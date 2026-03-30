@@ -66,7 +66,7 @@ describe("train car card deck", () => {
     assertEquals(trainCardDeck.faceDown, ["blue", "green", "orange"]);
   });
 
-  it("draw one card from faceup", () => {
+  it("draw one card from faceup with index 1", () => {
     const deck = [
       "white",
       "orange",
@@ -88,7 +88,7 @@ describe("train car card deck", () => {
       "white",
     ]);
     assertEquals(trainCardDeck.faceDown, ["blue", "green", "orange"]);
-    assertEquals(trainCardDeck.drawCardFromFaceUp("1"), "orange");
+    assertEquals(trainCardDeck.drawCardFromFaceUp("2"), "orange");
     assertEquals(trainCardDeck.faceDown, ["green", "orange"]);
     assertEquals(trainCardDeck.faceUp, [
       "white",
@@ -97,5 +97,31 @@ describe("train car card deck", () => {
       "green",
       "white",
     ]);
+  });
+
+  it("draw one card from deck", () => {
+    const deck = [
+      "white",
+      "orange",
+      "blue",
+      "green",
+      "white",
+      "blue",
+      "green",
+      "orange",
+    ];
+
+    const trainCardDeck = new CarCardsDeck(deck);
+    trainCardDeck.initFaceUp();
+    assertEquals(trainCardDeck.faceUp, [
+      "white",
+      "orange",
+      "blue",
+      "green",
+      "white",
+    ]);
+    assertEquals(trainCardDeck.faceDown, ["blue", "green", "orange"]);
+    assertEquals(trainCardDeck.drawCardFromDeck(), "blue");
+    assertEquals(trainCardDeck.faceDown, ["green", "orange"]);
   });
 });
