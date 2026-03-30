@@ -29,6 +29,8 @@ export class CarCardsDeck {
   }
 
   drawCardFromDeck() {
-    return this.faceDown.shift();
+    const drawnCard = this.faceDown.shift();
+
+    return drawnCard;
   }
 }

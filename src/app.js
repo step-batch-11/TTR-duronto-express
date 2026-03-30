@@ -18,6 +18,12 @@ export const createApp = (game) => {
     return context.json(game.playerHand());
   });
 
+  app.get("/draw-deck-card", (context) => {
+    const game = context.get("game");
+    const drawnCard = game.drawDeckCard();
+
+    return context.json({ drawnCard });
+  });
   app.get("*", serveStatic({ root: "public" }));
 
   return app;

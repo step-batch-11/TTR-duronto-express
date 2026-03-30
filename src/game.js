@@ -33,6 +33,14 @@ export default class Game {
     return drawnCard;
   }
 
+  drawDeckCard() {
+    const drawnCard = this.#carCardsDeck.drawCardFromDeck();
+    this.player.carCards[drawnCard] = (this.player.carCards[drawnCard] || 0) +
+      1;
+
+    return drawnCard;
+  }
+
   playerHand() {
     return this.player;
   }

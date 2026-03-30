@@ -4,7 +4,7 @@ import Game from "../src/game.js";
 import TicketDeck from "../src/ticket_deck.js";
 import { CarCardsDeck } from "../src/train_car_card_deck.js";
 
-describe("testing handlers", () => {
+describe("testing the game", () => {
   let game;
   beforeEach(() => {
     const carCards = [
@@ -17,6 +17,8 @@ describe("testing handlers", () => {
       "orange",
       "black",
       "wild",
+      "pink",
+      "blue",
     ];
 
     const ticketCards = [
@@ -51,7 +53,7 @@ describe("testing handlers", () => {
     });
   });
 
-  it("drawFaceUpCard should add the card from train car card face up", () => {
+  it("drawFaceUpCard should add the card from train car card face up to player hand", () => {
     game.drawFaceUpCard("1");
     assertEquals(game.playerHand(), {
       carCards: {
@@ -60,6 +62,24 @@ describe("testing handlers", () => {
         "pink": 1,
         "red": 1,
         "white": 1,
+      },
+      ticketChoices: [
+        { id: "t3", src: "Chicago", dest: "New Orleans", points: 7 },
+        { id: "t4", src: "Denver", dest: "El Paso", points: 4 },
+        { id: "t5", src: "Winnipeg", dest: "Little Rock", points: 11 },
+      ],
+      bogies: 45,
+    });
+  });
+
+  it("drawFaceUpCard should add the card from train car card deck to player hand", () => {
+    game.drawDeckCard();
+    assertEquals(game.playerHand(), {
+      carCards: {
+        "blue": 1,
+        "green": 1,
+        "pink": 2,
+        "red": 1,
       },
       ticketChoices: [
         { id: "t3", src: "Chicago", dest: "New Orleans", points: 7 },
