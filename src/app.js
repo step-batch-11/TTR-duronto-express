@@ -8,7 +8,7 @@ export const createApp = (trainCardDeck) => {
   app.use(logger());
 
   app.use((context) => {
-    context.set("trainCardDeck", new trainCardDeck());
+    context.set("trainCardDeck", trainCardDeck);
   });
   app.get("*", serveStatic({ root: "public" }));
 
