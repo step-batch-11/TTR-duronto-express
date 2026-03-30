@@ -175,24 +175,23 @@ footer {
 
 .hand-car-card {
   margin-top: 2em;
-  height: 180px;
-  width: 110px;
+  width: 180px;
+  height: 110px;
   position: relative;
-  display: flex;
-  justify-content: center;
+  border: 1px solid rgb(38, 0, 255);
+  transform: rotate(270deg);
 }
 
 .hand-car-card img {
-  border: 1px solid;
-  border-radius: 6px;
   width: 100%;
+  height: 100%;
 }
 
 .card-count {
   border: 1px solid;
   border-radius: 50%;
   padding: 0.3em 1em;
-  transform: translate(0, -2em);
+  transform: translate(11em, 2.5em) rotate(90deg);
   position: absolute;
 }
 

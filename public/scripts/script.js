@@ -47,10 +47,9 @@ const displayFaceUpCards = (cards) => {
   cards.forEach((card, index) => {
     const clone = cardTemplate.content.cloneNode(true);
     clone.querySelector(".card").id = index;
-    clone.querySelector(".card img").setAttribute(
-      "src",
-      `./assets/car-cards-images/${card}.jpg`,
-    );
+    clone
+      .querySelector(".card img")
+      .setAttribute("src", `./assets/car-cards-images/${card}.jpg`);
     container.append(clone);
   });
 };
@@ -66,21 +65,23 @@ const displayPlayerHand = ({ carCards }) => {
     const clone = carCardTemplate.content.cloneNode(true);
     const countContainer = clone.querySelector(".card-count");
     const imageElement = clone.querySelector(".card-img");
-    imageElement.src = `assets/car-cards-images/${color}.jpg`;
+    imageElement.setAttribute("src", `assets/car-cards-images/${color}.jpg`);
 
     countContainer.textContent = count;
     return clone;
   });
 
   const handContainer = document.querySelector(".hand-car-cards");
+  console.log(cardsInHand);
 
   handContainer.append(...cardsInHand);
 };
 
-globalThis.onload = () => {
+globalThis.onload = async () => {
   const playerData = fetchPlayerDetails();
   displayPlayers(playerData);
   const cardsData = fetchFaceUpCards();
   displayFaceUpCards(cardsData);
-  fetchPlayerHand().then(displayPlayerHand);
+  const playerHand = await fetchPlayerHand();
+  displayPlayerHand(playerHand);
 };
