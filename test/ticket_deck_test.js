@@ -16,10 +16,6 @@ describe("Testing TicketDeck", () => {
   });
 
   it("dealTicketChoices should deal 3 tickets from top of deck", () => {
-    assertEquals(ticketDeck.dealTicketChoices(), [
-      { id: "t3", src: "Chicago", dest: "New Orleans", points: 7 },
-      { id: "t4", src: "Denver", dest: "El Paso", points: 4 },
-      { id: "t5", src: "Winnipeg", dest: "Little Rock", points: 11 },
-    ]);
+    assertEquals(ticketDeck.dealTicketChoices(), ["t3", "t4", "t5"]);
   });
 });

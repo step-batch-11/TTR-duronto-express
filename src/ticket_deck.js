@@ -5,6 +5,6 @@ export default class TicketDeck {
   }
 
   dealTicketChoices() {
-    return this.#cards.slice(-3);
+    return this.#cards.slice(-3).map(({id})=> id);
   }
 }
