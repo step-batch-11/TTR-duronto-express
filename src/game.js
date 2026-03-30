@@ -24,6 +24,10 @@ export default class Game {
     this.#carCardsDeck.initFaceUp();
   }
 
+  getFaceUpCards() {
+    return this.#carCardsDeck.faceUp;
+  }
+
   drawFaceUpCard(id) {
     const drawnCard = this.#carCardsDeck.drawCardFromFaceUp(id);
 

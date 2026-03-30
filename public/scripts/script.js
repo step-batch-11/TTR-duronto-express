@@ -38,13 +38,19 @@ const displayPlayers = (players) => {
   });
 };
 
-const fetchFaceUpCards = () => {
-  return ["red", "green", "wild", "yellow", "blue"];
+const fetchFaceUpCards = async () => {
+  const res = await fetch("/init-faceup");
+  const faceUpCards = await res.json();
+  console.log(faceUpCards);
+
+  return faceUpCards;
 };
 
 const displayFaceUpCards = (cards) => {
   const cardTemplate = document.querySelector("#face-up-cards");
   const container = document.querySelector(".faceup-cards");
+  console.log({ cards }, "in display");
+
   cards.forEach((card, index) => {
     const clone = cardTemplate.content.cloneNode(true);
     clone.querySelector(".card").id = index;
@@ -87,12 +93,29 @@ const drawDeckCard = () => {
   });
 };
 
+const drawFaceUpCard = () => {
+  const deck = document.querySelector(".faceup-cards");
+  deck.addEventListener("click", async (event) => {
+    const card = event.target.closest(".card");
+    const body = { id: card.id };
+    const res = await fetch("/draw-faceup-card", {
+      method: "post",
+      body: JSON.stringify(body),
+    });
+
+    const { carCards } = await res.json();
+
+    displayPlayerHand({ carCards });
+  });
+};
+
 globalThis.onload = async () => {
   const playerData = fetchPlayerDetails();
   displayPlayers(playerData);
-  const cardsData = fetchFaceUpCards();
+  const cardsData = await fetchFaceUpCards();
   displayFaceUpCards(cardsData);
   drawDeckCard();
+  drawFaceUpCard();
   const playerHand = await fetchPlayerHand();
   displayPlayerHand(playerHand);
 };

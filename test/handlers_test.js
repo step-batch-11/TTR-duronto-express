@@ -108,6 +108,15 @@ describe("testing /draw-deck-card GET", () => {
     });
 
     assertEquals(response.status, 200);
-    assertEquals(await response.json(), { drawnCard: "white" });
+    assertEquals(await response.json(), {
+      drawnCard: "white",
+      carCards: {
+        blue: 1,
+        green: 1,
+        pink: 1,
+        red: 1,
+        white: 1,
+      },
+    });
   });
 });

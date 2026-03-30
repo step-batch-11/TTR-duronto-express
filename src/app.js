@@ -12,6 +12,15 @@ export const createApp = (game) => {
     return next();
   });
 
+  app.get("/init-faceup", (context) => {
+    const game = context.get("game");
+    game.initializePlayerHand();
+    const faceUpCards = game.getFaceUpCards();
+    console.log(faceUpCards);
+
+    return context.json(faceUpCards);
+  });
+
   app.get("/initial-hand", (context) => {
     const game = context.get("game");
     game.initializePlayerHand();
@@ -22,7 +31,6 @@ export const createApp = (game) => {
     const game = context.get("game");
     const drawnCard = game.drawDeckCard();
     const { carCards } = game.playerHand();
-    console.log({ carCards });
 
     return context.json({ drawnCard, carCards });
   });
@@ -32,9 +40,11 @@ export const createApp = (game) => {
     const game = context.get("game");
 
     const drawnCard = game.drawFaceUpCard(id);
+    const { carCards } = game.playerHand();
 
-    return context.json({ drawnCard });
+    return context.json({ drawnCard, carCards });
   });
+
   app.get("*", serveStatic({ root: "public" }));
 
   return app;

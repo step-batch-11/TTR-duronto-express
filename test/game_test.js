@@ -77,4 +77,14 @@ describe("testing the game", () => {
       bogies: 45,
     });
   });
+
+  it("open face up deck of train car card", () => {
+    assertEquals(game.getFaceUpCards(), [
+      "white",
+      "yellow",
+      "orange",
+      "black",
+      "wild",
+    ]);
+  });
 });
