@@ -82,6 +82,11 @@ article {
   flex-flow: column;
 }
 
+.faceup-cards img{
+  width: 100%;
+  height: 100%;
+}
+
 svg {
   cursor: pointer;
   height: 100%;
@@ -92,12 +97,22 @@ svg {
   width: 180px;
   height: 100px;
   border: 1px solid;
+  border-radius: 5px;
 }
 
 .deck {
-  width: 180px;
-  height: 100px;
-  border: 1px solid;
+  width: 200px;
+  height: 115px;
+}
+
+.deck img{
+  height: 100%;
+  width: 100%;
+}
+
+.destination-tickets-deck img{
+  height: 100%;
+  width: 100%;
 }
 
 footer {
@@ -159,10 +174,15 @@ footer {
   margin-top: 2em;
   height: 180px;
   width: 110px;
-  border: 1px solid black;
   position: relative;
   display: flex;
   justify-content: center;
+}
+
+.hand-car-card img{
+  border: 1px solid;
+  border-radius: 6px;
+  width: 100%;
 }
 
 .card-count {
@@ -181,8 +201,6 @@ footer {
   width: 13%;
 }
 .destination-tickets-deck {
-  border: 1px solid;
-  height: 110px;
-  border: 1px solid;
-  width: 180px;
+  height: 120px;
+  width: 200px;
 }

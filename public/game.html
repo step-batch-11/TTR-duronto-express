@@ -14,56 +14,18 @@
   <main>
     <aside class="players">
       <div class="player-details">
-        <div class="user">
-          <div class="identifier row">
-            <h2 class="name">haji</h2>
-            <div class="symbol"></div>
+        <template id="user">
+          <div class="user">
+            <div class="identifier row">
+              <h2 class="name"></h2>
+              <div class="symbol"></div>
+            </div>
+            <div class="train-car-data row">
+              <img src="" alt="car">
+              <p class="car-count"></p>
+            </div>
           </div>
-          <div class="train-car-data row">
-            <img src="" alt="car">
-            <p class="car-count">34</p>
-          </div>
-        </div>
-        <div class="user">
-          <div class="identifier row">
-            <h2 class="name">haji</h2>
-            <div class="symbol"></div>
-          </div>
-          <div class="train-car-data row">
-            <img src="" alt="car">
-            <p class="car-count">34</p>
-          </div>
-        </div>
-        <div class="user">
-          <div class="identifier row">
-            <h2 class="name">haji</h2>
-            <div class="symbol"></div>
-          </div>
-          <div class="train-car-data row">
-            <img src="" alt="car">
-            <p class="car-count">34</p>
-          </div>
-        </div>
-        <div class="user">
-          <div class="identifier row">
-            <h2 class="name">haji</h2>
-            <div class="symbol"></div>
-          </div>
-          <div class="train-car-data row">
-            <img src="" alt="car">
-            <p class="car-count">34</p>
-          </div>
-        </div>
-        <div class="user">
-          <div class="identifier row">
-            <h2 class="name">haji</h2>
-            <div class="symbol"></div>
-          </div>
-          <div class="train-car-data row">
-            <img src="" alt="car">
-            <p class="car-count">34</p>
-          </div>
-        </div>
+        </template>
       </div>
 
       <div class="log">
@@ -2214,13 +2176,15 @@
     </article>
     <aside class="market">
       <div class="faceup-cards">
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
+        <template id="face-up-cards">
+          <div class="card">
+            <img src="" alt="">
+          </div>
+        </template>
       </div>
-      <div class="deck"></div>
+      <div class="deck">
+        <img src="assets/deck-images/car-card.png" alt="">
+      </div>
     </aside>
   </main>
   <footer>
@@ -2233,37 +2197,22 @@
     </div>
 
     <div class="hand-car-cards row">
+      <template id="card">
+        <div class="hand-car-card">
+          <span class="card-count"></span>
+          <img class="card-img" src="" alt="">
+        </div>
+      </template>
+
       <div class="hand-car-card hand-card-red" id="card1">
         <span class="card-count">3</span>
-      </div>
-      <div class="hand-car-card hand-card-red" id="card2">
-        <span class="card-count">3</span>
-      </div>
-      <div class="hand-car-card hand-card-green" id="card3">
-        <span class="card-count">3</span>
-      </div>
-      <div class="hand-car-card hand-card-yellow" id="card4">
-        <span class="card-count">3</span>
-      </div>
-      <div class="hand-car-card hand-card-red" id="card1">
-        <span class="card-count">3</span>
-      </div>
-      <div class="hand-car-card hand-card-red" id="card2">
-        <span class="card-count">3</span>
-      </div>
-      <div class="hand-car-card hand-card-green" id="card3">
-        <span class="card-count">3</span>
-      </div>
-      <div class="hand-car-card hand-card-yellow" id="card4">
-        <span class="card-count">3</span>
-      </div>
-      <div class="hand-car-card hand-card-yellow" id="card4">
-        <span class="card-count">3</span>
+        <img src="../blue.png" alt="">
       </div>
     </div>
 
     <div class="destination-tickets-deck-container">
       <div class="destination-tickets-deck">
+        <img src="assets/deck-images/destination-card.png" alt="">
       </div>
     </div>
   </footer>
