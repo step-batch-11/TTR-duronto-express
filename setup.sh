@@ -2,6 +2,7 @@ cp setup/hooks/* .git/hooks
 
 chmod +x .git/hooks/pre-commit
 chmod +x .git/hooks/prepare-commit-msg
+chmod +x .git/hooks/pre-push
 
 deno add jsr:@std/assert
 deno add jsr:@std/testing
