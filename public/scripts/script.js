@@ -41,7 +41,6 @@ const displayPlayers = (players) => {
 const fetchFaceUpCards = async () => {
   const res = await fetch("/init-faceup");
   const faceUpCards = await res.json();
-  console.log(faceUpCards);
 
   return faceUpCards;
 };
@@ -49,7 +48,6 @@ const fetchFaceUpCards = async () => {
 const displayFaceUpCards = (cards) => {
   const cardTemplate = document.querySelector("#face-up-cards");
   const container = document.querySelector(".faceup-cards");
-  console.log({ cards }, "in display");
 
   cards.forEach((card, index) => {
     const clone = cardTemplate.content.cloneNode(true);

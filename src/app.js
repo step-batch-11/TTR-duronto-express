@@ -16,7 +16,6 @@ export const createApp = (game) => {
     const game = context.get("game");
     game.initializePlayerHand();
     const faceUpCards = game.getFaceUpCards();
-    console.log(faceUpCards);
 
     return context.json(faceUpCards);
   });
