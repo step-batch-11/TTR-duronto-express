@@ -55,14 +55,14 @@ export class CarCardsDeck {
   }
 
   getFaceUpCards() {
-    return this.#faceUp;
+    return structuredClone(this.#faceUp);
   }
 
   getFaceDownCards() {
-    return this.#faceDown;
+    return structuredClone(this.#faceDown);
   }
 
   getDiscardPile() {
-    return this.#discardPile;
+    return structuredClone(this.#discardPile);
   }
 }

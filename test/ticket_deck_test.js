@@ -6,16 +6,24 @@ describe("Testing TicketDeck", () => {
   let ticketDeck;
   beforeEach(() => {
     const cards = [
-      { id: "t1", src: "Helena", dest: "Duluth", points: 12 },
-      { id: "t2", src: "Saint Louis", dest: "St Marie", points: 6 },
-      { id: "t3", src: "Chicago", dest: "New Orleans", points: 7 },
-      { id: "t4", src: "Denver", dest: "El Paso", points: 4 },
-      { id: "t5", src: "Winnipeg", dest: "Little Rock", points: 11 },
+      { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+      { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
+      {
+        id: "SSM-OKC",
+        src: "Sault St. Marie",
+        dest: "Oklahoma City",
+        points: 9,
+      },
+      { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
     ];
     ticketDeck = new TicketDeck(cards);
   });
 
-  it("dealTicketChoices should deal 3 tickets from top of deck", () => {
-    assertEquals(ticketDeck.dealTicketChoices(), ["t3", "t4", "t5"]);
+  it("dealTicketChoices should deal 3 tickets from top of the deck", () => {
+    assertEquals(ticketDeck.dealTicketChoices(), [
+      "MTL-NOL",
+      "SSM-OKC",
+      "STL-NYC",
+    ]);
   });
 });

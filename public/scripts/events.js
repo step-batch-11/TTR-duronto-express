@@ -1,4 +1,4 @@
-import { fetchDeckCards, fetchFaceUpDeck } from "./api.js";
+import { fetchDeckCards, fetchFaceUpDeck, fetchTicketChoices } from "./api.js";
 import { displayCarCards, displayFaceUpCards } from "./render.js";
 
 export const drawDeckCard = () => {
@@ -38,5 +38,13 @@ export const drawFaceUpCard = () => {
         displayCarCards(carCards);
       }, 900);
     }
+  });
+};
+
+export const drawTicketChoice = () => {
+  const ticketDeck = document.querySelector(".destination-tickets-deck");
+  ticketDeck.addEventListener("click", async () => {
+    const ticketChoices = await fetchTicketChoices();
+    return ticketChoices;
   });
 };

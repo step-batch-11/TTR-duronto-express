@@ -9,6 +9,7 @@ import {
   initializeFaceUpDeckHandler,
   initializePlayerHandHandler,
 } from "./app_handlers/initialization_handlers.js";
+import { drawTicketChoiceHandler } from "./app_handlers/draw_tickets_handlers.js";
 
 export const createApp = (game) => {
   const app = new Hono();
@@ -23,6 +24,8 @@ export const createApp = (game) => {
   app.get("/init-faceup", initializeFaceUpDeckHandler);
   app.get("/initial-hand", initializePlayerHandHandler);
   app.get("/draw-deck-card", drawDeckCardHandler);
+  app.get("/get-ticket-choices", drawTicketChoiceHandler);
+
   app.post("/draw-faceup-card", drawFaceUpCardHandler);
 
   app.get("*", serveStatic({ root: "public" }));

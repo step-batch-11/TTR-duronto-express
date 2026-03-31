@@ -33,3 +33,5 @@ export const fetchPlayerHand = () => get("/initial-hand");
 export const fetchFaceUpDeck = (body) => post("/draw-faceup-card", body);
 
 export const fetchDeckCards = () => get("/draw-deck-card");
+
+export const fetchTicketChoices = () => get("/get-ticket-choices");

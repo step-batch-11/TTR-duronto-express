@@ -35,6 +35,12 @@ export default class Game {
     return drawnCard;
   }
 
+  drawTicketChoice() {
+    const drawnTickets = this.#ticketDeck.dealTicketChoices();
+
+    return drawnTickets;
+  }
+
   playerHand() {
     return this.#player.getPlayerHand();
   }
