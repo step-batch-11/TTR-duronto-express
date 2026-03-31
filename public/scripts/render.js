@@ -20,7 +20,7 @@ export const displayPlayers = (players) => {
 };
 
 export const displayFaceUpCards = (cards) => {
-  const cardTemplate = document.querySelector("#face-up-cards");
+  const cardTemplate = document.querySelector("#market-card");
   const container = document.querySelector(".faceup-cards");
   container.innerHTML = "";
 
@@ -76,4 +76,32 @@ const displayPlayerHandTickets = (ticketChoices) => {
 export const displayPlayerHand = ({ carCards, ticketChoices }) => {
   displayPlayerHandTickets(ticketChoices);
   displayCarCards(carCards);
+};
+
+const toggleHidden = () => {
+  const carCardContainer = document.querySelector(".faceup-cards");
+  const carCardsDeck = document.querySelector(".deck");
+  const ticketCardContainer = document.querySelector(".ticket-cards");
+
+  carCardContainer.classList.toggle("hidden");
+  carCardsDeck.classList.toggle("hidden");
+  ticketCardContainer.classList.toggle("hidden");
+};
+
+export const displayTicketChoices = (tickets) => {
+  const ticketCardTemplate = document.querySelector("#market-card");
+  const ticketCardContainer = document.querySelector(".ticket-cards");
+  ticketCardContainer.innerHTML = "";
+
+  toggleHidden();
+
+  tickets.forEach((cardId) => {
+    const clone = ticketCardTemplate.content.cloneNode(true);
+    clone.querySelector(".card").id = cardId;
+    clone.querySelector(".card").setAttribute("data-color", cardId);
+    clone
+      .querySelector(".card img")
+      .setAttribute("src", `./assets/destination-cards-images/${cardId}.png`);
+    ticketCardContainer.append(clone);
+  });
 };

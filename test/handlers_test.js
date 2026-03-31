@@ -23,11 +23,17 @@ describe("testing /initial-hand GET", () => {
     ];
 
     const ticketCards = [
-      { id: "t1", src: "Helena", dest: "Duluth", points: 12 },
-      { id: "t2", src: "Saint Louis", dest: "St Marie", points: 6 },
-      { id: "t3", src: "Chicago", dest: "New Orleans", points: 7 },
-      { id: "t4", src: "Denver", dest: "El Paso", points: 4 },
-      { id: "t5", src: "Winnipeg", dest: "Little Rock", points: 11 },
+      { id: "DVR-ELP", src: "Denver", dest: "El Paso", points: 4 },
+      { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
+      { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+      { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
+      {
+        id: "SSM-OKC",
+        src: "Sault St. Marie",
+        dest: "Oklahoma City",
+        points: 9,
+      },
+      { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
     ];
 
     const carCardsDeck = new CarCardsDeck(carCards);
@@ -49,7 +55,7 @@ describe("testing /initial-hand GET", () => {
         wild: 1,
         yellow: 1,
       },
-      ticketChoices: ["t3", "t4", "t5"],
+      ticketChoices: ["MTL-NOL", "SSM-OKC", "STL-NYC"],
       bogies: 45,
     });
   });
@@ -89,11 +95,17 @@ describe("testing /draw-deck-card GET", () => {
     ];
 
     const ticketCards = [
-      { id: "t1", src: "Helena", dest: "Duluth", points: 12 },
-      { id: "t2", src: "Saint Louis", dest: "St Marie", points: 6 },
-      { id: "t3", src: "Chicago", dest: "New Orleans", points: 7 },
-      { id: "t4", src: "Denver", dest: "El Paso", points: 4 },
-      { id: "t5", src: "Winnipeg", dest: "Little Rock", points: 11 },
+      { id: "DVR-ELP", src: "Denver", dest: "El Paso", points: 4 },
+      { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
+      { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+      { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
+      {
+        id: "SSM-OKC",
+        src: "Sault St. Marie",
+        dest: "Oklahoma City",
+        points: 9,
+      },
+      { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
     ];
 
     const carCardsDeck = new CarCardsDeck(carCards);
@@ -137,5 +149,57 @@ describe("testing /draw-deck-card GET", () => {
       },
       faceUpCards: ["pink", "yellow", "orange", "black", "wild"],
     });
+  });
+});
+
+describe("testing /get-ticket-choices GET", () => {
+  let app;
+  beforeEach(() => {
+    const carCards = [
+      "red",
+      "green",
+      "blue",
+      "pink",
+      "white",
+      "yellow",
+      "orange",
+      "black",
+      "wild",
+      "blue",
+      "white",
+      "green",
+      "blue",
+    ];
+
+    const ticketCards = [
+      { id: "CHG-SFE", src: "Chicago", dest: "Santa Fe", points: 9 },
+      { id: "VCR-SFE", src: "Vancouver", dest: "Santa Fe", points: 13 },
+      { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
+      {
+        id: "SSM-OKC",
+        src: "Sault St. Marie",
+        dest: "Oklahoma City",
+        points: 9,
+      },
+      { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
+      { id: "DVR-ELP", src: "Denver", dest: "El Paso", points: 4 },
+      { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
+      { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+    ];
+
+    const carCardsDeck = new CarCardsDeck(carCards);
+    const ticketDeck = new TicketDeck(ticketCards);
+    const player = new Player();
+    const game = new Game(carCardsDeck, ticketDeck, player);
+
+    game.initializePlayerHand();
+    app = createApp(game);
+  });
+
+  it("after sending request to /get-ticket-choices it should return ticket cards choices as id", async () => {
+    const res = await app.request("/get-ticket-choices");
+
+    assertEquals(await res.status, 200);
+    assertEquals(await res.json(), ["MTL-NOL", "SSM-OKC", "STL-NYC"]);
   });
 });

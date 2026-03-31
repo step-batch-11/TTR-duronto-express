@@ -25,5 +25,6 @@ describe("Testing TicketDeck", () => {
       "SSM-OKC",
       "STL-NYC",
     ]);
+    assertEquals(ticketDeck.getTicketCards(), ["WPG-HTN"]);
   });
 });

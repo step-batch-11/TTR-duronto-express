@@ -10,4 +10,8 @@ export default class TicketDeck {
 
     return drawnTickets;
   }
+
+  getTicketCards() {
+    return this.#cards.map(({ id }) => id);
+  }
 }
