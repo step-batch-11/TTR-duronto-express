@@ -1,6 +1,14 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { serveStatic } from "hono/deno";
+import {
+  drawDeckCardHandler,
+  drawFaceUpCardHandler,
+} from "./app_handlers/draw_cards_handlers.js";
+import {
+  initializeFaceUpDeckHandler,
+  initializePlayerHandHandler,
+} from "./app_handlers/initialization_handlers.js";
 
 export const createApp = (game) => {
   const app = new Hono();
@@ -12,38 +20,11 @@ export const createApp = (game) => {
     return next();
   });
 
-  app.get("/init-faceup", (context) => {
-    const game = context.get("game");
-    const faceUpCards = game.getFaceUpCards();
+  app.get("/init-faceup", initializeFaceUpDeckHandler);
+  app.get("/initial-hand", initializePlayerHandHandler);
+  app.get("/draw-deck-card", drawDeckCardHandler);
 
-    return context.json(faceUpCards);
-  });
-
-  app.get("/initial-hand", (context) => {
-    const game = context.get("game");
-    game.initializePlayerHand();
-
-    return context.json(game.playerHand());
-  });
-
-  app.get("/draw-deck-card", (context) => {
-    const game = context.get("game");
-    const drawnCard = game.drawDeckCard();
-    const { carCards } = game.playerHand();
-
-    return context.json({ drawnCard, carCards });
-  });
-
-  app.post("/draw-faceup-card", async (context) => {
-    const { id } = await context.req.json();
-    const game = context.get("game");
-
-    const drawnCard = game.drawFaceUpCard(id);
-    const { carCards } = game.playerHand();
-    const faceUpCards = game.getFaceUpCards();
-
-    return context.json({ drawnCard, carCards, faceUpCards });
-  });
+  app.post("/draw-faceup-card", drawFaceUpCardHandler);
 
   app.get("*", serveStatic({ root: "public" }));
 

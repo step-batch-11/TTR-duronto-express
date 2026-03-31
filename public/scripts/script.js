@@ -1,5 +1,5 @@
 import {
-  fetchFaceUpCards,
+  fetchInitialFaceUp,
   fetchPlayerDetails,
   fetchPlayerHand,
 } from "./api.js";
@@ -72,7 +72,7 @@ globalThis.onload = async () => {
   displayPlayers(playerData);
   const playerHand = await fetchPlayerHand();
   displayPlayerHand(playerHand);
-  const cardsData = await fetchFaceUpCards();
+  const cardsData = await fetchInitialFaceUp();
   displayFaceUpCards(cardsData);
   drawDeckCard();
   drawFaceUpCard();
