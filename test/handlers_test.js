@@ -7,6 +7,7 @@ import Game from "../src/game.js";
 
 describe("testing /initial-hand GET", () => {
   let app;
+  let game;
   beforeEach(() => {
     const carCards = [
       "red",
@@ -30,7 +31,7 @@ describe("testing /initial-hand GET", () => {
 
     const carCardsDeck = new CarCardsDeck(carCards);
     const ticketDeck = new TicketDeck(ticketCards);
-    const game = new Game(carCardsDeck, ticketDeck);
+    game = new Game(carCardsDeck, ticketDeck);
     app = createApp(game);
   });
 
@@ -48,6 +49,20 @@ describe("testing /initial-hand GET", () => {
       ticketChoices: ["t3", "t4", "t5"],
       bogies: 45,
     });
+  });
+
+  it("testing /init-faceup GET", async () => {
+    game.initializePlayerHand();
+    const response = await app.request("/init-faceup");
+
+    assertEquals(response.status, 200);
+    assertEquals(await response.json(), [
+      "white",
+      "yellow",
+      "orange",
+      "black",
+      "wild",
+    ]);
   });
 });
 
