@@ -12,13 +12,31 @@ export const drawDeckCard = () => {
 };
 
 export const drawFaceUpCard = () => {
-  const deck = document.querySelector(".faceup-cards");
-  deck.addEventListener("click", async (event) => {
+  const market = document.querySelector(".faceup-cards");
+  market.addEventListener("click", (event) => {
     const card = event.target.closest(".card");
-    const body = { id: card.id };
-    const { faceUpCards, carCards } = await fetchFaceUpDeck(body);
 
-    displayFaceUpCards(faceUpCards);
-    displayCarCards(carCards);
+    if (card !== null) {
+      const body = { id: card.id };
+
+      const color = card.getAttribute("data-color");
+      const handCard = document
+        .querySelector(`.hand-car-cards [data-color="${color}"]`);
+      const hand = handCard.getBoundingClientRect();
+      const faceUpCard = card.getBoundingClientRect();
+
+      card.style.transform = `translate(${
+        hand.x - faceUpCard.x - faceUpCard.height / 2 + 10
+      }px, 
+      ${hand.y - faceUpCard.y + faceUpCard.height / 2 - 10}px) rotate(270deg)`;
+
+      setTimeout(async () => {
+        market.removeChild(card);
+        const { faceUpCards, carCards } = await fetchFaceUpDeck(body);
+
+        displayFaceUpCards(faceUpCards);
+        displayCarCards(carCards);
+      }, 900);
+    }
   });
 };
