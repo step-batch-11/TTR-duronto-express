@@ -43,8 +43,7 @@ export const displayFaceUpCards = (cards) => {
   });
 };
 
-export const displayPlayerHand = ({ carCards, ticketChoices }) => {
-  displayPlayerHandTickets(ticketChoices);
+export const displayCarCards = (carCards) => {
   const carCardTemplate = document.querySelector("#card");
   const handContainer = document.querySelector(".hand-car-cards");
 
@@ -60,6 +59,11 @@ export const displayPlayerHand = ({ carCards, ticketChoices }) => {
   });
 
   handContainer.append(...cardsInHand);
+};
+
+const displayPlayerHand = ({ carCards, ticketChoices }) => {
+  displayPlayerHandTickets(ticketChoices);
+  displayCarCards(carCards);
 };
 
 globalThis.onload = async () => {
