@@ -88,12 +88,19 @@ const toggleHidden = () => {
   ticketCardContainer.classList.toggle("hidden");
 };
 
+const toggleDisable = () => {
+  const ticketDeck = document.querySelector(".destination-tickets-deck");
+
+  ticketDeck.classList.toggle("is-disabled");
+};
+
 export const displayTicketChoices = (tickets) => {
   const ticketCardTemplate = document.querySelector("#market-card");
   const ticketCardContainer = document.querySelector(".ticket-cards");
   ticketCardContainer.innerHTML = "";
 
   toggleHidden();
+  toggleDisable();
 
   tickets.forEach((cardId) => {
     const clone = ticketCardTemplate.content.cloneNode(true);
@@ -102,6 +109,7 @@ export const displayTicketChoices = (tickets) => {
     clone
       .querySelector(".card img")
       .setAttribute("src", `./assets/destination-cards-images/${cardId}.png`);
+
     ticketCardContainer.append(clone);
   });
 };
