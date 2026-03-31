@@ -118,6 +118,7 @@ describe("testing /draw-deck-card GET", () => {
         white: 1,
       },
       faceUpCards: [
+        "blue",
         "yellow",
         "orange",
         "black",

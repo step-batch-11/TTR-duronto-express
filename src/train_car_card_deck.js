@@ -20,11 +20,17 @@ export class CarCardsDeck {
     return faceDownCards;
   }
 
+  #refillFaceUp(id, card) {
+    this.faceUp.splice(id, 0, card);
+  }
+
   drawCardFromFaceUp(id) {
     const cardIndex = parseInt(id) - 1;
 
     const [drawnCard] = this.faceUp.splice(cardIndex, 1);
-    console.log(this.faceUp);
+    const drawnCardFromDeck = this.faceDown.shift();
+
+    this.#refillFaceUp(cardIndex, drawnCardFromDeck);
 
     return drawnCard;
   }

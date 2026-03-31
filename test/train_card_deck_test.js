@@ -92,6 +92,7 @@ describe("train car card deck", () => {
     assertEquals(trainCardDeck.faceUp, [
       "white",
       "blue",
+      "blue",
       "green",
       "white",
     ]);
