@@ -21,7 +21,6 @@ export const drawFaceUpCard = () => {
     });
 
     const { faceUpCards, carCards } = await res.json();
-    console.log(carCards);
 
     displayFaceUpCards(faceUpCards);
     displayCarCards(carCards);
