@@ -14,7 +14,6 @@ export const createApp = (game) => {
 
   app.get("/init-faceup", (context) => {
     const game = context.get("game");
-    game.initializePlayerHand();
     const faceUpCards = game.getFaceUpCards();
 
     return context.json(faceUpCards);
@@ -23,6 +22,7 @@ export const createApp = (game) => {
   app.get("/initial-hand", (context) => {
     const game = context.get("game");
     game.initializePlayerHand();
+
     return context.json(game.playerHand());
   });
 

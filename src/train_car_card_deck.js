@@ -7,6 +7,7 @@ export class CarCardsDeck {
 
   initFaceUp() {
     const faceUpCards = this.faceDown.slice(0, 5);
+    console.log(faceUpCards);
 
     this.faceDown = this.faceDown.slice(5);
     this.faceUp = faceUpCards;
@@ -24,6 +25,7 @@ export class CarCardsDeck {
     const cardIndex = parseInt(id) - 1;
 
     const [drawnCard] = this.faceUp.splice(cardIndex, 1);
+    console.log(this.faceUp);
 
     return drawnCard;
   }
