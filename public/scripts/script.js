@@ -1,22 +1,9 @@
-const fetchPlayerDetails = () => {
-  return [
-    {
-      name: "a",
-      symbol: "green",
-      carCount: 45,
-    },
-    {
-      name: "b",
-      symbol: "red",
-      carCount: 45,
-    },
-    {
-      name: "v",
-      symbol: "blue",
-      carCount: 45,
-    },
-  ];
-};
+import {
+  fetchFaceUpCards,
+  fetchPlayerDetails,
+  fetchPlayerHand,
+} from "./api.js";
+import { drawDeckCard, drawFaceUpCard } from "./events.js";
 
 const appendPlayer = ({ name, symbol, carCount }, container, template) => {
   const clone = template.content.cloneNode(true);
@@ -38,13 +25,6 @@ const displayPlayers = (players) => {
   });
 };
 
-const fetchFaceUpCards = async () => {
-  const res = await fetch("/init-faceup");
-  const faceUpCards = await res.json();
-
-  return faceUpCards;
-};
-
 const displayFaceUpCards = (cards) => {
   const cardTemplate = document.querySelector("#face-up-cards");
   const container = document.querySelector(".faceup-cards");
@@ -60,11 +40,7 @@ const displayFaceUpCards = (cards) => {
   });
 };
 
-const fetchPlayerHand = async () => {
-  return await fetch("/initial-hand").then((resp) => resp.json());
-};
-
-const displayPlayerHand = ({ carCards }) => {
+export const displayPlayerHand = ({ carCards }) => {
   const carCardTemplate = document.querySelector("#card");
   const handContainer = document.querySelector(".hand-car-cards");
 
@@ -80,32 +56,6 @@ const displayPlayerHand = ({ carCards }) => {
   });
 
   handContainer.append(...cardsInHand);
-};
-
-const drawDeckCard = () => {
-  const deck = document.querySelector(".deck");
-  deck.addEventListener("click", async () => {
-    const res = await fetch("/draw-deck-card");
-    const { carCards } = await res.json();
-
-    displayPlayerHand({ carCards });
-  });
-};
-
-const drawFaceUpCard = () => {
-  const deck = document.querySelector(".faceup-cards");
-  deck.addEventListener("click", async (event) => {
-    const card = event.target.closest(".card");
-    const body = { id: card.id };
-    const res = await fetch("/draw-faceup-card", {
-      method: "post",
-      body: JSON.stringify(body),
-    });
-
-    const { faceUpCards, carCards } = await res.json();
-    displayFaceUpCards(faceUpCards);
-    displayPlayerHand({ carCards });
-  });
 };
 
 globalThis.onload = async () => {
