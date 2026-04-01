@@ -10,9 +10,9 @@ export const drawFaceUpCardHandler = async (context) => {
   const { id } = await context.req.json();
   const game = context.get("game");
 
-  const drawnCard = game.drawFaceUpCard(id);
+  const { drawnCard, drawnCardFromDeck } = game.drawFaceUpCard(id);
   const { carCards } = game.playerHand();
   const faceUpCards = game.getFaceUpCards();
 
-  return context.json({ drawnCard, carCards, faceUpCards });
+  return context.json({ drawnCard, drawnCardFromDeck, carCards, faceUpCards });
 };

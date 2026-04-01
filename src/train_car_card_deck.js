@@ -45,7 +45,8 @@ export class CarCardsDeck {
     if (this.#totalWildInFaceUp() >= 3) {
       this.initFaceUp();
     }
-    return drawnCard;
+
+    return { drawnCard, drawnCardFromDeck };
   }
 
   drawCardFromDeck() {

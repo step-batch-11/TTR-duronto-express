@@ -122,13 +122,13 @@ describe("testing /draw-deck-card GET", () => {
 
     assertEquals(response.status, 200);
     assertEquals(await response.json(), {
-      drawnCard: "pink",
       carCards: {
         blue: 2,
         green: 1,
         pink: 1,
         white: 1,
       },
+      drawnCard: "pink",
     });
   });
 
@@ -142,6 +142,7 @@ describe("testing /draw-deck-card GET", () => {
     assertEquals(response.status, 200);
     assertEquals(await response.json(), {
       drawnCard: "white",
+      drawnCardFromDeck: "pink",
       carCards: {
         blue: 2,
         green: 1,
