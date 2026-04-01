@@ -3,7 +3,12 @@ import {
   fetchPlayerDetails,
   fetchPlayerHand,
 } from "./api.js";
-import { drawDeckCard, drawFaceUpCard, drawTicketChoice } from "./events.js";
+import {
+  drawDeckCard,
+  drawFaceUpCard,
+  drawTicketChoice,
+  selectTicketCard,
+} from "./events.js";
 import {
   displayFaceUpCards,
   displayPlayerHand,
@@ -12,6 +17,7 @@ import {
 
 const registerListeners = () => {
   drawTicketChoice();
+  selectTicketCard();
   drawDeckCard();
   drawFaceUpCard();
 };

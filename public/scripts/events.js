@@ -157,3 +157,26 @@ export const drawTicketChoice = () => {
     return ticketChoices;
   });
 };
+
+const selectedTickets = new Set();
+
+export const selectTicketCard = () => {
+  const ticketCards = document.querySelector(".ticket-cards");
+
+  ticketCards.addEventListener("click", (event) => {
+    const selectedCard = event.target.closest(".card");
+    if (!selectedCard) {
+      return;
+    }
+
+    const cardId = selectedCard.id;
+
+    if (selectedTickets.has(cardId)) {
+      selectedTickets.delete(cardId);
+      return;
+    }
+
+    selectedTickets.add(cardId);
+    return;
+  });
+};
