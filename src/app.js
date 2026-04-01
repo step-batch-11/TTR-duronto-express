@@ -10,6 +10,10 @@ import {
   initializePlayerHandHandler,
 } from "./app_handlers/initialization_handlers.js";
 import { drawTicketChoiceHandler } from "./app_handlers/draw_tickets_handlers.js";
+import {
+  claimRouteHandler,
+  routeOwnershipHandler,
+} from "./app_handlers/map_handlers.js";
 
 export const createApp = (game) => {
   const app = new Hono();
@@ -25,8 +29,9 @@ export const createApp = (game) => {
   app.get("/initial-hand", initializePlayerHandHandler);
   app.get("/draw-deck-card", drawDeckCardHandler);
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
-
   app.post("/draw-faceup-card", drawFaceUpCardHandler);
+  app.post("/claim-route", claimRouteHandler);
+  app.get("/map-ownership", routeOwnershipHandler);
 
   app.get("*", serveStatic({ root: "public" }));
 

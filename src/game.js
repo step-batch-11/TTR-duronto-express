@@ -49,4 +49,16 @@ export default class Game {
   playerHand() {
     return this.#player.getPlayerHand();
   }
+
+  claimRoute(routeId) {
+    this.#player.addClaimedRoute(routeId);
+  }
+
+  getRouteOwnershipMap() {
+    const playerColor = this.#player.getPlayerColor();
+    const claimedRoutes = this.#player.getClaimedRoutes();
+    const ownershipMap = {};
+    ownershipMap[playerColor] = claimedRoutes;
+    return ownershipMap;
+  }
 }

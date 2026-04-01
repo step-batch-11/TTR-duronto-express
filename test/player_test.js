@@ -23,4 +23,13 @@ describe("testing player class methods", () => {
 
     assertEquals(player.getPlayerHand().ticketChoices, ["A-B", "B-C"]);
   });
+
+  it("addClaimedRoute should add a claimed Route to the claimedRoutes list", () => {
+    player.addClaimedRoute("STN1-STN2");
+    assertEquals(player.getClaimedRoutes(), ["STN1-STN2"]);
+  });
+
+  it("getPlayerColor should return the players color", () => {
+    assertEquals(player.getPlayerColor(), "green");
+  });
 });
