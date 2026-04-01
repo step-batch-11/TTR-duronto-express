@@ -1,4 +1,18 @@
 import { claimTicketChoices } from "./events.js";
+const paintRoutes = (color, routes) => {
+  const map = document.querySelector("#map");
+
+  for (const routeId of routes) {
+    const routeElement = map.querySelector(`#${routeId}`);
+    routeElement.setAttribute("data-owner-color", color);
+  }
+};
+
+export const renderMap = (routeOwnership) => {
+  for (const [color, routes] of Object.entries(routeOwnership)) {
+    paintRoutes(color, routes);
+  }
+};
 
 const appendPlayer = ({ name, symbol, carCount }, container, template) => {
   const clone = template.content.cloneNode(true);

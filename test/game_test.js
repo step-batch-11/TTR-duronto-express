@@ -90,4 +90,10 @@ describe("testing the game", () => {
       "orange",
     ]);
   });
+
+  it("claimRoute should add the route to player claimed routes", () => {
+    game.claimRoute("STN4-STN5");
+
+    assertEquals(game.getRouteOwnershipMap(), { green: ["STN4-STN5"] });
+  });
 });

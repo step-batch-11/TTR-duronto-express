@@ -38,3 +38,7 @@ export const fetchTicketChoices = () => get("/get-ticket-choices");
 
 export const claimSelectedTickets = (tickets) =>
   post("/claim-tickets", tickets);
+
+export const postClaimRoute = (body) => post("/claim-route", body);
+
+export const fetchRouteOwnership = () => get("/map-ownership");

@@ -1,3 +1,5 @@
+import { shuffle } from "@std/random/shuffle";
+
 export class CarCardsDeck {
   #faceUp;
   #faceDown;
@@ -49,7 +51,15 @@ export class CarCardsDeck {
     return { drawnCard, drawnCardFromDeck };
   }
 
+  #refillDeck() {
+    const shuffledDeck = shuffle(this.#discardPile);
+    this.#faceDown.push(...shuffledDeck);
+  }
+
   drawCardFromDeck() {
+    if (this.#faceDown.length < 5) {
+      this.#refillDeck();
+    }
     const drawnCard = this.#faceDown.pop();
 
     return drawnCard;
@@ -65,5 +75,9 @@ export class CarCardsDeck {
 
   getDiscardPile() {
     return structuredClone(this.#discardPile);
+  }
+
+  discardCards(cards) {
+    this.#discardPile.push(...cards);
   }
 }

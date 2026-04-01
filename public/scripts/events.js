@@ -3,30 +3,45 @@ import {
   fetchDeckCards,
   fetchFaceUpDeck,
   fetchTicketChoices,
+  postClaimRoute,
 } from "./api.js";
 import {
   displayCarCards,
   displayFaceUpCards,
   displayTicketChoices,
+  renderMap,
 } from "./render.js";
+
+const claimRoute = async (event) => {
+  const route = event.target.closest(".route");
+  if (route === null) {
+    return;
+  }
+  const routeId = route.getAttribute("id");
+  const resp = await postClaimRoute({ routeId });
+
+  renderMap(resp.routeOwnership);
+};
+
+export const mapOnClick = () => {
+  const map = document.querySelector("#map");
+  map.addEventListener("click", claimRoute);
+};
 
 const addHandCardContainer = (color) => {
   const handContainer = document.querySelector(".hand-car-cards");
   const carCardTemplate = document.querySelector("#card");
   const clone = carCardTemplate.content.cloneNode(true);
-  clone.querySelector(".img-container").setAttribute(
-    "data-color",
-    color,
-  );
+  clone.querySelector(".img-container").setAttribute("data-color", color);
 
   handContainer.append(clone);
-  return document
-    .querySelector(`.hand-car-cards [data-color="${color}"]`);
+  return document.querySelector(`.hand-car-cards [data-color="${color}"]`);
 };
 
 const getHandCard = (color) => {
-  const handCard = document
-    .querySelector(`.hand-car-cards [data-color="${color}"]`);
+  const handCard = document.querySelector(
+    `.hand-car-cards [data-color="${color}"]`,
+  );
 
   if (!handCard) return addHandCardContainer(color);
   return handCard;
@@ -75,7 +90,8 @@ export const drawDeckCard = () => {
 
   deck.addEventListener("click", async () => {
     const { drawnCard, carCards } = await fetchDeckCards();
-    const deckPosition = deck.querySelector("#deck-img")
+    const deckPosition = deck
+      .querySelector("#deck-img")
       .getBoundingClientRect();
     const hand = getHandCardPositions(drawnCard);
 
@@ -127,8 +143,7 @@ const animateRefillMarket = (drawnCardFromDeck, card, faceUpCards) => {
   const cardPosition = card.getBoundingClientRect();
   const img = createImageAtr(drawnCardFromDeck);
   deck.append(img);
-  const deckPosition = deck.querySelector("#deck-img")
-    .getBoundingClientRect();
+  const deckPosition = deck.querySelector("#deck-img").getBoundingClientRect();
 
   animateDrawDeckCard(img, cardPosition, deckPosition, moveFromDeckToMarket);
   resolveRefillMarket(deck, img, faceUpCards);

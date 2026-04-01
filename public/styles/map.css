@@ -1,0 +1,72 @@
+svg {
+  background-color: #e0d8c0;
+  border: 2px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.route .claimed-shape,
+.route .empty-shape {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.route .claimed-shape {
+  opacity: 0;
+}
+
+.route .empty-shape {
+  opacity: 1;
+}
+
+.route:not([data-owner-color="none"]) .claimed-shape {
+  opacity: 1;
+}
+
+.route[data-owner-color="red"] .claimed-shape {
+  fill: #e74c3c;
+  stroke: #c0392b;
+}
+
+.route[data-owner-color="blue"] .claimed-shape {
+  fill: #3498db;
+  stroke: #2980b9;
+}
+
+.route[data-owner-color="green"] .claimed-shape {
+  fill: mediumseagreen;
+  stroke: black;
+}
+
+.route[data-owner-color="green"] .empty-shape {
+  opacity: 0.5;
+}
+
+.route[data-route-color="white"] .empty-shape {
+  fill: #fbfbfb;
+  stroke: #4a4a4a;
+}
+
+.route[data-route-color="red"] .empty-shape {
+  fill: #ea4949;
+  stroke: #4a4a4a;
+}
+
+.route[data-route-color="blue"] .empty-shape {
+  fill: #4997ea;
+  stroke: #4a4a4a;
+}
+
+.route[data-route-color="pink"] .empty-shape {
+  fill: #e779ed;
+  stroke: #ff0c0c;
+}
+
+.route[data-route-color="yellow"] .empty-shape {
+  fill: #f2fb42;
+  stroke: #ff0c0c;
+}
+
+.route[data-route-color="transparent"] .empty-shape {
+  fill: #e2e2e2;
+  stroke: #ff0c0c;
+}
