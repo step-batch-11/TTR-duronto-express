@@ -8,6 +8,7 @@ import {
 import {
   displayCarCards,
   displayFaceUpCards,
+  displayPlayerHandTickets,
   displayTicketChoices,
   renderMap,
 } from "./render.js";
@@ -54,8 +55,12 @@ const createImageAtr = (name) => {
   return img;
 };
 
-const moveDeckToHand = (img, destination, deck) => {
-  // img.style.zIndex = 1;
+const toggleMarket = () => {
+  const market = document.querySelector(".market");
+  market.classList.toggle("is-disabled");
+};
+
+const moveFromDeckToHand = (img, destination, deck) => {
   img.style.transform = "scale(1)";
   const x = destination.left - deck.left - deck.height / 2 + 17;
   const y = destination.top - deck.top + deck.height / 2 - 20;
@@ -77,6 +82,7 @@ const resolveDeckCardDraw = (deck, img, carCards) => {
   setTimeout(() => {
     deck.removeChild(img);
     displayCarCards(carCards);
+    toggleMarket();
   }, 1600);
 };
 
@@ -97,7 +103,8 @@ export const drawDeckCard = () => {
 
     const img = createImageAtr(drawnCard);
     deck.append(img);
-    animateDrawDeckCard(img, hand, deckPosition, moveDeckToHand);
+    toggleMarket();
+    animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
     resolveDeckCardDraw(deck, img, carCards);
   });
 };
@@ -114,10 +121,12 @@ const resolveFaceUpCardDraw = (card, img, carCards) => {
   setTimeout(() => {
     card.removeChild(img);
     displayCarCards(carCards);
+    toggleMarket();
   }, 1000);
 };
 
 const animateDrawFaceUpCard = (card) => {
+  toggleMarket();
   const color = card.getAttribute("data-color");
   const hand = getHandCardPositions(color);
   const faceUpCard = card.getBoundingClientRect();
@@ -180,7 +189,16 @@ export const drawTicketChoice = () => {
 
 const selectedTickets = new Set();
 
-export const claimTicketCard = () => {
+const highLightCities = (cardId) => {
+  const [from, to] = cardId.split("-");
+  const fromCity = document.querySelector(`#${from}`);
+  const toCity = document.querySelector(`#${to}`);
+
+  fromCity.classList.toggle("highlightCity");
+  toCity.classList.toggle("highlightCity");
+};
+
+export const selectTicketCard = () => {
   const ticketCards = document.querySelector(".ticket-cards");
 
   ticketCards.addEventListener("click", (event) => {
@@ -191,6 +209,8 @@ export const claimTicketCard = () => {
 
     const cardId = selectedCard.id;
 
+    selectedCard.classList.toggle("highlight");
+    highLightCities(cardId);
     if (selectedTickets.has(cardId)) {
       selectedTickets.delete(cardId);
       return;
@@ -204,12 +224,13 @@ export const claimTicketCard = () => {
 export const claimTicketChoices = () => {
   const button = document.querySelector("#ticket-submit-button");
 
-  button.addEventListener("click", () => {
+  button.addEventListener("click", async () => {
     const ticketChoices = [];
     selectedTickets.forEach((ticket) => ticketChoices.push(ticket));
-    console.log(ticketChoices);
 
-    claimSelectedTickets(ticketChoices);
+    const playerHandTickets = await claimSelectedTickets(ticketChoices);
     selectedTickets.clear();
+
+    displayPlayerHandTickets(playerHandTickets);
   });
 };

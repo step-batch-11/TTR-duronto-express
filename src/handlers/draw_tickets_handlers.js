@@ -9,7 +9,7 @@ export const claimDestinationTickets = async (context) => {
   const game = context.get("game");
   const tickets = await context.req.json();
 
-  game.claimTicketCard(tickets);
+  const playerHandTickets = game.claimTicketCard(tickets);
 
-  return context.json({});
+  return context.json(playerHandTickets);
 };

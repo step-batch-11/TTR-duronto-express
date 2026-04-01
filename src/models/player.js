@@ -23,6 +23,8 @@ export default class Player {
 
   claimTicket(tickets) {
     this.#ticketChoices.push(...tickets);
+
+    return this.#ticketChoices;
   }
 
   getPlayerHand() {

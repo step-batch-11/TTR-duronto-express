@@ -71,7 +71,7 @@ export const displayCarCards = (carCards) => {
   handContainer.append(...cardsInHand);
 };
 
-const displayPlayerHandTickets = (ticketChoices) => {
+export const displayPlayerHandTickets = (ticketChoices) => {
   const ticketsContainer = document.querySelector(
     ".hand-destination-tickets > .container",
   );
@@ -119,7 +119,7 @@ const createTicketCard = (ticketId) => {
   clone
     .querySelector(".card img")
     .setAttribute("src", `./assets/destination-cards-images/${ticketId}.png`);
-
+  clone.onclick = () => {};
   return clone;
 };
 

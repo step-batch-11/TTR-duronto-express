@@ -5,11 +5,11 @@ import {
   fetchRouteOwnership,
 } from "./api.js";
 import {
-  claimTicketCard,
   drawDeckCard,
   drawFaceUpCard,
   drawTicketChoice,
   mapOnClick,
+  selectTicketCard,
 } from "./events.js";
 import {
   displayFaceUpCards,
@@ -19,8 +19,8 @@ import {
 } from "./render.js";
 
 const registerListeners = () => {
+  selectTicketCard();
   drawTicketChoice();
-  claimTicketCard();
   drawDeckCard();
   drawFaceUpCard();
   mapOnClick();

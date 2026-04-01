@@ -46,7 +46,7 @@ export default class Game {
   }
 
   claimTicketCard(tickets) {
-    this.#player.claimTicket(tickets);
+    return this.#player.claimTicket(tickets);
   }
 
   playerHand() {

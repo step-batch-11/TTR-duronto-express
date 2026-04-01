@@ -1,10 +1,10 @@
 import { createApp } from "./src/app.js";
-import Game from "./src/game.js";
-import Player from "./src/player.js";
+import Game from "./src/models/game.js";
+import Player from "./src/models/player.js";
 import { initDeck } from "./src/static-data/deck.js";
 import { getTicketCards } from "./src/static-data/ticket_cards.js";
-import TicketDeck from "./src/ticket_deck.js";
-import { CarCardsDeck } from "./src/train_car_card_deck.js";
+import TicketDeck from "./src/models/ticket_deck.js";
+import { CarCardsDeck } from "./src/models/train_car_card_deck.js";
 
 const main = () => {
   const deck = initDeck();
