@@ -15,7 +15,8 @@
   "fmt": {
     "exclude": [
       "public/**/*.html",
-      "public/**/*.css"
+      "public/**/*.css",
+      "public/**/*.xml"
     ]
   }
 }
