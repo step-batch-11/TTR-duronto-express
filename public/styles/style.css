@@ -273,6 +273,23 @@ svg {
   width: 100%;
 }
 
+.highlight {
+  border: 40px;
+  border-color: #007bff;
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+}
+
+.highlightCity .empty-shape {
+  stroke: rgb(255, 220, 45);
+  stroke-width: 4;
+  fill: red;
+}
+
+.highlightCity text {
+  fill: red;
+  font-weight: bold;
+}
+
 .hidden {
   display: none;
 }

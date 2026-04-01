@@ -179,6 +179,15 @@ export const drawTicketChoice = () => {
 
 const selectedTickets = new Set();
 
+const highLightCities = (cardId) => {
+  const [from, to] = cardId.split("-");
+  const fromCity = document.querySelector(`#${from}`);
+  const toCity = document.querySelector(`#${to}`);
+
+  fromCity.classList.toggle("highlightCity");
+  toCity.classList.toggle("highlightCity");
+};
+
 export const selectTicketCard = () => {
   const ticketCards = document.querySelector(".ticket-cards");
 
@@ -190,6 +199,8 @@ export const selectTicketCard = () => {
 
     const cardId = selectedCard.id;
 
+    selectedCard.classList.toggle("highlight");
+    highLightCities(cardId);
     if (selectedTickets.has(cardId)) {
       selectedTickets.delete(cardId);
       return;

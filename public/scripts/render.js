@@ -118,7 +118,7 @@ const createTicketCard = (ticketId) => {
   clone
     .querySelector(".card img")
     .setAttribute("src", `./assets/destination-cards-images/${ticketId}.png`);
-
+  clone.onclick = () => {};
   return clone;
 };
 
