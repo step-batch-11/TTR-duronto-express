@@ -1,4 +1,5 @@
 import { claimTicketChoices } from "./events.js";
+
 const paintRoutes = (color, routes) => {
   const map = document.querySelector("#map");
 
@@ -71,21 +72,27 @@ export const displayCarCards = (carCards) => {
   handContainer.append(...cardsInHand);
 };
 
+
 export const displayPlayerHandTickets = (ticketChoices) => {
-  const ticketsContainer = document.querySelector(
-    ".hand-destination-tickets > .container",
+  const container = document.querySelector(
+    ".hand-destination-tickets > .container"
   );
 
-  const ticketContainers = ticketsContainer.children;
+  container.innerHTML = ""; 
 
-  Object.values(ticketContainers).forEach((ticketElement, index) => {
+  ticketChoices.forEach((ticket, index) => {
+    const ticketDiv = document.createElement("div");
+    ticketDiv.classList.add("ticket");
+
     const imageElement = document.createElement("img");
-    imageElement.setAttribute(
-      "src",
-      `assets/destination-cards-images/${ticketChoices[index]}.png`,
-    );
+    imageElement.src = `assets/destination-cards-images/${ticket}.png`;
 
-    ticketElement.append(imageElement);
+    ticketDiv.append(imageElement);
+
+    ticketDiv.style.top = `${index * 20}px`;  
+    ticketDiv.style.zIndex = index;         
+
+    container.append(ticketDiv);
   });
 };
 
