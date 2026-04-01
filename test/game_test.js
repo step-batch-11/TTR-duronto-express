@@ -49,6 +49,7 @@ describe("testing the game", () => {
       ticketChoices: ["t3", "t4", "t5"],
       bogies: 45,
     });
+    assertEquals(game.getTicketCards(), ["t1", "t2"]);
   });
 
   it("drawFaceUpCard should add the card from train car card face up to player hand", () => {

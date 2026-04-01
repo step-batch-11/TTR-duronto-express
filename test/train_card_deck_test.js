@@ -200,5 +200,6 @@ describe("train car card deck", () => {
     ]);
     assertEquals(trainCardDeck.getFaceDownCards(), ["white", "orange", "blue"]);
     assertEquals(trainCardDeck.drawCardFromDeck(), "blue");
+    assertEquals(trainCardDeck.getDiscardPile(), []);
   });
 });

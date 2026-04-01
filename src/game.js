@@ -18,7 +18,7 @@ export default class Game {
   }
 
   getFaceUpCards() {
-    return this.#carCardsDeck.getFaceUpCards();
+    return structuredClone(this.#carCardsDeck.getFaceUpCards());
   }
 
   drawFaceUpCard(id) {
@@ -36,7 +36,7 @@ export default class Game {
   }
 
   getTicketCards() {
-    return this.#ticketDeck.getTicketCards();
+    return structuredClone(this.#ticketDeck.getTicketCards());
   }
 
   drawTicketChoice() {
