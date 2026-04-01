@@ -72,13 +72,12 @@ export const displayCarCards = (carCards) => {
   handContainer.append(...cardsInHand);
 };
 
-
 export const displayPlayerHandTickets = (ticketChoices) => {
   const container = document.querySelector(
-    ".hand-destination-tickets > .container"
+    ".hand-destination-tickets > .container",
   );
 
-  container.innerHTML = ""; 
+  container.innerHTML = "";
 
   ticketChoices.forEach((ticket, index) => {
     const ticketDiv = document.createElement("div");
@@ -89,8 +88,8 @@ export const displayPlayerHandTickets = (ticketChoices) => {
 
     ticketDiv.append(imageElement);
 
-    ticketDiv.style.top = `${index * 20}px`;  
-    ticketDiv.style.zIndex = index;         
+    ticketDiv.style.top = `${index * 20}px`;
+    ticketDiv.style.zIndex = index;
 
     container.append(ticketDiv);
   });
