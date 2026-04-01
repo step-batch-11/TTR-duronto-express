@@ -87,7 +87,10 @@ describe("train car card deck", () => {
       "orange",
     ]);
     assertEquals(trainCardDeck.getFaceDownCards(), ["white", "orange", "blue"]);
-    assertEquals(trainCardDeck.drawCardFromFaceUp("2"), "white");
+    assertEquals(trainCardDeck.drawCardFromFaceUp("2"), {
+      drawnCard: "white",
+      drawnCardFromDeck: "blue",
+    });
     assertEquals(trainCardDeck.getFaceUpCards(), [
       "green",
       "blue",
@@ -167,7 +170,10 @@ describe("train car card deck", () => {
       "white",
       "wild",
     ]);
-    assertEquals(trainCardDeck.drawCardFromFaceUp("2"), "orange");
+    assertEquals(trainCardDeck.drawCardFromFaceUp("2"), {
+      drawnCard: "orange",
+      drawnCardFromDeck: "wild",
+    });
     assertEquals(trainCardDeck.getFaceUpCards(), [
       "white",
       "blue",

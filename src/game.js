@@ -22,10 +22,11 @@ export default class Game {
   }
 
   drawFaceUpCard(id) {
-    const drawnCard = this.#carCardsDeck.drawCardFromFaceUp(id);
+    const { drawnCard, drawnCardFromDeck } = this.#carCardsDeck
+      .drawCardFromFaceUp(id);
     this.#player.addCarCardToHand(drawnCard);
 
-    return drawnCard;
+    return { drawnCard, drawnCardFromDeck };
   }
 
   drawDeckCard() {
