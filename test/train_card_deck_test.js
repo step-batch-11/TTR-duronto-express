@@ -208,4 +208,19 @@ describe("train car card deck", () => {
     assertEquals(trainCardDeck.drawCardFromDeck(), "blue");
     assertEquals(trainCardDeck.getDiscardPile(), []);
   });
+
+  it("refilling the deck from discarded pile", () => {
+    const deck = [
+      "white",
+      "orange",
+      "blue",
+    ];
+
+    const trainCardDeck = new CarCardsDeck(deck);
+    trainCardDeck.discardCards(["white", "white", "white"]);
+    const drawnCard = trainCardDeck.drawCardFromDeck();
+    assertEquals(drawnCard, "white");
+    const faceDownCards = trainCardDeck.getFaceDownCards();
+    assertEquals(faceDownCards, ["white", "orange", "blue", "white", "white"]);
+  });
 });
