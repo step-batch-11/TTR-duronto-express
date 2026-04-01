@@ -18,6 +18,10 @@ export default class Player {
     this.#ticketChoices.push(...ticketChoices);
   }
 
+  claimTicket(tickets) {
+    this.#ticketChoices.push(...tickets);
+  }
+
   getPlayerHand() {
     return {
       carCards: structuredClone(this.#carCards),

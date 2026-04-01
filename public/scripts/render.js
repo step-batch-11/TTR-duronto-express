@@ -1,3 +1,5 @@
+import { claimTicketChoices } from "./events.js";
+
 const appendPlayer = ({ name, symbol, carCount }, container, template) => {
   const clone = template.content.cloneNode(true);
   clone.querySelector(".identifier .name").textContent = name;
@@ -131,4 +133,5 @@ export const displayTicketChoices = (tickets) => {
 
   const button = createTicketSubmitButton();
   ticketCardContainer.append(button);
+  claimTicketChoices();
 };

@@ -1,4 +1,9 @@
-import { fetchDeckCards, fetchFaceUpDeck, fetchTicketChoices } from "./api.js";
+import {
+  claimSelectedTickets,
+  fetchDeckCards,
+  fetchFaceUpDeck,
+  fetchTicketChoices,
+} from "./api.js";
 import {
   displayCarCards,
   displayFaceUpCards,
@@ -160,7 +165,7 @@ export const drawTicketChoice = () => {
 
 const selectedTickets = new Set();
 
-export const selectTicketCard = () => {
+export const claimTicketCard = () => {
   const ticketCards = document.querySelector(".ticket-cards");
 
   ticketCards.addEventListener("click", (event) => {
@@ -178,5 +183,18 @@ export const selectTicketCard = () => {
 
     selectedTickets.add(cardId);
     return;
+  });
+};
+
+export const claimTicketChoices = () => {
+  const button = document.querySelector("#ticket-submit-button");
+
+  button.addEventListener("click", () => {
+    const ticketChoices = [];
+    selectedTickets.forEach((ticket) => ticketChoices.push(ticket));
+    console.log(ticketChoices);
+
+    claimSelectedTickets(ticketChoices);
+    selectedTickets.clear();
   });
 };
