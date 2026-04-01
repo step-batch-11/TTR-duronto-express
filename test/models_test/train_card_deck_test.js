@@ -1,6 +1,6 @@
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { CarCardsDeck } from "../src/train_car_card_deck.js";
+import { CarCardsDeck } from "../../src/models/train_car_card_deck.js";
 
 describe("train car card deck", () => {
   it("initialize", () => {
@@ -210,11 +210,7 @@ describe("train car card deck", () => {
   });
 
   it("refilling the deck from discarded pile", () => {
-    const deck = [
-      "white",
-      "orange",
-      "blue",
-    ];
+    const deck = ["white", "orange", "blue"];
 
     const trainCardDeck = new CarCardsDeck(deck);
     trainCardDeck.discardCards(["white", "white", "white"]);

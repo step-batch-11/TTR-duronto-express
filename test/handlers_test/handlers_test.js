@@ -1,10 +1,10 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { createApp } from "../src/app.js";
-import { CarCardsDeck } from "../src/train_car_card_deck.js";
-import TicketDeck from "../src/ticket_deck.js";
-import Game from "../src/game.js";
-import Player from "../src/player.js";
+import { CarCardsDeck } from "../../src/models/train_car_card_deck.js";
+import TicketDeck from "../../src/models/ticket_deck.js";
+import Player from "../../src/models/player.js";
+import Game from "../../src/models/game.js";
+import { createApp } from "../../src/app.js";
 
 describe("testing /initial-hand GET", () => {
   let app;

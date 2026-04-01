@@ -2,18 +2,18 @@ import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { serveStatic } from "hono/deno";
 import {
-  drawDeckCardHandler,
-  drawFaceUpCardHandler,
-} from "./app_handlers/draw_cards_handlers.js";
-import {
   initializeFaceUpDeckHandler,
   initializePlayerHandHandler,
-} from "./app_handlers/initialization_handlers.js";
-import { drawTicketChoiceHandler } from "./app_handlers/draw_tickets_handlers.js";
+} from "./handlers/initialization_handlers.js";
+import {
+  drawDeckCardHandler,
+  drawFaceUpCardHandler,
+} from "./handlers/draw_cards_handlers.js";
+import { drawTicketChoiceHandler } from "./handlers/draw_tickets_handlers.js";
 import {
   claimRouteHandler,
   routeOwnershipHandler,
-} from "./app_handlers/map_handlers.js";
+} from "./handlers/map_handlers.js";
 
 export const createApp = (game) => {
   const app = new Hono();

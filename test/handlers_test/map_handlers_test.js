@@ -1,0 +1,72 @@
+import { beforeEach, describe, it } from "@std/testing/bdd";
+import { assertEquals } from "@std/assert";
+import { CarCardsDeck } from "../../src/models/train_car_card_deck.js";
+import TicketDeck from "../../src/models/ticket_deck.js";
+import Player from "../../src/models/player.js";
+import Game from "../../src/models/game.js";
+import { createApp } from "../../src/app.js";
+
+describe("testing map handlers", () => {
+  let app;
+  let game;
+  beforeEach(() => {
+    const carCards = [
+      "red",
+      "green",
+      "blue",
+      "pink",
+      "white",
+      "yellow",
+      "orange",
+      "black",
+      "wild",
+    ];
+
+    const ticketCards = [
+      { id: "DVR-ELP", src: "Denver", dest: "El Paso", points: 4 },
+      { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
+      { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+      { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
+      {
+        id: "SSM-OKC",
+        src: "Sault St. Marie",
+        dest: "Oklahoma City",
+        points: 9,
+      },
+      { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
+    ];
+
+    const carCardsDeck = new CarCardsDeck(carCards);
+    const ticketDeck = new TicketDeck(ticketCards);
+    const player = new Player();
+
+    game = new Game(carCardsDeck, ticketDeck, player);
+    app = createApp(game);
+  });
+
+  it("POST /claim-route should add the route to player claimed routes and should give route ownership of map", async () => {
+    const body = JSON.stringify({ routeId: "STN1-STN2" });
+    const response = await app.request("/claim-route", {
+      method: "post",
+      body,
+    });
+    assertEquals(response.status, 200);
+    assertEquals(await response.json(), {
+      routeOwnership: { green: ["STN1-STN2"] },
+    });
+  });
+
+  it("GET /map-ownership should give the routes ownership", async () => {
+    const body = JSON.stringify({ routeId: "STN5-STN7" });
+    await app.request("/claim-route", {
+      method: "post",
+      body,
+    });
+
+    const response = await app.request("/map-ownership");
+    assertEquals(response.status, 200);
+    assertEquals(await response.json(), {
+      routeOwnership: { green: ["STN5-STN7"] },
+    });
+  });
+});
