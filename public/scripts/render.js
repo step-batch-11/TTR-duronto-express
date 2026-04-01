@@ -100,7 +100,7 @@ export const displayPlayerHand = ({ carCards, ticketChoices }) => {
   displayCarCards(carCards);
 };
 
-const toggleHidden = () => {
+export const toggleHidden = () => {
   const carCardContainer = document.querySelector(".faceup-cards");
   const carCardsDeck = document.querySelector(".deck");
   const ticketCardContainer = document.querySelector(".ticket-cards");
@@ -110,7 +110,7 @@ const toggleHidden = () => {
   ticketCardContainer.classList.toggle("hidden");
 };
 
-const toggleDisable = () => {
+export const toggleDisable = () => {
   const ticketDeck = document.querySelector(".destination-tickets-deck");
 
   ticketDeck.classList.toggle("is-disabled");

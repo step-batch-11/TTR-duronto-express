@@ -11,6 +11,8 @@ import {
   displayPlayerHandTickets,
   displayTicketChoices,
   renderMap,
+  toggleDisable,
+  toggleHidden,
 } from "./render.js";
 
 const claimRoute = async (event) => {
@@ -231,6 +233,8 @@ export const claimTicketChoices = () => {
     const playerHandTickets = await claimSelectedTickets(ticketChoices);
     selectedTickets.clear();
 
+    toggleDisable();
+    toggleHidden();
     displayPlayerHandTickets(playerHandTickets);
   });
 };
