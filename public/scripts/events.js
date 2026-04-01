@@ -83,7 +83,6 @@ export const drawDeckCard = () => {
 
 const moveFaceUpCard = (card, hand, faceUpCard) => {
   const img = card.querySelector(".card-img");
-  // img.style.zIndex = 1;
   const x = hand.x - faceUpCard.x - faceUpCard.height / 2 + 15;
   const y = hand.y - faceUpCard.y + faceUpCard.height / 2 - 20;
   img.style.height = `${faceUpCard.height + 10}px`;
@@ -150,9 +149,11 @@ export const drawFaceUpCard = () => {
 
 export const drawTicketChoice = () => {
   const ticketDeck = document.querySelector(".destination-tickets-deck");
+
   ticketDeck.addEventListener("click", async () => {
     const ticketChoices = await fetchTicketChoices();
     displayTicketChoices(ticketChoices);
+
     return ticketChoices;
   });
 };

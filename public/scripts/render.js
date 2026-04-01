@@ -94,22 +94,41 @@ const toggleDisable = () => {
   ticketDeck.classList.toggle("is-disabled");
 };
 
-export const displayTicketChoices = (tickets) => {
+const createTicketCard = (ticketId) => {
   const ticketCardTemplate = document.querySelector("#market-card");
+
+  const clone = ticketCardTemplate.content.cloneNode(true);
+  clone.querySelector(".card").id = ticketId;
+  clone.querySelector(".card").setAttribute("data-ticket-id", ticketId);
+  clone
+    .querySelector(".card img")
+    .setAttribute("src", `./assets/destination-cards-images/${ticketId}.png`);
+
+  return clone;
+};
+
+const createTicketSubmitButton = () => {
+  const buttonTemplate = document.querySelector("#btn");
+
+  const clone = buttonTemplate.content.cloneNode(true);
+  clone.querySelector(".button").id = "ticket-submit-button";
+  clone.querySelector(".button").innerText = "Submit";
+
+  return clone;
+};
+
+export const displayTicketChoices = (tickets) => {
   const ticketCardContainer = document.querySelector(".ticket-cards");
   ticketCardContainer.innerHTML = "";
 
   toggleHidden();
   toggleDisable();
 
-  tickets.forEach((cardId) => {
-    const clone = ticketCardTemplate.content.cloneNode(true);
-    clone.querySelector(".card").id = cardId;
-    clone.querySelector(".card").setAttribute("data-color", cardId);
-    clone
-      .querySelector(".card img")
-      .setAttribute("src", `./assets/destination-cards-images/${cardId}.png`);
-
-    ticketCardContainer.append(clone);
+  tickets.forEach((ticketId) => {
+    const card = createTicketCard(ticketId);
+    ticketCardContainer.append(card);
   });
+
+  const button = createTicketSubmitButton();
+  ticketCardContainer.append(button);
 };
