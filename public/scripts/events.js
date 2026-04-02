@@ -7,7 +7,8 @@ import {
 import {
   handleTicketsClaim,
   handleTicketSelection,
-  highLightCities,
+  highlightCities,
+  unhighlightCities,
 } from "./event_handlers/tickets_handlers.js";
 import {
   displayCarCards,
@@ -265,7 +266,8 @@ export const swipeTickets = () => {
   buttonContainer.addEventListener("click", (event) => {
     const tickets = document.querySelectorAll(".ticket");
     const currentTicket = document.querySelector(".top");
-
+    const ticketRoute = currentTicket.dataset.ticketRoute;
+    unhighlightCities(ticketRoute);
     const offset = SWIPE_DIRECTION[event.target.name];
 
     return updateActiveTicket(tickets, currentTicket, offset);
@@ -278,6 +280,6 @@ export const accessTicket = () => {
   tickets.addEventListener("click", (event) => {
     const ticket = event.target.closest(".ticket");
     const ticketRoute = ticket.dataset.ticketRoute;
-    highLightCities(ticketRoute);
+    highlightCities(ticketRoute);
   });
 };

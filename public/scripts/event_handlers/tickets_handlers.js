@@ -7,6 +7,15 @@ import {
 
 const selectedTickets = new Set();
 
+const clearHighlightedCities = () => {
+  const highlighted = document.querySelectorAll(".highlightCity");
+
+  highlighted.forEach((el) => {
+    el.classList.remove("highlightCity");
+    el.classList.remove("stationColor");
+  });
+};
+
 export const handleTicketsClaim = async () => {
   const ticketChoices = [];
   selectedTickets.forEach((ticket) => ticketChoices.push(ticket));
@@ -14,21 +23,35 @@ export const handleTicketsClaim = async () => {
   const playerHandTickets = await claimSelectedTickets(ticketChoices);
   selectedTickets.clear();
 
+  clearHighlightedCities();
   toggleDisable();
   toggleHidden();
 
   displayPlayerHandTickets(playerHandTickets);
 };
 
-export const highLightCities = (cardId) => {
+export const highlightCities = (cardId) => {
   const [from, to] = cardId.split("-");
-  const fromCity = document.querySelector(`#${from}`);
-  const toCity = document.querySelector(`#${to}`);
+  document.querySelector(`#${from}`)?.classList.add(
+    "highlightCity",
+    "stationColor",
+  );
+  document.querySelector(`#${to}`)?.classList.add(
+    "highlightCity",
+    "stationColor",
+  );
+};
 
-  fromCity.classList.toggle("highlightCity");
-  fromCity.classList.toggle("stationColor");
-  toCity.classList.toggle("highlightCity");
-  toCity.classList.toggle("stationColor");
+export const unhighlightCities = (cardId) => {
+  const [from, to] = cardId.split("-");
+  document.querySelector(`#${from}`)?.classList.remove(
+    "highlightCity",
+    "stationColor",
+  );
+  document.querySelector(`#${to}`)?.classList.remove(
+    "highlightCity",
+    "stationColor",
+  );
 };
 
 export const handleTicketSelection = (event) => {
@@ -40,12 +63,13 @@ export const handleTicketSelection = (event) => {
   const cardId = selectedCard.id;
 
   selectedCard.classList.toggle("highlight");
-  highLightCities(cardId);
   if (selectedTickets.has(cardId)) {
     selectedTickets.delete(cardId);
+    unhighlightCities(cardId);
     return;
   }
 
   selectedTickets.add(cardId);
+  highlightCities(cardId);
   return;
 };
