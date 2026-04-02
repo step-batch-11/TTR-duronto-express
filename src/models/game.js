@@ -3,13 +3,18 @@ export default class Game {
   #carCardsDeck;
   #player;
   #drawnTickets;
+  #phase;
   constructor(carCardsDeck, ticketDeck, player) {
     this.#carCardsDeck = carCardsDeck;
     this.#ticketDeck = ticketDeck;
     this.#player = player;
+    this.#phase = "STARTED";
   }
 
   initializePlayerHand() {
+    if (this.#phase === "INITIALIZED") {
+      return;
+    }
     const dealtCards = this.#carCardsDeck.dealInitialCards();
 
     dealtCards.forEach((card) => this.#player.addCarCardToHand(card));
@@ -18,6 +23,7 @@ export default class Game {
     );
 
     this.#carCardsDeck.initFaceUp();
+    this.#phase = "INITIALIZED";
   }
 
   getFaceUpCards() {

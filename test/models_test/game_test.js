@@ -63,6 +63,30 @@ describe("testing the game", () => {
     ]);
   });
 
+  it("player already initialized then it shouldn't reinitialize", () => {
+    game.initializePlayerHand();
+
+    assertEquals(game.playerHand(), {
+      carCards: {
+        blue: 1,
+        black: 1,
+        pink: 1,
+        wild: 1,
+      },
+      ticketChoices: ["DLT-HTN", "SSM-NVL", "NYC-ATL"],
+      bogies: 45,
+    });
+
+    assertEquals(game.getTicketCards(), [
+      "DLT-ELP",
+      "TRT-MIM",
+      "PLD-PHX",
+      "DLS-NYC",
+      "CLC-SLC",
+      "LAS-NYC",
+    ]);
+  });
+
   it("drawFaceUpCard should add the card from train car card face up to player hand", () => {
     game.drawFaceUpCard("1");
     assertEquals(game.playerHand(), {
