@@ -2,6 +2,7 @@ export default class Game {
   #ticketDeck;
   #carCardsDeck;
   #player;
+  #drawnTickets;
   constructor(carCardsDeck, ticketDeck, player) {
     this.#carCardsDeck = carCardsDeck;
     this.#ticketDeck = ticketDeck;
@@ -12,7 +13,9 @@ export default class Game {
     const dealtCards = this.#carCardsDeck.dealInitialCards();
 
     dealtCards.forEach((card) => this.#player.addCarCardToHand(card));
-    this.#player.addTicketChoices(this.#ticketDeck.dealTicketChoices());
+    this.#player.claimTickets(
+      this.#ticketDeck.dealTicketChoices().map(({ id }) => id),
+    );
 
     this.#carCardsDeck.initFaceUp();
   }
@@ -41,12 +44,25 @@ export default class Game {
   }
 
   drawTicketChoice() {
-    const drawnTickets = this.#ticketDeck.dealTicketChoices();
-    return drawnTickets;
+    this.#drawnTickets = this.#ticketDeck.dealTicketChoices();
+
+    return structuredClone(this.#drawnTickets.map(({ id }) => id));
   }
 
   claimTicketCard(tickets) {
-    return this.#player.claimTicket(tickets);
+    const claimedTickets = this.#player.claimTickets(tickets);
+
+    const unclaimedTickets = this.#drawnTickets.filter(({ id }) =>
+      !tickets.includes(id)
+    );
+
+    if (unclaimedTickets.length > 0) {
+      this.#ticketDeck.discardTickets(unclaimedTickets);
+    }
+
+    this.#drawnTickets = "";
+
+    return claimedTickets;
   }
 
   playerHand() {

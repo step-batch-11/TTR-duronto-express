@@ -1,12 +1,12 @@
 export default class Player {
   #carCards;
-  #ticketChoices;
+  #claimedTickets;
   #bogies;
   #claimedRoutes;
   #color;
   constructor() {
     this.#carCards = {};
-    this.#ticketChoices = [];
+    this.#claimedTickets = [];
     this.#bogies = 45;
     this.#claimedRoutes = [];
     this.#color = "green";
@@ -17,20 +17,16 @@ export default class Player {
     this.#carCards[carCard] = cardCount + 1;
   }
 
-  addTicketChoices(ticketChoices) {
-    this.#ticketChoices.push(...ticketChoices);
-  }
+  claimTickets(tickets) {
+    this.#claimedTickets.push(...tickets);
 
-  claimTicket(tickets) {
-    this.#ticketChoices.push(...tickets);
-
-    return this.#ticketChoices;
+    return structuredClone(this.#claimedTickets);
   }
 
   getPlayerHand() {
     return {
       carCards: structuredClone(this.#carCards),
-      ticketChoices: structuredClone(this.#ticketChoices),
+      ticketChoices: structuredClone(this.#claimedTickets),
       bogies: this.#bogies,
     };
   }

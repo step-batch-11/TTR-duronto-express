@@ -79,12 +79,12 @@ export const displayPlayerHandTickets = (ticketChoices) => {
 
   container.innerHTML = "";
 
-  ticketChoices.forEach((ticket, index) => {
+  ticketChoices.forEach((id, index) => {
     const ticketDiv = document.createElement("div");
     ticketDiv.classList.add("ticket");
 
     const imageElement = document.createElement("img");
-    imageElement.src = `assets/destination-cards-images/${ticket}.png`;
+    imageElement.src = `assets/destination-cards-images/${id}.png`;
 
     ticketDiv.append(imageElement);
 
@@ -112,7 +112,9 @@ export const toggleHidden = () => {
 
 export const toggleDisable = () => {
   const ticketDeck = document.querySelector(".destination-tickets-deck");
+  const routes = document.querySelectorAll(".route");
 
+  routes.forEach((route) => route.classList.toggle("is-disabled"));
   ticketDeck.classList.toggle("is-disabled");
 };
 
@@ -129,7 +131,7 @@ const createTicketCard = (ticketId) => {
   return clone;
 };
 
-const createTicketSubmitButton = () => {
+const createSubmitButton = () => {
   const buttonTemplate = document.querySelector("#btn");
 
   const clone = buttonTemplate.content.cloneNode(true);
@@ -146,12 +148,12 @@ export const displayTicketChoices = (tickets) => {
   toggleHidden();
   toggleDisable();
 
-  tickets.forEach((ticketId) => {
-    const card = createTicketCard(ticketId);
+  tickets.forEach((id) => {
+    const card = createTicketCard(id);
     ticketCardContainer.append(card);
   });
 
-  const button = createTicketSubmitButton();
-  ticketCardContainer.append(button);
+  const buttons = createSubmitButton();
+  ticketCardContainer.append(buttons);
   claimTicketChoices();
 };

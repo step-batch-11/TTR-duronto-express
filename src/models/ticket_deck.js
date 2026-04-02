@@ -5,10 +5,13 @@ export default class TicketDeck {
   }
 
   dealTicketChoices() {
-    const drawnTickets = this.#cards.slice(-3).map(({ id }) => id);
-    this.#cards = this.#cards.slice(0, -3);
+    const drawnTickets = this.#cards.splice(-3);
 
     return drawnTickets;
+  }
+
+  discardTickets(tickets) {
+    this.#cards.unshift(...tickets);
   }
 
   getTicketCards() {

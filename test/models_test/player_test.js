@@ -19,7 +19,7 @@ describe("testing player class methods", () => {
   });
 
   it("addTicketChoices should add the given ticketChoices to player Hand", () => {
-    player.addTicketChoices(["A-B", "B-C"]);
+    player.claimTickets(["A-B", "B-C"]);
 
     assertEquals(player.getPlayerHand().ticketChoices, ["A-B", "B-C"]);
   });
@@ -31,5 +31,13 @@ describe("testing player class methods", () => {
 
   it("getPlayerColor should return the players color", () => {
     assertEquals(player.getPlayerColor(), "green");
+  });
+
+  it("claimTickets should add the selected cards in th player's hand of destination ticket", () => {
+    const selectedTickets = [
+      "SSM-NVL",
+      "NYC-ATL",
+    ];
+    assertEquals(player.claimTickets(selectedTickets), ["SSM-NVL", "NYC-ATL"]);
   });
 });

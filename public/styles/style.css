@@ -189,9 +189,18 @@ svg {
   border: 1px solid;
   position: absolute;
 }
+
 .ticket img {
   height: 100%;
   width: 100%;
+}
+
+.button {
+  height: 5%;
+}
+
+.button:hover {
+  cursor: pointer;
 }
 
 .hand-destination-tickets .ticket {

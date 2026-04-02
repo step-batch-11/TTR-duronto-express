@@ -29,11 +29,15 @@ const registerListeners = () => {
 globalThis.onload = async () => {
   const playerData = fetchPlayerDetails();
   displayPlayers(playerData);
+
   const playerHand = await fetchPlayerHand();
   displayPlayerHand(playerHand);
+
   const cardsData = await fetchInitialFaceUp();
   displayFaceUpCards(cardsData);
+
   const { routeOwnership } = await fetchRouteOwnership();
   renderMap(routeOwnership);
+
   registerListeners();
 };

@@ -250,10 +250,11 @@ describe("testing /claim-tickets POST", () => {
   });
 
   it("after sending request to /claim-tickets it should return ticket cards of player hands after claiming", async () => {
-    const tickets = ["SSM-OKC"];
+    await app.request("/get-ticket-choices");
+    const selectedTickets = ["SSM-OKC"];
     const res = await app.request("/claim-tickets", {
       method: "post",
-      body: JSON.stringify(tickets),
+      body: JSON.stringify(selectedTickets),
     });
 
     assertEquals(await res.status, 200);

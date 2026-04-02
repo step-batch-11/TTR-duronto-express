@@ -224,9 +224,10 @@ export const selectTicketCard = () => {
 };
 
 export const claimTicketChoices = () => {
-  const button = document.querySelector("#ticket-submit-button");
+  const submitButton = document.querySelector("#ticket-submit-button");
+  const cancelButton = document.querySelector("#ticket-cancel-button");
 
-  button.addEventListener("click", async () => {
+  submitButton.addEventListener("click", async () => {
     const ticketChoices = [];
     selectedTickets.forEach((ticket) => ticketChoices.push(ticket));
 
@@ -235,6 +236,12 @@ export const claimTicketChoices = () => {
 
     toggleDisable();
     toggleHidden();
+
     displayPlayerHandTickets(playerHandTickets);
+  });
+
+  cancelButton.addEventListener("click", () => {
+    toggleDisable();
+    toggleHidden();
   });
 };

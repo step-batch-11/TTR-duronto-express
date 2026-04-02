@@ -37,8 +37,8 @@ export class CarCardsDeck {
     return this.#faceUp.filter((card) => card === "wild").length;
   }
 
-  drawCardFromFaceUp(id) {
-    const cardIndex = parseInt(id) - 1;
+  drawCardFromFaceUp(faceUpCardPosition) {
+    const cardIndex = parseInt(faceUpCardPosition) - 1;
 
     const [drawnCard] = this.#faceUp.splice(cardIndex, 1);
     const drawnCardFromDeck = this.#faceDown.pop();

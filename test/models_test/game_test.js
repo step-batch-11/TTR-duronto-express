@@ -23,11 +23,15 @@ describe("testing the game", () => {
     ];
 
     const ticketCards = [
-      { id: "t1", src: "Helena", dest: "Duluth", points: 12 },
-      { id: "t2", src: "Saint Louis", dest: "St Marie", points: 6 },
-      { id: "t3", src: "Chicago", dest: "New Orleans", points: 7 },
-      { id: "t4", src: "Denver", dest: "El Paso", points: 4 },
-      { id: "t5", src: "Winnipeg", dest: "Little Rock", points: 11 },
+      { id: "DLT-ELP", src: "Duluth", dest: "El Paso", points: 10 },
+      { id: "TRT-MIM", src: "Toronto", dest: "Miami", points: 10 },
+      { id: "PLD-PHX", src: "Portland", dest: "Phoenix", points: 11 },
+      { id: "DLS-NYC", src: "Dallas", dest: "New York", points: 11 },
+      { id: "CLC-SLC", src: "Calgary", dest: "Salt Lake City", points: 7 },
+      { id: "LAS-NYC", src: "Los Angeles", dest: "New York", points: 21 },
+      { id: "DLT-HTN", src: "Duluth", dest: "Houston", points: 8 },
+      { id: "SSM-NVL", src: "Sault St. Marie", dest: "Nashville", points: 8 },
+      { id: "NYC-ATL", src: "New York", dest: "Atlanta", points: 6 },
     ];
 
     const carCardsDeck = new CarCardsDeck(carCards);
@@ -46,10 +50,17 @@ describe("testing the game", () => {
         pink: 1,
         wild: 1,
       },
-      ticketChoices: ["t3", "t4", "t5"],
+      ticketChoices: ["DLT-HTN", "SSM-NVL", "NYC-ATL"],
       bogies: 45,
     });
-    assertEquals(game.getTicketCards(), ["t1", "t2"]);
+    assertEquals(game.getTicketCards(), [
+      "DLT-ELP",
+      "TRT-MIM",
+      "PLD-PHX",
+      "DLS-NYC",
+      "CLC-SLC",
+      "LAS-NYC",
+    ]);
   });
 
   it("drawFaceUpCard should add the card from train car card face up to player hand", () => {
@@ -61,7 +72,7 @@ describe("testing the game", () => {
         pink: 1,
         wild: 1,
       },
-      ticketChoices: ["t3", "t4", "t5"],
+      ticketChoices: ["DLT-HTN", "SSM-NVL", "NYC-ATL"],
       bogies: 45,
     });
   });
@@ -76,7 +87,7 @@ describe("testing the game", () => {
         wild: 1,
         black: 1,
       },
-      ticketChoices: ["t3", "t4", "t5"],
+      ticketChoices: ["DLT-HTN", "SSM-NVL", "NYC-ATL"],
       bogies: 45,
     });
   });
@@ -95,5 +106,43 @@ describe("testing the game", () => {
     game.claimRoute("STN4-STN5");
 
     assertEquals(game.getRouteOwnershipMap(), { green: ["STN4-STN5"] });
+  });
+
+  it("claimRoute should add the route to player claimed routes", () => {
+    game.claimRoute("STN4-STN5");
+
+    assertEquals(game.getRouteOwnershipMap(), { green: ["STN4-STN5"] });
+  });
+
+  it("claimTicketCard should add the selected tickets to the player's hand of destination tickets and discard the unselected cards", () => {
+    const drawnTickets = game.drawTicketChoice();
+    const selectedTickets = ["DLS-NYC"];
+
+    assertEquals(drawnTickets, [
+      "DLS-NYC",
+      "CLC-SLC",
+      "LAS-NYC",
+    ]);
+
+    assertEquals(game.getTicketCards(), [
+      "DLT-ELP",
+      "TRT-MIM",
+      "PLD-PHX",
+    ]);
+
+    assertEquals(game.claimTicketCard(selectedTickets), [
+      "DLT-HTN",
+      "SSM-NVL",
+      "NYC-ATL",
+      "DLS-NYC",
+    ]);
+
+    assertEquals(game.getTicketCards(), [
+      "CLC-SLC",
+      "LAS-NYC",
+      "DLT-ELP",
+      "TRT-MIM",
+      "PLD-PHX",
+    ]);
   });
 });
