@@ -12,9 +12,8 @@ export class CarCardsDeck {
   }
 
   initFaceUp() {
-    const faceUpCards = this.#faceDown.slice(-5);
+    const faceUpCards = this.#faceDown.splice(-5);
 
-    this.#faceDown = this.#faceDown.slice(0, -5);
     this.#faceUp = faceUpCards;
     if (this.#totalWildInFaceUp() >= 3) {
       this.initFaceUp();
@@ -22,9 +21,7 @@ export class CarCardsDeck {
   }
 
   dealInitialCards() {
-    const faceDownCards = this.#faceDown.slice(-4);
-
-    this.#faceDown = this.#faceDown.slice(0, -4);
+    const faceDownCards = this.#faceDown.splice(-4);
 
     return faceDownCards;
   }
