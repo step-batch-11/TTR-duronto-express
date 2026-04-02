@@ -16,7 +16,6 @@ import {
   displayCarCards,
   displayDestTicketDeck,
   displayFaceUpCards,
-  displayLog,
   displayTicketChoices,
   highlightCities,
   renderMap,
@@ -287,13 +286,22 @@ export const drawTicketChoice = () => {
 export const selectTicketCard = () => {
   const ticketCards = document.querySelector(".ticket-cards");
   ticketCards.addEventListener("click", handleTicketSelection);
-  ticketCards.addEventListener("mousemove", () => {
+  ticketCards.addEventListener("mouseover", (event) => {
     const selectedCard = event.target.closest(".card");
     if (!selectedCard) {
       return;
     }
     const ticketRoute = selectedCard.dataset.ticketRoute;
     highlightCities(ticketRoute);
+  });
+
+  ticketCards.addEventListener("mouseout", (event) => {
+    const selectedCard = event.target.closest(".card");
+    if (!selectedCard) {
+      return;
+    }
+    const ticketRoute = selectedCard.dataset.ticketRoute;
+    unhighlightCities(ticketRoute);
   });
 };
 
@@ -311,7 +319,7 @@ export const accessTicket = () => {
   const tickets = document.querySelector(".container");
 
   tickets.addEventListener("mouseover", handleTicketClick);
-  tickets.addEventListener("mouseout", () => {
+  tickets.addEventListener("mouseout", (event) => {
     const ticket = event.target.closest(".ticket");
     if (!ticket) {
       return;
