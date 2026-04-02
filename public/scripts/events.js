@@ -16,6 +16,7 @@ import {
   displayCarCards,
   displayDestTicketDeck,
   displayFaceUpCards,
+  displayLog,
   displayTicketChoices,
   highlightCities,
   renderMap,
