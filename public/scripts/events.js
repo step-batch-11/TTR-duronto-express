@@ -197,7 +197,9 @@ const highLightCities = (cardId) => {
   const toCity = document.querySelector(`#${to}`);
 
   fromCity.classList.toggle("highlightCity");
+  fromCity.classList.toggle("stationColor");
   toCity.classList.toggle("highlightCity");
+  toCity.classList.toggle("stationColor");
 };
 
 export const selectTicketCard = () => {

@@ -1,180 +1,188 @@
-import { beforeEach, describe, it } from "@std/testing/bdd";
+import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 import { CarCardsDeck } from "../../src/models/train_car_card_deck.js";
 
-describe("train car card deck", () => {
-  let deck;
-  let trainCardDeck;
+const BASE_DECK = [
+  "white",
+  "orange",
+  "blue",
+  "green",
+  "white",
+  "blue",
+  "green",
+  "orange",
+];
 
-  beforeEach(() => {
-    deck = [
-      "white",
-      "orange",
-      "blue",
-      "green",
-      "white",
-      "blue",
-      "green",
-      "orange",
-    ];
+const createDeck = (cards = BASE_DECK) => new CarCardsDeck([...cards]);
 
-    trainCardDeck = new CarCardsDeck(deck);
-  });
+const createInitializedDeck = (cards = BASE_DECK) => {
+  const deck = createDeck(cards);
+  deck.initFaceUp();
+  return deck;
+};
 
-  it("initialize", () => {
-    assertEquals(trainCardDeck.getFaceDownCards(), deck);
-  });
+describe("CarCardsDeck", () => {
+  describe("constructor", () => {
+    it("should store all cards as faceDown cards on initialization", () => {
+      const deck = createDeck();
 
-  it("deal 4 cards initially ", () => {
-    assertEquals(trainCardDeck.dealInitialCards(), [
-      "white",
-      "blue",
-      "green",
-      "orange",
-    ]);
-  });
-
-  it("open face up cards deck", () => {
-    trainCardDeck.initFaceUp();
-
-    assertEquals(trainCardDeck.getFaceUpCards(), [
-      "green",
-      "white",
-      "blue",
-      "green",
-      "orange",
-    ]);
-    assertEquals(trainCardDeck.getFaceDownCards(), ["white", "orange", "blue"]);
-  });
-
-  it("draw one card from faceup with index 1", () => {
-    trainCardDeck.initFaceUp();
-    assertEquals(trainCardDeck.getFaceUpCards(), [
-      "green",
-      "white",
-      "blue",
-      "green",
-      "orange",
-    ]);
-    assertEquals(trainCardDeck.getFaceDownCards(), ["white", "orange", "blue"]);
-    assertEquals(trainCardDeck.drawCardFromFaceUp("2"), {
-      drawnCard: "white",
-      drawnCardFromDeck: "blue",
+      assertEquals(deck.getFaceDownCards(), BASE_DECK);
     });
-    assertEquals(trainCardDeck.getFaceUpCards(), [
-      "green",
-      "blue",
-      "blue",
-      "green",
-      "orange",
-    ]);
   });
 
-  it("reopen faceup card when there are more than or equal to 3 wild cards ", () => {
-    const deck = [
-      "blue",
-      "green",
-      "orange",
-      "white",
-      "blue",
-      "blue",
-      "green",
-      "white",
-      "white",
-      "wild",
-      "wild",
-      "black",
-      "wild",
-    ];
+  describe("dealInitialCards", () => {
+    it("should remove and return the last 4 cards from the deck", () => {
+      const deck = createDeck();
 
-    const trainCardDeck = new CarCardsDeck(deck);
-    trainCardDeck.initFaceUp();
+      const dealtCards = deck.dealInitialCards();
 
-    assertEquals(trainCardDeck.getFaceUpCards(), [
-      "white",
-      "blue",
-      "blue",
-      "green",
-      "white",
-    ]);
-    assertEquals(trainCardDeck.getFaceDownCards(), ["blue", "green", "orange"]);
-  });
-
-  it("draw one card from faceup [check: the faceup wild >= 3]", () => {
-    const deck = [
-      "green",
-      "orange",
-      "green",
-      "orange",
-      "white",
-      "blue",
-      "blue",
-      "green",
-      "white",
-      "wild",
-      "white",
-      "orange",
-      "green",
-      "wild",
-      "wild",
-    ];
-
-    const trainCardDeck = new CarCardsDeck(deck);
-    trainCardDeck.initFaceUp();
-    assertEquals(trainCardDeck.getFaceUpCards(), [
-      "white",
-      "orange",
-      "green",
-      "wild",
-      "wild",
-    ]);
-    assertEquals(trainCardDeck.getFaceDownCards(), [
-      "green",
-      "orange",
-      "green",
-      "orange",
-      "white",
-      "blue",
-      "blue",
-      "green",
-      "white",
-      "wild",
-    ]);
-    assertEquals(trainCardDeck.drawCardFromFaceUp("2"), {
-      drawnCard: "orange",
-      drawnCardFromDeck: "wild",
+      assertEquals(dealtCards, [
+        "white",
+        "blue",
+        "green",
+        "orange",
+      ]);
     });
-    assertEquals(trainCardDeck.getFaceUpCards(), [
-      "white",
-      "blue",
-      "blue",
-      "green",
-      "white",
-    ]);
   });
 
-  it("draw one card from deck", () => {
-    trainCardDeck.initFaceUp();
-    assertEquals(trainCardDeck.getFaceUpCards(), [
-      "green",
-      "white",
-      "blue",
-      "green",
-      "orange",
-    ]);
-    assertEquals(trainCardDeck.getFaceDownCards(), ["white", "orange", "blue"]);
-    assertEquals(trainCardDeck.drawCardFromDeck(), "blue");
-    assertEquals(trainCardDeck.getDiscardPile(), []);
+  describe("initFaceUp", () => {
+    it("should move 5 cards from faceDown to faceUp", () => {
+      const deck = createDeck();
+
+      deck.initFaceUp();
+
+      assertEquals(deck.getFaceUpCards(), [
+        "green",
+        "white",
+        "blue",
+        "green",
+        "orange",
+      ]);
+
+      assertEquals(deck.getFaceDownCards(), [
+        "white",
+        "orange",
+        "blue",
+      ]);
+    });
+
+    it("should reinitialize faceUp cards if 3 or more wild cards are present", () => {
+      const deck = createDeck([
+        "blue",
+        "green",
+        "orange",
+        "white",
+        "blue",
+        "blue",
+        "green",
+        "white",
+        "white",
+        "wild",
+        "wild",
+        "black",
+        "wild",
+      ]);
+
+      deck.initFaceUp();
+
+      assertEquals(deck.getFaceUpCards(), [
+        "white",
+        "blue",
+        "blue",
+        "green",
+        "white",
+      ]);
+
+      assertEquals(deck.getFaceDownCards(), [
+        "blue",
+        "green",
+        "orange",
+      ]);
+    });
   });
 
-  it("refilling the deck from discarded pile", () => {
-    const deck = ["white", "orange", "blue"];
+  describe("drawCardFromFaceUp", () => {
+    it("should remove the selected faceUp card and replace it with a card from the deck", () => {
+      const deck = createInitializedDeck();
 
-    const trainCardDeck = new CarCardsDeck(deck);
-    trainCardDeck.discardCards(["white", "white", "white"]);
-    const drawnCard = trainCardDeck.drawCardFromDeck();
-    assertEquals(drawnCard, "white");
-    const faceDownCards = trainCardDeck.getFaceDownCards();
-    assertEquals(faceDownCards, ["white", "orange", "blue", "white", "white"]);
+      const result = deck.drawCardFromFaceUp("2");
+
+      assertEquals(result, {
+        drawnCard: "white",
+        drawnCardFromDeck: "blue",
+      });
+
+      assertEquals(deck.getFaceUpCards(), [
+        "green",
+        "blue",
+        "blue",
+        "green",
+        "orange",
+      ]);
+    });
+
+    it("should reinitialize faceUp cards if drawing causes 3 or more wild cards", () => {
+      const deck = createInitializedDeck([
+        "green",
+        "orange",
+        "green",
+        "orange",
+        "white",
+        "blue",
+        "blue",
+        "green",
+        "white",
+        "wild",
+        "white",
+        "orange",
+        "green",
+        "wild",
+        "wild",
+      ]);
+
+      const result = deck.drawCardFromFaceUp("2");
+
+      assertEquals(result, {
+        drawnCard: "orange",
+        drawnCardFromDeck: "wild",
+      });
+
+      assertEquals(deck.getFaceUpCards(), [
+        "white",
+        "blue",
+        "blue",
+        "green",
+        "white",
+      ]);
+    });
+  });
+
+  describe("drawCardFromDeck", () => {
+    it("should remove and return the top card from the faceDown deck", () => {
+      const deck = createInitializedDeck();
+
+      const drawnCard = deck.drawCardFromDeck();
+
+      assertEquals(drawnCard, "blue");
+      assertEquals(deck.getDiscardPile(), []);
+    });
+
+    it("should refill faceDown deck from discard pile when it has insufficient cards", () => {
+      const deck = createDeck(["white", "orange", "blue"]);
+
+      deck.discardCards(["white", "white", "white"]);
+
+      const drawnCard = deck.drawCardFromDeck();
+
+      assertEquals(drawnCard, "white");
+
+      assertEquals(deck.getFaceDownCards(), [
+        "white",
+        "orange",
+        "blue",
+        "white",
+        "white",
+      ]);
+    });
   });
 });

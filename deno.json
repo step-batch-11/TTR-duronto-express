@@ -16,7 +16,8 @@
     "exclude": [
       "public/**/*.html",
       "public/**/*.css",
-      "public/**/*.xml"
+      "public/**/*.xml",
+      "public/**/*.svg"
     ]
   }
 }

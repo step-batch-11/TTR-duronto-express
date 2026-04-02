@@ -1,3 +1,14 @@
+export const fetchMap = () => {
+  const mapContainer = document.querySelector("#map");
+  return fetch("/assets/map.svg")
+    .then((res) => res.text())
+    .then((data) => {
+      const parser = new DOMParser();
+      const map = parser.parseFromString(data, "image/svg+xml").documentElement;
+      mapContainer.appendChild(map);
+    });
+};
+
 export const fetchPlayerDetails = () => {
   return [
     {

@@ -281,14 +281,14 @@ svg {
   box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
 }
 
-.highlightCity .empty-shape {
-  stroke: rgb(255, 220, 45);
-  stroke-width: 4;
+.highlightCity {
+  stroke: rgb(19, 19, 18);
+  stroke-width: 1;
+  box-shadow: 0 0 20px rgb(250, 30, 30);
   fill: red;
-}
+} 
 
 .highlightCity text {
-  fill: red;
   font-weight: bold;
 }
 
