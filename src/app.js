@@ -18,16 +18,26 @@ import {
   routeOwnershipHandler,
 } from "./handlers/map_handlers.js";
 import { getplayerCarCardsHandler } from "./handlers/claim_route_handlers.js";
+import {
+  allowNonExistingPlayer,
+  createUser,
+  doesPlayerExist,
+  doesPlayerNotExist,
+} from "./handlers/auth_handlers.js";
 
-export const createApp = (game) => {
+export const createApp = (game, players) => {
   const app = new Hono();
 
   app.use(logger());
-
   app.use((context, next) => {
     context.set("game", game);
+    context.set("players", players);
     return next();
   });
+
+  app.get("/", doesPlayerExist, serveStatic({ root: "game.html" }));
+  app.get("/login.html", doesPlayerNotExist, serveStatic({ root: "/public" }));
+  app.post("/login", allowNonExistingPlayer, createUser);
 
   app.get("/init-faceup", initializeFaceUpDeckHandler);
   app.get("/initial-hand", initializePlayerHandHandler);
