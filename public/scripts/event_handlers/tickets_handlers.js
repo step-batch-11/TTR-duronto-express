@@ -1,8 +1,11 @@
 import { claimSelectedTickets } from "../api.js";
 import {
   displayPlayerHandTickets,
+  highlightCities,
   toggleDisable,
   toggleHidden,
+  unhighlightCities,
+  updateActiveTicket,
 } from "../render.js";
 
 const selectedTickets = new Set();
@@ -30,30 +33,6 @@ export const handleTicketsClaim = async () => {
   displayPlayerHandTickets(playerHandTickets);
 };
 
-export const highlightCities = (cardId) => {
-  const [from, to] = cardId.split("-");
-  document.querySelector(`#${from}`)?.classList.add(
-    "highlightCity",
-    "stationColor",
-  );
-  document.querySelector(`#${to}`)?.classList.add(
-    "highlightCity",
-    "stationColor",
-  );
-};
-
-export const unhighlightCities = (cardId) => {
-  const [from, to] = cardId.split("-");
-  document.querySelector(`#${from}`)?.classList.remove(
-    "highlightCity",
-    "stationColor",
-  );
-  document.querySelector(`#${to}`)?.classList.remove(
-    "highlightCity",
-    "stationColor",
-  );
-};
-
 export const handleTicketSelection = (event) => {
   const selectedCard = event.target.closest(".card");
   if (!selectedCard) {
@@ -72,4 +51,25 @@ export const handleTicketSelection = (event) => {
   selectedTickets.add(cardId);
   highlightCities(cardId);
   return;
+};
+
+const SWIPE_DIRECTION = {
+  "right": 1,
+  "left": -1,
+};
+
+export const handleTicketSwipe = (event) => {
+  const tickets = document.querySelectorAll(".ticket");
+  const currentTicket = document.querySelector(".top");
+  const ticketRoute = currentTicket.dataset.ticketRoute;
+  unhighlightCities(ticketRoute);
+  const offset = SWIPE_DIRECTION[event.target.name];
+
+  return updateActiveTicket(tickets, currentTicket, offset);
+};
+
+export const handleTicketClick = (event) => {
+  const ticket = event.target.closest(".ticket");
+  const ticketRoute = ticket.dataset.ticketRoute;
+  highlightCities(ticketRoute);
 };
