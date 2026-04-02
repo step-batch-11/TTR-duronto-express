@@ -8,8 +8,7 @@ import {
 import {
   handleTicketsClaim,
   handleTicketSelection,
-  highlightCities,
-  unhighlightCities,
+  handleTicketSwipe,
 } from "./event_handlers/tickets_handlers.js";
 import {
   displayCarCards,
@@ -274,7 +273,6 @@ export const drawTicketChoice = () => {
 
 export const selectTicketCard = () => {
   const ticketCards = document.querySelector(".ticket-cards");
-
   ticketCards.addEventListener("click", handleTicketSelection);
   ticketCards.addEventListener("mousemove", () => {
     const selectedCard = event.target.closest(".card");
@@ -288,42 +286,12 @@ export const selectTicketCard = () => {
 
 export const claimTicketChoices = () => {
   const submitButton = document.querySelector("#ticket-submit-button");
-
   submitButton.addEventListener("click", handleTicketsClaim);
-};
-
-const updateActiveTicket = (tickets, currentTicket, offset) => {
-  const currentTicketId = parseInt(currentTicket.dataset.ticketId);
-  const nextId = (tickets.length + currentTicketId + offset) %
-    tickets.length;
-
-  const ticketCounter = document.querySelector(".ticket-counter");
-  ticketCounter.textContent = `${nextId + 1}/${tickets.length}`;
-
-  const nextTicket = document.querySelector(`[data-ticket-id="${nextId}"]`);
-  nextTicket.classList.add("top");
-  currentTicket.classList.remove("top");
-
-  return;
-};
-
-const SWIPE_DIRECTION = {
-  "right": 1,
-  "left": -1,
 };
 
 export const swipeTickets = () => {
   const buttonContainer = document.querySelector(".buttons-container");
-
-  buttonContainer.addEventListener("click", (event) => {
-    const tickets = document.querySelectorAll(".ticket");
-    const currentTicket = document.querySelector(".top");
-    const ticketRoute = currentTicket.dataset.ticketRoute;
-    unhighlightCities(ticketRoute);
-    const offset = SWIPE_DIRECTION[event.target.name];
-
-    return updateActiveTicket(tickets, currentTicket, offset);
-  });
+  buttonContainer.addEventListener("click", handleTicketSwipe);
 };
 
 export const accessTicket = () => {

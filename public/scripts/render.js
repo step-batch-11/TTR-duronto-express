@@ -169,3 +169,42 @@ export const displayTicketChoices = (tickets) => {
   ticketCardContainer.append(buttons);
   claimTicketChoices();
 };
+
+export const updateActiveTicket = (tickets, currentTicket, offset) => {
+  const currentTicketId = parseInt(currentTicket.dataset.ticketId);
+  const nextId = (tickets.length + currentTicketId + offset) %
+    tickets.length;
+
+  const ticketCounter = document.querySelector(".ticket-counter");
+  ticketCounter.textContent = `${nextId + 1}/${tickets.length}`;
+
+  const nextTicket = document.querySelector(`[data-ticket-id="${nextId}"]`);
+  nextTicket.classList.add("top");
+  currentTicket.classList.remove("top");
+
+  return;
+};
+
+export const highlightCities = (cardId) => {
+  const [from, to] = cardId.split("-");
+  document.querySelector(`#${from}`)?.classList.add(
+    "highlightCity",
+    "stationColor",
+  );
+  document.querySelector(`#${to}`)?.classList.add(
+    "highlightCity",
+    "stationColor",
+  );
+};
+
+export const unhighlightCities = (cardId) => {
+  const [from, to] = cardId.split("-");
+  document.querySelector(`#${from}`)?.classList.remove(
+    "highlightCity",
+    "stationColor",
+  );
+  document.querySelector(`#${to}`)?.classList.remove(
+    "highlightCity",
+    "stationColor",
+  );
+};
