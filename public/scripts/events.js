@@ -1,18 +1,18 @@
 import {
-  claimSelectedTickets,
   fetchDeckCards,
   fetchFaceUpDeck,
   fetchTicketChoices,
   postClaimRoute,
 } from "./api.js";
 import {
+  handleTicketsClaim,
+  handleTicketSelection,
+} from "./event_handlers/tickets_handlers.js";
+import {
   displayCarCards,
   displayFaceUpCards,
-  displayPlayerHandTickets,
   displayTicketChoices,
   renderMap,
-  toggleDisable,
-  toggleHidden,
 } from "./render.js";
 
 const claimRoute = async (event) => {
@@ -189,61 +189,13 @@ export const drawTicketChoice = () => {
   });
 };
 
-const selectedTickets = new Set();
-
-const highLightCities = (cardId) => {
-  const [from, to] = cardId.split("-");
-  const fromCity = document.querySelector(`#${from}`);
-  const toCity = document.querySelector(`#${to}`);
-
-  fromCity.classList.toggle("highlightCity");
-  fromCity.classList.toggle("stationColor");
-  toCity.classList.toggle("highlightCity");
-  toCity.classList.toggle("stationColor");
-};
-
 export const selectTicketCard = () => {
   const ticketCards = document.querySelector(".ticket-cards");
 
-  ticketCards.addEventListener("click", (event) => {
-    const selectedCard = event.target.closest(".card");
-    if (!selectedCard) {
-      return;
-    }
-
-    const cardId = selectedCard.id;
-
-    selectedCard.classList.toggle("highlight");
-    highLightCities(cardId);
-    if (selectedTickets.has(cardId)) {
-      selectedTickets.delete(cardId);
-      return;
-    }
-
-    selectedTickets.add(cardId);
-    return;
-  });
+  ticketCards.addEventListener("click", handleTicketSelection);
 };
 
 export const claimTicketChoices = () => {
   const submitButton = document.querySelector("#ticket-submit-button");
-  const cancelButton = document.querySelector("#ticket-cancel-button");
-
-  submitButton.addEventListener("click", async () => {
-    const ticketChoices = [];
-    selectedTickets.forEach((ticket) => ticketChoices.push(ticket));
-
-    const playerHandTickets = await claimSelectedTickets(ticketChoices);
-    selectedTickets.clear();
-
-    toggleDisable();
-    toggleHidden();
-
-    displayPlayerHandTickets(playerHandTickets);
-  });
-
-  cancelButton.addEventListener("click", () => {
-    toggleDisable();
-    toggleHidden();
-  });
+  submitButton.addEventListener("click", handleTicketsClaim);
 };
