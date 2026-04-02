@@ -134,11 +134,6 @@ const getHandCard = (color) => {
   return handCard;
 };
 
-const toggleMarket = () => {
-  const market = document.querySelector(".market");
-  market.classList.toggle("is-disabled");
-};
-
 const moveFromDeckToHand = (img, destination, deck) => {
   img.style.transform = "scale(1)";
   const x = destination.left - deck.left - deck.height / 2 + 17;
@@ -148,6 +143,8 @@ const moveFromDeckToHand = (img, destination, deck) => {
 };
 
 const animateDrawDeckCard = (img, destination, deckPosition, move) => {
+  document.querySelector(".market").classList.add("is-disabled");
+  document.querySelector(".footer").classList.add("is-disabled");
   setTimeout(() => {
     img.style.transform = "scale(1.2)";
   }, 1);
@@ -161,7 +158,8 @@ const resolveDeckCardDraw = (deck, img, carCards) => {
   setTimeout(() => {
     deck.removeChild(img);
     displayCarCards(carCards);
-    toggleMarket();
+    document.querySelector(".market").classList.remove("is-disabled");
+    document.querySelector(".footer").classList.remove("is-disabled");
   }, 1600);
 };
 
@@ -182,7 +180,6 @@ export const drawDeckCard = () => {
 
     const img = createImageAtr(drawnCard);
     deck.append(img);
-    toggleMarket();
     animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
     resolveDeckCardDraw(deck, img, carCards);
   });
@@ -200,12 +197,18 @@ const resolveFaceUpCardDraw = (card, img, carCards) => {
   setTimeout(() => {
     card.removeChild(img);
     displayCarCards(carCards);
-    toggleMarket();
-  }, 1000);
+
+    const market = document.querySelector(".market");
+    market.classList.remove("is-disabled");
+    document.querySelector(".footer").classList.remove("is-disabled");
+  }, 1001);
 };
 
 const animateDrawFaceUpCard = (card) => {
-  toggleMarket();
+  const market = document.querySelector(".market");
+  market.classList.add("is-disabled");
+  document.querySelector(".footer").classList.add("is-disabled");
+
   const color = card.getAttribute("data-color");
   const hand = getHandCardPositions(color);
   const faceUpCard = card.getBoundingClientRect();
@@ -223,6 +226,8 @@ const resolveRefillMarket = (deck, img, faceUpCards) => {
   setTimeout(() => {
     deck.removeChild(img);
     displayFaceUpCards(faceUpCards);
+    document.querySelector(".market").classList.remove("is-disabled");
+    document.querySelector(".footer").classList.remove("is-disabled");
   }, 1500);
 };
 
@@ -231,6 +236,7 @@ const animateRefillMarket = (drawnCardFromDeck, card, faceUpCards) => {
   const cardPosition = card.getBoundingClientRect();
   const img = createImageAtr(drawnCardFromDeck);
   deck.append(img);
+  img.classList.add("is-disabled");
   const deckPosition = deck.querySelector("#deck-img").getBoundingClientRect();
 
   animateDrawDeckCard(img, cardPosition, deckPosition, moveFromDeckToMarket);
