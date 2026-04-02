@@ -22,7 +22,6 @@ import { getplayerCarCardsHandler } from "./handlers/claim_route_handlers.js";
 import {
   allowNonExistingPlayer,
   createUser,
-  doesPlayerExist,
   doesPlayerNotExist,
 } from "./handlers/auth_handlers.js";
 
@@ -36,7 +35,6 @@ export const createApp = (game, players) => {
     return next();
   });
 
-  app.get("/", doesPlayerExist, serveStatic({ root: "game.html" }));
   app.get("/login.html", doesPlayerNotExist, serveStatic({ root: "/public" }));
   app.post("/login", allowNonExistingPlayer, createUser);
 

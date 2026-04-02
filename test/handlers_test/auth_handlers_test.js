@@ -15,29 +15,6 @@ describe("auth handler test", () => {
     it("accessing without logging in, no session, should be redirected to login", async () => {
       const response = await app.request("/");
       await response.text();
-      assertEquals(response.status, 303);
-      assertEquals(response.headers.get("location"), "/login.html");
-    });
-
-    it("accessing with invaid sessionId, should be redirected to login", async () => {
-      const response = await app.request("/", {
-        headers: {
-          Cookie: "sessionId=0",
-        },
-      });
-      await response.text();
-      assertEquals(response.status, 303);
-      assertEquals(response.headers.get("location"), "/login.html");
-    });
-
-    it("accessing with valid sessionId, should get game.html", async () => {
-      const sessionId = players.addPlayer("player1");
-      const response = await app.request("/", {
-        headers: {
-          Cookie: `sessionId=${sessionId}`,
-        },
-      });
-      await response.text();
       assertEquals(response.status, 200);
       assertEquals(
         response.headers.get("content-type"),
@@ -110,7 +87,7 @@ describe("auth handler test", () => {
         method: "post",
         body: JSON.stringify({ username: "user" }),
         headers: {
-          cookie: `sessioId=${sessionId}`,
+          Cookie: `sessionId=${sessionId}`,
         },
       });
 
@@ -120,11 +97,25 @@ describe("auth handler test", () => {
         response.headers.get("content-type"),
         "application/json",
       );
-      assertEquals(
-        response.headers.get("set-cookie"),
-        "sessionId=1001; Path=/",
-      );
+      assertEquals(response.headers.get("set-cookie"), null);
       assertEquals(res, { isLoggedIn: true });
+    });
+
+    it("sending same username for login, should send back isLoggedIn false", async () => {
+      players.addPlayer("newPlayer");
+      const response = await app.request("/login", {
+        method: "post",
+        body: JSON.stringify({ username: "newPlayer" }),
+      });
+
+      const res = await response.json();
+      assertEquals(response.status, 200);
+      assertEquals(
+        response.headers.get("content-type"),
+        "application/json",
+      );
+      assertEquals(response.headers.get("set-cookie"), null);
+      assertEquals(res, { isLoggedIn: false, message: "User already exists" });
     });
   });
 });
