@@ -179,7 +179,7 @@ export const drawDeckCard = () => {
   const deck = document.querySelector(".deck");
 
   deck.addEventListener("click", async () => {
-  //Move to its own handler 
+    //Move to its own handler
     const { drawnCard, carCards } = await fetchDeckCards();
     const deckPosition = deck
       .querySelector("#deck-img")
