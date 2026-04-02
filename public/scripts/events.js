@@ -276,6 +276,14 @@ export const selectTicketCard = () => {
   const ticketCards = document.querySelector(".ticket-cards");
 
   ticketCards.addEventListener("click", handleTicketSelection);
+  ticketCards.addEventListener("mousemove", () => {
+    const selectedCard = event.target.closest(".card");
+    if (!selectedCard) {
+      return;
+    }
+    const ticketRoute = selectedCard.dataset.ticketRoute;
+    highlightCities(ticketRoute);
+  });
 };
 
 export const claimTicketChoices = () => {
@@ -321,7 +329,7 @@ export const swipeTickets = () => {
 export const accessTicket = () => {
   const tickets = document.querySelector(".container");
 
-  tickets.addEventListener("click", (event) => {
+  tickets.addEventListener("mousemove", (event) => {
     const ticket = event.target.closest(".ticket");
     const ticketRoute = ticket.dataset.ticketRoute;
     highlightCities(ticketRoute);

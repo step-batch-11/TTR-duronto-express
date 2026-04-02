@@ -30,7 +30,13 @@ export const handleTicketsClaim = async () => {
   displayPlayerHandTickets(playerHandTickets);
 };
 
+export const getHighlightedCities = () => {
+  console.log(selectedTickets);
+  return new Set(_.map([...selectedTickets], (t) => t.split("-")));
+};
+
 export const highlightCities = (cardId) => {
+  clearHighlightedCities();
   const [from, to] = cardId.split("-");
   document.querySelector(`#${from}`)?.classList.add(
     "highlightCity",
@@ -63,6 +69,7 @@ export const handleTicketSelection = (event) => {
   const cardId = selectedCard.id;
 
   selectedCard.classList.toggle("highlight");
+
   if (selectedTickets.has(cardId)) {
     selectedTickets.delete(cardId);
     unhighlightCities(cardId);

@@ -135,7 +135,7 @@ const createTicketCard = (ticketId) => {
 
   const clone = ticketCardTemplate.content.cloneNode(true);
   clone.querySelector(".card").id = ticketId;
-  clone.querySelector(".card").setAttribute("data-ticket-id", ticketId);
+  clone.querySelector(".card").setAttribute("data-ticket-route", ticketId);
   clone
     .querySelector(".card img")
     .setAttribute("src", `./assets/destination-cards-images/${ticketId}.png`);
