@@ -1,5 +1,6 @@
 import {
   fetchInitialFaceUp,
+  fetchMap,
   fetchPlayerDetails,
   fetchPlayerHand,
   fetchRouteOwnership,
@@ -27,6 +28,7 @@ const registerListeners = () => {
 };
 
 globalThis.onload = async () => {
+  await fetchMap();
   const playerData = fetchPlayerDetails();
   displayPlayers(playerData);
 
