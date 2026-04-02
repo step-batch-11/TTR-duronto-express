@@ -10,7 +10,7 @@ import {
 
 const selectedTickets = new Set();
 
-const clearHighlightedCities = () => {
+export const clearHighlightedCities = () => {
   const highlighted = document.querySelectorAll(".highlightCity");
 
   highlighted.forEach((el) => {

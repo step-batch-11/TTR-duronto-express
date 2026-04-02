@@ -1,3 +1,4 @@
+import { clearHighlightedCities } from "./event_handlers/tickets_handlers.js";
 import { claimTicketChoices } from "./events.js";
 
 const paintRoutes = (color, routes) => {
@@ -186,6 +187,7 @@ export const updateActiveTicket = (tickets, currentTicket, offset) => {
 };
 
 export const highlightCities = (cardId) => {
+  clearHighlightedCities();
   const [from, to] = cardId.split("-");
   document.querySelector(`#${from}`)?.classList.add(
     "highlightCity",

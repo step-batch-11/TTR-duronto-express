@@ -6,6 +6,7 @@ import {
   postClaimRoute,
 } from "./api.js";
 import {
+  handleTicketClick,
   handleTicketsClaim,
   handleTicketSelection,
   handleTicketSwipe,
@@ -15,7 +16,9 @@ import {
   displayDestTicketDeck,
   displayFaceUpCards,
   displayTicketChoices,
+  highlightCities,
   renderMap,
+  unhighlightCities,
 } from "./render.js";
 
 const enableBuildActions = () => {
@@ -297,9 +300,13 @@ export const swipeTickets = () => {
 export const accessTicket = () => {
   const tickets = document.querySelector(".container");
 
-  tickets.addEventListener("mousemove", (event) => {
+  tickets.addEventListener("mouseover", handleTicketClick);
+  tickets.addEventListener("mouseout", () => {
     const ticket = event.target.closest(".ticket");
+    if (!ticket) {
+      return;
+    }
     const ticketRoute = ticket.dataset.ticketRoute;
-    highlightCities(ticketRoute);
+    unhighlightCities(ticketRoute);
   });
 };
