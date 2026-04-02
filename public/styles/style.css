@@ -199,7 +199,8 @@ svg {
   gap: 10px;
 }
 
-#ticket-swipe-button-right, #ticket-swipe-button-left {
+#ticket-swipe-button-right,
+#ticket-swipe-button-left {
   height: 30px;
   width: 30px;
 }
@@ -229,6 +230,7 @@ svg {
   height: 110px;
   border: 1px solid;
 }
+
 .container {
   position: relative;
   height: 80%;
@@ -243,6 +245,55 @@ svg {
   justify-content: center;
   align-items: center;
   gap: 1%;
+}
+
+#squeezed-hand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1%;
+  width: 60%;
+}
+
+.build-route-container {
+  width: 27%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: red; */
+}
+
+.possible-cards {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  width: 70%;
+}
+
+.build-actions {
+  border: 1px solid;
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2em;
+}
+
+.build-actions button {
+  display: block;
+  padding: 0.5em;
+  background-color: transparent;
+}
+
+.build-img-container {
+  width: 170px;
+  height: 105px;
+  transform: rotate(270deg);
+  z-index: 0;
+  border: 1px dashed;
 }
 
 .hand-car-card {
@@ -311,7 +362,7 @@ svg {
   stroke-width: 1;
   box-shadow: 0 0 20px rgb(250, 30, 30);
   fill: red;
-} 
+}
 
 .highlightCity text {
   font-weight: bold;
@@ -327,6 +378,6 @@ svg {
   user-select: none;
 }
 
-.top{
+.top {
   z-index: 31;
 }

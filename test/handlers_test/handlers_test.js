@@ -265,4 +265,11 @@ describe("testing /claim-tickets POST", () => {
       "SSM-OKC",
     ]);
   });
+
+  it("/car-cards GET should return the car cards in player hand", async () => {
+    const res = await app.request("/car-cards");
+
+    assertEquals(await res.status, 200);
+    assertEquals(await res.json(), { blue: 2, green: 1, white: 1 });
+  });
 });

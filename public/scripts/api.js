@@ -39,7 +39,7 @@ const post = (endpoint, body) =>
 
 export const fetchInitialFaceUp = () => get("/init-faceup");
 
-export const fetchPlayerHand = () => get("/initial-hand");
+export const fetchInitialPlayerHand = () => get("/initial-hand");
 
 export const fetchFaceUpDeck = (body) => post("/draw-faceup-card", body);
 
@@ -53,3 +53,20 @@ export const claimSelectedTickets = (tickets) =>
 export const postClaimRoute = (body) => post("/claim-route", body);
 
 export const fetchRouteOwnership = () => get("/map-ownership");
+
+export const fetchPlayerHand = () => get("/car-cards");
+
+export const fetchRoutesData = () => ({
+  "HLN-CLC": {
+    routeColor: "red",
+    routeLength: 4,
+  },
+  "STL-CLC": {
+    routeColor: "transparent",
+    routeLength: 4,
+  },
+  "VCR-CLC": {
+    routeColor: "transparent",
+    routeLength: 3,
+  },
+});

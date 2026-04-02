@@ -17,6 +17,7 @@ import {
   claimRouteHandler,
   routeOwnershipHandler,
 } from "./handlers/map_handlers.js";
+import { getplayerCarCardsHandler } from "./handlers/claim_route_handlers.js";
 
 export const createApp = (game) => {
   const app = new Hono();
@@ -31,6 +32,8 @@ export const createApp = (game) => {
   app.get("/init-faceup", initializeFaceUpDeckHandler);
   app.get("/initial-hand", initializePlayerHandHandler);
   app.get("/draw-deck-card", drawDeckCardHandler);
+  app.get("/car-cards", getplayerCarCardsHandler);
+
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
   app.post("/draw-faceup-card", drawFaceUpCardHandler);
   app.post("/claim-tickets", claimDestinationTickets);

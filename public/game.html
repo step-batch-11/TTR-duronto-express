@@ -36,7 +36,8 @@
 
     </aside>
 
-    <article id="map"></article>
+    <article id="map">
+    </article>
 
     <aside class="market">
       <div class="faceup-cards">
@@ -62,8 +63,9 @@
       <div class="container">
       </div>
       <div class="buttons-container">
-        <button type="button" class="button" id="ticket-swipe-button-left" name="left"> < </button>
-        <button type="button" class="button" id="ticket-swipe-button-right" name="right"> > </button>
+        <button type="button" class="button" id="ticket-swipe-button-left" name="left">
+          < </button>
+            <button type="button" class="button" id="ticket-swipe-button-right" name="right"> > </button>
       </div>
     </div>
 
@@ -77,6 +79,29 @@
     </template>
     <div class="hand-car-cards">
     </div>
+
+    <template id="build-route-template">
+      <div class="build-route-container">
+        <div class="possible-cards">
+          <div class="hand-car-card" id="color-card">
+            <span class="card-count"></span>
+            <div class="build-img-container">
+            </div>
+          </div>
+          <div class="hand-car-card" id="wild-card">
+            <span class="card-count"></span>
+            <div class="build-img-container">
+            </div>
+          </div>
+        </div>
+
+        <div class="build-actions">
+          <button id="build">Build</button>
+          <button id="cancel">Cancel</button>
+        </div>
+      </div>
+
+    </template>
 
     <div class="destination-tickets-deck-container">
       <div class="destination-tickets-deck">

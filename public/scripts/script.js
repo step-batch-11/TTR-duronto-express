@@ -1,9 +1,10 @@
 import {
   fetchInitialFaceUp,
+  fetchInitialPlayerHand,
   fetchMap,
   fetchPlayerDetails,
-  fetchPlayerHand,
   fetchRouteOwnership,
+  fetchRoutesData,
 } from "./api.js";
 import {
   drawDeckCard,
@@ -20,13 +21,13 @@ import {
   renderMap,
 } from "./render.js";
 
-const registerListeners = () => {
+const registerListeners = (routesData) => {
   selectTicketCard();
   drawTicketChoice();
   swipeTickets();
   drawDeckCard();
   drawFaceUpCard();
-  mapOnClick();
+  mapOnClick(routesData);
 };
 
 globalThis.onload = async () => {
@@ -34,7 +35,8 @@ globalThis.onload = async () => {
   const playerData = fetchPlayerDetails();
   displayPlayers(playerData);
 
-  const playerHand = await fetchPlayerHand();
+  const playerHand = await fetchInitialPlayerHand();
+
   displayPlayerHand(playerHand);
 
   const cardsData = await fetchInitialFaceUp();
@@ -43,5 +45,7 @@ globalThis.onload = async () => {
   const { routeOwnership } = await fetchRouteOwnership();
   renderMap(routeOwnership);
 
-  registerListeners();
+  const routesData = fetchRoutesData();
+
+  registerListeners(routesData);
 };

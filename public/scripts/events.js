@@ -1,8 +1,8 @@
 import {
   fetchDeckCards,
   fetchFaceUpDeck,
+  fetchPlayerHand,
   fetchTicketChoices,
-  postClaimRoute,
 } from "./api.js";
 import {
   handleTicketsClaim,
@@ -12,23 +12,67 @@ import {
   displayCarCards,
   displayFaceUpCards,
   displayTicketChoices,
-  renderMap,
 } from "./render.js";
 
-const claimRoute = async (event) => {
-  const route = event.target.closest(".route");
-  if (route === null) {
-    return;
-  }
-  const routeId = route.getAttribute("id");
-  const resp = await postClaimRoute({ routeId });
-
-  renderMap(resp.routeOwnership);
+const buildRouteContainer = () => {
+  const buildTemplate = document.querySelector("#build-route-template");
+  const clone = buildTemplate.content.cloneNode(true);
+  document.querySelector(".footer").appendChild(clone);
 };
 
-export const mapOnClick = () => {
+const squeezePlayerHand = () => {
+  const destContainer = document.querySelector(
+    ".destination-tickets-deck-container",
+  );
+  document.querySelector(".footer").removeChild(destContainer);
+  document.querySelector(".hand-car-cards").id = "#squeezed-hand";
+};
+
+const createImageAtr = (color) => {
+  const img = document.createElement("img");
+  img.setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
+
+  return img;
+};
+
+const showPossibleCardsToBuild = async ({ routeLength, routeColor }) => {
+  const handCarCards = await fetchPlayerHand();
+  const carCardCountInPlayerHand = handCarCards[routeColor];
+  if (carCardCountInPlayerHand >= routeLength) {
+    const playerHandCard = document.querySelector(
+      `.hand-car-cards #${routeColor}`,
+    );
+    const countContainer = playerHandCard.querySelector(".card-count");
+    countContainer.textContent = parseInt(countContainer.textContent) -
+      routeLength;
+    const colorCardElement = document.querySelector(
+      ".possible-cards #color-card",
+    );
+    const img = createImageAtr(routeColor);
+
+    colorCardElement.querySelector(".card-count").textContent = routeLength;
+    const imgContainer = colorCardElement.querySelector(".build-img-container");
+    imgContainer.append(img);
+    imgContainer.style.border = "1px solid";
+  }
+};
+
+const claimRoute = async (event, routesData) => {
+  const route = event.target.closest(".route");
+  if (route === null) return;
+
+  const routeId = route.getAttribute("id");
+  const routeData = routesData[routeId];
+  squeezePlayerHand();
+  buildRouteContainer();
+  await showPossibleCardsToBuild(routeData);
+};
+
+export const mapOnClick = (routesData) => {
   const map = document.querySelector("#map");
-  map.addEventListener("click", claimRoute);
+  map.addEventListener("click", (event) => {
+    claimRoute(event, routesData);
+  });
 };
 
 const addHandCardContainer = (color) => {
@@ -48,13 +92,6 @@ const getHandCard = (color) => {
 
   if (!handCard) return addHandCardContainer(color);
   return handCard;
-};
-
-const createImageAtr = (name) => {
-  const img = document.createElement("img");
-  img.setAttribute("src", `/assets/car-cards-images/${name}.jpg`);
-
-  return img;
 };
 
 const toggleMarket = () => {
