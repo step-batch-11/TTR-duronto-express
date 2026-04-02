@@ -89,8 +89,10 @@ export const displayPlayerHandTickets = (ticketChoices) => {
 
     ticketDiv.append(imageElement);
     ticketDiv.setAttribute("data-ticket-id", index);
-    if (ticketChoices.length - 1 === index) {
+    if (index === 0) {
       ticketDiv.classList.add("top");
+      const ticketCounter = document.querySelector(".ticket-counter");
+      ticketCounter.textContent = `${index + 1}/${ticketChoices.length}`;
     }
     container.append(ticketDiv);
   });

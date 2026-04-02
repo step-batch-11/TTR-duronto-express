@@ -243,6 +243,8 @@ const updateActiveTicket = (tickets, currentTicket, offset) => {
   const nextId = (tickets.length + currentTicketId + offset) %
     tickets.length;
 
+  const ticketCounter = document.querySelector(".ticket-counter");
+  ticketCounter.textContent = `${nextId + 1}/${tickets.length}`;
   const nextTicket = document.querySelector(`[data-ticket-id="${nextId}"]`);
   nextTicket.classList.add("top");
   currentTicket.classList.remove("top");
