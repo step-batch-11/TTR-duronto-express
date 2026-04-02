@@ -88,7 +88,9 @@ export const displayPlayerHandTickets = (ticketChoices) => {
     imageElement.src = `assets/destination-cards-images/${id}.png`;
 
     ticketDiv.append(imageElement);
+    ticketDiv.setAttribute("data-ticket-route", id);
     ticketDiv.setAttribute("data-ticket-id", index);
+
     if (index === 0) {
       ticketDiv.classList.add("top");
       const ticketCounter = document.querySelector(".ticket-counter");

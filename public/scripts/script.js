@@ -7,6 +7,7 @@ import {
   fetchRoutesData,
 } from "./api.js";
 import {
+  accessTicket,
   drawDeckCard,
   drawFaceUpCard,
   drawTicketChoice,
@@ -27,6 +28,7 @@ const registerListeners = (routesData) => {
   swipeTickets();
   drawDeckCard();
   drawFaceUpCard();
+  accessTicket();
   mapOnClick(routesData);
 };
 

@@ -20,7 +20,7 @@ export const handleTicketsClaim = async () => {
   displayPlayerHandTickets(playerHandTickets);
 };
 
-const highLightCities = (cardId) => {
+export const highLightCities = (cardId) => {
   const [from, to] = cardId.split("-");
   const fromCity = document.querySelector(`#${from}`);
   const toCity = document.querySelector(`#${to}`);
