@@ -11,6 +11,7 @@ import {
   drawTicketChoice,
   mapOnClick,
   selectTicketCard,
+  swipeTickets,
 } from "./events.js";
 import {
   displayFaceUpCards,
@@ -22,6 +23,7 @@ import {
 const registerListeners = () => {
   selectTicketCard();
   drawTicketChoice();
+  swipeTickets();
   drawDeckCard();
   drawFaceUpCard();
   mapOnClick();

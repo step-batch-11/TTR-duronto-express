@@ -197,5 +197,36 @@ export const selectTicketCard = () => {
 
 export const claimTicketChoices = () => {
   const submitButton = document.querySelector("#ticket-submit-button");
+
   submitButton.addEventListener("click", handleTicketsClaim);
+};
+
+const updateActiveTicket = (tickets, currentTicket, offset) => {
+  const currentTicketId = parseInt(currentTicket.dataset.ticketId);
+  const nextId = (tickets.length + currentTicketId + offset) %
+    tickets.length;
+
+  const nextTicket = document.querySelector(`[data-ticket-id="${nextId}"]`);
+  nextTicket.classList.add("top");
+  currentTicket.classList.remove("top");
+
+  return;
+};
+
+const SWIPE_DIRECTION = {
+  "right": 1,
+  "left": -1,
+};
+
+export const swipeTickets = () => {
+  const buttonContainer = document.querySelector(".buttons-container");
+
+  buttonContainer.addEventListener("click", (event) => {
+    const tickets = document.querySelectorAll(".ticket");
+    const currentTicket = document.querySelector(".top");
+
+    const offset = SWIPE_DIRECTION[event.target.name];
+
+    return updateActiveTicket(tickets, currentTicket, offset);
+  });
 };

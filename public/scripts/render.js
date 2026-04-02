@@ -87,10 +87,10 @@ export const displayPlayerHandTickets = (ticketChoices) => {
     imageElement.src = `assets/destination-cards-images/${id}.png`;
 
     ticketDiv.append(imageElement);
-
-    ticketDiv.style.top = `${index * 20}px`;
-    ticketDiv.style.zIndex = index;
-
+    ticketDiv.setAttribute("data-ticket-id", index);
+    if (ticketChoices.length - 1 === index) {
+      ticketDiv.classList.add("top");
+    }
     container.append(ticketDiv);
   });
 };

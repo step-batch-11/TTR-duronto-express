@@ -181,6 +181,27 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hand-destination-tickets .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+}
+
+.buttons-container {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#ticket-swipe-button-right, #ticket-swipe-button-left {
+  height: 30px;
+  width: 30px;
 }
 
 .ticket {
@@ -275,6 +296,10 @@ svg {
   width: 100%;
 }
 
+.destination-tickets-deck:hover {
+  cursor: pointer;
+}
+
 .highlight {
   border: 40px;
   border-color: #007bff;
@@ -300,4 +325,8 @@ svg {
   pointer-events: none;
   opacity: 0.85;
   user-select: none;
+}
+
+.top{
+  z-index: 31;
 }

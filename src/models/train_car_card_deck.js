@@ -16,6 +16,7 @@ export class CarCardsDeck {
 
     this.#faceUp = faceUpCards;
     if (this.#totalWildInFaceUp() >= 3) {
+      this.#discardPile.push(...this.#faceUp);
       this.initFaceUp();
     }
   }
@@ -42,6 +43,7 @@ export class CarCardsDeck {
 
     this.#refillFaceUp(cardIndex, drawnCardFromDeck);
     if (this.#totalWildInFaceUp() >= 3) {
+      this.#discardPile.push(...this.#faceUp);
       this.initFaceUp();
     }
 
