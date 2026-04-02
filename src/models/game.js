@@ -73,11 +73,11 @@ export default class Game {
     this.#player.addClaimedRoute(routeId);
   }
 
-  getRouteOwnershipMap() {
+  getRouteClaims() {
     const playerColor = this.#player.getPlayerColor();
     const claimedRoutes = this.#player.getClaimedRoutes();
-    const ownershipMap = {};
-    ownershipMap[playerColor] = claimedRoutes;
-    return ownershipMap;
+    const playerClaimedRoutes = {};
+    playerClaimedRoutes[playerColor] = claimedRoutes;
+    return playerClaimedRoutes;
   }
 }

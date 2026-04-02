@@ -105,13 +105,13 @@ describe("testing the game", () => {
   it("claimRoute should add the route to player claimed routes", () => {
     game.claimRoute("STN4-STN5");
 
-    assertEquals(game.getRouteOwnershipMap(), { green: ["STN4-STN5"] });
+    assertEquals(game.getRouteClaims(), { green: ["STN4-STN5"] });
   });
 
   it("claimRoute should add the route to player claimed routes", () => {
     game.claimRoute("STN4-STN5");
 
-    assertEquals(game.getRouteOwnershipMap(), { green: ["STN4-STN5"] });
+    assertEquals(game.getRouteClaims(), { green: ["STN4-STN5"] });
   });
 
   it("claimTicketCard should add the selected tickets to the player's hand of destination tickets and discard the unselected cards", () => {

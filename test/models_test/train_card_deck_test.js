@@ -1,10 +1,13 @@
-import { describe, it } from "@std/testing/bdd";
+import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 import { CarCardsDeck } from "../../src/models/train_car_card_deck.js";
 
 describe("train car card deck", () => {
-  it("initialize", () => {
-    const deck = [
+  let deck;
+  let trainCardDeck;
+
+  beforeEach(() => {
+    deck = [
       "white",
       "orange",
       "blue",
@@ -14,24 +17,15 @@ describe("train car card deck", () => {
       "green",
       "orange",
     ];
-    const trainCardDeck = new CarCardsDeck(deck);
 
+    trainCardDeck = new CarCardsDeck(deck);
+  });
+
+  it("initialize", () => {
     assertEquals(trainCardDeck.getFaceDownCards(), deck);
   });
 
   it("deal 4 cards initially ", () => {
-    const deck = [
-      "white",
-      "orange",
-      "blue",
-      "green",
-      "white",
-      "blue",
-      "green",
-      "orange",
-    ];
-    const trainCardDeck = new CarCardsDeck(deck);
-
     assertEquals(trainCardDeck.dealInitialCards(), [
       "white",
       "blue",
@@ -41,18 +35,6 @@ describe("train car card deck", () => {
   });
 
   it("open face up cards deck", () => {
-    const deck = [
-      "white",
-      "orange",
-      "blue",
-      "green",
-      "white",
-      "blue",
-      "green",
-      "orange",
-    ];
-
-    const trainCardDeck = new CarCardsDeck(deck);
     trainCardDeck.initFaceUp();
 
     assertEquals(trainCardDeck.getFaceUpCards(), [
@@ -66,18 +48,6 @@ describe("train car card deck", () => {
   });
 
   it("draw one card from faceup with index 1", () => {
-    const deck = [
-      "white",
-      "orange",
-      "blue",
-      "green",
-      "white",
-      "blue",
-      "green",
-      "orange",
-    ];
-
-    const trainCardDeck = new CarCardsDeck(deck);
     trainCardDeck.initFaceUp();
     assertEquals(trainCardDeck.getFaceUpCards(), [
       "green",
@@ -184,18 +154,6 @@ describe("train car card deck", () => {
   });
 
   it("draw one card from deck", () => {
-    const deck = [
-      "white",
-      "orange",
-      "blue",
-      "green",
-      "white",
-      "blue",
-      "green",
-      "orange",
-    ];
-
-    const trainCardDeck = new CarCardsDeck(deck);
     trainCardDeck.initFaceUp();
     assertEquals(trainCardDeck.getFaceUpCards(), [
       "green",
