@@ -16,6 +16,7 @@ import {
   swipeTickets,
 } from "./events.js";
 import {
+  displayDestTicketDeck,
   displayFaceUpCards,
   displayPlayerHand,
   displayPlayers,
@@ -49,5 +50,6 @@ globalThis.onload = async () => {
 
   const routesData = fetchRoutesData();
 
+  displayDestTicketDeck();
   registerListeners(routesData);
 };

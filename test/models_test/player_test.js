@@ -24,9 +24,13 @@ describe("testing player class methods", () => {
     assertEquals(player.getPlayerHand().ticketChoices, ["A-B", "B-C"]);
   });
 
-  it("addClaimedRoute should add a claimed Route to the claimedRoutes list", () => {
-    player.addClaimedRoute("STN1-STN2");
+  it("claimRoute should add a claimed Route to the claimedRoutes list and remove the cards used to claim from player hand", () => {
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.claimRoute("STN1-STN2", { colorCard: "red", colorCardCount: 2 });
     assertEquals(player.getClaimedRoutes(), ["STN1-STN2"]);
+    assertEquals(player.getPlayerHand().carCards, { "red": 1 });
   });
 
   it("getPlayerColor should return the players color", () => {

@@ -31,7 +31,8 @@ export default class Player {
     };
   }
 
-  addClaimedRoute(routeId) {
+  claimRoute(routeId, { colorCard, colorCardCount }) {
+    this.#carCards[colorCard] = this.#carCards[colorCard] - colorCardCount;
     this.#claimedRoutes.push(routeId);
   }
 

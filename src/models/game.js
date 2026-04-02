@@ -75,8 +75,8 @@ export default class Game {
     return this.#player.getPlayerHand();
   }
 
-  claimRoute(routeId) {
-    this.#player.addClaimedRoute(routeId);
+  claimRoute(routeId, cardsUsed) {
+    this.#player.claimRoute(routeId, cardsUsed);
   }
 
   getRouteClaims() {

@@ -105,6 +105,13 @@ export const displayPlayerHand = ({ carCards, ticketChoices }) => {
   displayCarCards(carCards);
 };
 
+export const displayDestTicketDeck = () => {
+  const template = document.querySelector("#dest-ticket");
+  const clone = template.content.cloneNode(true);
+
+  document.querySelector(".footer").append(clone);
+};
+
 export const toggleHidden = () => {
   const carCardContainer = document.querySelector(".faceup-cards");
   const carCardsDeck = document.querySelector(".deck");

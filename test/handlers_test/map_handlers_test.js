@@ -7,8 +7,8 @@ import Game from "../../src/models/game.js";
 import { createApp } from "../../src/app.js";
 
 describe("testing map handlers", () => {
-  let app;
-  let game;
+  let carCardsDeck;
+  let ticketDeck;
   beforeEach(() => {
     const carCards = [
       "red",
@@ -36,20 +36,26 @@ describe("testing map handlers", () => {
       { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
     ];
 
-    const carCardsDeck = new CarCardsDeck(carCards);
-    const ticketDeck = new TicketDeck(ticketCards);
-    const player = new Player();
-
-    game = new Game(carCardsDeck, ticketDeck, player);
-    app = createApp(game);
+    carCardsDeck = new CarCardsDeck(carCards);
+    ticketDeck = new TicketDeck(ticketCards);
   });
 
   it("POST /claim-route should add the route to player claimed routes and should give route ownership of map", async () => {
-    const body = JSON.stringify({ routeId: "STN1-STN2" });
-    const response = await app.request("/claim-route", {
+    const player = new Player();
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    const game = new Game(carCardsDeck, ticketDeck, player);
+
+    const mockApp = createApp(game);
+    const body = JSON.stringify({
+      routeId: "STN1-STN2",
+      cardsUsed: { colorCard: "red", colorCardCount: 2 },
+    });
+    const response = await mockApp.request("/claim-route", {
       method: "post",
       body,
     });
+
     assertEquals(response.status, 200);
     assertEquals(await response.json(), {
       routeOwnership: { green: ["STN1-STN2"] },
@@ -57,7 +63,16 @@ describe("testing map handlers", () => {
   });
 
   it("GET /map-ownership should give the routes ownership", async () => {
-    const body = JSON.stringify({ routeId: "STN5-STN7" });
+    const player = new Player();
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    const game = new Game(carCardsDeck, ticketDeck, player);
+
+    const app = createApp(game);
+    const body = JSON.stringify({
+      routeId: "STN5-STN7",
+      cardsUsed: { colorCard: "red", colorCardCount: 2 },
+    });
     await app.request("/claim-route", {
       method: "post",
       body,

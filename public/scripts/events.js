@@ -3,6 +3,7 @@ import {
   fetchFaceUpDeck,
   fetchPlayerHand,
   fetchTicketChoices,
+  postClaimRoute,
 } from "./api.js";
 import {
   handleTicketsClaim,
@@ -12,22 +13,31 @@ import {
 } from "./event_handlers/tickets_handlers.js";
 import {
   displayCarCards,
+  displayDestTicketDeck,
   displayFaceUpCards,
   displayTicketChoices,
+  renderMap,
 } from "./render.js";
 
-const buildRouteContainer = () => {
-  const buildTemplate = document.querySelector("#build-route-template");
-  const clone = buildTemplate.content.cloneNode(true);
+const enableBuildActions = () => {
+  const template = document.querySelector("#build-route-template");
+  const clone = template.content.cloneNode(true);
+  console.log(clone);
   document.querySelector(".footer").appendChild(clone);
 };
+
+const disableBuildActions = () =>
+  document.querySelector(".build-route-container").remove();
+
+const expandPlayerHand = () =>
+  document.querySelector(".hand-car-cards").id = "";
 
 const squeezePlayerHand = () => {
   const destContainer = document.querySelector(
     ".destination-tickets-deck-container",
   );
   document.querySelector(".footer").removeChild(destContainer);
-  document.querySelector(".hand-car-cards").id = "#squeezed-hand";
+  document.querySelector(".hand-car-cards").id = "squeezed-hand";
 };
 
 const createImageAtr = (color) => {
@@ -50,6 +60,8 @@ const showPossibleCardsToBuild = async ({ routeLength, routeColor }) => {
     const colorCardElement = document.querySelector(
       ".possible-cards #color-card",
     );
+
+    colorCardElement.setAttribute("data-card-color", routeColor);
     const img = createImageAtr(routeColor);
 
     colorCardElement.querySelector(".card-count").textContent = routeLength;
@@ -59,15 +71,41 @@ const showPossibleCardsToBuild = async ({ routeLength, routeColor }) => {
   }
 };
 
+export const buildRoute = (routeId) => {
+  const buildButton = document.querySelector(".build-actions #build");
+
+  buildButton.addEventListener("click", async () => {
+    const colorCardElement = document.querySelector(
+      ".possible-cards #color-card",
+    );
+
+    const colorCardUsed = colorCardElement.getAttribute("data-card-color");
+    const colorCardCount =
+      colorCardElement.querySelector(".card-count").textContent;
+    const { routeOwnership } = await postClaimRoute({
+      routeId,
+      cardsUsed: { colorCardUsed, colorCardCount },
+    });
+    renderMap(routeOwnership);
+
+    disableBuildActions();
+    expandPlayerHand();
+    displayDestTicketDeck();
+    drawTicketChoice();
+  });
+};
+
 const claimRoute = async (event, routesData) => {
   const route = event.target.closest(".route");
+  console.log("kadsfhio");
   if (route === null) return;
 
   const routeId = route.getAttribute("id");
   const routeData = routesData[routeId];
+  enableBuildActions(routeId);
   squeezePlayerHand();
-  buildRouteContainer();
   await showPossibleCardsToBuild(routeData);
+  buildRoute(routeId);
 };
 
 export const mapOnClick = (routesData) => {

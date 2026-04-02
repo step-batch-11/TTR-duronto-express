@@ -126,16 +126,11 @@ describe("testing the game", () => {
     ]);
   });
 
-  it("claimRoute should add the route to player claimed routes", () => {
-    game.claimRoute("STN4-STN5");
-
+  it("claimRoute should add the route to player claimed routes and remove the cards used to claim the route", () => {
+    assertEquals(game.playerHand().carCards.pink, 1);
+    game.claimRoute("STN4-STN5", { colorCard: "pink", colorCardCount: 1 });
     assertEquals(game.getRouteClaims(), { green: ["STN4-STN5"] });
-  });
-
-  it("claimRoute should add the route to player claimed routes", () => {
-    game.claimRoute("STN4-STN5");
-
-    assertEquals(game.getRouteClaims(), { green: ["STN4-STN5"] });
+    assertEquals(game.playerHand().carCards.pink, 0);
   });
 
   it("claimTicketCard should add the selected tickets to the player's hand of destination tickets and discard the unselected cards", () => {
