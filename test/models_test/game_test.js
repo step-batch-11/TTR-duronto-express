@@ -164,4 +164,10 @@ describe("testing the game", () => {
       "PLD-PHX",
     ]);
   });
+
+  it("tests store log functionality", () => {
+    game.storeLog("card is drawn from deck");
+    const log = game.getLog();
+    assertEquals(log, ["card is drawn from deck"]);
+  });
 });

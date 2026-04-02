@@ -210,3 +210,10 @@ export const unhighlightCities = (cardId) => {
     "stationColor",
   );
 };
+
+export const displayLog = (log) => {
+  const logContainer = document.querySelector(".log");
+  const p = document.createElement("p");
+  p.textContent = log;
+  logContainer.append(p);
+};

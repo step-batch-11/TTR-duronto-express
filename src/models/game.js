@@ -4,11 +4,22 @@ export default class Game {
   #player;
   #drawnTickets;
   #phase;
+  #log;
   constructor(carCardsDeck, ticketDeck, player) {
     this.#carCardsDeck = carCardsDeck;
     this.#ticketDeck = ticketDeck;
     this.#player = player;
     this.#phase = "STARTED";
+    this.#log = [];
+  }
+
+  storeLog(move) {
+    this.#log.push(move);
+    return { lastLog: move };
+  }
+
+  getLog() {
+    return structuredClone(this.#log);
   }
 
   initializePlayerHand() {

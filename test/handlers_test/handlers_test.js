@@ -272,4 +272,13 @@ describe("testing /claim-tickets POST", () => {
     assertEquals(await res.status, 200);
     assertEquals(await res.json(), { blue: 2, green: 1, white: 1 });
   });
+
+  it("/store-log POST should return the last log of the game actions", async () => {
+    const res = await app.request("/store-log", {
+      method: "post",
+      body: JSON.stringify({ msg: "draws card from the faceup" }),
+    });
+    const { lastLog } = await res.json();
+    assertEquals(lastLog, "draws card from the faceup");
+  });
 });

@@ -1,6 +1,7 @@
 import {
   fetchDeckCards,
   fetchFaceUpDeck,
+  fetchLastLog,
   fetchPlayerHand,
   fetchTicketChoices,
   postClaimRoute,
@@ -15,6 +16,7 @@ import {
   displayCarCards,
   displayDestTicketDeck,
   displayFaceUpCards,
+  displayLog,
   displayTicketChoices,
   highlightCities,
   renderMap,
@@ -182,6 +184,10 @@ export const drawDeckCard = () => {
 
     const img = createImageAtr(drawnCard);
     deck.append(img);
+
+    const body = { msg: `card drawn from the deck` };
+    const { lastLog } = await fetchLastLog(body);
+    displayLog(lastLog);
     animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
     resolveDeckCardDraw(deck, img, carCards);
   });
@@ -257,6 +263,10 @@ export const drawFaceUpCard = () => {
     const { faceUpCards, carCards, drawnCardFromDeck } = await fetchFaceUpDeck(
       cardId,
     );
+
+    const body = { msg: `card drawn from the faceUp` };
+    const { lastLog } = await fetchLastLog(body);
+    displayLog(lastLog);
 
     animateRefillMarket(drawnCardFromDeck, card, faceUpCards);
     resolveFaceUpCardDraw(card, img, carCards);

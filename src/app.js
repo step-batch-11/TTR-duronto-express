@@ -4,6 +4,7 @@ import { serveStatic } from "hono/deno";
 import {
   initializeFaceUpDeckHandler,
   initializePlayerHandHandler,
+  storeRecentMove,
 } from "./handlers/initialization_handlers.js";
 import {
   drawDeckCardHandler,
@@ -43,12 +44,13 @@ export const createApp = (game, players) => {
   app.get("/initial-hand", initializePlayerHandHandler);
   app.get("/draw-deck-card", drawDeckCardHandler);
   app.get("/car-cards", getplayerCarCardsHandler);
-
+  app.get("/map-ownership", routeOwnershipHandler);
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
+
   app.post("/draw-faceup-card", drawFaceUpCardHandler);
   app.post("/claim-tickets", claimDestinationTickets);
   app.post("/claim-route", claimRouteHandler);
-  app.get("/map-ownership", routeOwnershipHandler);
+  app.post("/store-log", storeRecentMove);
 
   app.get("*", serveStatic({ root: "public" }));
 
