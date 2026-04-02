@@ -7,7 +7,7 @@ export default class PlayerBase {
   }
 
   isExisting(sessionId) {
-    return this.#playerList.some((player) => player.sessionId === sessionId);
+    return this.#playerList.some((player) => player.sessionId === +sessionId);
   }
 
   #isImposter(username) {
