@@ -54,6 +54,8 @@ const showPossibleCardsToBuild = async ({ routeLength, routeColor }) => {
   const handCarCards = await fetchPlayerHand();
   const carCardCountInPlayerHand = handCarCards[routeColor];
   if (carCardCountInPlayerHand >= routeLength) {
+    //Extract to its function module
+    //Break down the functionalities into its module
     const playerHandCard = document.querySelector(
       `.hand-car-cards #${routeColor}`,
     );
@@ -78,6 +80,7 @@ export const buildRoute = (routeId) => {
   const buildButton = document.querySelector(".build-actions #build");
 
   buildButton.addEventListener("click", async () => {
+    //Move to its own event handler
     const colorCardElement = document.querySelector(
       ".possible-cards #color-card",
     );
@@ -98,6 +101,7 @@ export const buildRoute = (routeId) => {
   });
 };
 
+//Move to its own handler
 const claimRoute = async (event, routesData) => {
   const route = event.target.closest(".route");
   console.log("kadsfhio");
@@ -175,6 +179,7 @@ export const drawDeckCard = () => {
   const deck = document.querySelector(".deck");
 
   deck.addEventListener("click", async () => {
+  //Move to its own handler 
     const { drawnCard, carCards } = await fetchDeckCards();
     const deckPosition = deck
       .querySelector("#deck-img")
@@ -254,6 +259,7 @@ export const drawFaceUpCard = () => {
   const market = document.querySelector(".faceup-cards");
 
   market.addEventListener("click", async (event) => {
+    //Move to its own handler
     const card = event.target.closest(".card");
     const img = card.querySelector(".card-img");
     if (card === null) return;
@@ -287,6 +293,7 @@ export const selectTicketCard = () => {
   const ticketCards = document.querySelector(".ticket-cards");
   ticketCards.addEventListener("click", handleTicketSelection);
   ticketCards.addEventListener("mouseover", (event) => {
+    //Move to its own handler
     const selectedCard = event.target.closest(".card");
     if (!selectedCard) {
       return;
@@ -320,6 +327,7 @@ export const accessTicket = () => {
 
   tickets.addEventListener("mouseover", handleTicketClick);
   tickets.addEventListener("mouseout", (event) => {
+    //Move to its own handler
     const ticket = event.target.closest(".ticket");
     if (!ticket) {
       return;

@@ -140,7 +140,7 @@ const createTicketCard = (ticketId) => {
   clone
     .querySelector(".card img")
     .setAttribute("src", `./assets/destination-cards-images/${ticketId}.png`);
-  clone.onclick = () => {};
+  clone.onclick = () => { };
   return clone;
 };
 
@@ -209,4 +209,10 @@ export const unhighlightCities = (cardId) => {
     "highlightCity",
     "stationColor",
   );
+};
+export const displayLog = (log) => {
+  const logContainer = document.querySelector(".log");
+  const p = document.createElement("p");
+  p.textContent = log;
+  logContainer.append(p);
 };
