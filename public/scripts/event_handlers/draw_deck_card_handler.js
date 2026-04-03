@@ -7,15 +7,11 @@ import {
   displayLog,
   resolveFaceUpCardDraw,
 } from "../render.js";
-import { animateDrawFaceUpCard, animateRefillMarket } from "../animations.js";
-
-const moveFromDeckToHand = (img, destination, deck) => {
-  img.style.transform = "scale(1)";
-  const x = destination.left - deck.left - deck.height / 2 + 17;
-  const y = destination.top - deck.top + deck.height / 2 - 20;
-
-  img.style.transform = `translate(${x}px,${y}px) rotate(270deg)`;
-};
+import {
+  animateDrawFaceUpCard,
+  animateRefillMarket,
+  moveFromDeckToHand,
+} from "../animations.js";
 
 const resolveDeckCardDraw = (deck, img, carCards) => {
   setTimeout(() => {
@@ -26,10 +22,34 @@ const resolveDeckCardDraw = (deck, img, carCards) => {
   }, 1600);
 };
 
+const disableDestinationDeck = () =>
+  document
+    .querySelector(".destination-tickets-deck")
+    .classList.add("is-disabled");
+
+const disableMap = () =>
+  document
+    .querySelector("#map")
+    .classList.add("is-disabled");
+
+const disableWild = () => {
+  setTimeout(() => {
+    const wilds = document
+      .querySelectorAll('.faceup-cards [data-color="wild"]');
+
+    wilds.forEach((wild) => {
+      wild.classList.add("is-disabled");
+    });
+  }, 1500);
+};
+
 export const handleDrawFaceUP = async (event) => {
+  disableDestinationDeck();
+  disableMap();
+
   const card = event.target.closest(".card");
-  const img = card.querySelector(".card-img");
   if (card === null) return;
+  const img = card.querySelector(".card-img");
   animateDrawFaceUpCard(card);
   const cardId = { id: card.id };
   const { faceUpCards, carCards, cardToRefill } = await fetchFaceUpDeck(
@@ -41,9 +61,13 @@ export const handleDrawFaceUP = async (event) => {
   displayLog(lastLog);
   animateRefillMarket(cardToRefill, card, faceUpCards);
   resolveFaceUpCardDraw(card, img, carCards);
+  disableWild();
 };
 
 export const handleDrawCardFromDeck = async (deck) => {
+  disableDestinationDeck();
+  disableMap();
+
   const { drawnCard, carCards } = await fetchDeckCards();
   const deckPosition = deck
     .querySelector("#deck-img")
