@@ -21,7 +21,7 @@ describe("testing player class methods", () => {
   it("addTicketChoices should add the given ticketChoices to player Hand", () => {
     player.claimTickets(["A-B", "B-C"]);
 
-    assertEquals(player.getPlayerHand().ticketChoices, ["A-B", "B-C"]);
+    assertEquals(player.getPlayerHand().claimedTickets, ["A-B", "B-C"]);
   });
 
   it("claimRoute should add a claimed Route to the claimedRoutes list and remove the cards used to claim from player hand", () => {

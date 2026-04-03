@@ -9,7 +9,7 @@ import {
   handleDrawCardFromDeck,
   handleDrawFaceUP,
 } from "./event_handlers/draw_deck_card_handler.js";
-import { displayTicketChoices } from "./render.js";
+import { displayTicketChoices, highlightCities } from "./render.js";
 
 export const createImageAtr = (color) => {
   const img = document.createElement("img");
@@ -22,6 +22,7 @@ export const addHandCardContainer = (color) => {
   const handContainer = document.querySelector(".hand-car-cards");
   const carCardTemplate = document.querySelector("#card");
   const clone = carCardTemplate.content.cloneNode(true);
+  clone.querySelector(".hand-car-card").id = color;
   clone.querySelector(".img-container").setAttribute("data-color", color);
 
   handContainer.append(clone);

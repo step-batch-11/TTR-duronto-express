@@ -223,6 +223,7 @@ svg {
 
 .button {
   height: 5%;
+  background-color: #9860db;
 }
 
 .button:hover {
@@ -265,7 +266,6 @@ svg {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: red; */
 }
 
 .possible-cards {
@@ -297,6 +297,10 @@ svg {
   height: 105px;
   transform: rotate(270deg);
   z-index: 0;
+  border: 1px solid;
+}
+
+.card-placeholder {
   border: 1px dashed;
 }
 
@@ -370,6 +374,13 @@ svg {
 
 .highlightCity text {
   font-weight: bold;
+}
+
+.disabled-submit{
+  pointer-events: none;
+  background-color: rgb(129, 129, 169);
+  opacity: 0.85;
+  user-select: none;
 }
 
 .hidden {

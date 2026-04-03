@@ -50,7 +50,7 @@ describe("testing the game", () => {
         pink: 1,
         wild: 1,
       },
-      ticketChoices: [],
+      claimedTickets: [],
       bogies: 45,
     });
     assertEquals(game.getTicketCards(), [
@@ -73,7 +73,7 @@ describe("testing the game", () => {
         pink: 1,
         wild: 1,
       },
-      ticketChoices: [],
+      claimedTickets: [],
       bogies: 45,
     });
 
@@ -96,7 +96,7 @@ describe("testing the game", () => {
         pink: 1,
         wild: 1,
       },
-      ticketChoices: [],
+      claimedTickets: [],
       bogies: 45,
     });
   });
@@ -111,7 +111,7 @@ describe("testing the game", () => {
         wild: 1,
         black: 1,
       },
-      ticketChoices: [],
+      claimedTickets: [],
       bogies: 45,
     });
   });

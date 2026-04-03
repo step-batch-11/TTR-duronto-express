@@ -75,6 +75,8 @@ export const displayCarCards = (carCards) => {
 };
 
 export const displayPlayerHandTickets = (ticketChoices) => {
+  const playerHandTicketButtons = document.querySelector(".buttons-container");
+  playerHandTicketButtons.classList.remove("hidden");
   const container = document.querySelector(
     ".hand-destination-tickets > .container",
   );
@@ -101,8 +103,12 @@ export const displayPlayerHandTickets = (ticketChoices) => {
   });
 };
 
-export const displayPlayerHand = ({ carCards, ticketChoices }) => {
-  displayTicketChoices(ticketChoices);
+export const displayPlayerHand = (
+  { carCards, ticketChoices, claimedTickets },
+) => {
+  console.log(carCards, ticketChoices, claimedTickets);
+
+  displayTicketChoices(ticketChoices, claimedTickets);
   displayCarCards(carCards);
 };
 
@@ -152,12 +158,17 @@ const createClaimButton = () => {
   clone.querySelector(".button").innerText = "Claim";
 
   const button = clone.querySelector(".button");
-  button.classList.add("is-disabled");
+  button.classList.add("disabled-submit");
 
   return clone;
 };
 
-export const displayTicketChoices = (tickets) => {
+export const displayTicketChoices = (tickets, claimedTickets) => {
+  if (tickets.length === 0) {
+    displayPlayerHandTickets(claimedTickets);
+    return;
+  }
+
   const ticketCardContainer = document.querySelector(".ticket-cards");
   ticketCardContainer.innerHTML = "";
 

@@ -34,8 +34,6 @@ export const handleTicketsClaim = async (_event) => {
   toggleDisable();
   toggleHidden();
 
-  const playerHandTicketButtons = document.querySelector(".buttons-container");
-  playerHandTicketButtons.classList.remove("hidden");
   displayPlayerHandTickets(playerHandTickets);
 
   selectedTickets.clear();
@@ -49,10 +47,10 @@ const validateTicketClaim = async () => {
   const { gamePhase } = await fetchPhase();
 
   if (selectedTickets.size >= claimedTicketsMap[gamePhase]) {
-    button.classList.remove("is-disabled");
+    button.classList.remove("disabled-submit");
     return;
   }
-  button.classList.add("is-disabled");
+  button.classList.add("disabled-submit");
 };
 
 export const handleTicketSelection = async (event) => {

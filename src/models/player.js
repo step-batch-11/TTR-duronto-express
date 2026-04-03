@@ -26,7 +26,7 @@ export default class Player {
   getPlayerHand() {
     return {
       carCards: structuredClone(this.#carCards),
-      ticketChoices: structuredClone(this.#claimedTickets),
+      claimedTickets: structuredClone(this.#claimedTickets),
       bogies: this.#bogies,
     };
   }
