@@ -1,15 +1,15 @@
 import { getCookie, setCookie } from "hono/cookie";
 
 // This function will be requied for single player validation
-// export const doesPlayerExist = async (context, next) => {
-//   const players = context.get("players");
-//   const sessionId = getCookie(context, "sessionId");
+export const allowExistingPlayer = async (context, next) => {
+  const players = context.get("players");
+  const sessionId = getCookie(context, "sessionId");
 
-//   if (players.isExisting(sessionId)) {
-//     await next();
-//   }
-//   return context.redirect("/login.html", 303);
-// };
+  if (players.isExisting(sessionId)) {
+    await next();
+  }
+  return context.redirect("/login.html", 303);
+};
 
 export const doesPlayerNotExist = async (context, next) => {
   const players = context.get("players");

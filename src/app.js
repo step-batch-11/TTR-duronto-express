@@ -20,6 +20,7 @@ import {
 } from "./handlers/map_handlers.js";
 import { getplayerCarCardsHandler } from "./handlers/claim_route_handlers.js";
 import {
+  allowExistingPlayer,
   allowNonExistingPlayer,
   createUser,
   doesPlayerNotExist,
@@ -37,6 +38,8 @@ export const createApp = (game, players) => {
 
   app.get("/login.html", doesPlayerNotExist, serveStatic({ root: "/public" }));
   app.post("/login", allowNonExistingPlayer, createUser);
+
+  app.get("/game.html", allowExistingPlayer, serveStatic({ root: "/public" }));
 
   app.get("/init-faceup", initializeFaceUpDeckHandler);
   app.get("/initial-hand", initializePlayerHandHandler);

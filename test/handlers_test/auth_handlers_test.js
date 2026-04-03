@@ -118,4 +118,42 @@ describe("auth handler test", () => {
       assertEquals(res, { isLoggedIn: false, message: "User already exists" });
     });
   });
+
+  describe("GET /game.html", () => {
+    it("accessing game.html without cookies", async () => {
+      const response = await app.request("/game.html");
+
+      await response.text();
+      assertEquals(response.status, 303);
+      assertEquals(response.headers.get("location"), "/login.html");
+    });
+
+    it("accessing game.html with valid cookies", async () => {
+      const sessionId = players.addPlayer("newPlayer");
+      const response = await app.request("/game.html", {
+        headers: {
+          Cookie: `sessionId=${sessionId}`,
+        },
+      });
+
+      await response.text();
+      assertEquals(response.status, 200);
+      assertEquals(
+        response.headers.get("content-type"),
+        "text/html; charset=utf-8",
+      );
+    });
+
+    it("accessing game.html with invalid cookies", async () => {
+      const response = await app.request("/game.html", {
+        headers: {
+          Cookie: `sessionId=2`,
+        },
+      });
+
+      await response.text();
+      assertEquals(response.status, 303);
+      assertEquals(response.headers.get("location"), "/login.html");
+    });
+  });
 });
