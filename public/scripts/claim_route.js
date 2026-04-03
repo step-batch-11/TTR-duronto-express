@@ -27,8 +27,9 @@ const squeezePlayerHand = () => {
 };
 
 const appendCarCardImgInCart = (color, count) => {
+  const cardType = color === "wild" ? "wild" : "color";
   const colorCardElement = document.querySelector(
-    ".possible-cards #color-card",
+    `.possible-cards #${cardType}-card`,
   );
 
   const cartCountContainer = colorCardElement.querySelector(".card-count");
@@ -81,7 +82,9 @@ const addToCart = () => {
     const container = document.querySelector(".possible-cards #color-card");
     const colorCardChosen = container.dataset.cardColor || card.dataset.color;
 
-    disableCardsExcept(colorCardChosen, cardsContainer);
+    if (colorCardChosen !== "wild") {
+      disableCardsExcept(colorCardChosen, cardsContainer);
+    }
 
     const countContainer = card.parentElement.querySelector(".card-count");
     if (countContainer.textContent === "1") {
