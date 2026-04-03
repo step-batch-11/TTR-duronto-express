@@ -1,8 +1,5 @@
-import {
-  addHandCardContainer,
-  createImageAtr,
-  displayFaceUpCards,
-} from "./render.js";
+import { addHandCardContainer, displayFaceUpCards } from "./render.js";
+import { createCarCardImg } from "./utils.js";
 
 export const moveFromDeckToHand = (img, destination, deck) => {
   img.style.transform = "scale(1)";
@@ -76,7 +73,7 @@ export const animateDrawDeckCard = (img, destination, deckPosition, move) => {
 export const animateRefillMarket = (drawnCardFromDeck, card, faceUpCards) => {
   const deck = document.querySelector(".deck");
   const cardPosition = card.getBoundingClientRect();
-  const img = createImageAtr(drawnCardFromDeck);
+  const img = createCarCardImg(drawnCardFromDeck);
   deck.append(img);
   img.classList.add("is-disabled");
   const deckPosition = deck.querySelector("#deck-img").getBoundingClientRect();

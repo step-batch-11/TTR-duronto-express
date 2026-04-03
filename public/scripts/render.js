@@ -237,13 +237,6 @@ export const resolveFaceUpCardDraw = (card, img, carCards) => {
   }, 1001);
 };
 
-export const createImageAtr = (color) => {
-  const img = document.createElement("img");
-  img.setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
-
-  return img;
-};
-
 export const addHandCardContainer = (color) => {
   const handContainer = document.querySelector(".hand-car-cards");
   const carCardTemplate = document.querySelector("#card");

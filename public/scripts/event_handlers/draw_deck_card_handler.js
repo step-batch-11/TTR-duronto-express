@@ -2,7 +2,6 @@ import { fetchFaceUpDeck, fetchLog } from "../api.js";
 import { animateDrawDeckCard, getHandCardPositions } from "../animations.js";
 import { fetchDeckCards } from "../api.js";
 import {
-  createImageAtr,
   displayCarCards,
   displayLog,
   resolveFaceUpCardDraw,
@@ -12,6 +11,7 @@ import {
   animateRefillMarket,
   moveFromDeckToHand,
 } from "../animations.js";
+import { createCarCardImg } from "../utils.js";
 
 const resolveDeckCardDraw = (deck, img, carCards) => {
   setTimeout(() => {
@@ -75,7 +75,7 @@ export const handleDrawCardFromDeck = async (deck) => {
     .getBoundingClientRect();
   const hand = getHandCardPositions(drawnCard);
 
-  const img = createImageAtr(drawnCard);
+  const img = createCarCardImg(drawnCard);
   deck.append(img);
   animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
 
