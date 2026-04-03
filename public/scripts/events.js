@@ -12,13 +12,6 @@ import {
 } from "./event_handlers/draw_deck_card_handler.js";
 import { displayTicketChoices } from "./render.js";
 
-export const createImageAtr = (color) => {
-  const img = document.createElement("img");
-  img.setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
-
-  return img;
-};
-
 export const addHandCardContainer = (color) => {
   const handContainer = document.querySelector(".hand-car-cards");
   const carCardTemplate = document.querySelector("#card");
