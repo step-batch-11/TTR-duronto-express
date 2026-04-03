@@ -33,7 +33,6 @@ export default class Game {
     this.#drawnTickets = this.#ticketDeck.dealTicketChoices().map(({ id }) =>
       id
     );
-    console.log(this.#drawnTickets);
 
     this.#carCardsDeck.initFaceUp();
     this.#phase = "INITIALIZED";
@@ -88,7 +87,7 @@ export default class Game {
       this.#ticketDeck.discardTickets(unclaimedTickets);
     }
 
-    this.#drawnTickets = "";
+    this.#drawnTickets = [];
 
     return claimedTickets;
   }

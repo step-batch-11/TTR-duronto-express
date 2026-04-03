@@ -9,7 +9,7 @@ import {
   handleDrawCardFromDeck,
   handleDrawFaceUP,
 } from "./event_handlers/draw_deck_card_handler.js";
-import { displayTicketChoices } from "./render.js";
+import { displayTicketChoices, highlightCities } from "./render.js";
 
 export const createImageAtr = (color) => {
   const img = document.createElement("img");

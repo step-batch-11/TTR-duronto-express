@@ -56,6 +56,7 @@ describe("testing /initial-hand GET", () => {
         yellow: 1,
       },
       ticketChoices: ["MTL-NOL", "SSM-OKC", "STL-NYC"],
+      claimedTickets: [],
     });
   });
 
