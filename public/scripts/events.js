@@ -1,15 +1,16 @@
 import { fetchTicketChoices } from "./api.js";
 import {
-  handleTicketClick,
+  handleHighlightCities,
   handleTicketsClaim,
   handleTicketSelection,
   handleTicketSwipe,
+  handleUnHighlightCities,
 } from "./event_handlers/tickets_handlers.js";
 import {
   handleDrawCardFromDeck,
   handleDrawFaceUP,
 } from "./event_handlers/draw_deck_card_handler.js";
-import { displayTicketChoices, highlightCities } from "./render.js";
+import { displayTicketChoices } from "./render.js";
 
 export const createImageAtr = (color) => {
   const img = document.createElement("img");
@@ -55,14 +56,15 @@ export const selectTicketCard = () => {
 
   ticketCards.addEventListener("click", handleTicketSelection);
 
-  ticketCards.addEventListener("mousemove", () => {
-    const selectedCard = event.target.closest(".card");
-    if (!selectedCard) {
-      return;
-    }
-    const ticketRoute = selectedCard.dataset.ticketRoute;
-    highlightCities(ticketRoute);
-  });
+  ticketCards.addEventListener(
+    "mouseover",
+    (event) => handleHighlightCities(event, "card"),
+  );
+
+  ticketCards.addEventListener(
+    "mouseout",
+    (event) => handleUnHighlightCities(event, "card"),
+  );
 };
 
 export const claimTicketChoices = () => {
@@ -80,5 +82,12 @@ export const swipeTickets = () => {
 
 export const accessTicket = () => {
   const tickets = document.querySelector(".container");
-  tickets.addEventListener("click", handleTicketClick);
+  tickets.addEventListener(
+    "mouseover",
+    (event) => handleHighlightCities(event, "ticket"),
+  );
+  tickets.addEventListener(
+    "mouseout",
+    (event) => handleUnHighlightCities(event, "ticket"),
+  );
 };

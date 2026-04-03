@@ -90,8 +90,20 @@ export const handleTicketSwipe = (event) => {
   return updateActiveTicket(tickets, currentTicket, offset);
 };
 
-export const handleTicketClick = (event) => {
-  const ticket = event.target.closest(".ticket");
+export const handleHighlightCities = (event, container) => {
+  const ticket = event.target.closest(`.${container}`);
+  if (!ticket) {
+    return;
+  }
   const ticketRoute = ticket.dataset.ticketRoute;
   highlightCities(ticketRoute);
+};
+
+export const handleUnHighlightCities = (event, container) => {
+  const ticket = event.target.closest(`.${container}`);
+  if (!ticket) {
+    return;
+  }
+  const ticketRoute = ticket.dataset.ticketRoute;
+  unhighlightCities(ticketRoute);
 };

@@ -113,10 +113,10 @@ export const displayPlayerHand = (
 };
 
 export const displayDestTicketDeck = () => {
-  const template = document.querySelector("#dest-ticket");
-  const clone = template.content.cloneNode(true);
+  // const template = document.querySelector("#dest-ticket");
+  // const clone = template.content.cloneNode(true);
 
-  document.querySelector(".footer").append(clone);
+  // document.querySelector(".footer").append(clone);
 };
 
 export const toggleHidden = () => {
