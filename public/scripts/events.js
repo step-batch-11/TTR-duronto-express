@@ -69,10 +69,7 @@ export const selectTicketCard = () => {
 
 export const claimTicketChoices = () => {
   const submitButton = document.querySelector("#ticket-claim-button");
-  submitButton.addEventListener(
-    "click",
-    handleTicketsClaim,
-  );
+  submitButton.addEventListener("click", handleTicketsClaim);
 };
 
 export const swipeTickets = () => {

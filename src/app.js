@@ -44,6 +44,7 @@ export const createApp = (game, players) => {
 
   app.get("/init-faceup", initializeFaceUpDeckHandler);
   app.get("/initial-hand", initializePlayerHandHandler);
+
   app.get("/draw-deck-card", drawDeckCardHandler);
   app.get("/car-cards", getplayerCarCardsHandler);
   app.get("/get-game-phase", getGamePhase);

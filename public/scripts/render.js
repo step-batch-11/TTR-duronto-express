@@ -106,17 +106,15 @@ export const displayPlayerHandTickets = (ticketChoices) => {
 export const displayPlayerHand = (
   { carCards, ticketChoices, claimedTickets },
 ) => {
-  console.log(carCards, ticketChoices, claimedTickets);
-
   displayTicketChoices(ticketChoices, claimedTickets);
   displayCarCards(carCards);
 };
 
 export const displayDestTicketDeck = () => {
-  // const template = document.querySelector("#dest-ticket");
-  // const clone = template.content.cloneNode(true);
+  const template = document.querySelector("#dest-ticket");
+  const clone = template.content.cloneNode(true);
 
-  // document.querySelector(".footer").append(clone);
+  document.querySelector(".footer").append(clone);
 };
 
 export const toggleHidden = () => {
@@ -197,8 +195,6 @@ export const updateActiveTicket = (tickets, currentTicket, offset) => {
   const nextTicket = document.querySelector(`[data-ticket-id="${nextId}"]`);
   nextTicket.classList.add("top");
   currentTicket.classList.remove("top");
-
-  return;
 };
 
 export const highlightCities = (cardId) => {
