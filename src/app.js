@@ -53,7 +53,12 @@ export const createApp = (game, players) => {
   app.post("/draw-faceup-card", drawFaceUpCardHandler);
   app.post("/claim-tickets", claimDestinationTickets);
   app.post("/claim-route", claimRouteHandler);
-  app.post("/store-log", storeRecentMove);
+  app.post("/fetch-log", storeRecentMove);
+
+  app.get("/fetch-log", (context) => {
+    const game = context.get("game");
+    return context.json(game.getLog());
+  });
 
   app.get("*", serveStatic({ root: "public" }));
 

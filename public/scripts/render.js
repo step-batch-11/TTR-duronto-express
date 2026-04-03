@@ -256,7 +256,13 @@ export const addHandCardContainer = (color) => {
 
 export const displayLog = (log) => {
   const logContainer = document.querySelector(".log");
-  const p = document.createElement("p");
-  p.textContent = log;
-  logContainer.prepend(p);
+
+  const logElements = logContainer.querySelectorAll("p");
+  logElements.forEach((element) => logContainer.removeChild(element));
+
+  log.forEach((logMessage) => {
+    const p = document.createElement("p");
+    p.textContent = logMessage;
+    logContainer.append(p);
+  });
 };

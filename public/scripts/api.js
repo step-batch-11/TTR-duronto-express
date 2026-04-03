@@ -56,7 +56,7 @@ export const fetchRouteOwnership = () => get("/map-ownership");
 
 export const fetchPlayerHand = () => get("/car-cards");
 
-export const fetchLastLog = (body) => post("/store-log", body);
+export const fetchLog = (body) => post("/fetch-log", body);
 
 export const fetchRoutesData = () => ({
   "HLN-CLC": {

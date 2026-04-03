@@ -1,4 +1,4 @@
-import { fetchFaceUpDeck, fetchLastLog } from "../api.js";
+import { fetchFaceUpDeck, fetchLog } from "../api.js";
 import { animateDrawDeckCard, getHandCardPositions } from "../animations.js";
 import { fetchDeckCards } from "../api.js";
 import {
@@ -56,9 +56,10 @@ export const handleDrawFaceUP = async (event) => {
     cardId,
   );
 
-  const body = { msg: `Cards drown from face-up` };
-  const { lastLog } = await fetchLastLog(body);
-  displayLog(lastLog);
+  const body = { msg: `Cards drawn from face-up` };
+  const log = await fetchLog(body);
+  displayLog(log);
+
   animateRefillMarket(cardToRefill, card, faceUpCards);
   resolveFaceUpCardDraw(card, img, carCards);
   disableWild();
@@ -77,8 +78,10 @@ export const handleDrawCardFromDeck = async (deck) => {
   const img = createImageAtr(drawnCard);
   deck.append(img);
   animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
+
   const body = { msg: `Cards drown from deck` };
-  const { lastLog } = await fetchLastLog(body);
-  displayLog(lastLog);
+  const log = await fetchLog(body);
+  displayLog(log);
+
   resolveDeckCardDraw(deck, img, carCards);
 };

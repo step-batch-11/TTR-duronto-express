@@ -15,8 +15,8 @@ export default class Game {
   }
 
   storeLog(move) {
-    this.#log.push(move);
-    return { lastLog: move };
+    this.#log.unshift(move);
+    return structuredClone(this.#log);
   }
 
   getLog() {

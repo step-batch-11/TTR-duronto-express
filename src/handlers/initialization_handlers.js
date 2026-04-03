@@ -17,7 +17,7 @@ export const initializeFaceUpDeckHandler = (context) => {
 export const storeRecentMove = async (context) => {
   const { msg } = await context.req.json();
   const game = context.get("game");
-  const { lastLog } = game.storeLog(msg);
+  const log = game.storeLog(msg);
 
-  return context.json({ lastLog });
+  return context.json(log);
 };

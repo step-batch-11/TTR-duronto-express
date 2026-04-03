@@ -18,6 +18,7 @@ import {
 import {
   displayDestTicketDeck,
   displayFaceUpCards,
+  displayLog,
   displayPlayerHand,
   displayPlayers,
   renderMap,
@@ -39,6 +40,9 @@ globalThis.onload = async () => {
   const playerData = fetchPlayerDetails();
   displayPlayers(playerData);
   displayDestTicketDeck();
+
+  const logs = await (await fetch("/fetch-log")).json();
+  displayLog(logs);
 
   const playerHand = await fetchInitialPlayerHand();
   displayPlayerHand(playerHand);
