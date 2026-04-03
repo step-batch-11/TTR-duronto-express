@@ -44,7 +44,7 @@ describe("testing /initial-hand GET", () => {
     app = createApp(game);
   });
 
-  it("/initial-hand GET should give the player's initial hand with 4 car cards, 3 ticket choices and 45 bogies", async () => {
+  it("/initial-hand GET should give the player's initial hand with 4 car cards, 3 drawn tickets", async () => {
     const response = await app.request("/initial-hand");
 
     assertEquals(response.status, 200);
@@ -56,7 +56,6 @@ describe("testing /initial-hand GET", () => {
         yellow: 1,
       },
       ticketChoices: ["MTL-NOL", "SSM-OKC", "STL-NYC"],
-      bogies: 45,
     });
   });
 
@@ -251,7 +250,7 @@ describe("testing /claim-tickets POST", () => {
 
   it("after sending request to /claim-tickets it should return ticket cards of player hands after claiming", async () => {
     await app.request("/get-ticket-choices");
-    const selectedTickets = ["SSM-OKC"];
+    const selectedTickets = ["HLN-LAS", "DVR-ELP"];
     const res = await app.request("/claim-tickets", {
       method: "post",
       body: JSON.stringify(selectedTickets),
@@ -259,10 +258,8 @@ describe("testing /claim-tickets POST", () => {
 
     assertEquals(await res.status, 200);
     assertEquals(await res.json(), [
-      "DVR-ELP",
       "HLN-LAS",
-      "WPG-HTN",
-      "SSM-OKC",
+      "DVR-ELP",
     ]);
   });
 

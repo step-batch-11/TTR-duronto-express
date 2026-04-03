@@ -2,7 +2,9 @@ export const initializePlayerHandHandler = (context) => {
   const game = context.get("game");
   game.initializePlayerHand();
 
-  return context.json(game.playerHand());
+  const { carCards } = game.playerHand();
+  const ticketChoices = game.getDrawnTickets();
+  return context.json({ carCards, ticketChoices });
 };
 
 export const initializeFaceUpDeckHandler = (context) => {

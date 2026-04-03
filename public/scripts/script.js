@@ -35,11 +35,12 @@ const registerListeners = (routesData) => {
 
 globalThis.onload = async () => {
   await fetchMap();
+
   const playerData = fetchPlayerDetails();
   displayPlayers(playerData);
+  displayDestTicketDeck();
 
   const playerHand = await fetchInitialPlayerHand();
-
   displayPlayerHand(playerHand);
 
   const cardsData = await fetchInitialFaceUp();
@@ -50,6 +51,5 @@ globalThis.onload = async () => {
 
   const routesData = fetchRoutesData();
 
-  displayDestTicketDeck();
   registerListeners(routesData);
 };

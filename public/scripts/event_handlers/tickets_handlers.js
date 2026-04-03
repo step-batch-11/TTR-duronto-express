@@ -30,6 +30,8 @@ export const handleTicketsClaim = async () => {
   toggleDisable();
   toggleHidden();
 
+  const playerHandTicketButtons = document.querySelector(".buttons-container");
+  playerHandTicketButtons.classList.remove("hidden");
   displayPlayerHandTickets(playerHandTickets);
 };
 

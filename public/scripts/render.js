@@ -102,7 +102,7 @@ export const displayPlayerHandTickets = (ticketChoices) => {
 };
 
 export const displayPlayerHand = ({ carCards, ticketChoices }) => {
-  displayPlayerHandTickets(ticketChoices);
+  displayTicketChoices(ticketChoices);
   displayCarCards(carCards);
 };
 
