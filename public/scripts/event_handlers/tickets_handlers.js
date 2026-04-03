@@ -1,5 +1,6 @@
-import { claimSelectedTickets } from "../api.js";
+import { claimSelectedTickets, fetchLastLog } from "../api.js";
 import {
+  displayLog,
   displayPlayerHandTickets,
   highlightCities,
   toggleDisable,
@@ -31,6 +32,10 @@ export const handleTicketsClaim = async () => {
   toggleHidden();
 
   displayPlayerHandTickets(playerHandTickets);
+
+  const body = { msg: `tickets are drawn` };
+  const { lastLog } = await fetchLastLog(body);
+  displayLog(lastLog);
 };
 
 export const handleTicketSelection = (event) => {

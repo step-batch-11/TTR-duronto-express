@@ -238,3 +238,10 @@ export const addHandCardContainer = (color) => {
   handContainer.append(clone);
   return document.querySelector(`.hand-car-cards [data-color="${color}"]`);
 };
+
+export const displayLog = (log) => {
+  const logContainer = document.querySelector(".log");
+  const p = document.createElement("p");
+  p.textContent = log;
+  logContainer.prepend(p);
+};
