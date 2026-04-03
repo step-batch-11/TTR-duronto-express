@@ -4,7 +4,7 @@ import Player from "./src/models/player.js";
 import { initDeck } from "./src/static-data/deck.js";
 import { getTicketCards } from "./src/static-data/ticket_cards.js";
 import TicketDeck from "./src/models/ticket_deck.js";
-import { CarCardsDeck } from "./src/models/train_car_card_deck.js";
+import CarCardsDeck from "./src/models/train_car_card_deck.js";
 import PlayerBase from "./src/models/player_base.js";
 
 const main = () => {
