@@ -210,13 +210,6 @@ export const unhighlightCities = (cardId) => {
     "stationColor",
   );
 };
-<<<<<<< Updated upstream
-export const displayLog = (log) => {
-  const logContainer = document.querySelector(".log");
-  const p = document.createElement("p");
-  p.textContent = log;
-  logContainer.append(p);
-=======
 
 export const resolveFaceUpCardDraw = (card, img, carCards) => {
   setTimeout(() => {
@@ -244,5 +237,4 @@ export const addHandCardContainer = (color) => {
 
   handContainer.append(clone);
   return document.querySelector(`.hand-car-cards [data-color="${color}"]`);
->>>>>>> Stashed changes
 };

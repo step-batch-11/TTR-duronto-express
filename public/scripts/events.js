@@ -1,15 +1,4 @@
-<<<<<<< Updated upstream
-import {
-  fetchDeckCards,
-  fetchFaceUpDeck,
-  fetchLastLog,
-  fetchPlayerHand,
-  fetchTicketChoices,
-  postClaimRoute,
-} from "./api.js";
-=======
 import { fetchPlayerHand, fetchTicketChoices, postClaimRoute } from "./api.js";
->>>>>>> Stashed changes
 import {
   handleTicketClick,
   handleTicketsClaim,
@@ -22,15 +11,8 @@ import {
 } from "./event_handlers/draw_deck_card_handler.js";
 import {
   displayDestTicketDeck,
-<<<<<<< Updated upstream
-  displayFaceUpCards,
-  displayLog,
-=======
->>>>>>> Stashed changes
   displayTicketChoices,
-  highlightCities,
   renderMap,
-  unhighlightCities,
 } from "./render.js";
 
 const enableBuildActions = () => {
@@ -58,8 +40,6 @@ const showPossibleCardsToBuild = async ({ routeLength, routeColor }) => {
   const handCarCards = await fetchPlayerHand();
   const carCardCountInPlayerHand = handCarCards[routeColor];
   if (carCardCountInPlayerHand >= routeLength) {
-    //Extract to its function module
-    //Break down the functionalities into its module
     const playerHandCard = document.querySelector(
       `.hand-car-cards #${routeColor}`,
     );
@@ -84,7 +64,6 @@ export const buildRoute = (routeId) => {
   const buildButton = document.querySelector(".build-actions #build");
 
   buildButton.addEventListener("click", async () => {
-    //Move to its own event handler
     const colorCardElement = document.querySelector(
       ".possible-cards #color-card",
     );
@@ -105,7 +84,6 @@ export const buildRoute = (routeId) => {
   });
 };
 
-//Move to its own handler
 const claimRoute = async (event, routesData) => {
   const route = event.target.closest(".route");
   if (route === null) return;
@@ -127,113 +105,12 @@ export const mapOnClick = (routesData) => {
 
 export const drawDeckCard = () => {
   const deck = document.querySelector(".deck");
-<<<<<<< Updated upstream
-
-  deck.addEventListener("click", async () => {
-    //Move to its own handler
-    const { drawnCard, carCards } = await fetchDeckCards();
-    const deckPosition = deck
-      .querySelector("#deck-img")
-      .getBoundingClientRect();
-    const hand = getHandCardPositions(drawnCard);
-
-    const img = createImageAtr(drawnCard);
-    deck.append(img);
-
-    const body = { msg: `card drawn from the deck` };
-    const { lastLog } = await fetchLastLog(body);
-    displayLog(lastLog);
-    animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
-    resolveDeckCardDraw(deck, img, carCards);
-  });
-};
-
-const moveFaceUpCard = (card, hand, faceUpCard) => {
-  const img = card.querySelector(".card-img");
-  const x = hand.x - faceUpCard.x - faceUpCard.height / 2 + 15;
-  const y = hand.y - faceUpCard.y + faceUpCard.height / 2 - 20;
-  img.style.height = `${faceUpCard.height + 10}px`;
-  img.style.transform = `translate(${x}px, ${y}px) rotate(270deg)`;
-};
-
-const resolveFaceUpCardDraw = (card, img, carCards) => {
-  setTimeout(() => {
-    card.removeChild(img);
-    displayCarCards(carCards);
-
-    const market = document.querySelector(".market");
-    market.classList.remove("is-disabled");
-    document.querySelector(".footer").classList.remove("is-disabled");
-  }, 1001);
-};
-
-const animateDrawFaceUpCard = (card) => {
-  const market = document.querySelector(".market");
-  market.classList.add("is-disabled");
-  document.querySelector(".footer").classList.add("is-disabled");
-
-  const color = card.getAttribute("data-color");
-  const hand = getHandCardPositions(color);
-  const faceUpCard = card.getBoundingClientRect();
-  moveFaceUpCard(card, hand, faceUpCard);
-};
-
-const moveFromDeckToMarket = (img, destination, deck) => {
-  img.style.borderRadius = "5px";
-  img.style.transform = "scale(1)";
-  const y = destination.top - deck.top;
-  img.style.transform = `translate(0px,${y}px)`;
-};
-
-const resolveRefillMarket = (deck, img, faceUpCards) => {
-  setTimeout(() => {
-    deck.removeChild(img);
-    displayFaceUpCards(faceUpCards);
-    document.querySelector(".market").classList.remove("is-disabled");
-    document.querySelector(".footer").classList.remove("is-disabled");
-  }, 1500);
-};
-
-const animateRefillMarket = (drawnCardFromDeck, card, faceUpCards) => {
-  const deck = document.querySelector(".deck");
-  const cardPosition = card.getBoundingClientRect();
-  const img = createImageAtr(drawnCardFromDeck);
-  deck.append(img);
-  img.classList.add("is-disabled");
-  const deckPosition = deck.querySelector("#deck-img").getBoundingClientRect();
-
-  animateDrawDeckCard(img, cardPosition, deckPosition, moveFromDeckToMarket);
-  resolveRefillMarket(deck, img, faceUpCards);
-=======
   deck.addEventListener("click", () => handleDrawCardFromDeck(deck));
->>>>>>> Stashed changes
 };
 
 export const drawFaceUpCard = () => {
   const market = document.querySelector(".faceup-cards");
-<<<<<<< Updated upstream
-
-  market.addEventListener("click", async (event) => {
-    //Move to its own handler
-    const card = event.target.closest(".card");
-    const img = card.querySelector(".card-img");
-    if (card === null) return;
-    animateDrawFaceUpCard(card);
-    const cardId = { id: card.id };
-    const { faceUpCards, carCards, drawnCardFromDeck } = await fetchFaceUpDeck(
-      cardId,
-    );
-
-    const body = { msg: `card drawn from the faceUp` };
-    const { lastLog } = await fetchLastLog(body);
-    displayLog(lastLog);
-
-    animateRefillMarket(drawnCardFromDeck, card, faceUpCards);
-    resolveFaceUpCardDraw(card, img, carCards);
-  });
-=======
   market.addEventListener("click", handleDrawFaceUP);
->>>>>>> Stashed changes
 };
 
 export const drawTicketChoice = () => {
@@ -250,24 +127,6 @@ export const drawTicketChoice = () => {
 export const selectTicketCard = () => {
   const ticketCards = document.querySelector(".ticket-cards");
   ticketCards.addEventListener("click", handleTicketSelection);
-  ticketCards.addEventListener("mouseover", (event) => {
-    //Move to its own handler
-    const selectedCard = event.target.closest(".card");
-    if (!selectedCard) {
-      return;
-    }
-    const ticketRoute = selectedCard.dataset.ticketRoute;
-    highlightCities(ticketRoute);
-  });
-
-  ticketCards.addEventListener("mouseout", (event) => {
-    const selectedCard = event.target.closest(".card");
-    if (!selectedCard) {
-      return;
-    }
-    const ticketRoute = selectedCard.dataset.ticketRoute;
-    unhighlightCities(ticketRoute);
-  });
 };
 
 export const claimTicketChoices = () => {
@@ -282,15 +141,5 @@ export const swipeTickets = () => {
 
 export const accessTicket = () => {
   const tickets = document.querySelector(".container");
-
-  tickets.addEventListener("mouseover", handleTicketClick);
-  tickets.addEventListener("mouseout", (event) => {
-    //Move to its own handler
-    const ticket = event.target.closest(".ticket");
-    if (!ticket) {
-      return;
-    }
-    const ticketRoute = ticket.dataset.ticketRoute;
-    unhighlightCities(ticketRoute);
-  });
+  tickets.addEventListener("click", handleTicketClick);
 };
