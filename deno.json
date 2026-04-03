@@ -19,5 +19,8 @@
       "public/**/*.xml",
       "public/**/*.svg"
     ]
+  },
+  "compilerOptions": {
+    "lib": ["deno.ns", "dom"]
   }
 }
