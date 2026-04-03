@@ -42,11 +42,11 @@ export default class Game {
   }
 
   drawFaceUpCard(id) {
-    const { drawnCard, drawnCardFromDeck } = this.#carCardsDeck
+    const { drawnCard, cardToRefill } = this.#carCardsDeck
       .drawCardFromFaceUp(id);
     this.#player.addCarCardToHand(drawnCard);
 
-    return { drawnCard, drawnCardFromDeck };
+    return { drawnCard, cardToRefill };
   }
 
   drawDeckCard() {

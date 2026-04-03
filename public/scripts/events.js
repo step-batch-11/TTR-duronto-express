@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import {
   fetchDeckCards,
   fetchFaceUpDeck,
@@ -6,6 +7,9 @@ import {
   fetchTicketChoices,
   postClaimRoute,
 } from "./api.js";
+=======
+import { fetchPlayerHand, fetchTicketChoices, postClaimRoute } from "./api.js";
+>>>>>>> Stashed changes
 import {
   handleTicketClick,
   handleTicketsClaim,
@@ -13,10 +17,16 @@ import {
   handleTicketSwipe,
 } from "./event_handlers/tickets_handlers.js";
 import {
-  displayCarCards,
+  handleDrawCardFromDeck,
+  handleDrawFaceUP,
+} from "./event_handlers/draw_deck_card_handler.js";
+import {
   displayDestTicketDeck,
+<<<<<<< Updated upstream
   displayFaceUpCards,
   displayLog,
+=======
+>>>>>>> Stashed changes
   displayTicketChoices,
   highlightCities,
   renderMap,
@@ -42,13 +52,6 @@ const squeezePlayerHand = () => {
   );
   document.querySelector(".footer").removeChild(destContainer);
   document.querySelector(".hand-car-cards").id = "squeezed-hand";
-};
-
-const createImageAtr = (color) => {
-  const img = document.createElement("img");
-  img.setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
-
-  return img;
 };
 
 const showPossibleCardsToBuild = async ({ routeLength, routeColor }) => {
@@ -105,7 +108,6 @@ export const buildRoute = (routeId) => {
 //Move to its own handler
 const claimRoute = async (event, routesData) => {
   const route = event.target.closest(".route");
-  console.log("kadsfhio");
   if (route === null) return;
 
   const routeId = route.getAttribute("id");
@@ -123,61 +125,9 @@ export const mapOnClick = (routesData) => {
   });
 };
 
-const addHandCardContainer = (color) => {
-  const handContainer = document.querySelector(".hand-car-cards");
-  const carCardTemplate = document.querySelector("#card");
-  const clone = carCardTemplate.content.cloneNode(true);
-  clone.querySelector(".img-container").setAttribute("data-color", color);
-
-  handContainer.append(clone);
-  return document.querySelector(`.hand-car-cards [data-color="${color}"]`);
-};
-
-const getHandCard = (color) => {
-  const handCard = document.querySelector(
-    `.hand-car-cards [data-color="${color}"]`,
-  );
-
-  if (!handCard) return addHandCardContainer(color);
-  return handCard;
-};
-
-const moveFromDeckToHand = (img, destination, deck) => {
-  img.style.transform = "scale(1)";
-  const x = destination.left - deck.left - deck.height / 2 + 17;
-  const y = destination.top - deck.top + deck.height / 2 - 20;
-
-  img.style.transform = `translate(${x}px,${y}px) rotate(270deg)`;
-};
-
-const animateDrawDeckCard = (img, destination, deckPosition, move) => {
-  document.querySelector(".market").classList.add("is-disabled");
-  document.querySelector(".footer").classList.add("is-disabled");
-  setTimeout(() => {
-    img.style.transform = "scale(1.2)";
-  }, 1);
-
-  setTimeout(() => {
-    move(img, destination, deckPosition);
-  }, 500);
-};
-
-const resolveDeckCardDraw = (deck, img, carCards) => {
-  setTimeout(() => {
-    deck.removeChild(img);
-    displayCarCards(carCards);
-    document.querySelector(".market").classList.remove("is-disabled");
-    document.querySelector(".footer").classList.remove("is-disabled");
-  }, 1600);
-};
-
-const getHandCardPositions = (color) => {
-  const handCard = getHandCard(color);
-  return handCard.getBoundingClientRect();
-};
-
 export const drawDeckCard = () => {
   const deck = document.querySelector(".deck");
+<<<<<<< Updated upstream
 
   deck.addEventListener("click", async () => {
     //Move to its own handler
@@ -254,10 +204,14 @@ const animateRefillMarket = (drawnCardFromDeck, card, faceUpCards) => {
 
   animateDrawDeckCard(img, cardPosition, deckPosition, moveFromDeckToMarket);
   resolveRefillMarket(deck, img, faceUpCards);
+=======
+  deck.addEventListener("click", () => handleDrawCardFromDeck(deck));
+>>>>>>> Stashed changes
 };
 
 export const drawFaceUpCard = () => {
   const market = document.querySelector(".faceup-cards");
+<<<<<<< Updated upstream
 
   market.addEventListener("click", async (event) => {
     //Move to its own handler
@@ -277,6 +231,9 @@ export const drawFaceUpCard = () => {
     animateRefillMarket(drawnCardFromDeck, card, faceUpCards);
     resolveFaceUpCardDraw(card, img, carCards);
   });
+=======
+  market.addEventListener("click", handleDrawFaceUP);
+>>>>>>> Stashed changes
 };
 
 export const drawTicketChoice = () => {

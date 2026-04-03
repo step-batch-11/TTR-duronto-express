@@ -109,7 +109,7 @@ describe("CarCardsDeck", () => {
 
       assertEquals(result, {
         drawnCard: "white",
-        drawnCardFromDeck: "blue",
+        cardToRefill: "blue",
       });
 
       assertEquals(deck.getFaceUpCards(), [
@@ -144,7 +144,7 @@ describe("CarCardsDeck", () => {
 
       assertEquals(result, {
         drawnCard: "orange",
-        drawnCardFromDeck: "wild",
+        cardToRefill: "wild",
       });
 
       assertEquals(deck.getFaceUpCards(), [
