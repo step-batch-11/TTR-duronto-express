@@ -40,7 +40,7 @@ const appendCarCardImgInCart = (color, count) => {
   const img = createImageAtr(color);
   const imgContainer = colorCardElement.querySelector(".build-img-container");
   imgContainer.append(img);
-  imgContainer.style.border = "1px solid";
+  imgContainer.classList.remove("card-placeholder");
 };
 
 const showPossibleCardsToBuild = async ({ routeLength, routeColor }) => {
@@ -65,6 +65,13 @@ const disableCardsExcept = (color, container) => {
   });
 };
 
+const enableCards = () => {
+  const container = document.querySelector(".hand-car-cards");
+  Object.entries(container.children).forEach(([_, card]) => {
+    card.classList.remove("click-disabled");
+  });
+};
+
 const addToCart = () => {
   const cardsContainer = document.querySelector(".hand-car-cards");
   cardsContainer.addEventListener("click", (event) => {
@@ -80,12 +87,30 @@ const addToCart = () => {
     if (countContainer.textContent === "1") {
       cardsContainer.removeChild(card.parentElement);
     }
-
     countContainer.textContent = parseInt(countContainer.textContent) - 1;
+
     const color = card.parentElement.id;
 
     appendCarCardImgInCart(color, 1);
   });
+};
+
+const moveCardToPlayerHand = (card) => {
+  const color = card.parentElement.dataset.cardColor;
+  const handCarCardContainer = document.querySelector(`#${color}`);
+
+  if (handCarCardContainer) {
+    const carCount = handCarCardContainer.querySelector(".card-count");
+    carCount.textContent = parseInt(carCount.textContent) + 1;
+    return;
+  }
+
+  const container = addHandCardContainer(color);
+  container.querySelector("img")
+    .setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
+
+  const carCount = container.parentElement.querySelector(".card-count");
+  carCount.textContent = 1;
 };
 
 const removeFromCart = () => {
@@ -94,24 +119,20 @@ const removeFromCart = () => {
   possibleCardContainer.addEventListener("click", (event) => {
     const card = event.target.closest(".build-img-container");
     if (card === null) return;
+
     const countContainer = card.parentElement.querySelector(".card-count");
-    countContainer.textContent = parseInt(countContainer.textContent) - 1;
-    const color = card.parentElement.dataset.cardColor;
-
-    const handCarCardContainer = document.querySelector(`#${color}`);
-
-    if (handCarCardContainer) {
-      const carCount = handCarCardContainer.querySelector(".card-count");
-      carCount.textContent = parseInt(carCount.textContent) + 1;
+    if (countContainer.textContent === "1") {
+      card.innerHTML = "";
+      card.classList.add("card-placeholder");
+      countContainer.textContent = "";
+      moveCardToPlayerHand(card);
+      card.parentElement.removeAttribute("data-card-color");
+      enableCards();
       return;
     }
 
-    const container = addHandCardContainer(color);
-    container.querySelector("img")
-      .setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
-
-    const carCount = container.parentElement.querySelector(".card-count");
-    carCount.textContent = 1;
+    countContainer.textContent = parseInt(countContainer.textContent) - 1;
+    moveCardToPlayerHand(card);
   });
 };
 

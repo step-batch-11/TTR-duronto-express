@@ -10,12 +10,12 @@ export default class PlayerBase {
     return this.#playerList.some((player) => player.sessionId === +sessionId);
   }
 
-  #isImposter(username) {
+  #isExistingUsername(username) {
     return this.#playerList.some((player) => player.username === username);
   }
 
   addPlayer(username) {
-    if (this.#isImposter(username)) {
+    if (this.#isExistingUsername(username)) {
       throw new Error("User already exists");
     }
 

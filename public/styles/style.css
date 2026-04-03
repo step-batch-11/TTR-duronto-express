@@ -297,6 +297,10 @@ svg {
   height: 105px;
   transform: rotate(270deg);
   z-index: 0;
+  border: 1px solid;
+}
+
+.card-placeholder {
   border: 1px dashed;
 }
 
