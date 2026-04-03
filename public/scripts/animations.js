@@ -4,6 +4,14 @@ import {
   displayFaceUpCards,
 } from "./render.js";
 
+export const moveFromDeckToHand = (img, destination, deck) => {
+  img.style.transform = "scale(1)";
+  const x = destination.left - deck.left - deck.height / 2 + 17;
+  const y = destination.top - deck.top + deck.height / 2 - 20;
+
+  img.style.transform = `translate(${x}px,${y}px) rotate(270deg)`;
+};
+
 const moveFromDeckToMarket = (img, destination, deck) => {
   img.style.borderRadius = "5px";
   img.style.transform = "scale(1)";
