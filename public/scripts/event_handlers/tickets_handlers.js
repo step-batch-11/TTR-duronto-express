@@ -1,4 +1,4 @@
-import { claimSelectedTickets } from "../api.js";
+import { claimSelectedTickets, fetchPhase } from "../api.js";
 import {
   displayPlayerHandTickets,
   highlightCities,
@@ -9,6 +9,10 @@ import {
 } from "../render.js";
 
 const selectedTickets = new Set();
+const claimedTicketsMap = {
+  "INITIALIZED": 2,
+  "DRAWTICKETCHOICE": 1,
+};
 
 export const clearHighlightedCities = () => {
   const highlighted = document.querySelectorAll(".highlightCity");
@@ -19,12 +23,11 @@ export const clearHighlightedCities = () => {
   });
 };
 
-export const handleTicketsClaim = async () => {
+export const handleTicketsClaim = async (_event) => {
   const ticketChoices = [];
   selectedTickets.forEach((ticket) => ticketChoices.push(ticket));
 
   const playerHandTickets = await claimSelectedTickets(ticketChoices);
-  selectedTickets.clear();
 
   clearHighlightedCities();
   toggleDisable();
@@ -33,9 +36,22 @@ export const handleTicketsClaim = async () => {
   const playerHandTicketButtons = document.querySelector(".buttons-container");
   playerHandTicketButtons.classList.remove("hidden");
   displayPlayerHandTickets(playerHandTickets);
+
+  selectedTickets.clear();
 };
 
-export const handleTicketSelection = (event) => {
+const validateTicketClaim = async () => {
+  const button = document.querySelector("#ticket-claim-button");
+  const { gamePhase } = await fetchPhase();
+
+  if (selectedTickets.size >= claimedTicketsMap[gamePhase]) {
+    button.classList.remove("is-disabled");
+    return;
+  }
+  button.classList.add("is-disabled");
+};
+
+export const handleTicketSelection = async (event) => {
   const selectedCard = event.target.closest(".card");
   if (!selectedCard) {
     return;
@@ -53,7 +69,8 @@ export const handleTicketSelection = (event) => {
 
   selectedTickets.add(cardId);
   highlightCities(cardId);
-  return;
+
+  await validateTicketClaim();
 };
 
 const SWIPE_DIRECTION = {

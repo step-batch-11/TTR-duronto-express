@@ -24,6 +24,7 @@ import {
   doesPlayerExist,
   doesPlayerNotExist,
 } from "./handlers/auth_handlers.js";
+import { getGamePhase } from "./handlers/phase_handler.js";
 
 export const createApp = (game, players) => {
   const app = new Hono();
@@ -43,7 +44,7 @@ export const createApp = (game, players) => {
   app.get("/initial-hand", initializePlayerHandHandler);
   app.get("/draw-deck-card", drawDeckCardHandler);
   app.get("/car-cards", getplayerCarCardsHandler);
-
+  app.get("/get-game-phase", getGamePhase);
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
   app.post("/draw-faceup-card", drawFaceUpCardHandler);
   app.post("/claim-tickets", claimDestinationTickets);

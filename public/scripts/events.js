@@ -276,7 +276,9 @@ export const drawTicketChoice = () => {
 
 export const selectTicketCard = () => {
   const ticketCards = document.querySelector(".ticket-cards");
+
   ticketCards.addEventListener("click", handleTicketSelection);
+
   ticketCards.addEventListener("mousemove", () => {
     const selectedCard = event.target.closest(".card");
     if (!selectedCard) {
@@ -288,8 +290,11 @@ export const selectTicketCard = () => {
 };
 
 export const claimTicketChoices = () => {
-  const submitButton = document.querySelector("#ticket-submit-button");
-  submitButton.addEventListener("click", handleTicketsClaim);
+  const submitButton = document.querySelector("#ticket-claim-button");
+  submitButton.addEventListener(
+    "click",
+    handleTicketsClaim,
+  );
 };
 
 export const swipeTickets = () => {

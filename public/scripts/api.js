@@ -70,3 +70,5 @@ export const fetchRoutesData = () => ({
     routeLength: 3,
   },
 });
+
+export const fetchPhase = () => get("/get-game-phase");

@@ -144,12 +144,15 @@ const createTicketCard = (ticketId) => {
   return clone;
 };
 
-const createSubmitButton = () => {
+const createClaimButton = () => {
   const buttonTemplate = document.querySelector("#btn");
 
   const clone = buttonTemplate.content.cloneNode(true);
-  clone.querySelector(".button").id = "ticket-submit-button";
-  clone.querySelector(".button").innerText = "Submit";
+  clone.querySelector(".button").id = "ticket-claim-button";
+  clone.querySelector(".button").innerText = "Claim";
+
+  const button = clone.querySelector(".button");
+  button.classList.add("is-disabled");
 
   return clone;
 };
@@ -166,8 +169,9 @@ export const displayTicketChoices = (tickets) => {
     ticketCardContainer.append(card);
   });
 
-  const buttons = createSubmitButton();
+  const buttons = createClaimButton();
   ticketCardContainer.append(buttons);
+
   claimTicketChoices();
 };
 

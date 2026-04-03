@@ -28,6 +28,10 @@ export default class Game {
     this.#phase = "INITIALIZED";
   }
 
+  getGamePhase() {
+    return structuredClone(this.#phase);
+  }
+
   getFaceUpCards() {
     return structuredClone(this.#carCardsDeck.getFaceUpCards());
   }
@@ -56,6 +60,9 @@ export default class Game {
   }
 
   drawTicketChoice() {
+    this.#phase = "DRAWTICKETCHOICE";
+    console.log("here", this.#phase);
+
     this.#drawnTickets = this.#ticketDeck.dealTicketChoices();
 
     return structuredClone(this.#drawnTickets.map(({ id }) => id));
