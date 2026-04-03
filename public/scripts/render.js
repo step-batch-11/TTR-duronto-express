@@ -214,3 +214,38 @@ export const unhighlightCities = (cardId) => {
     "stationColor",
   );
 };
+
+export const resolveFaceUpCardDraw = (card, img, carCards) => {
+  setTimeout(() => {
+    card.removeChild(img);
+    displayCarCards(carCards);
+
+    const market = document.querySelector(".market");
+    market.classList.remove("is-disabled");
+    document.querySelector(".footer").classList.remove("is-disabled");
+  }, 1001);
+};
+
+export const createImageAtr = (color) => {
+  const img = document.createElement("img");
+  img.setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
+
+  return img;
+};
+
+export const addHandCardContainer = (color) => {
+  const handContainer = document.querySelector(".hand-car-cards");
+  const carCardTemplate = document.querySelector("#card");
+  const clone = carCardTemplate.content.cloneNode(true);
+  clone.querySelector(".img-container").setAttribute("data-color", color);
+
+  handContainer.append(clone);
+  return document.querySelector(`.hand-car-cards [data-color="${color}"]`);
+};
+
+export const displayLog = (log) => {
+  const logContainer = document.querySelector(".log");
+  const p = document.createElement("p");
+  p.textContent = log;
+  logContainer.prepend(p);
+};

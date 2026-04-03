@@ -4,6 +4,7 @@ import { serveStatic } from "hono/deno";
 import {
   initializeFaceUpDeckHandler,
   initializePlayerHandHandler,
+  storeRecentMove,
 } from "./handlers/initialization_handlers.js";
 import {
   drawDeckCardHandler,
@@ -19,9 +20,9 @@ import {
 } from "./handlers/map_handlers.js";
 import { getplayerCarCardsHandler } from "./handlers/claim_route_handlers.js";
 import {
+  allowExistingPlayer,
   allowNonExistingPlayer,
   createUser,
-  doesPlayerExist,
   doesPlayerNotExist,
 } from "./handlers/auth_handlers.js";
 import { getGamePhase } from "./handlers/phase_handler.js";
@@ -36,20 +37,23 @@ export const createApp = (game, players) => {
     return next();
   });
 
-  app.get("/", doesPlayerExist, serveStatic({ root: "game.html" }));
   app.get("/login.html", doesPlayerNotExist, serveStatic({ root: "/public" }));
   app.post("/login", allowNonExistingPlayer, createUser);
+
+  app.get("/game.html", allowExistingPlayer, serveStatic({ root: "/public" }));
 
   app.get("/init-faceup", initializeFaceUpDeckHandler);
   app.get("/initial-hand", initializePlayerHandHandler);
   app.get("/draw-deck-card", drawDeckCardHandler);
   app.get("/car-cards", getplayerCarCardsHandler);
   app.get("/get-game-phase", getGamePhase);
+  app.get("/map-ownership", routeOwnershipHandler);
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
+
   app.post("/draw-faceup-card", drawFaceUpCardHandler);
   app.post("/claim-tickets", claimDestinationTickets);
   app.post("/claim-route", claimRouteHandler);
-  app.get("/map-ownership", routeOwnershipHandler);
+  app.post("/store-log", storeRecentMove);
 
   app.get("*", serveStatic({ root: "public" }));
 

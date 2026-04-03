@@ -31,8 +31,9 @@ export default class Player {
     };
   }
 
-  claimRoute(routeId, { colorCard, colorCardCount }) {
-    this.#carCards[colorCard] = this.#carCards[colorCard] - colorCardCount;
+  claimRoute(routeId, { colorCardUsed, colorCardCount }) {
+    this.#carCards[colorCardUsed] = this.#carCards[colorCardUsed] -
+      colorCardCount;
     this.#claimedRoutes.push(routeId);
   }
 

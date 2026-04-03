@@ -4,12 +4,23 @@ export default class Game {
   #player;
   #drawnTickets;
   #phase;
+  #log;
   constructor(carCardsDeck, ticketDeck, player) {
     this.#carCardsDeck = carCardsDeck;
     this.#ticketDeck = ticketDeck;
     this.#player = player;
     this.#drawnTickets = [];
     this.#phase = "STARTED";
+    this.#log = [];
+  }
+
+  storeLog(move) {
+    this.#log.push(move);
+    return { lastLog: move };
+  }
+
+  getLog() {
+    return structuredClone(this.#log);
   }
 
   initializePlayerHand() {
@@ -37,11 +48,11 @@ export default class Game {
   }
 
   drawFaceUpCard(id) {
-    const { drawnCard, drawnCardFromDeck } = this.#carCardsDeck
+    const { drawnCard, cardToRefill } = this.#carCardsDeck
       .drawCardFromFaceUp(id);
     this.#player.addCarCardToHand(drawnCard);
 
-    return { drawnCard, drawnCardFromDeck };
+    return { drawnCard, cardToRefill };
   }
 
   drawDeckCard() {
@@ -61,8 +72,6 @@ export default class Game {
 
   drawTicketChoice() {
     this.#phase = "DRAWTICKETCHOICE";
-    console.log("here", this.#phase);
-
     this.#drawnTickets = this.#ticketDeck.dealTicketChoices();
 
     return structuredClone(this.#drawnTickets.map(({ id }) => id));

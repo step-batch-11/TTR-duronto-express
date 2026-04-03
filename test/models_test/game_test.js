@@ -128,7 +128,7 @@ describe("testing the game", () => {
 
   it("claimRoute should add the route to player claimed routes and remove the cards used to claim the route", () => {
     assertEquals(game.playerHand().carCards.pink, 1);
-    game.claimRoute("STN4-STN5", { colorCard: "pink", colorCardCount: 1 });
+    game.claimRoute("STN4-STN5", { colorCardUsed: "pink", colorCardCount: 1 });
     assertEquals(game.getRouteClaims(), { green: ["STN4-STN5"] });
     assertEquals(game.playerHand().carCards.pink, 0);
   });
@@ -160,5 +160,11 @@ describe("testing the game", () => {
       "TRT-MIM",
       "PLD-PHX",
     ]);
+  });
+
+  it("tests store log functionality", () => {
+    game.storeLog("card is drawn from deck");
+    const log = game.getLog();
+    assertEquals(log, ["card is drawn from deck"]);
   });
 });

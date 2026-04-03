@@ -13,3 +13,11 @@ export const initializeFaceUpDeckHandler = (context) => {
 
   return context.json(faceUpCards);
 };
+
+export const storeRecentMove = async (context) => {
+  const { msg } = await context.req.json();
+  const game = context.get("game");
+  const { lastLog } = game.storeLog(msg);
+
+  return context.json({ lastLog });
+};

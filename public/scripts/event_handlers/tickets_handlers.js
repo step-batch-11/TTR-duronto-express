@@ -1,5 +1,6 @@
-import { claimSelectedTickets, fetchPhase } from "../api.js";
+import { claimSelectedTickets, fetchLastLog, fetchPhase } from "../api.js";
 import {
+  displayLog,
   displayPlayerHandTickets,
   highlightCities,
   toggleDisable,
@@ -38,6 +39,9 @@ export const handleTicketsClaim = async (_event) => {
   displayPlayerHandTickets(playerHandTickets);
 
   selectedTickets.clear();
+  const body = { msg: `tickets are drawn` };
+  const { lastLog } = await fetchLastLog(body);
+  displayLog(lastLog);
 };
 
 const validateTicketClaim = async () => {

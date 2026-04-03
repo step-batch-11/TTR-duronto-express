@@ -39,15 +39,14 @@ export class CarCardsDeck {
     const cardIndex = parseInt(faceUpCardPosition) - 1;
 
     const [drawnCard] = this.#faceUp.splice(cardIndex, 1);
-    const drawnCardFromDeck = this.#faceDown.pop();
+    const cardToRefill = this.#faceDown.pop();
 
-    this.#refillFaceUp(cardIndex, drawnCardFromDeck);
+    this.#refillFaceUp(cardIndex, cardToRefill);
     if (this.#totalWildInFaceUp() >= 3) {
       this.#discardPile.push(...this.#faceUp);
       this.initFaceUp();
     }
-
-    return { drawnCard, drawnCardFromDeck };
+    return { drawnCard, cardToRefill };
   }
 
   #refillDeck() {

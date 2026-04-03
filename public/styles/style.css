@@ -66,6 +66,10 @@ article {
   width: 100%;
   border: 1px solid rgb(0, 0, 0);
   height: 30%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .user {
@@ -376,6 +380,12 @@ svg {
   pointer-events: none;
   opacity: 0.85;
   user-select: none;
+}
+
+.click-disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .top {
