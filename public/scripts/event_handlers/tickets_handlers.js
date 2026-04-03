@@ -66,6 +66,7 @@ export const handleTicketSelection = async (event) => {
   if (selectedTickets.has(cardId)) {
     selectedTickets.delete(cardId);
     unhighlightCities(cardId);
+    await validateTicketClaim();
     return;
   }
 

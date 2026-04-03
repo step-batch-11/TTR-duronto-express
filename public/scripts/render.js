@@ -154,10 +154,10 @@ const createClaimButton = () => {
   const buttonTemplate = document.querySelector("#btn");
 
   const clone = buttonTemplate.content.cloneNode(true);
-  clone.querySelector(".button").id = "ticket-claim-button";
-  clone.querySelector(".button").innerText = "Claim";
+  const button = clone.querySelector(".claim-button");
+  button.id = "ticket-claim-button";
+  button.innerText = "Claim";
 
-  const button = clone.querySelector(".button");
   button.classList.add("disabled-submit");
 
   return clone;

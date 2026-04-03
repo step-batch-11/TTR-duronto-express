@@ -223,7 +223,6 @@ svg {
 
 .button {
   height: 5%;
-  background-color: #9860db;
 }
 
 .button:hover {
@@ -376,10 +375,16 @@ svg {
   font-weight: bold;
 }
 
+.claim-button {
+  background-color: black;
+  color: white;
+  font-size: 18px;
+  padding: 5px;
+}
+
 .disabled-submit{
   pointer-events: none;
-  background-color: rgb(129, 129, 169);
-  opacity: 0.85;
+  background-color: rgba(0, 0, 0, 0.577);
   user-select: none;
 }
 
