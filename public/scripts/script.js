@@ -6,12 +6,12 @@ import {
   fetchRouteOwnership,
   fetchRoutesData,
 } from "./api.js";
+import { mapOnClick } from "./claim_route.js";
 import {
   accessTicket,
   drawDeckCard,
   drawFaceUpCard,
   drawTicketChoice,
-  mapOnClick,
   selectTicketCard,
   swipeTickets,
 } from "./events.js";

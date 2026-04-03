@@ -1,0 +1,161 @@
+import { fetchPlayerHand, postClaimRoute } from "./api.js";
+import {
+  addHandCardContainer,
+  createImageAtr,
+  drawTicketChoice,
+} from "./events.js";
+import { displayDestTicketDeck, renderMap } from "./render.js";
+
+const enableBuildActions = () => {
+  const template = document.querySelector("#build-route-template");
+  const clone = template.content.cloneNode(true);
+  document.querySelector(".footer").appendChild(clone);
+};
+
+const disableBuildActions = () =>
+  document.querySelector(".build-route-container").remove();
+
+const expandPlayerHand = () =>
+  document.querySelector(".hand-car-cards").id = "";
+
+const squeezePlayerHand = () => {
+  const destContainer = document.querySelector(
+    ".destination-tickets-deck-container",
+  );
+  document.querySelector(".footer").removeChild(destContainer);
+  document.querySelector(".hand-car-cards").id = "squeezed-hand";
+};
+
+const appendCarCardImgInCart = (color, count) => {
+  const colorCardElement = document.querySelector(
+    ".possible-cards #color-card",
+  );
+
+  const cartCountContainer = colorCardElement.querySelector(".card-count");
+  cartCountContainer.textContent =
+    parseInt(cartCountContainer.textContent || 0) + count;
+  if (colorCardElement.dataset.cardColor) return;
+
+  colorCardElement.setAttribute("data-card-color", color);
+  const img = createImageAtr(color);
+  const imgContainer = colorCardElement.querySelector(".build-img-container");
+  imgContainer.append(img);
+  imgContainer.style.border = "1px solid";
+};
+
+const showPossibleCardsToBuild = async ({ routeLength, routeColor }) => {
+  const handCarCards = await fetchPlayerHand();
+  const carCardCountInPlayerHand = handCarCards[routeColor];
+  if (carCardCountInPlayerHand >= routeLength) {
+    const playerHandCard = document.querySelector(
+      `.hand-car-cards #${routeColor}`,
+    );
+    const countContainer = playerHandCard.querySelector(".card-count");
+    countContainer.textContent = parseInt(countContainer.textContent) -
+      routeLength;
+    appendCarCardImgInCart(routeColor, routeLength);
+  }
+};
+
+const disableCardsExcept = (color, container) => {
+  Object.entries(container.children).forEach(([_, card]) => {
+    if (card.id !== color && card.id !== "wild") {
+      card.classList.add("click-disabled");
+    }
+  });
+};
+
+const addToCart = () => {
+  const cardsContainer = document.querySelector(".hand-car-cards");
+  cardsContainer.addEventListener("click", (event) => {
+    const card = event.target.closest(".img-container");
+    if (card === null) return;
+
+    const container = document.querySelector(".possible-cards #color-card");
+    const colorCardChosen = container.dataset.cardColor || card.dataset.color;
+
+    disableCardsExcept(colorCardChosen, cardsContainer);
+
+    const countContainer = card.parentElement.querySelector(".card-count");
+    if (countContainer.textContent === "1") {
+      cardsContainer.removeChild(card.parentElement);
+    }
+
+    countContainer.textContent = parseInt(countContainer.textContent) - 1;
+    const color = card.parentElement.id;
+
+    appendCarCardImgInCart(color, 1);
+  });
+};
+
+const removeFromCart = () => {
+  const possibleCardContainer = document.querySelector(".possible-cards");
+
+  possibleCardContainer.addEventListener("click", (event) => {
+    const card = event.target.closest(".build-img-container");
+    if (card === null) return;
+    const countContainer = card.parentElement.querySelector(".card-count");
+    countContainer.textContent = parseInt(countContainer.textContent) - 1;
+    const color = card.parentElement.dataset.cardColor;
+
+    const handCarCardContainer = document.querySelector(`#${color}`);
+
+    if (handCarCardContainer) {
+      const carCount = handCarCardContainer.querySelector(".card-count");
+      carCount.textContent = parseInt(carCount.textContent) + 1;
+      return;
+    }
+
+    const container = addHandCardContainer(color);
+    container.querySelector("img")
+      .setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
+
+    const carCount = container.parentElement.querySelector(".card-count");
+    carCount.textContent = 1;
+  });
+};
+
+export const buildRoute = (routeId) => {
+  const buildButton = document.querySelector(".build-actions #build");
+
+  buildButton.addEventListener("click", async () => {
+    const colorCardElement = document.querySelector(
+      ".possible-cards #color-card",
+    );
+
+    const colorCardUsed = colorCardElement.getAttribute("data-card-color");
+    const colorCardCount =
+      colorCardElement.querySelector(".card-count").textContent;
+    const { routeOwnership } = await postClaimRoute({
+      routeId,
+      cardsUsed: { colorCardUsed, colorCardCount },
+    });
+    renderMap(routeOwnership);
+
+    disableBuildActions();
+    expandPlayerHand();
+    displayDestTicketDeck();
+    drawTicketChoice();
+  });
+};
+
+const claimRoute = async (event, routesData) => {
+  const route = event.target.closest(".route");
+  if (route === null) return;
+
+  const routeId = route.getAttribute("id");
+  const routeData = routesData[routeId];
+  enableBuildActions(routeId);
+  squeezePlayerHand();
+  await showPossibleCardsToBuild(routeData);
+  addToCart();
+  removeFromCart();
+  buildRoute(routeId);
+};
+
+export const mapOnClick = (routesData) => {
+  const map = document.querySelector("#map");
+  map.addEventListener("click", (event) => {
+    claimRoute(event, routesData);
+  });
+};
