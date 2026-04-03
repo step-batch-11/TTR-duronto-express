@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+  <link rel="stylesheet" href="styles/login.css">
   <script type="module" src="/scripts/login.js"></script>
 </head>
+
 <body>
-  <div>
+  <header>
+    <h1>Ticket To Ride</h1>
+  </header>
+  <main>
     <form action="/login" method="post" id="login-form">
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" required>
+      <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" pattern="[A-Za-z]+[0-9]*" required>
+      </div>
       <button type="submit">Login</button>
     </form>
-  </div>
+  </main>
 </body>
+
 </html>
