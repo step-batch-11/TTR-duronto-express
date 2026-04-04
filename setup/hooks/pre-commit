@@ -1,5 +1,12 @@
 #! /bin/zsh
+
 ./setup/coverages/coverage_script.sh
+deno coverage --detailed
+
+if [ $? -eq 1 ]
+then exit 1
+fi
+
 set -e
 echo "🔄 Checking if branch is up to date..."
 
