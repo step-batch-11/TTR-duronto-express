@@ -394,7 +394,7 @@ svg {
 
 .is-disabled {
   pointer-events: none;
-  opacity: 0.85;
+  opacity: 0.65;
   user-select: none;
 }
 
