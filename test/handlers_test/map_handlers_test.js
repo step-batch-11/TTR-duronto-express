@@ -6,7 +6,7 @@ import Player from "../../src/models/player.js";
 import Game from "../../src/models/game.js";
 import { createApp } from "../../src/app.js";
 
-describe.only("testing map handlers", () => {
+describe("testing map handlers", () => {
   let carCardsDeck;
   let ticketDeck;
   beforeEach(() => {
@@ -105,17 +105,15 @@ describe.only("testing map handlers", () => {
       method: "post",
       body: JSON.stringify({
         routeId: "SLC-DVR",
-        cardsUsed: { colorCardUsed: "red", colorCardCount: 3 },
+        cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount : 0 },
       }),
     });
-
-    player.playerBogies = 2;
 
     const res = await app.request("/claim-route", {
       method: "post",
       body: JSON.stringify({
         routeId: "DLT-CHG",
-        cardsUsed: { colorCardUsed: "red", colorCardCount: 3 },
+        cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount : 0 },
       }),
     });
 

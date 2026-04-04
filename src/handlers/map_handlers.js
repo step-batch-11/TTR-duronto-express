@@ -8,8 +8,6 @@ export const claimRouteHandler = async (context) => {
     game.setLastPlayer(1);
   }
 
-  console.log(game.isGameEnded());
-
   if (game.getLastPlayerId() === playerId) {
     return context.redirect("/finish-game", 303);
   }
