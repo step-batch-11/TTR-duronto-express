@@ -90,6 +90,7 @@ describe("testing map handlers", () => {
   });
 
   it("after sending request to /claim-route if last turn is going on it should end the game if last player played the turn", async () => {
+    let res;
     const player = new Player();
     player.addCarCardToHand("red");
     player.addCarCardToHand("red");
@@ -101,7 +102,7 @@ describe("testing map handlers", () => {
     player.playerBogies = 5;
     const app = createApp(game);
 
-    await app.request("/claim-route", {
+    res = await app.request("/claim-route", {
       method: "post",
       body: JSON.stringify({
         routeId: "SLC-DVR",
@@ -113,7 +114,9 @@ describe("testing map handlers", () => {
       }),
     });
 
-    const res = await app.request("/claim-route", {
+    assertEquals(await res.status, 200);
+
+    res = await app.request("/claim-route", {
       method: "post",
       body: JSON.stringify({
         routeId: "DLT-CHG",

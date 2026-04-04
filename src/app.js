@@ -18,7 +18,7 @@ import {
   claimRouteHandler,
   routeOwnershipHandler,
 } from "./handlers/map_handlers.js";
-import { getplayerCarCardsHandler } from "./handlers/claim_route_handlers.js";
+import { getPlayerCarCardsHandler } from "./handlers/claim_route_handlers.js";
 import {
   allowExistingPlayer,
   allowNonExistingPlayer,
@@ -46,7 +46,7 @@ export const createApp = (game, players) => {
   app.get("/initial-hand", initializePlayerHandHandler);
 
   app.get("/draw-deck-card", drawDeckCardHandler);
-  app.get("/car-cards", getplayerCarCardsHandler);
+  app.get("/car-cards", getPlayerCarCardsHandler);
   app.get("/routes-data", serveStatic({ path: "src/static-data/route.json" }));
   app.get("/get-game-phase", getGamePhase);
   app.get("/map-ownership", routeOwnershipHandler);

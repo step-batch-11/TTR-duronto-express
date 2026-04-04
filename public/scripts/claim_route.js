@@ -1,9 +1,10 @@
-import { fetchPlayerHand, postClaimRoute } from "./api.js";
+import { fetchLog, fetchPlayerHand, postClaimRoute } from "./api.js";
 import { drawTicketChoice } from "./events.js";
 import {
   addHandCardContainer,
   displayCarCards,
   displayDestTicketDeck,
+  displayLog,
   renderMap,
 } from "./render.js";
 import { createCarCardImg } from "./utils.js";
@@ -221,6 +222,10 @@ const buildRoute = async (routeId) => {
   });
   renderMap(routeOwnership);
   resolveBuild(carCards);
+
+  const body = { msg: `Route claimed successfully` };
+  const log = await fetchLog(body);
+  displayLog(log);
 };
 
 const cancelBuild = (_, handCarCards) => {
@@ -260,7 +265,6 @@ const claimRoute = async (event, routesData, map) => {
   const handCarCards = await fetchPlayerHand();
   const routeId = route.getAttribute("id");
   const routeData = routesData[routeId];
-  console.log(routeData, routesData[routeId]);
   if (!isBuildPossible(routeData, structuredClone(handCarCards))) return;
 
   map.classList.add("click-disabled");

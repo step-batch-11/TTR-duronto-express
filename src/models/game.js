@@ -117,7 +117,6 @@ export default class Game {
     return playerClaimedRoutes;
   }
 
-  //Claim the route
   isGameEnded() {
     const playerHand = this.#player.getPlayerHand();
     return playerHand.bogies < 3;
