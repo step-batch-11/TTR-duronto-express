@@ -47,6 +47,7 @@ export const createApp = (game, players) => {
 
   app.get("/draw-deck-card", drawDeckCardHandler);
   app.get("/car-cards", getplayerCarCardsHandler);
+  app.get("/routes-data", serveStatic({ path: "src/static-data/route.json" }));
   app.get("/get-game-phase", getGamePhase);
   app.get("/map-ownership", routeOwnershipHandler);
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
