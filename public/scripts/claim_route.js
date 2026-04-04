@@ -1,6 +1,11 @@
 import { fetchPlayerHand, postClaimRoute } from "./api.js";
-import { addHandCardContainer, drawTicketChoice } from "./events.js";
-import { displayDestTicketDeck, renderMap } from "./render.js";
+import { drawTicketChoice } from "./events.js";
+import {
+  addHandCardContainer,
+  displayCarCards,
+  displayDestTicketDeck,
+  renderMap,
+} from "./render.js";
 import { createCarCardImg } from "./utils.js";
 
 const enableBuildActions = () => {
@@ -21,6 +26,25 @@ const squeezePlayerHand = () => {
   );
   document.querySelector(".footer").removeChild(destContainer);
   document.querySelector(".hand-car-cards").id = "squeezed-hand";
+};
+
+const calculateTotalCardsInCart = () => {
+  const colorCardCount =
+    document.querySelector("#color-card .card-count").textContent;
+  const wildCardCount =
+    document.querySelector("#wild-card .card-count").textContent || 0;
+
+  return parseInt(colorCardCount) + parseInt(wildCardCount);
+};
+
+const enableBuildButton = () => {
+  const buildBtn = document.querySelector(".build-actions #build");
+  buildBtn.classList.remove("click-disabled");
+};
+
+const disableBuildButton = () => {
+  const buildBtn = document.querySelector(".build-actions #build");
+  buildBtn.classList.add("click-disabled");
 };
 
 const appendCarCardImgInCart = (color, count) => {
@@ -45,16 +69,18 @@ const showPossibleCardsToBuild = (
   { routeLength, routeColor },
   handCarCards,
 ) => {
+  if (routeColor === "transparent") return;
   const carCardCountInPlayerHand = handCarCards[routeColor];
   const playerHandCard = document.querySelector(
     `.hand-car-cards #${routeColor}`,
   );
   const countContainer = playerHandCard.querySelector(".card-count");
-
+  enableBuildButton();
   if (carCardCountInPlayerHand >= routeLength) {
     countContainer.textContent = parseInt(countContainer.textContent) -
       routeLength;
     appendCarCardImgInCart(routeColor, routeLength);
+    disableCardsExcept(routeColor);
     return;
   }
 
@@ -90,8 +116,9 @@ const enableCards = () => {
   });
 };
 
-const addToCart = () => {
+const addToCart = ({ routeLength }) => {
   const cardsContainer = document.querySelector(".hand-car-cards");
+
   cardsContainer.addEventListener("click", (event) => {
     const card = event.target.closest(".img-container");
     if (card === null) return;
@@ -110,6 +137,9 @@ const addToCart = () => {
     countContainer.textContent = parseInt(countContainer.textContent) - 1;
     const color = card.parentElement.id;
     appendCarCardImgInCart(color, 1);
+    const totalCardsInCart = calculateTotalCardsInCart();
+
+    if (totalCardsInCart >= routeLength) enableBuildButton();
   });
 };
 
@@ -141,12 +171,13 @@ const removeCardImgFromCart = (card, countContainer) => {
   if (cardType !== "wild") enableCards();
 };
 
-const removeFromCart = () => {
+const removeFromCart = ({ routeLength }) => {
   const possibleCardContainer = document.querySelector(".possible-cards");
 
   possibleCardContainer.addEventListener("click", (event) => {
     const card = event.target.closest(".build-img-container");
-    if (card === null) return;
+
+    if (card === null || !card.innerHTML.trim()) return;
 
     const countContainer = card.parentElement.querySelector(".card-count");
     if (countContainer.textContent === "1") {
@@ -156,35 +187,62 @@ const removeFromCart = () => {
 
     countContainer.textContent = parseInt(countContainer.textContent) - 1;
     moveCardToPlayerHand(card);
+
+    if (calculateTotalCardsInCart() < routeLength) disableBuildButton();
   });
 };
 
-export const buildRoute = (routeId) => {
-  const buildButton = document.querySelector(".build-actions #build");
+const resolveBuild = (handCarCards) => {
+  disableBuildActions();
+  expandPlayerHand();
+  displayDestTicketDeck();
+  drawTicketChoice();
+  document.querySelector(".hand-car-cards").remove();
+  displayCarCards(handCarCards);
+};
 
-  buildButton.addEventListener("click", async () => {
-    const colorCardElement = document.querySelector(
-      ".possible-cards #color-card",
-    );
+const buildRoute = async (routeId) => {
+  const colorCardElement = document.querySelector(
+    ".possible-cards #color-card",
+  );
+  const wildCardCount = parseInt(
+    document.querySelector(
+      ".possible-cards #wild-card .card-count",
+    ).textContent || 0,
+  );
 
-    const colorCardUsed = colorCardElement.getAttribute("data-card-color");
-    const colorCardCount =
-      colorCardElement.querySelector(".card-count").textContent;
-    const { routeOwnership } = await postClaimRoute({
-      routeId,
-      cardsUsed: { colorCardUsed, colorCardCount },
-    });
-    renderMap(routeOwnership);
+  const colorCardUsed = colorCardElement.getAttribute("data-card-color");
+  const colorCardCount = parseInt(
+    colorCardElement.querySelector(".card-count").textContent || 0,
+  );
+  const { routeOwnership, carCards } = await postClaimRoute({
+    routeId,
+    cardsUsed: { colorCardUsed, colorCardCount, wildCardCount },
+  });
+  renderMap(routeOwnership);
+  resolveBuild(carCards);
+};
 
-    disableBuildActions();
-    expandPlayerHand();
-    displayDestTicketDeck();
-    drawTicketChoice();
+const cancelBuild = (_, handCarCards) => {
+  const map = document.querySelector("#map");
+  map.classList.remove("click-disabled");
+  resolveBuild(handCarCards);
+};
+
+const BUILD_ACTIONS = { "build": buildRoute, "cancel": cancelBuild };
+
+const buildActionsOnClick = (routeId, handCarCards) => {
+  const buildButton = document.querySelector(".build-actions");
+
+  buildButton.addEventListener("click", async (event) => {
+    const action = event.target.id;
+    if (action === null) return;
+    await BUILD_ACTIONS[action](routeId, handCarCards);
   });
 };
 
 const isBuildPossible = ({ routeLength, routeColor }, handCarCards) => {
-  const wildCardCount = handCarCards["wild"];
+  const wildCardCount = handCarCards["wild"] || 0;
   delete handCarCards.wild;
   if (routeColor === "transparent") {
     return Object.entries(handCarCards).some(([_, count]) =>
@@ -195,26 +253,28 @@ const isBuildPossible = ({ routeLength, routeColor }, handCarCards) => {
   return (handCarCards[routeColor] + wildCardCount) >= routeLength;
 };
 
-const claimRoute = async (event, routesData) => {
+const claimRoute = async (event, routesData, map) => {
   const route = event.target.closest(".route");
   if (route === null) return;
 
   const handCarCards = await fetchPlayerHand();
   const routeId = route.getAttribute("id");
   const routeData = routesData[routeId];
-  if (!isBuildPossible(routeData, handCarCards)) return;
+  console.log(routeData, routesData[routeId]);
+  if (!isBuildPossible(routeData, structuredClone(handCarCards))) return;
 
+  map.classList.add("click-disabled");
   enableBuildActions(routeId);
   squeezePlayerHand();
   await showPossibleCardsToBuild(routeData, handCarCards);
-  addToCart();
-  removeFromCart();
-  buildRoute(routeId);
+  addToCart(routeData);
+  removeFromCart(routeData);
+  buildActionsOnClick(routeId, handCarCards);
 };
 
 export const mapOnClick = (routesData) => {
   const map = document.querySelector("#map");
   map.addEventListener("click", (event) => {
-    claimRoute(event, routesData);
+    claimRoute(event, routesData, map);
   });
 };

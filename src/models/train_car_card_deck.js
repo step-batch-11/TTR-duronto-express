@@ -1,6 +1,6 @@
 import { shuffle } from "@std/random/shuffle";
 
-export class CarCardsDeck {
+export default class CarCardsDeck {
   #faceUp;
   #faceDown;
   #discardPile;

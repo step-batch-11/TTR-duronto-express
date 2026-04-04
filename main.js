@@ -4,7 +4,7 @@ import Player from "./src/models/player.js";
 import { initDeck } from "./src/static-data/deck.js";
 import { getTicketCards } from "./src/static-data/ticket_cards.js";
 import TicketDeck from "./src/models/ticket_deck.js";
-import { CarCardsDeck } from "./src/models/train_car_card_deck.js";
+import CarCardsDeck from "./src/models/train_car_card_deck.js";
 import PlayerBase from "./src/models/player_base.js";
 
 const main = () => {
@@ -13,7 +13,6 @@ const main = () => {
   const carCardsDeck = new CarCardsDeck(deck);
   const ticketDeck = new TicketDeck(getTicketCards());
   const player = new Player();
-
   const game = new Game(carCardsDeck, ticketDeck, player);
   const app = createApp(game, players);
   const port = Deno.env.get("PORT") || 8000;

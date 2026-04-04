@@ -12,17 +12,6 @@ import {
 } from "./event_handlers/draw_deck_card_handler.js";
 import { displayTicketChoices } from "./render.js";
 
-export const addHandCardContainer = (color) => {
-  const handContainer = document.querySelector(".hand-car-cards");
-  const carCardTemplate = document.querySelector("#card");
-  const clone = carCardTemplate.content.cloneNode(true);
-  clone.querySelector(".hand-car-card").id = color;
-  clone.querySelector(".img-container").setAttribute("data-color", color);
-
-  handContainer.append(clone);
-  return document.querySelector(`.hand-car-cards [data-color="${color}"]`);
-};
-
 export const drawDeckCard = () => {
   const deck = document.querySelector(".deck");
   deck.addEventListener("click", () => handleDrawCardFromDeck(deck));

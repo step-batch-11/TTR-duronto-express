@@ -1,6 +1,6 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { CarCardsDeck } from "../../src/models/train_car_card_deck.js";
+import CarCardsDeck from "../../src/models/train_car_card_deck.js";
 import TicketDeck from "../../src/models/ticket_deck.js";
 import Player from "../../src/models/player.js";
 import Game from "../../src/models/game.js";
@@ -128,9 +128,17 @@ describe("testing the game", () => {
 
   it("claimRoute should add the route to player claimed routes and remove the cards used to claim the route", () => {
     assertEquals(game.playerHand().carCards.pink, 1);
-    game.claimRoute("STN4-STN5", { colorCardUsed: "pink", colorCardCount: 1 });
+    game.claimRoute("STN4-STN5", {
+      colorCardUsed: "pink",
+      colorCardCount: 1,
+      wildCardCount: 0,
+    });
     assertEquals(game.getRouteClaims(), { green: ["STN4-STN5"] });
-    assertEquals(game.playerHand().carCards.pink, 0);
+    assertEquals(game.playerHand().carCards, {
+      "black": 1,
+      "wild": 1,
+      "blue": 1,
+    });
   });
 
   it("claimTicketCard should add the selected tickets to the player's hand of destination tickets and discard the unselected cards", () => {

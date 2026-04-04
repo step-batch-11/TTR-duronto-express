@@ -55,8 +55,13 @@ export const displayFaceUpCards = (cards) => {
 
 export const displayCarCards = (carCards) => {
   const carCardTemplate = document.querySelector("#card");
-  const handContainer = document.querySelector(".hand-car-cards");
 
+  const container = document.querySelector(".hand-car-cards");
+  if (container !== null) container.remove();
+
+  const handContainer = document.createElement("div");
+  handContainer.classList.add("hand-car-cards");
+  document.querySelector(".footer").children[1].before(handContainer);
   handContainer.innerHTML = "";
 
   const cardsInHand = Object.entries(carCards).map(([color, count]) => {
@@ -106,8 +111,8 @@ export const displayPlayerHandTickets = (ticketChoices) => {
 export const displayPlayerHand = (
   { carCards, ticketChoices, claimedTickets },
 ) => {
-  displayTicketChoices(ticketChoices, claimedTickets);
   displayCarCards(carCards);
+  displayTicketChoices(ticketChoices, claimedTickets);
 };
 
 export const displayDestTicketDeck = () => {
@@ -237,6 +242,7 @@ export const addHandCardContainer = (color) => {
   const handContainer = document.querySelector(".hand-car-cards");
   const carCardTemplate = document.querySelector("#card");
   const clone = carCardTemplate.content.cloneNode(true);
+  clone.querySelector(".hand-car-card").id = color;
   clone.querySelector(".img-container").setAttribute("data-color", color);
 
   handContainer.append(clone);

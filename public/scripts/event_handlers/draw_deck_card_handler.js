@@ -84,4 +84,5 @@ export const handleDrawCardFromDeck = async (deck) => {
   displayLog(log);
 
   resolveDeckCardDraw(deck, img, carCards);
+  disableWild();
 };

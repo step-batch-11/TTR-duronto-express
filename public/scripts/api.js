@@ -59,11 +59,11 @@ export const fetchPlayerHand = () => get("/car-cards");
 export const fetchLog = (body) => post("/fetch-log", body);
 
 export const fetchRoutesData = () => ({
-  "HLN-CLC": {
+  "CLC-HLN": {
     routeColor: "red",
     routeLength: 4,
   },
-  "STL-CLC": {
+  "CLC-STL": {
     routeColor: "transparent",
     routeLength: 4,
   },
