@@ -105,7 +105,11 @@ describe("testing map handlers", () => {
       method: "post",
       body: JSON.stringify({
         routeId: "SLC-DVR",
-        cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount : 0 },
+        cardsUsed: {
+          colorCardUsed: "red",
+          colorCardCount: 3,
+          wildCardCount: 0,
+        },
       }),
     });
 
@@ -113,7 +117,11 @@ describe("testing map handlers", () => {
       method: "post",
       body: JSON.stringify({
         routeId: "DLT-CHG",
-        cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount : 0 },
+        cardsUsed: {
+          colorCardUsed: "red",
+          colorCardCount: 3,
+          wildCardCount: 0,
+        },
       }),
     });
 
