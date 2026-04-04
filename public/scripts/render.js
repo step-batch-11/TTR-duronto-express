@@ -42,7 +42,7 @@ export const displayFaceUpCards = (cards) => {
   const container = document.querySelector(".faceup-cards");
   container.innerHTML = "";
 
-  cards.forEach((card, index) => {
+  cards.filter((card) => card !== null).forEach((card, index) => {
     const clone = cardTemplate.content.cloneNode(true);
     clone.querySelector(".card").id = index + 1;
     clone.querySelector(".card").setAttribute("data-color", card);
@@ -149,7 +149,6 @@ const createTicketCard = (ticketId) => {
   clone
     .querySelector(".card img")
     .setAttribute("src", `./assets/destination-cards-images/${ticketId}.png`);
-  clone.onclick = () => {};
   return clone;
 };
 

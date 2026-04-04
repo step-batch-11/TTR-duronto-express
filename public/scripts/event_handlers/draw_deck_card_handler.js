@@ -72,9 +72,11 @@ export const handleDrawFaceUP = async (event) => {
   const log = await fetchLog(body);
   displayLog(log);
 
-  animateRefillMarket(cardToRefill, card, faceUpCards);
-  resolveFaceUpCardDraw(card, img, carCards);
-  disableWild();
+  if (cardToRefill !== undefined) {
+    animateRefillMarket(cardToRefill, card, faceUpCards);
+    resolveFaceUpCardDraw(card, img, carCards);
+    disableWild();
+  }
 };
 
 export const handleDrawCardFromDeck = async (deck) => {
@@ -82,19 +84,21 @@ export const handleDrawCardFromDeck = async (deck) => {
   disableMap();
 
   const { drawnCard, carCards } = await fetchDeckCards();
-  const deckPosition = deck
-    .querySelector("#deck-img")
-    .getBoundingClientRect();
-  const hand = getHandCardPositions(drawnCard);
+  if (drawnCard !== undefined) {
+    const deckPosition = deck
+      .querySelector("#deck-img")
+      .getBoundingClientRect();
+    const hand = getHandCardPositions(drawnCard);
 
-  const img = createCarCardImg(drawnCard);
-  deck.append(img);
-  animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
+    const img = createCarCardImg(drawnCard);
+    deck.append(img);
+    animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
 
-  const body = { msg: `Cards drown from deck` };
-  const log = await fetchLog(body);
-  displayLog(log);
+    const body = { msg: `Cards drawn from deck` };
+    const log = await fetchLog(body);
+    displayLog(log);
 
-  resolveDeckCardDraw(deck, img, carCards);
-  disableWild();
+    resolveDeckCardDraw(deck, img, carCards);
+    disableWild();
+  }
 };

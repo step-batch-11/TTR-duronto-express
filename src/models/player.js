@@ -26,8 +26,12 @@ export default class Player {
   }
 
   getPlayerHand() {
+    const cards = Object.entries(this.#carCards);
+    const handCards = Object.fromEntries(
+      cards.filter(([color]) => color !== "undefined"),
+    );
     return {
-      carCards: structuredClone(this.#carCards),
+      carCards: handCards,
       claimedTickets: structuredClone(this.#claimedTickets),
       bogies: this.#bogies,
     };
