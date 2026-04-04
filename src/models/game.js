@@ -29,7 +29,7 @@ export default class Game {
   }
 
   initializePlayerHand() {
-    if (this.#phase === "INITIALIZED") {
+    if (this.#phase !== "STARTED") {
       return;
     }
     const dealtCards = this.#carCardsDeck.dealInitialCards();
@@ -77,7 +77,6 @@ export default class Game {
   drawTicketChoice() {
     this.#phase = "DRAWTICKETCHOICE";
     this.#drawnTickets = this.#ticketDeck.dealTicketChoices();
-    console.log("draw tickets", this.#drawnTickets);
 
     return structuredClone(this.#drawnTickets.map(({ id }) => id));
   }
