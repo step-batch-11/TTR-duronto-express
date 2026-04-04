@@ -66,39 +66,65 @@ const appendCarCardImgInCart = (color, count) => {
   imgContainer.classList.remove("card-placeholder");
 };
 
+const removeExhaustedCards = () => {
+  const handCarCards = document.querySelectorAll(
+    ".hand-car-cards .hand-car-card",
+  );
+
+  handCarCards.forEach((card) => {
+    const countContainer = card.querySelector(".card-count");
+    if (countContainer.textContent === "0") card.remove();
+  });
+};
+
+const showPossibleCombinationToBuild = (
+  routeLength,
+  routeColor,
+  colorCardCount,
+) => {
+  appendCarCardImgInCart(routeColor, colorCardCount);
+
+  const wildCountContainer = document.querySelector(
+    `.hand-car-cards #wild .card-count`,
+  );
+  const wildCardsRequired = routeLength - colorCardCount;
+  wildCountContainer.textContent = wildCountContainer.textContent -
+    wildCardsRequired;
+  appendCarCardImgInCart("wild", wildCardsRequired);
+
+  disableCardsExcept(routeColor);
+  removeExhaustedCards();
+};
+
+const showPossibleColorCards = (countContainer, routeColor, routeLength) => {
+  countContainer.textContent = parseInt(countContainer.textContent) -
+    routeLength;
+  appendCarCardImgInCart(routeColor, routeLength);
+  disableCardsExcept(routeColor);
+  removeExhaustedCards();
+};
+
 const showPossibleCardsToBuild = (
   { routeLength, routeColor },
   handCarCards,
 ) => {
   if (routeColor === "transparent") return;
-  const carCardCountInPlayerHand = handCarCards[routeColor];
+
+  const colorCardCount = handCarCards[routeColor];
   const playerHandCard = document.querySelector(
     `.hand-car-cards #${routeColor}`,
   );
+
   const countContainer = playerHandCard.querySelector(".card-count");
   enableBuildButton();
-  if (carCardCountInPlayerHand >= routeLength) {
-    countContainer.textContent = parseInt(countContainer.textContent) -
-      routeLength;
-    appendCarCardImgInCart(routeColor, routeLength);
-    disableCardsExcept(routeColor);
+
+  if (colorCardCount >= routeLength) {
+    showPossibleColorCards(countContainer, routeColor, routeLength);
     return;
   }
 
-  if (carCardCountInPlayerHand > 0) {
-    countContainer.textContent = 0;
-    appendCarCardImgInCart(routeColor, carCardCountInPlayerHand);
-
-    const wildCountContainer = document.querySelector(
-      `.hand-car-cards #wild .card-count`,
-    );
-    const wildCardsRequired = routeLength - carCardCountInPlayerHand;
-    wildCountContainer.textContent = wildCountContainer.textContent -
-      wildCardsRequired;
-    appendCarCardImgInCart("wild", wildCardsRequired);
-  }
-
-  disableCardsExcept(routeColor);
+  countContainer.textContent = 0;
+  showPossibleCombinationToBuild(routeLength, routeColor, colorCardCount);
 };
 
 const disableCardsExcept = (color) => {
@@ -140,7 +166,8 @@ const addToCart = ({ routeLength }) => {
     appendCarCardImgInCart(color, 1);
     const totalCardsInCart = calculateTotalCardsInCart();
 
-    if (totalCardsInCart >= routeLength) enableBuildButton();
+    if (totalCardsInCart === routeLength) enableBuildButton();
+    if (totalCardsInCart > routeLength) disableBuildButton();
   });
 };
 
@@ -181,6 +208,7 @@ const removeFromCart = ({ routeLength }) => {
     if (card === null || !card.innerHTML.trim()) return;
 
     const countContainer = card.parentElement.querySelector(".card-count");
+
     if (countContainer.textContent === "1") {
       removeCardImgFromCart(card, countContainer);
       return;
@@ -189,7 +217,9 @@ const removeFromCart = ({ routeLength }) => {
     countContainer.textContent = parseInt(countContainer.textContent) - 1;
     moveCardToPlayerHand(card);
 
-    if (calculateTotalCardsInCart() < routeLength) disableBuildButton();
+    const totalCardsInCart = calculateTotalCardsInCart();
+    if (totalCardsInCart === routeLength) enableBuildButton();
+    if (totalCardsInCart < routeLength) disableBuildButton();
   });
 };
 
@@ -268,7 +298,7 @@ const claimRoute = async (event, routesData, map) => {
   if (!isBuildPossible(routeData, structuredClone(handCarCards))) return;
 
   map.classList.add("click-disabled");
-  enableBuildActions(routeId);
+  enableBuildActions();
   squeezePlayerHand();
   await showPossibleCardsToBuild(routeData, handCarCards);
   addToCart(routeData);
