@@ -77,6 +77,7 @@ describe("testing map handlers", () => {
       routeId: "STN5-STN7",
       cardsUsed: { colorCard: "red", colorCardCount: 2 },
     });
+
     await app.request("/claim-route", {
       method: "post",
       body,
@@ -87,6 +88,48 @@ describe("testing map handlers", () => {
     assertEquals(await response.json(), {
       routeOwnership: { green: ["STN5-STN7"] },
     });
+  });
+
+  it("after sending request to /claim-route if player has less than 3 bogies it should start the last turn end the lastPlayerId", async () => {
+    let res;
+    const player = new Player();
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    const game = new Game(carCardsDeck, ticketDeck, player);
+
+    player.playerBogies = 5;
+    const app = createApp(game);
+
+    res = await app.request("/claim-route", {
+      method: "post",
+      body: JSON.stringify({
+        routeId: "SLC-DVR",
+        cardsUsed: {
+          colorCardUsed: "red",
+          colorCardCount: 3,
+          wildCardCount: 0,
+        },
+      }),
+    });
+
+    assertEquals(await res.status, 200);
+
+    res = await app.request("/claim-route", {
+      method: "post",
+      body: JSON.stringify({
+        routeId: "DLT-CHG",
+        cardsUsed: {
+          colorCardUsed: "red",
+          colorCardCount: 3,
+          wildCardCount: 0,
+        },
+      }),
+    });
+
+    assertEquals(await res.status, 303);
   });
 
   it("after sending request to /claim-route if last turn is going on it should end the game if last player played the turn", async () => {

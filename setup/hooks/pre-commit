@@ -1,5 +1,5 @@
 #! /bin/zsh
-
+./setup/coverages/coverage_script.sh
 set -e
 echo "🔄 Checking if branch is up to date..."
 
