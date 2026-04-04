@@ -6,7 +6,7 @@ import Player from "../../src/models/player.js";
 import Game from "../../src/models/game.js";
 import { createApp } from "../../src/app.js";
 
-describe("testing map handlers", () => {
+describe.only("testing map handlers", () => {
   let carCardsDeck;
   let ticketDeck;
   beforeEach(() => {
@@ -83,5 +83,38 @@ describe("testing map handlers", () => {
     assertEquals(await response.json(), {
       routeOwnership: { green: ["STN5-STN7"] },
     });
+  });
+
+  it("after sending request to /claim-route if last turn is going on it should end the game if last player played the turn", async () => {
+    const player = new Player();
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    const game = new Game(carCardsDeck, ticketDeck, player);
+
+    player.playerBogies = 5;
+    const app = createApp(game);
+
+    await app.request("/claim-route", {
+      method: "post",
+      body: JSON.stringify({
+        routeId: "SLC-DVR",
+        cardsUsed: { colorCardUsed: "red", colorCardCount: 3 },
+      }),
+    });
+
+    player.playerBogies = 2;
+
+    const res = await app.request("/claim-route", {
+      method: "post",
+      body: JSON.stringify({
+        routeId: "DLT-CHG",
+        cardsUsed: { colorCardUsed: "red", colorCardCount: 3 },
+      }),
+    });
+
+    assertEquals(await res.status, 303);
   });
 });

@@ -4,12 +4,14 @@ export default class Player {
   #bogies;
   #claimedRoutes;
   #color;
+  #playerId;
   constructor() {
     this.#carCards = {};
     this.#claimedTickets = [];
     this.#bogies = 45;
     this.#claimedRoutes = [];
     this.#color = "green";
+    this.#playerId = 1;
   }
 
   addCarCardToHand(carCard) {
@@ -35,6 +37,8 @@ export default class Player {
     this.#carCards[colorCardUsed] = this.#carCards[colorCardUsed] -
       colorCardCount;
     this.#claimedRoutes.push(routeId);
+
+    return structuredClone(this.#playerId);
   }
 
   getPlayerColor() {
@@ -43,5 +47,9 @@ export default class Player {
 
   getClaimedRoutes() {
     return structuredClone(this.#claimedRoutes);
+  }
+
+  set playerBogies(bogies) {
+    this.#bogies = bogies;
   }
 }
