@@ -77,6 +77,14 @@ const removeExhaustedCards = () => {
   });
 };
 
+const showPossibleCardToBuild = (countContainer, routeColor, cardCount) => {
+  countContainer.textContent = parseInt(countContainer.textContent) -
+    cardCount;
+  appendCarCardImgInCart(routeColor, cardCount);
+  disableCardsExcept(routeColor);
+  removeExhaustedCards();
+};
+
 const showPossibleCombinationToBuild = (
   routeLength,
   routeColor,
@@ -87,21 +95,9 @@ const showPossibleCombinationToBuild = (
   const wildCountContainer = document.querySelector(
     `.hand-car-cards #wild .card-count`,
   );
+
   const wildCardsRequired = routeLength - colorCardCount;
-  wildCountContainer.textContent = wildCountContainer.textContent -
-    wildCardsRequired;
-  appendCarCardImgInCart("wild", wildCardsRequired);
-
-  disableCardsExcept(routeColor);
-  removeExhaustedCards();
-};
-
-const showPossibleColorCards = (countContainer, routeColor, routeLength) => {
-  countContainer.textContent = parseInt(countContainer.textContent) -
-    routeLength;
-  appendCarCardImgInCart(routeColor, routeLength);
-  disableCardsExcept(routeColor);
-  removeExhaustedCards();
+  showPossibleCardToBuild(wildCountContainer, "wild", wildCardsRequired);
 };
 
 const showPossibleCardsToBuild = (
@@ -119,7 +115,7 @@ const showPossibleCardsToBuild = (
   enableBuildButton();
 
   if (colorCardCount >= routeLength) {
-    showPossibleColorCards(countContainer, routeColor, routeLength);
+    showPossibleCardToBuild(countContainer, routeColor, routeLength);
     return;
   }
 
@@ -129,7 +125,7 @@ const showPossibleCardsToBuild = (
 
 const disableCardsExcept = (color) => {
   const container = document.querySelector(".hand-car-cards");
-  Object.entries(container.children).forEach(([_, card]) => {
+  [...container.children].forEach((card) => {
     if (card.id !== color && card.id !== "wild") {
       card.classList.add("click-disabled");
     }
@@ -138,7 +134,7 @@ const disableCardsExcept = (color) => {
 
 const enableCards = () => {
   const container = document.querySelector(".hand-car-cards");
-  Object.entries(container.children).forEach(([_, card]) => {
+  Object.values(container.children).forEach((card) => {
     card.classList.remove("click-disabled");
   });
 };
@@ -211,6 +207,7 @@ const removeFromCart = ({ routeLength }) => {
 
     if (countContainer.textContent === "1") {
       removeCardImgFromCart(card, countContainer);
+      disableBuildButton();
       return;
     }
 
@@ -280,7 +277,7 @@ const isBuildPossible = ({ routeLength, routeColor }, handCarCards) => {
   const wildCardCount = handCarCards["wild"] || 0;
   delete handCarCards.wild;
   if (routeColor === "transparent") {
-    return Object.entries(handCarCards).some(([_, count]) =>
+    return Object.values(handCarCards).some((count) =>
       count + wildCardCount >= routeLength
     );
   }
