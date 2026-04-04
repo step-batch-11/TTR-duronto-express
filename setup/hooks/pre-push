@@ -1,5 +1,13 @@
 #! /bin/zsh
 
+# ./setup/coverages/coverage_script.sh
+
+# if [ $? -eq 1 ]
+# deno coverage --detailed
+# then exit 1
+# fi
+
+
 set -e
 deno lint
 deno test -A

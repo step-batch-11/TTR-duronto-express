@@ -246,10 +246,14 @@ const buildRoute = async (routeId) => {
   const colorCardCount = parseInt(
     colorCardElement.querySelector(".card-count").textContent || 0,
   );
-  const { routeOwnership, carCards } = await postClaimRoute({
+  const res = await postClaimRoute({
     routeId,
     cardsUsed: { colorCardUsed, colorCardCount, wildCardCount },
   });
+
+  console.log(res);
+  const { routeOwnership, carCards } = res;
+
   renderMap(routeOwnership);
   resolveBuild(carCards);
 

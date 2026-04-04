@@ -50,7 +50,19 @@ export const fetchTicketChoices = () => get("/get-ticket-choices");
 export const claimSelectedTickets = (tickets) =>
   post("/claim-tickets", tickets);
 
-export const postClaimRoute = (body) => post("/claim-route", body);
+export const postClaimRoute = async (body) => {
+  const response = await fetch("/claim-route", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+
+  if (response.redirected) {
+    globalThis.location.href = response.url;
+    return;
+  }
+
+  return await response.json();
+};
 
 export const fetchRouteOwnership = () => get("/map-ownership");
 

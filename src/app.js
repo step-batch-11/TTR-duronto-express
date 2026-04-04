@@ -52,6 +52,8 @@ export const createApp = (game, players) => {
   app.get("/map-ownership", routeOwnershipHandler);
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
 
+  app.get("/finish-game", serveStatic({ path: "./public/victory.html" }));
+
   app.post("/draw-faceup-card", drawFaceUpCardHandler);
   app.post("/claim-tickets", claimDestinationTickets);
   app.post("/claim-route", claimRouteHandler);
