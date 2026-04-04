@@ -43,12 +43,24 @@ const disableWild = () => {
   }, 1500);
 };
 
+const showMessage = (message) => {
+  const dialogBox = document.getElementById("dialog-box");
+  dialogBox.textContent = message;
+  dialogBox.show();
+  setTimeout(() => {
+    dialogBox.close();
+  }, 4000);
+};
+
 export const handleDrawFaceUP = async (event) => {
   disableDestinationDeck();
   disableMap();
 
   const card = event.target.closest(".card");
-  if (card === null) return;
+  if (card === null) {
+    showMessage("choose a valid card");
+    return;
+  }
   const img = card.querySelector(".card-img");
   animateDrawFaceUpCard(card);
   const cardId = { id: card.id };

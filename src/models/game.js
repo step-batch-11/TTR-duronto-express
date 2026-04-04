@@ -77,6 +77,7 @@ export default class Game {
   drawTicketChoice() {
     this.#phase = "DRAWTICKETCHOICE";
     this.#drawnTickets = this.#ticketDeck.dealTicketChoices();
+    console.log("draw tickets", this.#drawnTickets);
 
     return structuredClone(this.#drawnTickets.map(({ id }) => id));
   }
@@ -107,6 +108,10 @@ export default class Game {
 
   addToDiscardedPile(cards) {
     this.#carCardsDeck.discardCards(cards);
+  }
+
+  getClaimedTickets() {
+    return this.#player.getClaimedTickets();
   }
 
   getRouteClaims() {

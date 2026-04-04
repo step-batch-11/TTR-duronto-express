@@ -71,4 +71,8 @@ export default class Player {
   set playerBogies(bogies) { // for testing the game end condition
     this.#bogies = bogies;
   }
+
+  getClaimedTickets() {
+    return structuredClone(this.#claimedTickets);
+  }
 }
