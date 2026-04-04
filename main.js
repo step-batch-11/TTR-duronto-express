@@ -13,7 +13,6 @@ const main = () => {
   const carCardsDeck = new CarCardsDeck(deck);
   const ticketDeck = new TicketDeck(getTicketCards());
   const player = new Player();
-
   const game = new Game(carCardsDeck, ticketDeck, player);
   const app = createApp(game, players);
   const port = Deno.env.get("PORT") || 8000;

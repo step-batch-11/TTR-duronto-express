@@ -40,8 +40,9 @@ describe("testing map handlers", () => {
     ticketDeck = new TicketDeck(ticketCards);
   });
 
-  it("POST /claim-route should add the route to player claimed routes and should give route ownership of map", async () => {
+  it("POST /claim-route should add the route to player claimed routes and should return car cards in player hand", async () => {
     const player = new Player();
+    player.addCarCardToHand("red");
     player.addCarCardToHand("red");
     player.addCarCardToHand("red");
     const game = new Game(carCardsDeck, ticketDeck, player);
@@ -49,15 +50,18 @@ describe("testing map handlers", () => {
     const mockApp = createApp(game);
     const body = JSON.stringify({
       routeId: "STN1-STN2",
-      cardsUsed: { colorCard: "red", colorCardCount: 2 },
+      cardsUsed: { colorCardUsed: "red", colorCardCount: 2, wildCardCount: 0 },
     });
+
     const response = await mockApp.request("/claim-route", {
       method: "post",
       body,
     });
-
     assertEquals(response.status, 200);
     assertEquals(await response.json(), {
+      carCards: {
+        red: 1,
+      },
       routeOwnership: { green: ["STN1-STN2"] },
     });
   });

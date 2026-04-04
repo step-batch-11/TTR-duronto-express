@@ -31,9 +31,28 @@ export default class Player {
     };
   }
 
-  claimRoute(routeId, { colorCardUsed, colorCardCount }) {
-    this.#carCards[colorCardUsed] = this.#carCards[colorCardUsed] -
-      colorCardCount;
+  #removeExhaustedCard(color) {
+    if (this.#carCards[color] === 0) delete this.#carCards[color];
+  }
+
+  #reconcile(color, count) {
+    this.#carCards[color] = this.#carCards[color] - count;
+  }
+
+  #removeUsedBogies(count) {
+    this.#bogies = this.#bogies - count;
+  }
+
+  claimRoute(routeId, { colorCardUsed, colorCardCount, wildCardCount }) {
+    this.#reconcile(colorCardUsed, colorCardCount);
+    this.#removeExhaustedCard(colorCardUsed);
+
+    if (this.#carCards["wild"]) {
+      this.#reconcile("wild", wildCardCount);
+      this.#removeExhaustedCard("wild");
+    }
+
+    this.#removeUsedBogies(colorCardCount + wildCardCount);
     this.#claimedRoutes.push(routeId);
   }
 

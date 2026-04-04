@@ -100,6 +100,10 @@ export default class Game {
     this.#player.claimRoute(routeId, cardsUsed);
   }
 
+  addToDiscardedPile(cards) {
+    this.#carCardsDeck.discardCards(cards);
+  }
+
   getRouteClaims() {
     const playerColor = this.#player.getPlayerColor();
     const claimedRoutes = this.#player.getClaimedRoutes();
