@@ -68,7 +68,7 @@ export default class Player {
     return structuredClone(this.#claimedRoutes);
   }
 
-  set playerBogies(bogies) {
+  set playerBogies(bogies) { // for testing the game end condition
     this.#bogies = bogies;
   }
 }

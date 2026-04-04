@@ -53,7 +53,6 @@ globalThis.onload = async () => {
   const { routeOwnership } = await fetchRouteOwnership();
   renderMap(routeOwnership);
 
-  const routesData = fetchRoutesData();
-
+  const routesData = await fetchRoutesData();
   registerListeners(routesData);
 };

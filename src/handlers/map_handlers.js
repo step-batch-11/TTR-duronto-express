@@ -17,9 +17,9 @@ export const claimRouteHandler = async (context) => {
     { length: colorCardCount },
     () => colorCardUsed,
   );
+
   const usedWildCard = Array.from({ length: wildCardCount }, () => "wild");
   game.addToDiscardedPile([...usedColorCard, ...usedWildCard]);
-
   const { carCards } = game.playerHand();
 
   return context.json({ routeOwnership: game.getRouteClaims(), carCards });
@@ -29,3 +29,7 @@ export const routeOwnershipHandler = (context) => {
   const game = context.get("game");
   return context.json({ routeOwnership: game.getRouteClaims() });
 };
+
+// export const getRoutesData = (context) => {
+//   const routesData =
+// }

@@ -69,7 +69,7 @@ article {
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 0.4em;
 }
 
 .user {
@@ -385,7 +385,7 @@ svg {
   padding: 5px;
 }
 
-.disabled-submit{
+.disabled-submit {
   pointer-events: none;
   background-color: rgba(0, 0, 0, 0.577);
   user-select: none;
@@ -397,7 +397,7 @@ svg {
 
 .is-disabled {
   pointer-events: none;
-  opacity: 0.85;
+  opacity: 0.65;
   user-select: none;
 }
 

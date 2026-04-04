@@ -1,502 +1,102 @@
-[
-  {
-    "id": "CLC-VCR",
-    "trackColor": "transparent",
-    "trackLength": "3"
-  },
-  {
-    "id": "STL-VCR",
-    "trackColor": "transparent",
-    "trackLength": "1"
-  },
-  {
-    "id": "VCR-STL",
-    "trackColor": "transparent",
-    "trackLength": "1"
-  },
-  {
-    "id": "CLC-STL",
-    "trackColor": "transparent",
-    "trackLength": "4"
-  },
-  {
-    "id": "CLC-WPG",
-    "trackColor": "white",
-    "trackLength": "6"
-  },
-  {
-    "id": "CLC-HLN",
-    "trackColor": "transparent",
-    "trackLength": "4"
-  },
-  {
-    "id": "PLD-STL",
-    "trackColor": "transparent",
-    "trackLength": "1"
-  },
-  {
-    "id": "STL-PLD",
-    "trackColor": "transparent",
-    "trackLength": "1"
-  },
-  {
-    "id": "STL-HLN",
-    "trackColor": "yellow",
-    "trackLength": "6"
-  },
-  {
-    "id": "HLN-WPG",
-    "trackColor": "blue",
-    "trackLength": "4"
-  },
-  {
-    "id": "HLN-DLT",
-    "trackColor": "orange",
-    "trackLength": "6"
-  },
-  {
-    "id": "HLN-OMH",
-    "trackColor": "red",
-    "trackLength": "5"
-  },
-  {
-    "id": "HLN-DVR",
-    "trackColor": "green",
-    "trackLength": "4"
-  },
-  {
-    "id": "HLN-SLC",
-    "trackColor": "pink",
-    "trackLength": "3"
-  },
-  {
-    "id": "PLD-SLC",
-    "trackColor": "blue",
-    "trackLength": "6"
-  },
-  {
-    "id": "PLD-SFO",
-    "trackColor": "green",
-    "trackLength": "5"
-  },
-  {
-    "id": "SFO-PLD",
-    "trackColor": "pink",
-    "trackLength": "5"
-  },
-  {
-    "id": "SFO-SLC",
-    "trackColor": "orange",
-    "trackLength": "5"
-  },
-  {
-    "id": "SLC-SFO",
-    "trackColor": "white",
-    "trackLength": "5"
-  },
-  {
-    "id": "SFO-LAS",
-    "trackColor": "yellow",
-    "trackLength": "3"
-  },
-  {
-    "id": "LAS-SFO",
-    "trackColor": "pink",
-    "trackLength": "3"
-  },
-  {
-    "id": "SLC-LVS",
-    "trackColor": "orange",
-    "trackLength": "3"
-  },
-  {
-    "id": "LVS-LAS",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "SLC-DVR",
-    "trackColor": "red",
-    "trackLength": "3"
-  },
-  {
-    "id": "DVR-SLC",
-    "trackColor": "yellow",
-    "trackLength": "3"
-  },
-  {
-    "id": "LAS-ELP",
-    "trackColor": "black",
-    "trackLength": "6"
-  },
-  {
-    "id": "LAS-PHX",
-    "trackColor": "transparent",
-    "trackLength": "3"
-  },
-  {
-    "id": "PHX-DVR",
-    "trackColor": "white",
-    "trackLength": "5"
-  },
-  {
-    "id": "PHX-SFE",
-    "trackColor": "transparent",
-    "trackLength": "3"
-  },
-  {
-    "id": "PHX-ELP",
-    "trackColor": "transparent",
-    "trackLength": "3"
-  },
-  {
-    "id": "DVR-KCT",
-    "trackColor": "black",
-    "trackLength": "4"
-  },
-  {
-    "id": "KCT-DVR",
-    "trackColor": "orange",
-    "trackLength": "4"
-  },
-  {
-    "id": "DVR-OMH",
-    "trackColor": "pink",
-    "trackLength": "4"
-  },
-  {
-    "id": "DVR-OKC",
-    "trackColor": "red",
-    "trackLength": "4"
-  },
-  {
-    "id": "DVR-SFE",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "SFE-ELP",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "SFE-OKC",
-    "trackColor": "blue",
-    "trackLength": "3"
-  },
-  {
-    "id": "ELP-OKC",
-    "trackColor": "yellow",
-    "trackLength": "5"
-  },
-  {
-    "id": "ELP-DLS",
-    "trackColor": "red",
-    "trackLength": "4"
-  },
-  {
-    "id": "ELP-HTN",
-    "trackColor": "green",
-    "trackLength": "6"
-  },
-  {
-    "id": "WPG-SSM",
-    "trackColor": "transparent",
-    "trackLength": "6"
-  },
-  {
-    "id": "WPG-DLT",
-    "trackColor": "black",
-    "trackLength": "4"
-  },
-  {
-    "id": "DLT-SSM",
-    "trackColor": "transparent",
-    "trackLength": "3"
-  },
-  {
-    "id": "DLT-TRT",
-    "trackColor": "pink",
-    "trackLength": "6"
-  },
-  {
-    "id": "DLT-CHG",
-    "trackColor": "red",
-    "trackLength": "3"
-  },
-  {
-    "id": "DLT-OMH",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "OMH-DLT",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "OMH-CHG",
-    "trackColor": "blue",
-    "trackLength": "4"
-  },
-  {
-    "id": "OMH-KCT",
-    "trackColor": "transparent",
-    "trackLength": "1"
-  },
-  {
-    "id": "KCT-OMK",
-    "trackColor": "transparent",
-    "trackLength": "1"
-  },
-  {
-    "id": "KCT-SLS",
-    "trackColor": "blue",
-    "trackLength": "2"
-  },
-  {
-    "id": "SLS-KCT",
-    "trackColor": "pink",
-    "trackLength": "2"
-  },
-  {
-    "id": "KCT-OKC",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "OKC-KCT",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "OKC-LRK",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "OKC-DLS",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "DLS-OKC",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "DLS-LRK",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "DLS-HTN",
-    "trackColor": "transparent",
-    "trackLength": "1"
-  },
-  {
-    "id": "HTN-DLS",
-    "trackColor": "transparent",
-    "trackLength": "1"
-  },
-  {
-    "id": "HTN-NOL",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "NOL-LRK",
-    "trackColor": "green",
-    "trackLength": "3"
-  },
-  {
-    "id": "NOL-ATL",
-    "trackColor": "yellow",
-    "trackLength": "4"
-  },
-  {
-    "id": "ATL-NOL",
-    "trackColor": "orange",
-    "trackLength": "4"
-  },
-  {
-    "id": "NOL-MIM",
-    "trackColor": "red",
-    "trackLength": "6"
-  },
-  {
-    "id": "LRK-NVL",
-    "trackColor": "white",
-    "trackLength": "3"
-  },
-  {
-    "id": "LRK-SLS",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "SLS-NVL",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "SLS-CHG",
-    "trackColor": "green",
-    "trackLength": "2"
-  },
-  {
-    "id": "CHG-SLS",
-    "trackColor": "white",
-    "trackLength": "2"
-  },
-  {
-    "id": "SLS-PBH",
-    "trackColor": "green",
-    "trackLength": "5"
-  },
-  {
-    "id": "PBH-CHG",
-    "trackColor": "orange",
-    "trackLength": "3"
-  },
-  {
-    "id": "CHG-PBH",
-    "trackColor": "black",
-    "trackLength": "3"
-  },
-  {
-    "id": "CHG-TRT",
-    "trackColor": "white",
-    "trackLength": "4"
-  },
-  {
-    "id": "SSM-TRT",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "SSM-MTL",
-    "trackColor": "black",
-    "trackLength": "5"
-  },
-  {
-    "id": "MTL-TRT",
-    "trackColor": "transparent",
-    "trackLength": "3"
-  },
-  {
-    "id": "MTL-BSN",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "BSN-MTL",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "MTL-NYC",
-    "trackColor": "blue",
-    "trackLength": "2"
-  },
-  {
-    "id": "TRT-PBH",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "PBH-NYC",
-    "trackColor": "white",
-    "trackLength": "2"
-  },
-  {
-    "id": "NYC-PBH",
-    "trackColor": "green",
-    "trackLength": "2"
-  },
-  {
-    "id": "PBH-WDC",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "PBH-RGH",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "PBH-NVL",
-    "trackColor": "yellow",
-    "trackLength": "4"
-  },
-  {
-    "id": "NYC-BSN",
-    "trackColor": "yellow",
-    "trackLength": "2"
-  },
-  {
-    "id": "BSN-NYC",
-    "trackColor": "red",
-    "trackLength": "2"
-  },
-  {
-    "id": "NYC-WDC",
-    "trackColor": "orange",
-    "trackLength": "2"
-  },
-  {
-    "id": "WDC-NYC",
-    "trackColor": "black",
-    "trackLength": "2"
-  },
-  {
-    "id": "WDC-RGH",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "RGH-WDC",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "NVL-RGH",
-    "trackColor": "black",
-    "trackLength": "3"
-  },
-  {
-    "id": "NVL-ATL",
-    "trackColor": "transparent",
-    "trackLength": "1"
-  },
-  {
-    "id": "ATL-RGH",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "RGH-ATL",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "ATL-CLN",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "ATL-MIM",
-    "trackColor": "blue",
-    "trackLength": "5"
-  },
-  {
-    "id": "CLN-RGH",
-    "trackColor": "transparent",
-    "trackLength": "2"
-  },
-  {
-    "id": "CLN-MIM",
-    "trackColor": "pink",
-    "trackLength": "4"
-  }
-]
+{
+  "CLC-VCR": { "routeColor": "transparent", "routeLength": 3 },
+  "STL-VCR": { "routeColor": "transparent", "routeLength": 1 },
+  "VCR-STL": { "routeColor": "transparent", "routeLength": 1 },
+  "CLC-STL": { "routeColor": "transparent", "routeLength": 4 },
+  "CLC-WPG": { "routeColor": "white", "routeLength": 6 },
+  "CLC-HLN": { "routeColor": "transparent", "routeLength": 4 },
+  "PLD-STL": { "routeColor": "transparent", "routeLength": 1 },
+  "STL-PLD": { "routeColor": "transparent", "routeLength": 1 },
+  "STL-HLN": { "routeColor": "yellow", "routeLength": 6 },
+  "HLN-WPG": { "routeColor": "blue", "routeLength": 4 },
+  "HLN-DLT": { "routeColor": "orange", "routeLength": 6 },
+  "HLN-OMH": { "routeColor": "red", "routeLength": 5 },
+  "HLN-DVR": { "routeColor": "green", "routeLength": 4 },
+  "HLN-SLC": { "routeColor": "pink", "routeLength": 3 },
+  "PLD-SLC": { "routeColor": "blue", "routeLength": 6 },
+  "PLD-SFO": { "routeColor": "green", "routeLength": 5 },
+  "SFO-PLD": { "routeColor": "pink", "routeLength": 5 },
+  "SFO-SLC": { "routeColor": "orange", "routeLength": 5 },
+  "SLC-SFO": { "routeColor": "white", "routeLength": 5 },
+  "SFO-LAS": { "routeColor": "yellow", "routeLength": 3 },
+  "LAS-SFO": { "routeColor": "pink", "routeLength": 3 },
+  "SLC-LVS": { "routeColor": "orange", "routeLength": 3 },
+  "LVS-LAS": { "routeColor": "transparent", "routeLength": 2 },
+  "SLC-DVR": { "routeColor": "red", "routeLength": 3 },
+  "DVR-SLC": { "routeColor": "yellow", "routeLength": 3 },
+  "LAS-ELP": { "routeColor": "black", "routeLength": 6 },
+  "LAS-PHX": { "routeColor": "transparent", "routeLength": 3 },
+  "PHX-DVR": { "routeColor": "white", "routeLength": 5 },
+  "PHX-SFE": { "routeColor": "transparent", "routeLength": 3 },
+  "PHX-ELP": { "routeColor": "transparent", "routeLength": 3 },
+  "DVR-KCT": { "routeColor": "black", "routeLength": 4 },
+  "KCT-DVR": { "routeColor": "orange", "routeLength": 4 },
+  "DVR-OMH": { "routeColor": "pink", "routeLength": 4 },
+  "DVR-OKC": { "routeColor": "red", "routeLength": 4 },
+  "DVR-SFE": { "routeColor": "transparent", "routeLength": 2 },
+  "SFE-ELP": { "routeColor": "transparent", "routeLength": 2 },
+  "SFE-OKC": { "routeColor": "blue", "routeLength": 3 },
+  "ELP-OKC": { "routeColor": "yellow", "routeLength": 5 },
+  "ELP-DLS": { "routeColor": "red", "routeLength": 4 },
+  "ELP-HTN": { "routeColor": "green", "routeLength": 6 },
+  "WPG-SSM": { "routeColor": "transparent", "routeLength": 6 },
+  "WPG-DLT": { "routeColor": "black", "routeLength": 4 },
+  "DLT-SSM": { "routeColor": "transparent", "routeLength": 3 },
+  "DLT-TRT": { "routeColor": "pink", "routeLength": 6 },
+  "DLT-CHG": { "routeColor": "red", "routeLength": 3 },
+  "DLT-OMH": { "routeColor": "transparent", "routeLength": 2 },
+  "OMH-DLT": { "routeColor": "transparent", "routeLength": 2 },
+  "OMH-CHG": { "routeColor": "blue", "routeLength": 4 },
+  "OMH-KCT": { "routeColor": "transparent", "routeLength": 1 },
+  "KCT-OMK": { "routeColor": "transparent", "routeLength": 1 },
+  "KCT-SLS": { "routeColor": "blue", "routeLength": 2 },
+  "SLS-KCT": { "routeColor": "pink", "routeLength": 2 },
+  "KCT-OKC": { "routeColor": "transparent", "routeLength": 2 },
+  "OKC-KCT": { "routeColor": "transparent", "routeLength": 2 },
+  "OKC-LRK": { "routeColor": "transparent", "routeLength": 2 },
+  "OKC-DLS": { "routeColor": "transparent", "routeLength": 2 },
+  "DLS-OKC": { "routeColor": "transparent", "routeLength": 2 },
+  "DLS-LRK": { "routeColor": "transparent", "routeLength": 2 },
+  "DLS-HTN": { "routeColor": "transparent", "routeLength": 1 },
+  "HTN-DLS": { "routeColor": "transparent", "routeLength": 1 },
+  "HTN-NOL": { "routeColor": "transparent", "routeLength": 2 },
+  "NOL-LRK": { "routeColor": "green", "routeLength": 3 },
+  "NOL-ATL": { "routeColor": "yellow", "routeLength": 4 },
+  "ATL-NOL": { "routeColor": "orange", "routeLength": 4 },
+  "NOL-MIM": { "routeColor": "red", "routeLength": 6 },
+  "LRK-NVL": { "routeColor": "white", "routeLength": 3 },
+  "LRK-SLS": { "routeColor": "transparent", "routeLength": 2 },
+  "SLS-NVL": { "routeColor": "transparent", "routeLength": 2 },
+  "SLS-CHG": { "routeColor": "green", "routeLength": 2 },
+  "CHG-SLS": { "routeColor": "white", "routeLength": 2 },
+  "SLS-PBH": { "routeColor": "green", "routeLength": 5 },
+  "PBH-CHG": { "routeColor": "orange", "routeLength": 3 },
+  "CHG-PBH": { "routeColor": "black", "routeLength": 3 },
+  "CHG-TRT": { "routeColor": "white", "routeLength": 4 },
+  "SSM-TRT": { "routeColor": "transparent", "routeLength": 2 },
+  "SSM-MTL": { "routeColor": "black", "routeLength": 5 },
+  "MTL-TRT": { "routeColor": "transparent", "routeLength": 3 },
+  "MTL-BSN": { "routeColor": "transparent", "routeLength": 2 },
+  "BSN-MTL": { "routeColor": "transparent", "routeLength": 2 },
+  "MTL-NYC": { "routeColor": "blue", "routeLength": 2 },
+  "TRT-PBH": { "routeColor": "transparent", "routeLength": 2 },
+  "PBH-NYC": { "routeColor": "white", "routeLength": 2 },
+  "NYC-PBH": { "routeColor": "green", "routeLength": 2 },
+  "PBH-WDC": { "routeColor": "transparent", "routeLength": 2 },
+  "PBH-RGH": { "routeColor": "transparent", "routeLength": 2 },
+  "PBH-NVL": { "routeColor": "yellow", "routeLength": 4 },
+  "NYC-BSN": { "routeColor": "yellow", "routeLength": 2 },
+  "BSN-NYC": { "routeColor": "red", "routeLength": 2 },
+  "NYC-WDC": { "routeColor": "orange", "routeLength": 2 },
+  "WDC-NYC": { "routeColor": "black", "routeLength": 2 },
+  "WDC-RGH": { "routeColor": "transparent", "routeLength": 2 },
+  "RGH-WDC": { "routeColor": "transparent", "routeLength": 2 },
+  "NVL-RGH": { "routeColor": "black", "routeLength": 3 },
+  "NVL-ATL": { "routeColor": "transparent", "routeLength": 1 },
+  "ATL-RGH": { "routeColor": "transparent", "routeLength": 2 },
+  "RGH-ATL": { "routeColor": "transparent", "routeLength": 2 },
+  "ATL-CLN": { "routeColor": "transparent", "routeLength": 2 },
+  "ATL-MIM": { "routeColor": "blue", "routeLength": 5 },
+  "CLN-RGH": { "routeColor": "transparent", "routeLength": 2 },
+  "CLN-MIM": { "routeColor": "pink", "routeLength": 4 }
+}

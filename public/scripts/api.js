@@ -58,19 +58,6 @@ export const fetchPlayerHand = () => get("/car-cards");
 
 export const fetchLog = (body) => post("/fetch-log", body);
 
-export const fetchRoutesData = () => ({
-  "CLC-HLN": {
-    routeColor: "red",
-    routeLength: 4,
-  },
-  "CLC-STL": {
-    routeColor: "transparent",
-    routeLength: 4,
-  },
-  "VCR-CLC": {
-    routeColor: "transparent",
-    routeLength: 3,
-  },
-});
+export const fetchRoutesData = () => get("/routes-data");
 
 export const fetchPhase = () => get("/get-game-phase");
