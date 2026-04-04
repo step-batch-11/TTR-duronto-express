@@ -29,7 +29,7 @@ export default class Game {
   }
 
   initializePlayerHand() {
-    if (this.#phase === "INITIALIZED") {
+    if (this.#phase !== "STARTED") {
       return;
     }
     const dealtCards = this.#carCardsDeck.dealInitialCards();
@@ -107,6 +107,10 @@ export default class Game {
 
   addToDiscardedPile(cards) {
     this.#carCardsDeck.discardCards(cards);
+  }
+
+  getClaimedTickets() {
+    return this.#player.getClaimedTickets();
   }
 
   getRouteClaims() {

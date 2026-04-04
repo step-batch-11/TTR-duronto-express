@@ -13,6 +13,7 @@ import {
 import {
   claimDestinationTickets,
   drawTicketChoiceHandler,
+  getClaimedTicketsHandler,
 } from "./handlers/draw_tickets_handlers.js";
 import {
   claimRouteHandler,
@@ -51,6 +52,7 @@ export const createApp = (game, players) => {
   app.get("/get-game-phase", getGamePhase);
   app.get("/map-ownership", routeOwnershipHandler);
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
+  app.get("/claimed-tickets", getClaimedTicketsHandler);
 
   app.get("/finish-game", serveStatic({ path: "./public/victory.html" }));
 

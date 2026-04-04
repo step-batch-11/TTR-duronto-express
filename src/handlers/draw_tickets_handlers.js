@@ -13,3 +13,11 @@ export const claimDestinationTickets = async (context) => {
 
   return context.json(playerHandTickets);
 };
+
+export const getClaimedTicketsHandler = (context) => {
+  const game = context.get("game");
+
+  const tickets = game.getClaimedTickets();
+
+  return context.json(tickets);
+};
