@@ -4,7 +4,6 @@ import { serveStatic } from "hono/deno";
 import {
   initializeFaceUpDeckHandler,
   initializePlayerHandHandler,
-  storeRecentMove,
 } from "./handlers/initialization_handlers.js";
 import {
   drawDeckCardHandler,
