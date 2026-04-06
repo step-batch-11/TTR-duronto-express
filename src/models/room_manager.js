@@ -27,7 +27,6 @@ export default class RoomManager {
 
   joinRoom(roomId, player) {
     const room = this.getRoom(roomId);
-    console.log(room);
 
     if (room.isAPlayerPresent(player)) {
       throw new Error("Player already present");

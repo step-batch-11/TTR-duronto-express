@@ -6,7 +6,7 @@ globalThis.onload = () => {
 
     const id = new FormData(form).get("roomId");
 
-    const { isValidRoom } = await fetch("/join-room", {
+    const res = await fetch("/join-room", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -14,11 +14,10 @@ globalThis.onload = () => {
       body: JSON.stringify({ roomId: id }),
     }).then((x) => x.json());
 
-    if (isValidRoom) {
+    if (res.isValidRoom) {
       globalThis.location.href = "/waiting_room.html";
     } else {
-      document.querySelector(".alert").textContent =
-        "invalid room Id, try again with a valid one";
+      document.querySelector(".alert").textContent = res.error;
     }
   });
 };

@@ -254,6 +254,7 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 4%;
   gap: 1%;
 }
 
@@ -310,16 +311,18 @@ svg {
 }
 
 .hand-car-card {
-  width: 107px;
-  height: 205px;
-  position: relative;
+  width: 105px;
+  height: 170px;
   display: flex;
   flex-direction: column;
-  gap: 35px;
   align-items: center;
+  position: relative;
 }
 
 .img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 170px;
   height: 105px;
   transform: rotate(270deg);
@@ -329,17 +332,17 @@ svg {
 .hand-car-card img {
   width: 100%;
   height: 100%;
+  opacity: 0.9;
 }
 
 .card-count {
-  display: block;
-  width: 40px;
-  height: 30px;
-  border: 1px solid;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  z-index: 1;
+  position: absolute;
+  font-size: 4.5em;
+  font-weight: 900;
+  color: white;
+  font-family:sans-serif;
+  -webkit-text-stroke: 3px black;
 }
 
 .destination-tickets-deck-container {
@@ -369,12 +372,10 @@ svg {
 }
 
 .highlight {
-  border: 50px;
-  border-color: #eadec9;
-  box-shadow: 0 0 40px #e0d8c0;
+  box-shadow: 0 0 16px 8px #baa259;
 }
 
-.highlightCity > use {
+.highlightCity>use {
   fill: rgb(255, 62, 62);
   stroke-width: 1;
 }
@@ -416,8 +417,8 @@ svg {
   z-index: 31;
 }
 
-#dialog-box{
-  margin-right:0px;
+#dialog-box {
+  margin-right: 0px;
   line-height: 2em;
   left: auto;
   right: 50%;
@@ -437,9 +438,24 @@ svg {
   border: none;
 }
 
+.add-to-cart {
+  transition: all 0.5s ease;
+}
+
 @keyframes showMove {
-  0%   { opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }

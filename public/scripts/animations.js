@@ -95,5 +95,6 @@ export const animateTicketClaim = (ticketChoice) => {
 
   const x = handTicketSize.x - imgSize.x;
   const y = handTicketSize.y - imgSize.y;
+
   img.style.transform = `translate(${x}px, ${y}px)`;
 };
