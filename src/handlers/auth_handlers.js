@@ -17,7 +17,7 @@ export const doesPlayerNotExist = async (context, next) => {
   if (!players.isExisting(sessionId)) {
     await next();
   }
-  return context.redirect("/game.html", 303);
+  return context.redirect("/lobby.html", 303);
 };
 
 export const allowNonExistingPlayer = async (context, next) => {

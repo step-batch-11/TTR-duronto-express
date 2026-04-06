@@ -17,6 +17,7 @@ export default class Game {
     this.#log = [];
     this.#isFinalRound = false;
     this.#lastPlayerId = null;
+    this.initializePlayerHand();
   }
 
   storeLog(move) {

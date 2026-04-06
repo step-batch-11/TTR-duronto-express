@@ -30,4 +30,8 @@ export default class PlayerBase {
     );
     return this.#playerList.splice(playerIndex, 1)[0];
   }
+
+  getPlayer(sessionId) {
+    return this.#playerList.find((player) => player.sessionId === sessionId);
+  }
 }

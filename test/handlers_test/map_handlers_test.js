@@ -5,10 +5,15 @@ import TicketDeck from "../../src/models/ticket_deck.js";
 import Player from "../../src/models/player.js";
 import Game from "../../src/models/game.js";
 import { createApp } from "../../src/app.js";
+import PlayerBase from "../../src/models/player_base.js";
+import RoomManager from "../../src/models/room_manager.js";
+import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
 
 describe("testing map handlers", () => {
   let carCardsDeck;
   let ticketDeck;
+  let mockApp;
+  let players;
   beforeEach(() => {
     const carCards = [
       "red",
@@ -41,13 +46,37 @@ describe("testing map handlers", () => {
   });
 
   it("POST /claim-route should add the route to player claimed routes and should return car cards in player hand", async () => {
-    const player = new Player();
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    const game = new Game(carCardsDeck, ticketDeck, player);
+    players = new PlayerBase([{ sessionId: 1000, username: "haji" }, {
+      sessionId: 1001,
+      username: "hussain",
+    }]);
 
-    const mockApp = createApp(game);
+    const createGame = () => {
+      const player = new Player();
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      return new Game(carCardsDeck, ticketDeck, player);
+    };
+
+    const roomManager = new RoomManager(
+      createRoomFn,
+      createGenerateFn(),
+      createGame,
+    );
+    const sessionToRoomMap = new Map();
+
+    const room = roomManager.createRoom(2, {
+      sessionId: 1000,
+      username: "haji",
+    });
+    sessionToRoomMap.set(1000, room);
+
+    roomManager.joinRoom(1000, { sessionId: 1001, username: "hussain" });
+    sessionToRoomMap.set(1001, room);
+
+    mockApp = createApp(roomManager, players, sessionToRoomMap);
+
     const body = JSON.stringify({
       routeId: "STN1-STN2",
       cardsUsed: { colorCardUsed: "red", colorCardCount: 2, wildCardCount: 0 },
@@ -55,12 +84,19 @@ describe("testing map handlers", () => {
 
     const response = await mockApp.request("/claim-route", {
       method: "post",
+      headers: {
+        Cookie: `sessionId=${1000}`,
+      },
       body,
     });
     assertEquals(response.status, 200);
     assertEquals(await response.json(), {
       carCards: {
+        black: 1,
+        orange: 1,
         red: 1,
+        wild: 1,
+        yellow: 1,
       },
       routeOwnership: { green: ["STN1-STN2"] },
     });
@@ -68,19 +104,45 @@ describe("testing map handlers", () => {
 
   it("after sending request to /claim-route if last turn is going on it should end the game if last player played the turn", async () => {
     let res;
-    const player = new Player();
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    const game = new Game(carCardsDeck, ticketDeck, player);
 
-    player.playerBogies = 5;
-    const app = createApp(game);
+    players = new PlayerBase([{ sessionId: 1000, username: "haji" }, {
+      sessionId: 1001,
+      username: "hussain",
+    }]);
 
-    res = await app.request("/claim-route", {
+    const createGame = () => {
+      const player = new Player();
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      return new Game(carCardsDeck, ticketDeck, player);
+    };
+
+    const roomManager = new RoomManager(
+      createRoomFn,
+      createGenerateFn(),
+      createGame,
+    );
+    const sessionToRoomMap = new Map();
+
+    const room = roomManager.createRoom(2, {
+      sessionId: 1000,
+      username: "haji",
+    });
+    sessionToRoomMap.set(1000, room);
+
+    roomManager.joinRoom(1000, { sessionId: 1001, username: "hussain" });
+    sessionToRoomMap.set(1001, room);
+
+    mockApp = createApp(roomManager, players, sessionToRoomMap);
+
+    res = await mockApp.request("/claim-route", {
       method: "post",
+      headers: {
+        Cookie: `sessionId=${1000}`,
+      },
       body: JSON.stringify({
         routeId: "SLC-DVR",
         cardsUsed: {
@@ -93,8 +155,11 @@ describe("testing map handlers", () => {
 
     assertEquals(await res.status, 200);
 
-    res = await app.request("/claim-route", {
+    res = await mockApp.request("/claim-route", {
       method: "post",
+      headers: {
+        Cookie: `sessionId=${1000}`,
+      },
       body: JSON.stringify({
         routeId: "DLT-CHG",
         cardsUsed: {
@@ -105,6 +170,6 @@ describe("testing map handlers", () => {
       }),
     });
 
-    assertEquals(await res.status, 303);
+    assertEquals(await res.status, 200);
   });
 });

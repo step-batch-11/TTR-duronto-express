@@ -22,17 +22,62 @@ import {
   doesPlayerNotExist,
 } from "./handlers/auth_handlers.js";
 import { gameStateHandler, getGamePhase } from "./handlers/phase_handler.js";
+import { createRoom, joinRoom } from "./handlers/room_handler.js";
+import { getCookie } from "hono/cookie";
 
-export const createApp = (game, players) => {
+export const createApp = (roomManager, players, sessionToRoomMap) => {
   const app = new Hono();
 
   app.use(logger());
   app.use(etag());
   app.use((context, next) => {
-    context.set("game", game);
     context.set("players", players);
+    context.set("roomManager", roomManager);
+    context.set("sessionToRoomMap", sessionToRoomMap);
+    console.log(
+      "a room manager honi chahiye",
+      roomManager,
+      players,
+      sessionToRoomMap,
+    );
     return next();
   });
+
+  app.use((context, next) => {
+    const sessionId = Number(getCookie(context, "sessionId"));
+    context.set("sessionId", sessionId);
+    return next();
+  });
+
+  app.use((context, next) => {
+    const sessionId = getCookie(context, "sessionId");
+    const sessionToRoomMap = context.get("sessionToRoomMap");
+
+    const room = sessionToRoomMap.get(+sessionId);
+    if (room && room.game) {
+      const game = room.game;
+      context.set("game", game);
+      console.log("game create hora ki ni", game);
+    }
+    console.log("game ni hi room hi", room, sessionId);
+    return next();
+  });
+
+  app.get("/room-state", (context) => {
+    const sessionId = getCookie(context, "sessionId");
+    const sessionToRoomMap = context.get("sessionToRoomMap");
+
+    const room = sessionToRoomMap.get(+sessionId);
+
+    return context.json({
+      roomId: room.id,
+      maxPlayers: room.maxPlayers,
+      players: room.players,
+    });
+  });
+
+  app.post("/create-room", createRoom);
+  app.post("/join-room", joinRoom);
 
   app.get("/login.html", doesPlayerNotExist, serveStatic({ root: "/public" }));
   app.post("/login", allowNonExistingPlayer, createUser);

@@ -8,7 +8,7 @@ describe("auth handler test", () => {
   let players;
   beforeEach(() => {
     players = new PlayerBase([]);
-    app = createApp({}, players);
+    app = createApp({}, players, new Map());
   });
 
   describe("GET /", () => {
@@ -34,7 +34,7 @@ describe("auth handler test", () => {
       );
     });
 
-    it("accessing login with sessionId, should get redirected to game.html", async () => {
+    it("accessing login with sessionId, should get redirected to lobby.html", async () => {
       const sessionId = players.addPlayer("player1");
       const response = await app.request("/login.html", {
         headers: {
@@ -43,7 +43,7 @@ describe("auth handler test", () => {
       });
       await response.text();
       assertEquals(response.status, 303);
-      assertEquals(response.headers.get("location"), "/game.html");
+      assertEquals(response.headers.get("location"), "/lobby.html");
     });
 
     it("accessing login with invalid session, should get login.html", async () => {
