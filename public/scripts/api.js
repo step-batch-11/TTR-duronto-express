@@ -73,3 +73,5 @@ export const fetchRoutesData = () => get("/routes-data");
 export const fetchPhase = () => get("/get-game-phase");
 
 export const fetchClaimedTickets = () => get("/claimed-tickets");
+
+export const fetchGameState = () => get("/game-state");

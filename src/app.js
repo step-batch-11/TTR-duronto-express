@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
+import { etag } from "hono/etag";
 import { serveStatic } from "hono/deno";
 import {
-  initializeFaceUpDeckHandler,
   initializePlayerHandHandler,
 } from "./handlers/initialization_handlers.js";
 import {
@@ -12,12 +12,8 @@ import {
 import {
   claimDestinationTickets,
   drawTicketChoiceHandler,
-  getClaimedTicketsHandler,
 } from "./handlers/draw_tickets_handlers.js";
-import {
-  claimRouteHandler,
-  routeOwnershipHandler,
-} from "./handlers/map_handlers.js";
+import { claimRouteHandler } from "./handlers/map_handlers.js";
 import { getPlayerCarCardsHandler } from "./handlers/claim_route_handlers.js";
 import {
   allowExistingPlayer,
@@ -25,12 +21,13 @@ import {
   createUser,
   doesPlayerNotExist,
 } from "./handlers/auth_handlers.js";
-import { getGamePhase } from "./handlers/phase_handler.js";
+import { gameStateHandler, getGamePhase } from "./handlers/phase_handler.js";
 
 export const createApp = (game, players) => {
   const app = new Hono();
 
   app.use(logger());
+  app.use(etag());
   app.use((context, next) => {
     context.set("game", game);
     context.set("players", players);
@@ -42,16 +39,14 @@ export const createApp = (game, players) => {
 
   app.get("/game.html", allowExistingPlayer, serveStatic({ root: "/public" }));
 
-  app.get("/init-faceup", initializeFaceUpDeckHandler);
   app.get("/initial-hand", initializePlayerHandHandler);
 
   app.get("/draw-deck-card", drawDeckCardHandler);
   app.get("/car-cards", getPlayerCarCardsHandler);
   app.get("/routes-data", serveStatic({ path: "src/static-data/route.json" }));
   app.get("/get-game-phase", getGamePhase);
-  app.get("/map-ownership", routeOwnershipHandler);
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
-  app.get("/claimed-tickets", getClaimedTicketsHandler);
+  app.get("/game-state", gameStateHandler);
 
   app.get("/finish-game", serveStatic({ path: "./public/victory.html" }));
 

@@ -26,7 +26,7 @@ export const renderMap = (routeOwnership) => {
   }
 };
 
-const appendPlayer = ({ name, symbol, carCount }, container, template) => {
+const createPlayer = ({ name, symbol, carCount }, template) => {
   const clone = template.content.cloneNode(true);
   clone.querySelector(".identifier .name").textContent = name;
   clone.querySelector(".identifier .symbol").style.backgroundColor = symbol;
@@ -36,15 +36,16 @@ const appendPlayer = ({ name, symbol, carCount }, container, template) => {
     .setAttribute("src", `assets/symbols/${symbol}.png`);
   clone.querySelector(".train-car-data .car-count").textContent = carCount;
 
-  container.append(clone);
+  return clone;
 };
 
 export const displayPlayers = (players) => {
   const playerTemplate = document.querySelector("#user");
   const container = document.querySelector(".player-details");
-  players.forEach((player) => {
-    appendPlayer(player, container, playerTemplate);
-  });
+  const playerElements = players.map((player) =>
+    createPlayer(player, playerTemplate)
+  );
+  container.replaceChildren(...playerElements);
 };
 
 export const displayFaceUpCards = (cards) => {
@@ -161,10 +162,11 @@ export const toggleDisable = () => {
   ticketDeck.classList.toggle("is-disabled");
 };
 
-const createTicketCard = (ticketId) => {
+const createTicketCard = (ticket) => {
   const ticketCardTemplate = document.querySelector("#market-card");
 
   const clone = ticketCardTemplate.content.cloneNode(true);
+  const ticketId = typeof ticket === "object" ? ticket.id : ticket;
   clone.querySelector(".card").id = ticketId;
   clone.querySelector(".card").setAttribute("data-ticket-route", ticketId);
   clone

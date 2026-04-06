@@ -59,20 +59,6 @@ describe("testing /initial-hand GET", () => {
       claimedTickets: [],
     });
   });
-
-  it("testing /init-faceup GET", async () => {
-    game.initializePlayerHand();
-    const response = await app.request("/init-faceup");
-
-    assertEquals(response.status, 200);
-    assertEquals(await response.json(), [
-      "red",
-      "green",
-      "blue",
-      "pink",
-      "white",
-    ]);
-  });
 });
 
 describe("testing /draw-deck-card GET", () => {

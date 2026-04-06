@@ -66,100 +66,22 @@ describe("testing map handlers", () => {
     });
   });
 
-  it("GET /map-ownership should give the routes ownership", async () => {
+  it("after sending request to /claim-route if last turn is going on it should end the game if last player played the turn", async () => {
+    let res;
     const player = new Player();
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
     player.addCarCardToHand("red");
     player.addCarCardToHand("red");
     const game = new Game(carCardsDeck, ticketDeck, player);
 
+    player.playerBogies = 5;
     const app = createApp(game);
-    const body = JSON.stringify({
-      routeId: "STN5-STN7",
-      cardsUsed: { colorCard: "red", colorCardCount: 2 },
-    });
 
-    await app.request("/claim-route", {
-      method: "post",
-      body,
-    });
-
-    const response = await app.request("/map-ownership");
-    assertEquals(response.status, 200);
-    assertEquals(await response.json(), {
-      routeOwnership: { green: ["STN5-STN7"] },
-    });
-  });
-});
-
-describe("Checks the game end conditions", () => {
-  let carCardsDeck;
-  let ticketDeck;
-  let res, app, game;
-  beforeEach(() => {
-    const carCards = [
-      "red",
-      "green",
-      "blue",
-      "pink",
-      "white",
-      "yellow",
-      "orange",
-      "black",
-      "wild",
-    ];
-
-    const ticketCards = [
-      { id: "DVR-ELP", src: "Denver", dest: "El Paso", points: 4 },
-      { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
-      { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
-      { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
-      {
-        id: "SSM-OKC",
-        src: "Sault St. Marie",
-        dest: "Oklahoma City",
-        points: 9,
-      },
-      { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
-    ];
-
-    carCardsDeck = new CarCardsDeck(carCards);
-    ticketDeck = new TicketDeck(ticketCards);
-
-    const player = new Player();
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    game = new Game(carCardsDeck, ticketDeck, player);
-
-    player.playerBogies = 5;
-    app = createApp(game);
-  });
-
-  it("Test case to check whether the game ends or not", async () => {
     res = await app.request("/claim-route", {
       method: "post",
       body: JSON.stringify({
-        playerId: "1",
-        routeId: "SLC-DVR",
-        cardsUsed: {
-          colorCardUsed: "red",
-          colorCardCount: 3,
-          wildCardCount: 0,
-        },
-      }),
-    });
-
-    assertEquals(await res.status, 200);
-    assertEquals(game.getLastPlayerId(), "1");
-  });
-
-  it("after sending request to /claim-route if last turn is going on it should end the game if last player played the turn", async () => {
-    res = await app.request("/claim-route", {
-      method: "post",
-      body: JSON.stringify({
-        playerId: "1",
         routeId: "SLC-DVR",
         cardsUsed: {
           colorCardUsed: "red",
@@ -174,85 +96,6 @@ describe("Checks the game end conditions", () => {
     res = await app.request("/claim-route", {
       method: "post",
       body: JSON.stringify({
-        playerId: "1",
-        routeId: "DLT-CHG",
-        cardsUsed: {
-          colorCardUsed: "red",
-          colorCardCount: 3,
-          wildCardCount: 0,
-        },
-      }),
-    });
-
-    assertEquals(await res.status, 303);
-  });
-});
-
-describe("ending game within multiplayer", () => {
-  let carCardsDeck;
-  let ticketDeck;
-  let res, app, game;
-  beforeEach(() => {
-    const carCards = [
-      "red",
-      "green",
-      "blue",
-      "pink",
-      "white",
-      "yellow",
-      "orange",
-      "black",
-      "wild",
-    ];
-
-    const ticketCards = [
-      { id: "DVR-ELP", src: "Denver", dest: "El Paso", points: 4 },
-      { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
-      { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
-      { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
-      {
-        id: "SSM-OKC",
-        src: "Sault St. Marie",
-        dest: "Oklahoma City",
-        points: 9,
-      },
-      { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
-    ];
-
-    carCardsDeck = new CarCardsDeck(carCards);
-    ticketDeck = new TicketDeck(ticketCards);
-
-    const player = new Player();
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    game = new Game(carCardsDeck, ticketDeck, player);
-
-    player.playerBogies = 5;
-    app = createApp(game);
-  });
-  it("after sending request to /claim-route if", async () => {
-    res = await app.request("/claim-route", {
-      method: "post",
-      body: JSON.stringify({
-        playerId: "1",
-        routeId: "SLC-DVR",
-        cardsUsed: {
-          colorCardUsed: "red",
-          colorCardCount: 3,
-          wildCardCount: 0,
-        },
-      }),
-    });
-
-    assertEquals(await res.status, 200);
-
-    res = await app.request("/claim-route", {
-      method: "post",
-      body: JSON.stringify({
-        playerId: "1",
         routeId: "DLT-CHG",
         cardsUsed: {
           colorCardUsed: "red",

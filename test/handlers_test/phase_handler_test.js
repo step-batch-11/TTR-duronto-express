@@ -62,4 +62,30 @@ describe("testing /initial-hand GET", () => {
       gamePhase: "INITIALIZED",
     });
   });
+
+  it("GET /game-state should give the updated routes ownership after claiming", async () => {
+    const body = JSON.stringify({
+      routeId: "STN5-STN7",
+      cardsUsed: { colorCard: "red", colorCardCount: 2 },
+    });
+    await app.request("/claim-route", {
+      method: "post",
+      body,
+    });
+
+    await app.request("/initial-hand");
+
+    await app.request("/claim-tickets", {
+      method: "post",
+      body: JSON.stringify(["DVR-ELP", "HLN-LAS"]),
+    });
+
+    const response = await app.request("/game-state");
+    const gameState = await response.json();
+
+    assertEquals(response.status, 200);
+    assertEquals(gameState.claimedRoutes, { green: ["STN5-STN7"] });
+    assertEquals(gameState.faceUp, ["red", "green", "blue", "pink", "white"]);
+    assertEquals(gameState.claimedTickets, ["DVR-ELP", "HLN-LAS"]);
+  });
 });
