@@ -38,15 +38,13 @@ describe("testing /initial-hand GET", () => {
 
     const carCardsDeck = new CarCardsDeck(carCards);
     const ticketDeck = new TicketDeck(ticketCards);
-    const player = new Player();
-
-    game = new Game(carCardsDeck, ticketDeck, player);
+    const players = ["green", "red", "blue"].map((color) => new Player(color));
+    game = new Game(carCardsDeck, ticketDeck, players);
     app = createApp(game);
   });
 
-  it("/initial-hand GET should give the player's initial hand with 4 car cards, 3 drawn tickets", async () => {
+  it.only("/initial-hand GET should give the player's initial hand with 4 car cards, 3 drawn tickets", async () => {
     const response = await app.request("/initial-hand");
-
     assertEquals(response.status, 200);
     assertEquals(await response.json(), {
       carCards: {

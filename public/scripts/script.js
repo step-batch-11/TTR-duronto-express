@@ -57,3 +57,27 @@ globalThis.onload = async () => {
 
   registerListeners(routesData);
 };
+
+// response(game state) {
+//   map,
+//     faceUp,
+//     playerData,
+//     claimedTickets,
+//     playerHand,
+// }
+
+// const poll = async () => {
+//   const response = await fetch('/gameState');
+//   displayFaceUpCards(response.faceUp);
+//   displayPlayerHand(response.playerHand);
+//   displayClaimedTickets(response.claimedTickets);
+//   displayPlayers(response.playerData);
+//   setTimeout(poll, 3000);
+// }
+
+// globalThis.onload = async () => {
+//   renderMap(response.map);
+//   displayDestTicketDeck();
+//   registerListeners(routesData);
+//   await poll();
+// }

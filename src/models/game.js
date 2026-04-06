@@ -1,22 +1,34 @@
 export default class Game {
   #ticketDeck;
   #carCardsDeck;
-  #player;
+  #currentPlayer;
   #drawnTickets;
   #phase;
   #log;
-  constructor(carCardsDeck, ticketDeck, player) {
+  #players;
+  #currentPlayerIndex;
+
+  constructor(carCardsDeck, ticketDeck, players) {
     this.#carCardsDeck = carCardsDeck;
     this.#ticketDeck = ticketDeck;
-    this.#player = player;
+    this.#players = players;
+    this.#currentPlayerIndex = 0;
+    this.#currentPlayer = this.#players[0];
     this.#drawnTickets = [];
     this.#phase = "STARTED";
     this.#log = [];
   }
 
+  #nextTurn() {
+    const playerCount = this.#players.length;
+    this.#currentPlayer =
+      this.#players[++this.#currentPlayerIndex % playerCount];
+    this.#phase = "TURN_STARTED";
+  }
+
   storeLog(move) {
     this.#log.unshift(move);
-    return structuredClone(this.#log);
+    return this.getLog();
   }
 
   getLog() {
@@ -24,15 +36,13 @@ export default class Game {
   }
 
   initializePlayerHand() {
-    if (this.#phase === "INITIALIZED") {
-      return;
-    }
-    const dealtCards = this.#carCardsDeck.dealInitialCards();
+    if (this.#phase !== "STARTED") return;
 
-    dealtCards.forEach((card) => this.#player.addCarCardToHand(card));
-    this.#drawnTickets = this.#ticketDeck.dealTicketChoices().map(({ id }) =>
-      id
-    );
+    this.#players.forEach((player) => {
+      const dealtCards = this.#carCardsDeck.dealInitialCards();
+      dealtCards.forEach((card) => player.addCarCardToHand(card));
+      this.drawTicketChoice();
+    });
 
     this.#carCardsDeck.initFaceUp();
     this.#phase = "INITIALIZED";
@@ -46,22 +56,38 @@ export default class Game {
     return structuredClone(this.#carCardsDeck.getFaceUpCards());
   }
 
+  #isCardDrawFinished(drawnCard) {
+    if (drawnCard === "wild" || this.#phase === "CARD_DRAWN") {
+      return true;
+    }
+    this.#phase = "CARD_DRAWN";
+    return false;
+  }
+
   drawFaceUpCard(id) {
     const { drawnCard, cardToRefill } = this.#carCardsDeck
       .drawCardFromFaceUp(id);
-    this.#player.addCarCardToHand(drawnCard);
+    if (this.#isCardDrawFinished(drawnCard)) {
+      this.#nextTurn();
+    }
 
+    this.#currentPlayer.addCarCardToHand(drawnCard);
     return { drawnCard, cardToRefill };
   }
 
   drawDeckCard() {
     const drawnCard = this.#carCardsDeck.drawCardFromDeck();
-    this.#player.addCarCardToHand(drawnCard);
+
+    if (this.#isCardDrawFinished()) {
+      this.#nextTurn();
+    }
+
+    this.#currentPlayer.addCarCardToHand(drawnCard);
 
     return drawnCard;
   }
 
-  getTicketCards() {
+  getTicketCards(playerColor) {
     return structuredClone(this.#ticketDeck.getTicketCards());
   }
 
@@ -70,41 +96,61 @@ export default class Game {
   }
 
   drawTicketChoice() {
-    this.#phase = "DRAWTICKETCHOICE";
-    this.#drawnTickets = this.#ticketDeck.dealTicketChoices();
-
-    return structuredClone(this.#drawnTickets.map(({ id }) => id));
+    this.#phase = "DRAW_TICKET_CHOICE";
+    const drawnTickets = structuredClone(this.#ticketDeck.dealTicketChoices());
+    this.#drawnTickets.push(...drawnTickets);
+    return drawnTickets.map(({ id }) => id);
   }
 
-  claimTicketCard(tickets) {
-    const claimedTickets = this.#player.claimTickets(tickets);
+  filterTickets(unclaimed) {
+    const tickets = structuredClone(this.#drawnTickets);
 
-    const unclaimedTickets = this.#drawnTickets.filter(({ id }) =>
-      !tickets.includes(id)
-    );
+    return tickets.filter(({ id }, index) => {
+      if (unclaimed.includes(id)) {
+        this.#drawnTickets.splice(index, 1);
+        return true;
+      }
+      return false;
+    });
+  }
+
+  claimTicketCard(claimed, unclaimed, playerColor) {
+    const player = this.#findPlayer(playerColor);
+    player.claimTickets(claimed);
+
+    const unclaimedTickets = this.filterTickets(unclaimed);
 
     if (unclaimedTickets.length > 0) {
       this.#ticketDeck.discardTickets(unclaimedTickets);
     }
 
-    this.#drawnTickets = [];
+    this.#nextTurn();
 
-    return claimedTickets;
+    return claimed;
   }
 
-  playerHand() {
-    return this.#player.getPlayerHand();
+  #findPlayer(color) {
+    return this.#players
+      .find((player) => player.getPlayerColor() === color);
+  }
+
+  playerHand(color) {
+    return this.#findPlayer(color).getPlayerHand();
   }
 
   claimRoute(routeId, cardsUsed) {
-    this.#player.claimRoute(routeId, cardsUsed);
+    this.#currentPlayer.claimRoute(routeId, cardsUsed);
+    this.#nextTurn();
   }
 
-  getRouteClaims() {
-    const playerColor = this.#player.getPlayerColor();
-    const claimedRoutes = this.#player.getClaimedRoutes();
-    const playerClaimedRoutes = {};
-    playerClaimedRoutes[playerColor] = claimedRoutes;
-    return playerClaimedRoutes;
+  getAllClaimedRoutes() {
+    const playersClaimedRoutes = {};
+
+    this.#players.forEach((player) => {
+      const playerColor = player.getPlayerColor();
+      const claimedRoutes = player.getClaimedRoutes();
+      playersClaimedRoutes[playerColor] = claimedRoutes;
+    });
+    return playersClaimedRoutes;
   }
 }

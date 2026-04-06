@@ -237,6 +237,13 @@ export const resolveFaceUpCardDraw = (card, img, carCards) => {
   }, 1001);
 };
 
+export const createImageAtr = (color) => {
+  const img = document.createElement("img");
+  img.setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
+
+  return img;
+};
+
 export const addHandCardContainer = (color) => {
   const handContainer = document.querySelector(".hand-car-cards");
   const carCardTemplate = document.querySelector("#card");
@@ -245,17 +252,4 @@ export const addHandCardContainer = (color) => {
 
   handContainer.append(clone);
   return document.querySelector(`.hand-car-cards [data-color="${color}"]`);
-};
-
-export const displayLog = (log) => {
-  const logContainer = document.querySelector(".log");
-
-  const logElements = logContainer.querySelectorAll("p");
-  logElements.forEach((element) => logContainer.removeChild(element));
-
-  log.forEach((logMessage) => {
-    const p = document.createElement("p");
-    p.textContent = logMessage;
-    logContainer.append(p);
-  });
 };

@@ -5,7 +5,7 @@ import Player from "../../src/models/player.js";
 describe("testing player class methods", () => {
   let player;
   beforeEach(() => {
-    player = new Player();
+    player = new Player("green");
   });
 
   it("creating a new instance of player class should assign 45 bogies", () => {

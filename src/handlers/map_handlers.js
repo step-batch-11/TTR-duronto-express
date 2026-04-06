@@ -3,10 +3,10 @@ export const claimRouteHandler = async (context) => {
   const game = context.get("game");
   game.claimRoute(routeId, cardsUsed);
 
-  return context.json({ routeOwnership: game.getRouteClaims() });
+  return context.json({ routeOwnership: game.getAllClaimedRoutes() });
 };
 
 export const routeOwnershipHandler = (context) => {
   const game = context.get("game");
-  return context.json({ routeOwnership: game.getRouteClaims() });
+  return context.json({ routeOwnership: game.getAllClaimedRoutes() });
 };

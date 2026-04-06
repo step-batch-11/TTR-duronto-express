@@ -1,6 +1,5 @@
-import { fetchTicketChoices } from "./api.js";
+import { fetchPlayerHand, fetchTicketChoices, postClaimRoute } from "./api.js";
 import {
-  handleHighlightCities,
   handleTicketsClaim,
   handleTicketSelection,
   handleTicketSwipe,
@@ -10,17 +9,98 @@ import {
   handleDrawCardFromDeck,
   handleDrawFaceUP,
 } from "./event_handlers/draw_deck_card_handler.js";
-import { displayTicketChoices } from "./render.js";
+import {
+  displayDestTicketDeck,
+  displayTicketChoices,
+  renderMap,
+} from "./render.js";
 
-export const addHandCardContainer = (color) => {
-  const handContainer = document.querySelector(".hand-car-cards");
-  const carCardTemplate = document.querySelector("#card");
-  const clone = carCardTemplate.content.cloneNode(true);
-  clone.querySelector(".hand-car-card").id = color;
-  clone.querySelector(".img-container").setAttribute("data-color", color);
+const enableBuildActions = () => {
+  const template = document.querySelector("#build-route-template");
+  const clone = template.content.cloneNode(true);
+  console.log(clone);
+  document.querySelector(".footer").appendChild(clone);
+};
 
-  handContainer.append(clone);
-  return document.querySelector(`.hand-car-cards [data-color="${color}"]`);
+const disableBuildActions = () =>
+  document.querySelector(".build-route-container").remove();
+
+const expandPlayerHand = () =>
+  document.querySelector(".hand-car-cards").id = "";
+
+const squeezePlayerHand = () => {
+  const destContainer = document.querySelector(
+    ".destination-tickets-deck-container",
+  );
+  document.querySelector(".footer").removeChild(destContainer);
+  document.querySelector(".hand-car-cards").id = "squeezed-hand";
+};
+
+const showPossibleCardsToBuild = async ({ routeLength, routeColor }) => {
+  const handCarCards = await fetchPlayerHand();
+  const carCardCountInPlayerHand = handCarCards[routeColor];
+  if (carCardCountInPlayerHand >= routeLength) {
+    const playerHandCard = document.querySelector(
+      `.hand-car-cards #${routeColor}`,
+    );
+    const countContainer = playerHandCard.querySelector(".card-count");
+    countContainer.textContent = parseInt(countContainer.textContent) -
+      routeLength;
+    const colorCardElement = document.querySelector(
+      ".possible-cards #color-card",
+    );
+
+    colorCardElement.setAttribute("data-card-color", routeColor);
+    const img = createImageAtr(routeColor);
+
+    colorCardElement.querySelector(".card-count").textContent = routeLength;
+    const imgContainer = colorCardElement.querySelector(".build-img-container");
+    imgContainer.append(img);
+    imgContainer.style.border = "1px solid";
+  }
+};
+
+export const buildRoute = (routeId) => {
+  const buildButton = document.querySelector(".build-actions #build");
+
+  buildButton.addEventListener("click", async () => {
+    const colorCardElement = document.querySelector(
+      ".possible-cards #color-card",
+    );
+
+    const colorCardUsed = colorCardElement.getAttribute("data-card-color");
+    const colorCardCount =
+      colorCardElement.querySelector(".card-count").textContent;
+    const { routeOwnership } = await postClaimRoute({
+      routeId,
+      cardsUsed: { colorCardUsed, colorCardCount },
+    });
+    renderMap(routeOwnership);
+
+    disableBuildActions();
+    expandPlayerHand();
+    displayDestTicketDeck();
+    drawTicketChoice();
+  });
+};
+
+const claimRoute = async (event, routesData) => {
+  const route = event.target.closest(".route");
+  if (route === null) return;
+
+  const routeId = route.getAttribute("id");
+  const routeData = routesData[routeId];
+  enableBuildActions(routeId);
+  squeezePlayerHand();
+  await showPossibleCardsToBuild(routeData);
+  buildRoute(routeId);
+};
+
+export const mapOnClick = (routesData) => {
+  const map = document.querySelector("#map");
+  map.addEventListener("click", (event) => {
+    claimRoute(event, routesData);
+  });
 };
 
 export const drawDeckCard = () => {

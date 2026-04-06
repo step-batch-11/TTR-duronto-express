@@ -4,12 +4,12 @@ export default class Player {
   #bogies;
   #claimedRoutes;
   #color;
-  constructor() {
+  constructor(color) {
     this.#carCards = {};
     this.#claimedTickets = [];
     this.#bogies = 45;
     this.#claimedRoutes = [];
-    this.#color = "green";
+    this.#color = color;
   }
 
   addCarCardToHand(carCard) {

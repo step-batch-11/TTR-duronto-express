@@ -1,4 +1,4 @@
-import { fetchFaceUpDeck, fetchLog } from "../api.js";
+// import { fetchFaceUpDeck, fetchLastLog } from "../api.js";
 import { animateDrawDeckCard, getHandCardPositions } from "../animations.js";
 import { fetchDeckCards } from "../api.js";
 import {
@@ -11,7 +11,7 @@ import {
   animateRefillMarket,
   moveFromDeckToHand,
 } from "../animations.js";
-import { createCarCardImg } from "../utils.js";
+import { mapOnClick } from "../claim_route.js";
 
 const resolveDeckCardDraw = (deck, img, carCards) => {
   setTimeout(() => {
@@ -56,10 +56,9 @@ export const handleDrawFaceUP = async (event) => {
     cardId,
   );
 
-  const body = { msg: `Cards drawn from face-up` };
-  const log = await fetchLog(body);
-  displayLog(log);
-
+  const body = { msg: `Cards drown from face-up` };
+  const { lastLog } = await fetchLastLog(body);
+  displayLog(lastLog);
   animateRefillMarket(cardToRefill, card, faceUpCards);
   resolveFaceUpCardDraw(card, img, carCards);
   disableWild();
@@ -75,13 +74,13 @@ export const handleDrawCardFromDeck = async (deck) => {
     .getBoundingClientRect();
   const hand = getHandCardPositions(drawnCard);
 
-  const img = createCarCardImg(drawnCard);
+  const img = createImageAtr(drawnCard);
   deck.append(img);
   animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
-
   const body = { msg: `Cards drown from deck` };
-  const log = await fetchLog(body);
-  displayLog(log);
-
+  const { lastLog } = await fetchLastLog(body);
+  displayLog(lastLog);
   resolveDeckCardDraw(deck, img, carCards);
+
+  disableWild();
 };
