@@ -1,13 +1,9 @@
-/* Make the SVG look like a board game map */
 svg {
-  background-color: #e0d8c0;
-  border: 2px solid #333;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
 }
 
-/* --- THE GAME LOGIC CSS --- */
-
-/* Smooth transition for the shapes */
 .route .claimed-shape,
 .route .empty-shape {
   transition: opacity 0.3s ease-in-out;
@@ -94,6 +90,66 @@ svg {
 /* Station color */
 
 .stationColor {
-  fill: yellow;
+  fill: rgb(152, 152, 152);
   stroke: #0a0909;
+}
+
+.highlightCity>use {
+  fill: rgb(3, 182, 0);
+  stroke-width: 0;
+  stroke: none;
+}
+
+.highlightCity text {
+  font-weight: bold;
+}
+
+.effect {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgb(3, 182, 0);
+  color: white;
+  border: none;
+  overflow: hidden;
+  border: 1.5px solid rgb(27, 27, 27);
+  animation: scale 0.5s infinite ease-in-out alternate-reverse;
+}
+
+.effect::before {
+  content: "";
+  top: 0;
+  left: -100%;
+  width: 30%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: skewX(-25deg);
+  position: absolute;
+  animation: shine 0.75s infinite forwards;
+
+}
+
+@keyframes shine {
+  to {
+    left: 150%;
+  }
+}
+
+@keyframes scale {
+  from {
+    scale: 1.1;
+
+  }
+
+  to {
+    scale: 1.5;
+  }
+}
+
+.unfocus svg {
+  filter: url(#shadow);
+}
+
+.unfocus {
+  opacity: 0.6;
 }

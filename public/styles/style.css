@@ -21,6 +21,8 @@ body {
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
+
+  position: relative;
 }
 
 main {
@@ -136,12 +138,6 @@ article {
 .ticket-cards img {
   width: 100%;
   height: 100%;
-}
-
-svg {
-  cursor: pointer;
-  height: 100%;
-  width: 100%;
 }
 
 .card {
@@ -336,13 +332,14 @@ svg {
 }
 
 .card-count {
-  z-index: 1;
-  position: absolute;
-  font-size: 4.5em;
-  font-weight: 900;
-  color: white;
-  font-family:sans-serif;
-  -webkit-text-stroke: 3px black;
+  display: block;
+  width: 40px;
+  height: 30px;
+  border: 1px solid;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .destination-tickets-deck-container {
@@ -369,19 +366,6 @@ svg {
 
 #ticket-claim-button:hover {
   cursor: pointer;
-}
-
-.highlight {
-  box-shadow: 0 0 16px 8px #baa259;
-}
-
-.highlightCity>use {
-  fill: rgb(255, 62, 62);
-  stroke-width: 1;
-}
-
-.highlightCity text {
-  font-weight: bold;
 }
 
 .claim-button {
@@ -415,6 +399,16 @@ svg {
 
 .top {
   z-index: 31;
+}
+
+.active .highlight {
+  animation: glitch 0.3s alternate-reverse infinite linear;
+}
+
+@keyframes glitch {
+  to {
+    translate: 15px;
+  }
 }
 
 #dialog-box {

@@ -35,6 +35,18 @@
     inkscape:current-layer="ELP-OKC"
   ></sodipodi:namedview>
 
+  <defs>
+  <filter id="shadow">
+    <feGaussianBlur stdDeviation="1" result="blur"/>
+    
+    <feFlood flood-color="black" flood-opacity="1" result="color"/>
+    
+    <feComposite in="color" in2="blur" operator="in" result="fog"/>
+    
+    <feBlend in="SourceGraphic" in2="fog" mode="normal"/>
+  </filter>
+</defs>
+
   <defs id="defs1"><inkscape:path-effect
       effect="skeletal"
       id="path-effect2"

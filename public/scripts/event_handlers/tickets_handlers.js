@@ -41,10 +41,11 @@ export const handleTicketsClaim = async (_event) => {
 
     const swipeButtons = document.querySelector(".buttons-container");
     swipeButtons.classList.remove("is-disabled");
-  }, 1500);
+  }, 950);
 
   ticketChoices.forEach(animateTicketClaim);
 
+  document.querySelector("#map").classList.remove("unfocus");
   selectedTickets.clear();
 };
 
@@ -59,17 +60,22 @@ const validateTicketClaim = async () => {
   button.classList.add("disabled-submit");
 };
 
+const addBounceEffect = (selectedTickets) => {
+  document.querySelector(".ticket-cards").classList.remove("active");
+  [...selectedTickets].forEach((card) =>
+    document.getElementById(card).classList.add("highlight")
+  );
+  document.querySelector(".ticket-cards").classList.add("active");
+};
+
 export const handleTicketSelection = async (event) => {
   const selectedCard = event.target.closest(".card");
-  if (!selectedCard) {
-    return;
-  }
+  if (!selectedCard) return;
 
   const cardId = selectedCard.id;
 
-  selectedCard.classList.toggle("highlight");
-
   if (selectedTickets.has(cardId)) {
+    selectedCard.classList.remove("highlight");
     selectedTickets.delete(cardId);
     unhighlightCities(cardId);
     await validateTicketClaim();
@@ -80,6 +86,7 @@ export const handleTicketSelection = async (event) => {
   highlightCities(cardId);
 
   await validateTicketClaim();
+  addBounceEffect(selectedTickets);
 };
 
 const SWIPE_DIRECTION = {

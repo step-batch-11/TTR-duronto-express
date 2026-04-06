@@ -192,6 +192,7 @@ export const displayTicketChoices = (tickets, claimedTickets) => {
     return;
   }
 
+  document.querySelector("#map").classList.add("unfocus");
   const ticketCardContainer = document.querySelector(".ticket-cards");
   ticketCardContainer.innerHTML = "";
 
@@ -222,13 +223,31 @@ export const updateActiveTicket = (tickets, currentTicket, offset) => {
   currentTicket.classList.remove("top");
 };
 
+const createPulseEffect = (element) => {
+  const div = document.createElement("div");
+  div.classList.add("effect");
+  div.style.position = "absolute";
+  div.style.top = parseInt(element.top) - 14 + "px";
+  div.style.left = parseInt(element.left) + 2 + "px";
+
+  document.querySelector("body").appendChild(div);
+};
+
+const getShimmeringEffect = (src, dest) => {
+  const srcD = src.querySelector("use").getBoundingClientRect();
+  const destD = dest.querySelector("use").getBoundingClientRect();
+
+  createPulseEffect(srcD);
+  createPulseEffect(destD);
+};
+
 export const highlightCities = (cardId) => {
   clearHighlightedCities();
 
   const [src, dest] = cardId.split("-");
-
   const srcStation = document.querySelector(`#${src}`);
   const destStation = document.querySelector(`#${dest}`);
+  getShimmeringEffect(srcStation, destStation);
 
   srcStation?.classList.add(
     "highlightCity",
@@ -242,6 +261,7 @@ export const highlightCities = (cardId) => {
 
 export const unhighlightCities = (cardId) => {
   const [from, to] = cardId.split("-");
+  document.querySelectorAll(".effect").forEach((ele) => ele.remove());
   document.querySelector(`#${from}`)?.classList.remove(
     "highlightCity",
   );
