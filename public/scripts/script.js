@@ -40,8 +40,7 @@ globalThis.onload = async () => {
   const playerData = fetchPlayerDetails();
   displayPlayers(playerData);
 
-  const logs = await (await fetch("/fetch-log")).json();
-  displayLog(logs);
+  displayLog(`Game Started`);
 
   const playerHand = await fetchInitialPlayerHand();
   displayDestTicketDeck();

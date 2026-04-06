@@ -1,8 +1,8 @@
 export const claimRouteHandler = async (context) => {
-  const { routeId, cardsUsed } = await context.req.json();
+  const { routeId, cardsUsed, playerId } = await context.req.json();
 
   const game = context.get("game");
-  const playerId = game.claimRoute(routeId, cardsUsed);
+  game.claimRoute(routeId, cardsUsed);
 
   const { colorCardUsed, colorCardCount, wildCardCount } = cardsUsed;
   const usedColorCard = Array.from(

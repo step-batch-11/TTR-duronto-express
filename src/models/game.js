@@ -100,7 +100,7 @@ export default class Game {
   }
 
   claimRoute(routeId, cardsUsed) {
-    return this.#player.claimRoute(routeId, cardsUsed);
+    this.#player.claimRoute(routeId, cardsUsed);
   }
 
   addToDiscardedPile(cards) {
@@ -129,6 +129,6 @@ export default class Game {
   }
 
   getLastPlayerId() {
-    return structuredClone(this.#lastPlayerId);
+    return this.#lastPlayerId;
   }
 }

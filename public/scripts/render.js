@@ -263,14 +263,9 @@ export const addHandCardContainer = (color) => {
 };
 
 export const displayLog = (log) => {
-  const logContainer = document.querySelector(".log");
-
-  const logElements = logContainer.querySelectorAll("p");
-  logElements.forEach((element) => logContainer.removeChild(element));
-
-  log.forEach((logMessage) => {
-    const p = document.createElement("p");
-    p.textContent = logMessage;
-    logContainer.append(p);
-  });
+  const logContainer = document.querySelector(".log-div");
+  const logHolderElement = document.createElement("p");
+  logHolderElement.setAttribute("class", "log");
+  logHolderElement.textContent = log;
+  logContainer.replaceChildren(logHolderElement);
 };

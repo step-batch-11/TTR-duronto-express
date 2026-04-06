@@ -62,8 +62,7 @@ export default class Player {
 
     this.#removeUsedBogies(colorCardCount + wildCardCount);
     this.#claimedRoutes.push(routeId);
-
-    return structuredClone(this.#playerId);
+    // return structuredClone(this.#playerId);
   }
 
   getPlayerColor() {

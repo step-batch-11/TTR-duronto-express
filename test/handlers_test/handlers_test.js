@@ -271,12 +271,12 @@ describe("testing /claim-tickets POST", () => {
     assertEquals(await res.json(), { blue: 2, green: 1, white: 1 });
   });
 
-  it("/store-log POST should return the last log of the game actions", async () => {
-    const res = await app.request("/fetch-log", {
-      method: "post",
-      body: JSON.stringify({ msg: "draws card from the faceup" }),
-    });
-    const log = await res.json();
-    assertEquals(log, ["draws card from the faceup"]);
-  });
+  // it("/store-log POST should return the last log of the game actions", async () => {
+  //   const res = await app.request("/fetch-log", {
+  //     method: "post",
+  //     body: JSON.stringify({ msg: "draws card from the faceup" }),
+  //   });
+  //   const log = await res.json();
+  //   assertEquals(log, ["draws card from the faceup"]);
+  // });
 });

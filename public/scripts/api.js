@@ -68,8 +68,6 @@ export const fetchRouteOwnership = () => get("/map-ownership");
 
 export const fetchPlayerHand = () => get("/car-cards");
 
-export const fetchLog = (body) => post("/fetch-log", body);
-
 export const fetchRoutesData = () => get("/routes-data");
 
 export const fetchPhase = () => get("/get-game-phase");

@@ -429,3 +429,17 @@ svg {
   border-radius: 5px;
   z-index: 1;
 }
+
+.log {
+  opacity: 0;
+  width: 100%;
+  animation: showMove 2s ease-in-out;
+  border: none;
+}
+
+@keyframes showMove {
+  0%   { opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; }
+}
