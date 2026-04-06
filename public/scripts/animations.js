@@ -98,22 +98,3 @@ export const animateTicketClaim = (ticketChoice) => {
 
   img.style.transform = `translate(${x}px, ${y}px)`;
 };
-
-export const animateAddingToCart = (color) => {
-  const cartContainer = document.querySelector(
-    ".build-img-container",
-  );
-  console.log("coming..");
-
-  const handCard = document.querySelector(
-    `.hand-car-cards  [data-color=${color}] .card-img`,
-  );
-
-  const handCardSize = handCard.getBoundingClientRect();
-  const cartSize = cartContainer.getBoundingClientRect();
-  const y = cartSize.x - handCardSize.x;
-  const x = cartSize.y - handCardSize.y;
-
-  handCard.classList.add("add-to-cart");
-  handCard.style.transform = `translate(${x}px, ${y}px)`;
-};

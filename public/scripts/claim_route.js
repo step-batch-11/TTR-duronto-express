@@ -1,4 +1,3 @@
-import { animateAddingToCart } from "./animations.js";
 import { fetchPlayerHand, postClaimRoute } from "./api.js";
 import { drawTicketChoice } from "./events.js";
 import {
@@ -172,16 +171,13 @@ const addToCart = ({ routeLength }) => {
     if (card === null) return;
 
     const colorCardChosen = card.dataset.color;
-    animateAddingToCart(colorCardChosen);
 
     if (colorCardChosen !== "wild") {
       disableCardsExcept(colorCardChosen);
     }
 
     handleCardCountOnAddingCardInCart(card, cardsContainer);
-    setTimeout(() => {
-      handleCartOnAddingCard(routeLength, colorCardChosen);
-    }, 1500);
+    handleCartOnAddingCard(routeLength, colorCardChosen);
   });
 };
 
