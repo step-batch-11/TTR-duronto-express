@@ -14,11 +14,14 @@ export const createGenerateFn = () => {
   return () => id++;
 };
 
-export const createGameFn = (players) => {
-  // const player = new Player();
+export const createGameFn = (users) => {
+  const players = users.map(({ sessionId }, index) =>
+    createPlayerFn(sessionId, index)
+  );
+
   const deck = new CarCardsDeck(initDeck());
   const ticket = new TicketDeck(getTicketCards());
-  return new Game(deck, ticket, players,createPlayerFn);
+  return new Game(deck, ticket, players);
 };
 
 export const createRoomFn = (roomId, maxPlayer, createGameFn) =>

@@ -44,10 +44,10 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   });
 
   app.use((context, next) => {
-    const sessionId = getCookie(context, "sessionId");
+    const sessionId = parseInt(getCookie(context, "sessionId"));
     const sessionToRoomMap = context.get("sessionToRoomMap");
 
-    const room = sessionToRoomMap.get(+sessionId);
+    const room = sessionToRoomMap.get(sessionId);
     if (room && room.game) {
       const game = room.game;
       context.set("game", game);
@@ -65,10 +65,10 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   app.post("/join-room", joinRoom);
 
   app.get("/room-state", (context) => {
-    const sessionId = getCookie(context, "sessionId");
+    const sessionId = parseInt(getCookie(context, "sessionId"));
     const sessionToRoomMap = context.get("sessionToRoomMap");
 
-    const room = sessionToRoomMap.get(+sessionId);
+    const room = sessionToRoomMap.get(sessionId);
 
     return context.json({
       roomId: room.id,

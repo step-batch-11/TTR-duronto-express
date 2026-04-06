@@ -60,8 +60,9 @@ const pollCallBack = async () => {
 
 globalThis.onload = async () => {
   await fetchMap();
-  const playerHand = await fetchInitialPlayerHand();
   displayDestTicketDeck();
+
+  const playerHand = await fetchInitialPlayerHand();
   initializeGameUI(playerHand);
   displayPlayerHand(playerHand);
 

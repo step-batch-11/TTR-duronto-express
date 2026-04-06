@@ -2,21 +2,28 @@ import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 import CarCardsDeck from "../../src/models/train_car_card_deck.js";
 import TicketDeck from "../../src/models/ticket_deck.js";
-import Player from "../../src/models/player.js";
 import Game from "../../src/models/game.js";
 import { createApp } from "../../src/app.js";
 import RoomManager from "../../src/models/room_manager.js";
 import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
 import PlayerBase from "../../src/models/player_base.js";
+import { createPlayerFn } from "../../src/utils/factory.js";
 
 describe("testing /initial-hand GET", () => {
   let app;
-  let players;
+  let playerBase;
+  let users;
   beforeEach(() => {
-    players = new PlayerBase([{ sessionId: 1000, username: "haji" }, {
-      sessionId: 1001,
-      username: "hussain",
-    }]);
+    playerBase = new PlayerBase([
+      { sessionId: 1000, username: "haji" },
+      { sessionId: 1001, username: "hussain" },
+    ]);
+
+    users = [
+      { sessionId: 1000, username: "haji" },
+      { sessionId: 1001, username: "hussain" },
+    ];
+
     const carCards = [
       "red",
       "green",
@@ -44,10 +51,13 @@ describe("testing /initial-hand GET", () => {
     ];
 
     const createGame = () => {
+      const players = users.map(({ sessionId }, index) =>
+        createPlayerFn(sessionId, index)
+      );
+
       const carCardsDeck = new CarCardsDeck(carCards);
       const ticketDeck = new TicketDeck(ticketCards);
-      const player = new Player();
-      return new Game(carCardsDeck, ticketDeck, player);
+      return new Game(carCardsDeck, ticketDeck, players);
     };
 
     const roomManager = new RoomManager(
@@ -66,10 +76,10 @@ describe("testing /initial-hand GET", () => {
     roomManager.joinRoom(1000, { sessionId: 1001, username: "hussain" });
     sessionToRoomMap.set(1001, room);
 
-    app = createApp(roomManager, players, sessionToRoomMap);
+    app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
-  it.only("/initial-hand GET should give the player's initial hand with 4 car cards, 3 drawn tickets", async () => {
+  it("/initial-hand GET should give the player's initial hand with 4 car cards, 3 drawn tickets", async () => {
     const response = await app.request("/initial-hand", {
       headers: {
         Cookie: `sessionId=${1000}`,
@@ -92,12 +102,19 @@ describe("testing /initial-hand GET", () => {
 
 describe("testing /draw-deck-card GET", () => {
   let app;
-  let players;
+  let playerBase;
+  let users;
   beforeEach(() => {
-    players = new PlayerBase([{ sessionId: 1000, username: "haji" }, {
-      sessionId: 1001,
-      username: "hussain",
-    }]);
+    playerBase = new PlayerBase([
+      { sessionId: 1000, username: "haji" },
+      { sessionId: 1001, username: "hussain" },
+    ]);
+
+    users = [
+      { sessionId: 1000, username: "haji" },
+      { sessionId: 1001, username: "hussain" },
+    ];
+
     const carCards = [
       "red",
       "green",
@@ -108,10 +125,15 @@ describe("testing /draw-deck-card GET", () => {
       "orange",
       "black",
       "wild",
-      "blue",
-      "white",
+      "red",
       "green",
       "blue",
+      "pink",
+      "white",
+      "yellow",
+      "orange",
+      "black",
+      "wild",
     ];
 
     const ticketCards = [
@@ -127,12 +149,14 @@ describe("testing /draw-deck-card GET", () => {
       },
       { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
     ];
-
     const createGame = () => {
+      const players = users.map(({ sessionId }, index) =>
+        createPlayerFn(sessionId, index)
+      );
+
       const carCardsDeck = new CarCardsDeck(carCards);
       const ticketDeck = new TicketDeck(ticketCards);
-      const player = new Player();
-      return new Game(carCardsDeck, ticketDeck, player);
+      return new Game(carCardsDeck, ticketDeck, players);
     };
 
     const roomManager = new RoomManager(
@@ -150,8 +174,8 @@ describe("testing /draw-deck-card GET", () => {
 
     roomManager.joinRoom(1000, { sessionId: 1001, username: "hussain" });
     sessionToRoomMap.set(1001, room);
-    console.log(roomManager, players, sessionToRoomMap);
-    app = createApp(roomManager, players, sessionToRoomMap);
+
+    app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
   it("testing /draw-deck-card GET", async () => {
@@ -164,12 +188,13 @@ describe("testing /draw-deck-card GET", () => {
     assertEquals(response.status, 200);
     assertEquals(await response.json(), {
       carCards: {
-        blue: 2,
-        green: 1,
-        pink: 1,
+        black: 1,
+        orange: 1,
         white: 1,
+        wild: 1,
+        yellow: 1,
       },
-      drawnCard: "pink",
+      drawnCard: "white",
     });
   });
 
@@ -182,29 +207,35 @@ describe("testing /draw-deck-card GET", () => {
       body: JSON.stringify({ id: "1" }),
       "content-type": "application/json",
     });
-
     assertEquals(response.status, 200);
     assertEquals(await response.json(), {
-      drawnCard: "white",
-      cardToRefill: "pink",
+      drawnCard: "yellow",
+      cardToRefill: "white",
       carCards: {
-        blue: 2,
-        green: 1,
-        white: 2,
+        yellow: 2,
+        orange: 1,
+        black: 1,
+        wild: 1,
       },
-      faceUpCards: ["pink", "yellow", "orange", "black", "wild"],
+      faceUpCards: ["white", "orange", "black", "wild", "red"],
     });
   });
 });
 
 describe("testing /get-ticket-choices GET", () => {
   let app;
-  let players;
+  let playerBase;
+  let users;
   beforeEach(() => {
-    players = new PlayerBase([{ sessionId: 1000, username: "haji" }, {
-      sessionId: 1001,
-      username: "hussain",
-    }]);
+    playerBase = new PlayerBase([
+      { sessionId: 1000, username: "haji" },
+      { sessionId: 1001, username: "hussain" },
+    ]);
+
+    users = [
+      { sessionId: 1000, username: "haji" },
+      { sessionId: 1001, username: "hussain" },
+    ];
 
     const carCards = [
       "red",
@@ -236,13 +267,17 @@ describe("testing /get-ticket-choices GET", () => {
       { id: "DVR-ELP", src: "Denver", dest: "El Paso", points: 4 },
       { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
       { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+      { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+      { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
     ];
-
     const createGame = () => {
+      const players = users.map(({ sessionId }, index) =>
+        createPlayerFn(sessionId, index)
+      );
+
       const carCardsDeck = new CarCardsDeck(carCards);
       const ticketDeck = new TicketDeck(ticketCards);
-      const player = new Player();
-      return new Game(carCardsDeck, ticketDeck, player);
+      return new Game(carCardsDeck, ticketDeck, players);
     };
 
     const roomManager = new RoomManager(
@@ -260,8 +295,8 @@ describe("testing /get-ticket-choices GET", () => {
 
     roomManager.joinRoom(1000, { sessionId: 1001, username: "hussain" });
     sessionToRoomMap.set(1001, room);
-    console.log(roomManager, players, sessionToRoomMap);
-    app = createApp(roomManager, players, sessionToRoomMap);
+
+    app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
   it("after sending request to /get-ticket-choices it should return ticket cards choices as id", async () => {
@@ -272,18 +307,24 @@ describe("testing /get-ticket-choices GET", () => {
     });
 
     assertEquals(await res.status, 200);
-    assertEquals(await res.json(), ["MTL-NOL", "SSM-OKC", "STL-NYC"]);
+    assertEquals(await res.json(), ["VCR-SFE", "MTL-NOL", "SSM-OKC"]);
   });
 });
 
 describe("testing /claim-tickets POST", () => {
   let app;
-  let players;
+  let playerBase;
+  let users;
   beforeEach(() => {
-    players = new PlayerBase([{ sessionId: 1000, username: "haji" }, {
-      sessionId: 1001,
-      username: "hussain",
-    }]);
+    playerBase = new PlayerBase([
+      { sessionId: 1000, username: "haji" },
+      { sessionId: 1001, username: "hussain" },
+    ]);
+
+    users = [
+      { sessionId: 1000, username: "haji" },
+      { sessionId: 1001, username: "hussain" },
+    ];
 
     const carCards = [
       "red",
@@ -315,13 +356,17 @@ describe("testing /claim-tickets POST", () => {
       { id: "DVR-ELP", src: "Denver", dest: "El Paso", points: 4 },
       { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
       { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+      { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+      { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
     ];
-
     const createGame = () => {
+      const players = users.map(({ sessionId }, index) =>
+        createPlayerFn(sessionId, index)
+      );
+
       const carCardsDeck = new CarCardsDeck(carCards);
       const ticketDeck = new TicketDeck(ticketCards);
-      const player = new Player();
-      return new Game(carCardsDeck, ticketDeck, player);
+      return new Game(carCardsDeck, ticketDeck, players);
     };
 
     const roomManager = new RoomManager(
@@ -339,8 +384,8 @@ describe("testing /claim-tickets POST", () => {
 
     roomManager.joinRoom(1000, { sessionId: 1001, username: "hussain" });
     sessionToRoomMap.set(1001, room);
-    console.log(roomManager, players, sessionToRoomMap);
-    app = createApp(roomManager, players, sessionToRoomMap);
+
+    app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
   it("after sending request to /claim-tickets it should return ticket cards of player hands after claiming", async () => {

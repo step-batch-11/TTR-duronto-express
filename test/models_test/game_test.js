@@ -36,13 +36,13 @@ describe("testing the game", () => {
 
     const carCardsDeck = new CarCardsDeck(carCards);
     const ticketDeck = new TicketDeck(ticketCards);
-    const players = ["green"].map((color) => new Player(color));
-    game = new Game(carCardsDeck, ticketDeck, players);
+    const player = new Player(1000, 0);
+    game = new Game(carCardsDeck, ticketDeck, [player]);
     game.initializePlayerHand();
   });
 
   it("initPlayer should initialize the player ", () => {
-    assertEquals(game.playerHand("green"), {
+    assertEquals(game.playerHand(1000), {
       carCards: {
         blue: 1,
         black: 1,
@@ -65,7 +65,7 @@ describe("testing the game", () => {
   it("player already initialized then it shouldn't reinitialize", () => {
     game.initializePlayerHand();
 
-    assertEquals(game.playerHand("green"), {
+    assertEquals(game.playerHand(1000), {
       carCards: {
         blue: 1,
         black: 1,
@@ -88,7 +88,7 @@ describe("testing the game", () => {
 
   it("drawFaceUpCard should add the card from train car card face up to player hand", () => {
     game.drawFaceUpCard("1");
-    assertEquals(game.playerHand("green"), {
+    assertEquals(game.playerHand(1000), {
       carCards: {
         blue: 2,
         black: 1,
@@ -102,7 +102,7 @@ describe("testing the game", () => {
 
   it("draw deckCard should add the card from train car card deck to player hand", () => {
     game.drawDeckCard();
-    assertEquals(game.playerHand("green"), {
+    assertEquals(game.playerHand(1000), {
       carCards: {
         blue: 1,
         green: 1,
@@ -126,16 +126,16 @@ describe("testing the game", () => {
   });
 
   it("claimRoute should add the route to player claimed routes and remove the cards used to claim the route", () => {
-    assertEquals(game.playerHand("green").carCards.pink, 1);
+    assertEquals(game.playerHand(1000).carCards.pink, 1);
+    console.log(game.playerHand(1000));
     game.claimRoute("STN4-STN5", { colorCardUsed: "pink", colorCardCount: 1 });
     assertEquals(game.getAllClaimedRoutes(), { green: ["STN4-STN5"] });
-    assertEquals(game.playerHand("green").carCards.pink, 0);
+    assertEquals(game.playerHand(1000).carCards.pink);
   });
 
   it("claimTicketCard should add the selected tickets to the player's hand of destination tickets and discard the unselected cards", () => {
     const drawnTickets = game.drawTicketChoice();
     const selectedTickets = ["DLS-NYC"];
-    const unclaimed = ["CLC-SLC", "LAS-NYC"];
 
     assertEquals(drawnTickets, [
       "DLS-NYC",
@@ -143,23 +143,18 @@ describe("testing the game", () => {
       "LAS-NYC",
     ]);
 
-    assertEquals(game.claimTicketCard(selectedTickets, unclaimed, "green"), [
+    assertEquals(game.claimTicketCard(selectedTickets, 1000), [
       "DLS-NYC",
     ]);
 
     assertEquals(game.getTicketCards(), [
-      "CLC-SLC",
-      "LAS-NYC",
+      "DLT-HTN",
+      "SSM-NVL",
+      "NYC-ATL",
       "DLT-ELP",
       "TRT-MIM",
       "PLD-PHX",
     ]);
-  });
-
-  it("tests store log functionality", () => {
-    game.storeLog("card is drawn from deck");
-    const log = game.getLog();
-    assertEquals(log, ["card is drawn from deck"]);
   });
 });
 

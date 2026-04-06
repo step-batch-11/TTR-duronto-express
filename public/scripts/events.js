@@ -1,5 +1,6 @@
 import { fetchPlayerHand, fetchTicketChoices, postClaimRoute } from "./api.js";
 import {
+  handleHighlightCities,
   handleTicketsClaim,
   handleTicketSelection,
   handleTicketSwipe,

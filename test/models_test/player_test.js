@@ -5,23 +5,23 @@ import Player from "../../src/models/player.js";
 describe("testing player class methods", () => {
   let player;
   beforeEach(() => {
-    player = new Player("green");
+    player = new Player(1000, 0);
   });
 
   it("creating a new instance of player class should assign 45 bogies", () => {
-    assertEquals(player.getPlayerHand().bogies, 45);
+    assertEquals(player.getPlayerHand(1000).bogies, 45);
   });
 
   it("addCardToHand should add the given card to player Hand", () => {
     player.addCarCardToHand("red");
 
-    assertEquals(player.getPlayerHand().carCards, { red: 1 });
+    assertEquals(player.getPlayerHand(1000).carCards, { red: 1 });
   });
 
   it("addTicketChoices should add the given ticketChoices to player Hand", () => {
     player.claimTickets(["A-B", "B-C"]);
 
-    assertEquals(player.getPlayerHand().claimedTickets, ["A-B", "B-C"]);
+    assertEquals(player.getPlayerHand(1000).claimedTickets, ["A-B", "B-C"]);
   });
 
   it("claimRoute should add a claimed Route to the claimedRoutes list and remove the cards used to claim from player hand", () => {
@@ -30,7 +30,7 @@ describe("testing player class methods", () => {
     player.addCarCardToHand("red");
     player.claimRoute("STN1-STN2", { colorCardUsed: "red", colorCardCount: 2 });
     assertEquals(player.getClaimedRoutes(), ["STN1-STN2"]);
-    assertEquals(player.getPlayerHand().carCards, { "red": 1 });
+    assertEquals(player.getPlayerHand(1000).carCards, { "red": 1 });
   });
 
   it("getPlayerColor should return the players color", () => {

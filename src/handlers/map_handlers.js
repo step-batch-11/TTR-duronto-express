@@ -2,6 +2,8 @@ export const claimRouteHandler = async (context) => {
   const { routeId, cardsUsed, playerId } = await context.req.json();
 
   const game = context.get("game");
+  const sessionId = context.get("sessionId");
+
   game.claimRoute(routeId, cardsUsed);
 
   const { colorCardUsed, colorCardCount, wildCardCount } = cardsUsed;
@@ -12,15 +14,14 @@ export const claimRouteHandler = async (context) => {
 
   const usedWildCard = Array.from({ length: wildCardCount }, () => "wild");
   game.addToDiscardedPile([...usedColorCard, ...usedWildCard]);
-  const { carCards } = game.playerHand();
+  const { carCards } = game.playerHand(sessionId);
 
   if (game.getLastPlayerId() === playerId) {
     return context.redirect("/finish-game", 303);
   }
-
   if (game.isGameEnded()) {
     game.setLastPlayer(playerId);
   }
 
-  return context.json({ routeOwnership: game.getRouteClaims(), carCards });
+  return context.json({ routeOwnership: game.getAllClaimedRoutes(), carCards });
 };

@@ -2,21 +2,25 @@ import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 import CarCardsDeck from "../../src/models/train_car_card_deck.js";
 import TicketDeck from "../../src/models/ticket_deck.js";
-import Player from "../../src/models/player.js";
 import Game from "../../src/models/game.js";
 import { createApp } from "../../src/app.js";
 import RoomManager from "../../src/models/room_manager.js";
 import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
 import PlayerBase from "../../src/models/player_base.js";
+import { createPlayerFn } from "../../src/utils/factory.js";
 
 describe("testing /initial-hand GET", () => {
   let app;
-  let players;
+  let playerBase;
+  let users;
   beforeEach(() => {
-    players = new PlayerBase([{ sessionId: 1000, username: "haji" }, {
-      sessionId: 1001,
-      username: "hussain",
-    }]);
+    playerBase = new PlayerBase([
+      { sessionId: 1000, username: "haji" },
+    ]);
+
+    users = [
+      { sessionId: 1000, username: "haji" },
+    ];
 
     const carCards = [
       "red",
@@ -45,10 +49,13 @@ describe("testing /initial-hand GET", () => {
     ];
 
     const createGame = () => {
+      const players = users.map(({ sessionId }, index) =>
+        createPlayerFn(sessionId, index)
+      );
+
       const carCardsDeck = new CarCardsDeck(carCards);
       const ticketDeck = new TicketDeck(ticketCards);
-      const player = new Player();
-      return new Game(carCardsDeck, ticketDeck, player);
+      return new Game(carCardsDeck, ticketDeck, players);
     };
 
     const roomManager = new RoomManager(
@@ -67,7 +74,7 @@ describe("testing /initial-hand GET", () => {
     roomManager.joinRoom(1000, { sessionId: 1001, username: "hussain" });
     sessionToRoomMap.set(1001, room);
 
-    app = createApp(roomManager, players, sessionToRoomMap);
+    app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
   it("when game is just setted up, request of/get-game-phase [GET] should give the game phase as STARTED", async () => {

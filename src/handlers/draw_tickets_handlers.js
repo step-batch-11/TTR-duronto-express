@@ -7,9 +7,10 @@ export const drawTicketChoiceHandler = (context) => {
 
 export const claimDestinationTickets = async (context) => {
   const game = context.get("game");
+  const sessionId = context.get("sessionId");
   const tickets = await context.req.json();
 
-  const playerHandTickets = game.claimTicketCard(tickets);
+  const playerHandTickets = game.claimTicketCard(tickets, sessionId);
 
   return context.json(playerHandTickets);
 };

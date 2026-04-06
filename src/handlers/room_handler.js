@@ -5,7 +5,7 @@ export const createRoom = async (context) => {
 
   const roomManager = context.get("roomManager");
   const sessionToRoomMap = context.get("sessionToRoomMap");
-  const sessionId = +getCookie(context, "sessionId");
+  const sessionId = parseInt(getCookie(context, "sessionId"));
   const player = context.get("players").getPlayer(sessionId);
 
   const room = roomManager.createRoom(+maxPlayer, player);
@@ -20,7 +20,7 @@ export const joinRoom = async (context) => {
   const roomManager = context.get("roomManager");
   const sessionToRoomMap = context.get("sessionToRoomMap");
 
-  const sessionId = +getCookie(context, "sessionId");
+  const sessionId = parseInt(getCookie(context, "sessionId"));
   const player = context.get("players").getPlayer(sessionId);
 
   if (roomManager.getRoom(+roomId)) {

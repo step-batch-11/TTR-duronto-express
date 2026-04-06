@@ -3,15 +3,17 @@ export default class Player {
   #claimedTickets;
   #bogies;
   #claimedRoutes;
+  #colors;
   #color;
   #playerId;
-  constructor(color) {
+  constructor(id, index) {
+    this.colors = ["green", "yellow", "blue", "black", "red"];
     this.#carCards = {};
     this.#claimedTickets = [];
     this.#bogies = 45;
     this.#claimedRoutes = [];
-    this.#color = color;
-    this.#playerId = 1;
+    this.#color = this.colors[index];
+    this.#playerId = id;
   }
 
   addCarCardToHand(carCard) {
@@ -54,14 +56,20 @@ export default class Player {
       this.#reconcile(colorCardUsed, colorCardCount);
       this.#removeExhaustedCard(colorCardUsed);
     }
-
-    if (this.#carCards["wild"]) {
+    if (this.#carCards["wild"] < 0) {
       this.#reconcile("wild", wildCardCount);
       this.#removeExhaustedCard("wild");
     }
 
-    this.#removeUsedBogies(colorCardCount + wildCardCount);
+    const clrCardCount = colorCardCount || 0;
+    const wCardCount = wildCardCount || 0;
+
+    this.#removeUsedBogies(clrCardCount + wCardCount);
     this.#claimedRoutes.push(routeId);
+  }
+
+  getPlayerId() {
+    return this.#playerId;
   }
 
   getPlayerColor() {

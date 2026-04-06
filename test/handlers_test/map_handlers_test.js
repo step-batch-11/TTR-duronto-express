@@ -52,11 +52,11 @@ describe("testing map handlers", () => {
     }]);
 
     const createGame = () => {
-      const player = new Player();
+      const player = new Player(1000, 0);
       player.addCarCardToHand("red");
       player.addCarCardToHand("red");
       player.addCarCardToHand("red");
-      return new Game(carCardsDeck, ticketDeck, player);
+      return new Game(carCardsDeck, ticketDeck, [player]);
     };
 
     const roomManager = new RoomManager(
@@ -89,6 +89,7 @@ describe("testing map handlers", () => {
       },
       body,
     });
+
     assertEquals(response.status, 200);
     assertEquals(await response.json(), {
       carCards: {
@@ -111,13 +112,13 @@ describe("testing map handlers", () => {
     }]);
 
     const createGame = () => {
-      const player = new Player();
+      const player = new Player(1000, 0);
       player.addCarCardToHand("red");
       player.addCarCardToHand("red");
       player.addCarCardToHand("red");
       player.addCarCardToHand("red");
       player.addCarCardToHand("red");
-      return new Game(carCardsDeck, ticketDeck, player);
+      return new Game(carCardsDeck, ticketDeck, [player]);
     };
 
     const roomManager = new RoomManager(
