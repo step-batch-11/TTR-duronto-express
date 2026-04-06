@@ -254,6 +254,7 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 4%;
   gap: 1%;
 }
 
@@ -310,16 +311,18 @@ svg {
 }
 
 .hand-car-card {
-  width: 107px;
-  height: 205px;
-  position: relative;
+  width: 105px;
+  height: 170px;
   display: flex;
   flex-direction: column;
-  gap: 35px;
   align-items: center;
+  position: relative;
 }
 
 .img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 170px;
   height: 105px;
   transform: rotate(270deg);
@@ -329,17 +332,17 @@ svg {
 .hand-car-card img {
   width: 100%;
   height: 100%;
+  opacity: 0.9;
 }
 
 .card-count {
-  display: block;
-  width: 40px;
-  height: 30px;
-  border: 1px solid;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  z-index: 1;
+  position: absolute;
+  font-size: 4.5em;
+  font-weight: 900;
+  color: white;
+  font-family:sans-serif;
+  -webkit-text-stroke: 3px black;
 }
 
 .destination-tickets-deck-container {
@@ -373,8 +376,8 @@ svg {
 }
 
 .highlightCity>use {
-  fill: rgb(3, 182, 0);
-  stroke-width: 3;
+  fill: rgb(255, 62, 62);
+  stroke-width: 1;
 }
 
 .highlightCity text {
@@ -440,8 +443,19 @@ svg {
 }
 
 @keyframes showMove {
-  0%   { opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }

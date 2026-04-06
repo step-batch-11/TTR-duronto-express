@@ -5,10 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="styles/lobby.css">
   <style>
-    h1 {
-      display: flex;
-      justify-content: center;
+    input{
+      width: 100px;
+      height: 50px;
+      font-size: larger;
     }
   </style>
   <script type="module" src="scripts/create_room.js"></script>
@@ -17,7 +19,9 @@
 <body>
   <main>
     <section>
-      <h1>Host</h1>
+      <header>
+        <h1>Host</h1>
+      </header>
       <form>
         <label for="maxPlayer">Players count:</label>
         <input type="number" name="maxPlayer" id="maxPlayer" min="2" max="5" value="2">

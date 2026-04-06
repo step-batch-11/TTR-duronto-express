@@ -24,12 +24,15 @@ export const joinRoom = async (context) => {
   const player = context.get("players").getPlayer(sessionId);
 
   if (roomManager.getRoom(+roomId)) {
-    const { room } = roomManager.joinRoom(+roomId, player);
+    try {
+      const { room } = roomManager.joinRoom(+roomId, player);
+      sessionToRoomMap.set(sessionId, room);
 
-    sessionToRoomMap.set(sessionId, room);
-
-    return context.json({ roomId: room.id, isValidRoom: true });
+      return context.json({ roomId: room.id, isValidRoom: true });
+    } catch (e) {
+      return context.json({ error: e.message });
+    }
   }
 
-  return context.json({ isValidRoom: false });
+  return context.json({ error: `invalid room Id, try again with a valid one` });
 };

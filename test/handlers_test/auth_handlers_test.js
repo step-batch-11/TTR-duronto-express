@@ -15,11 +15,7 @@ describe("auth handler test", () => {
     it("accessing without logging in, no session, should be redirected to login", async () => {
       const response = await app.request("/");
       await response.text();
-      assertEquals(response.status, 200);
-      assertEquals(
-        response.headers.get("content-type"),
-        "text/html; charset=utf-8",
-      );
+      assertEquals(response.status, 303);
     });
   });
 
@@ -43,7 +39,7 @@ describe("auth handler test", () => {
       });
       await response.text();
       assertEquals(response.status, 303);
-      assertEquals(response.headers.get("location"), "/lobby.html");
+      assertEquals(response.headers.get("location"), "/index.html");
     });
 
     it("accessing login with invalid session, should get login.html", async () => {
