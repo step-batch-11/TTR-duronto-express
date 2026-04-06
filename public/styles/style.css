@@ -369,14 +369,12 @@ svg {
 }
 
 .highlight {
-  border: 50px;
-  border-color: #eadec9;
-  box-shadow: 0 0 40px #e0d8c0;
+  box-shadow: 0 0 16px 8px #baa259;
 }
 
-.highlightCity > use {
-  fill: rgb(255, 62, 62);
-  stroke-width: 1;
+.highlightCity>use {
+  fill: rgb(3, 182, 0);
+  stroke-width: 3;
 }
 
 .highlightCity text {
@@ -416,8 +414,8 @@ svg {
   z-index: 31;
 }
 
-#dialog-box{
-  margin-right:0px;
+#dialog-box {
+  margin-right: 0px;
   line-height: 2em;
   left: auto;
   right: 50%;
@@ -435,6 +433,10 @@ svg {
   width: 100%;
   animation: showMove 2s ease-in-out;
   border: none;
+}
+
+.add-to-cart {
+  transition: all 0.5s ease;
 }
 
 @keyframes showMove {
