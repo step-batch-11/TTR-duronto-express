@@ -50,8 +50,10 @@ export default class Player {
   }
 
   claimRoute(routeId, { colorCardUsed, colorCardCount, wildCardCount }) {
-    this.#reconcile(colorCardUsed, colorCardCount);
-    this.#removeExhaustedCard(colorCardUsed);
+    if (colorCardUsed !== null) {
+      this.#reconcile(colorCardUsed, colorCardCount);
+      this.#removeExhaustedCard(colorCardUsed);
+    }
 
     if (this.#carCards["wild"]) {
       this.#reconcile("wild", wildCardCount);
