@@ -121,6 +121,11 @@ article {
   width: 90%;
 }
 
+.ticket-cards .card {
+  width: 180px;
+  height: 110px;
+}
+
 .faceup-cards img {
   width: 100%;
   height: 100%;
@@ -193,7 +198,8 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50%;
+  height: 110px;
+  border: 1px solid rgb(183, 182, 182);
 }
 
 .buttons-container {
@@ -358,19 +364,18 @@ svg {
   cursor: pointer;
 }
 
-.highlight {
-  border: 40px;
-  border-color: #007bff;
-  box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+#ticket-claim-button:hover {
+  cursor: pointer;
 }
 
-/* .highlightCity {
-  box-shadow: 0 0 20px rgb(250, 30, 30);
-  fill: red;
-} */
+.highlight {
+  border: 50px;
+  border-color: #eadec9;
+  box-shadow: 0 0 40px #e0d8c0;
+}
 
 .highlightCity > use {
-  fill: rgb(19, 19, 18);
+  fill: rgb(255, 62, 62);
   stroke-width: 1;
 }
 

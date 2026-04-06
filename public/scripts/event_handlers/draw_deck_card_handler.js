@@ -52,7 +52,7 @@ const showMessage = (message) => {
   }, 4000);
 };
 
-export const handleDrawFaceUP = async (event) => {
+export const handleDrawFaceUp = async (event) => {
   disableDestinationDeck();
   disableMap();
 
@@ -61,6 +61,7 @@ export const handleDrawFaceUP = async (event) => {
     showMessage("choose a valid card");
     return;
   }
+
   const img = card.querySelector(".card-img");
   animateDrawFaceUpCard(card);
   const cardId = { id: card.id };

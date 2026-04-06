@@ -55,6 +55,7 @@ export const animateDrawFaceUpCard = (card) => {
   const color = card.getAttribute("data-color");
   const hand = getHandCardPositions(color);
   const faceUpCard = card.getBoundingClientRect();
+
   moveFaceUpCard(card, hand, faceUpCard);
 };
 
@@ -80,4 +81,19 @@ export const animateRefillMarket = (drawnCardFromDeck, card, faceUpCards) => {
 
   animateDrawDeckCard(img, cardPosition, deckPosition, moveFromDeckToMarket);
   resolveRefillMarket(deck, img, faceUpCards);
+};
+
+export const animateTicketClaim = (ticketChoice) => {
+  const handTicketContainer = document.querySelector(
+    ".hand-destination-tickets .container",
+  );
+
+  const img = document.querySelector(`[data-ticket-route=${ticketChoice}]`);
+
+  const handTicketSize = handTicketContainer.getBoundingClientRect();
+  const imgSize = img.getBoundingClientRect();
+
+  const x = handTicketSize.x - imgSize.x;
+  const y = handTicketSize.y - imgSize.y;
+  img.style.transform = `translate(${x}px, ${y}px)`;
 };

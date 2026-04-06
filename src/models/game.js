@@ -35,9 +35,7 @@ export default class Game {
     const dealtCards = this.#carCardsDeck.dealInitialCards();
 
     dealtCards.forEach((card) => this.#player.addCarCardToHand(card));
-    this.#drawnTickets = this.#ticketDeck.dealTicketChoices().map(({ id }) =>
-      id
-    );
+    this.#drawnTickets = this.#ticketDeck.dealTicketChoices();
 
     this.#carCardsDeck.initFaceUp();
     this.#phase = "INITIALIZED";
@@ -71,7 +69,7 @@ export default class Game {
   }
 
   getDrawnTickets() {
-    return structuredClone(this.#drawnTickets);
+    return structuredClone(this.#drawnTickets.map(({ id }) => id));
   }
 
   drawTicketChoice() {

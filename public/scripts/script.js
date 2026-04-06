@@ -1,5 +1,4 @@
 import {
-  fetchClaimedTickets,
   fetchInitialFaceUp,
   fetchInitialPlayerHand,
   fetchMap,
@@ -21,7 +20,6 @@ import {
   displayFaceUpCards,
   displayLog,
   displayPlayerHand,
-  displayPlayerHandTickets,
   displayPlayers,
   renderMap,
 } from "./render.js";
@@ -48,9 +46,6 @@ globalThis.onload = async () => {
   const playerHand = await fetchInitialPlayerHand();
   displayDestTicketDeck();
   displayPlayerHand(playerHand);
-
-  const claimedTickets = await fetchClaimedTickets();
-  displayPlayerHandTickets(claimedTickets);
 
   const cardsData = await fetchInitialFaceUp();
   displayFaceUpCards(cardsData);

@@ -204,12 +204,16 @@ export const updateActiveTicket = (tickets, currentTicket, offset) => {
 export const highlightCities = (cardId) => {
   clearHighlightedCities();
 
-  const [from, to] = cardId.split("-");
-  document.querySelector(`#${from}`)?.classList.add(
+  const [src, dest] = cardId.split("-");
+
+  const srcStation = document.querySelector(`#${src}`);
+  const destStation = document.querySelector(`#${dest}`);
+
+  srcStation?.classList.add(
     "highlightCity",
     "stationColor",
   );
-  document.querySelector(`#${to}`)?.classList.add(
+  destStation?.classList.add(
     "highlightCity",
     "stationColor",
   );

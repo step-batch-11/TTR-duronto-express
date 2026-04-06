@@ -8,7 +8,7 @@ import {
 } from "./event_handlers/tickets_handlers.js";
 import {
   handleDrawCardFromDeck,
-  handleDrawFaceUP,
+  handleDrawFaceUp,
 } from "./event_handlers/draw_deck_card_handler.js";
 import { displayTicketChoices } from "./render.js";
 
@@ -19,7 +19,7 @@ export const drawDeckCard = () => {
 
 export const drawFaceUpCard = () => {
   const market = document.querySelector(".faceup-cards");
-  market.addEventListener("click", handleDrawFaceUP);
+  market.addEventListener("click", handleDrawFaceUp);
 };
 
 export const drawTicketChoice = () => {
