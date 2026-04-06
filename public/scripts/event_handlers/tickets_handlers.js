@@ -88,8 +88,11 @@ const SWIPE_DIRECTION = {
 };
 
 export const handleTicketSwipe = (event) => {
+  if (event.target.name === undefined) return;
+
   const tickets = document.querySelectorAll(".ticket");
   const currentTicket = document.querySelector(".top");
+
   const ticketRoute = currentTicket.dataset.ticketRoute;
   unhighlightCities(ticketRoute);
   const offset = SWIPE_DIRECTION[event.target.name];

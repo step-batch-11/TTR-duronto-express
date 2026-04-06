@@ -7,9 +7,11 @@ export const getGamePhase = (context) => {
 
 export const gameStateHandler = (context) => {
   const game = context.get("game");
+
   const faceUp = game.getFaceUpCards();
   const claimedRoutes = game.getRouteClaims();
   const claimedTickets = game.getClaimedTickets();
+
   return context.json({
     faceUp,
     claimedRoutes,
