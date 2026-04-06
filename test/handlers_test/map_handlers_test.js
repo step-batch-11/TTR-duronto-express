@@ -187,3 +187,81 @@ describe("Checks the game end conditions", () => {
     assertEquals(await res.status, 303);
   });
 });
+
+describe("ending game within multiplayer", () => {
+  let carCardsDeck;
+  let ticketDeck;
+  let res, app, game;
+  beforeEach(() => {
+    const carCards = [
+      "red",
+      "green",
+      "blue",
+      "pink",
+      "white",
+      "yellow",
+      "orange",
+      "black",
+      "wild",
+    ];
+
+    const ticketCards = [
+      { id: "DVR-ELP", src: "Denver", dest: "El Paso", points: 4 },
+      { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
+      { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+      { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
+      {
+        id: "SSM-OKC",
+        src: "Sault St. Marie",
+        dest: "Oklahoma City",
+        points: 9,
+      },
+      { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
+    ];
+
+    carCardsDeck = new CarCardsDeck(carCards);
+    ticketDeck = new TicketDeck(ticketCards);
+
+    const player = new Player();
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    game = new Game(carCardsDeck, ticketDeck, player);
+
+    player.playerBogies = 5;
+    app = createApp(game);
+  });
+  it("after sending request to /claim-route if", async () => {
+    res = await app.request("/claim-route", {
+      method: "post",
+      body: JSON.stringify({
+        playerId: "1",
+        routeId: "SLC-DVR",
+        cardsUsed: {
+          colorCardUsed: "red",
+          colorCardCount: 3,
+          wildCardCount: 0,
+        },
+      }),
+    });
+
+    assertEquals(await res.status, 200);
+
+    res = await app.request("/claim-route", {
+      method: "post",
+      body: JSON.stringify({
+        playerId: "1",
+        routeId: "DLT-CHG",
+        cardsUsed: {
+          colorCardUsed: "red",
+          colorCardCount: 3,
+          wildCardCount: 0,
+        },
+      }),
+    });
+
+    assertEquals(await res.status, 303);
+  });
+});
