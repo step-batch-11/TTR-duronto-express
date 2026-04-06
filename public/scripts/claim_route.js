@@ -4,7 +4,6 @@ import {
   addHandCardContainer,
   displayCarCards,
   displayDestTicketDeck,
-  displayLog,
   renderMap,
 } from "./render.js";
 import { createCarCardImg } from "./utils.js";
@@ -255,7 +254,6 @@ const buildRoute = async (routeId) => {
   const { routeOwnership, carCards } = res;
   renderMap(routeOwnership);
   resolveBuild(carCards);
-  displayLog(`Route claimed successfully`);
 };
 
 const cancelBuild = (_, handCarCards) => {

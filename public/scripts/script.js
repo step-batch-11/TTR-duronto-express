@@ -65,9 +65,6 @@ globalThis.onload = async () => {
   initializeGameUI(playerHand);
   displayPlayerHand(playerHand);
 
-  const logs = await (await fetch("/fetch-log")).json();
-  displayLog(logs);
-
   const routesData = await fetchRoutesData();
   registerListeners(routesData);
 

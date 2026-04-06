@@ -123,8 +123,6 @@ const isNewGame = (tickets) => tickets.length === 0;
 
 export const initializeGameUI = ({ claimedTickets }) => {
   if (isNewGame(claimedTickets)) {
-    displayLog(`Game Started`);
-
     const swipeButtons = document.querySelector(".buttons-container");
     swipeButtons.classList.add("is-disabled");
   }
@@ -273,12 +271,4 @@ export const addHandCardContainer = (color) => {
 
   handContainer.append(clone);
   return document.querySelector(`.hand-car-cards [data-color="${color}"]`);
-};
-
-export const displayLog = (log) => {
-  const logContainer = document.querySelector(".log-div");
-  const logHolderElement = document.createElement("p");
-  logHolderElement.setAttribute("class", "log");
-  logHolderElement.textContent = log;
-  logContainer.replaceChildren(logHolderElement);
 };

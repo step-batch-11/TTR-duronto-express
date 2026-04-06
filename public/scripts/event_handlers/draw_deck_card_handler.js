@@ -1,11 +1,7 @@
 import { fetchFaceUpDeck } from "../api.js";
 import { animateDrawDeckCard, getHandCardPositions } from "../animations.js";
 import { fetchDeckCards } from "../api.js";
-import {
-  displayCarCards,
-  displayLog,
-  resolveFaceUpCardDraw,
-} from "../render.js";
+import { displayCarCards, resolveFaceUpCardDraw } from "../render.js";
 import {
   animateDrawFaceUpCard,
   animateRefillMarket,
@@ -69,8 +65,6 @@ export const handleDrawFaceUp = async (event) => {
     cardId,
   );
 
-  displayLog(`Cards drawn from face-up`);
-
   if (cardToRefill !== undefined) {
     animateRefillMarket(cardToRefill, card, faceUpCards);
     resolveFaceUpCardDraw(card, img, carCards);
@@ -92,8 +86,6 @@ export const handleDrawCardFromDeck = async (deck) => {
     const img = createCarCardImg(drawnCard);
     deck.append(img);
     animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
-
-    displayLog(`Cards drawn from deck`);
 
     resolveDeckCardDraw(deck, img, carCards);
     disableWild();
