@@ -1,22 +1,32 @@
 import { clearHighlightedCities } from "./event_handlers/tickets_handlers.js";
 import { claimTicketChoices } from "./events.js";
 
-const paintRoutes = (color, routes) => {
-  const map = document.querySelector("#map");
+const validateDoubleRouteClaim = (_color, routeId, map) => {
+  const adjacentPathId = routeId.split("-").reverse().join("-");
+  const adjacentPath = map.querySelector(`#${adjacentPathId}`);
 
+  if (adjacentPath !== null) adjacentPath.classList.add("click-disabled");
+};
+
+const paintRoutes = (color, routes, map) => {
   for (const routeId of routes) {
     const routeElement = map.querySelector(`#${routeId}`);
     routeElement.setAttribute("data-owner-color", color);
+    routeElement.classList.add("click-disabled");
+
+    validateDoubleRouteClaim(color, routeId, map);
   }
 };
 
 export const renderMap = (routeOwnership) => {
+  const map = document.querySelector("#map");
+
   for (const [color, routes] of Object.entries(routeOwnership)) {
-    paintRoutes(color, routes);
+    paintRoutes(color, routes, map);
   }
 };
 
-const appendPlayer = ({ name, symbol, carCount }, container, template) => {
+const createPlayer = ({ name, symbol, carCount }, template) => {
   const clone = template.content.cloneNode(true);
   clone.querySelector(".identifier .name").textContent = name;
   clone.querySelector(".identifier .symbol").style.backgroundColor = symbol;
@@ -26,15 +36,16 @@ const appendPlayer = ({ name, symbol, carCount }, container, template) => {
     .setAttribute("src", `assets/symbols/${symbol}.png`);
   clone.querySelector(".train-car-data .car-count").textContent = carCount;
 
-  container.append(clone);
+  return clone;
 };
 
 export const displayPlayers = (players) => {
   const playerTemplate = document.querySelector("#user");
   const container = document.querySelector(".player-details");
-  players.forEach((player) => {
-    appendPlayer(player, container, playerTemplate);
-  });
+  const playerElements = players.map((player) =>
+    createPlayer(player, playerTemplate)
+  );
+  container.replaceChildren(...playerElements);
 };
 
 export const displayFaceUpCards = (cards) => {
@@ -42,7 +53,7 @@ export const displayFaceUpCards = (cards) => {
   const container = document.querySelector(".faceup-cards");
   container.innerHTML = "";
 
-  cards.forEach((card, index) => {
+  cards.filter((card) => card !== null).forEach((card, index) => {
     const clone = cardTemplate.content.cloneNode(true);
     clone.querySelector(".card").id = index + 1;
     clone.querySelector(".card").setAttribute("data-color", card);
@@ -55,8 +66,13 @@ export const displayFaceUpCards = (cards) => {
 
 export const displayCarCards = (carCards) => {
   const carCardTemplate = document.querySelector("#card");
-  const handContainer = document.querySelector(".hand-car-cards");
 
+  const container = document.querySelector(".hand-car-cards");
+  if (container !== null) container.remove();
+
+  const handContainer = document.createElement("div");
+  handContainer.classList.add("hand-car-cards");
+  document.querySelector(".footer").children[1].before(handContainer);
   handContainer.innerHTML = "";
 
   const cardsInHand = Object.entries(carCards).map(([color, count]) => {
@@ -103,20 +119,27 @@ export const displayPlayerHandTickets = (ticketChoices) => {
   });
 };
 
+const isNewGame = (tickets) => tickets.length === 0;
+
+export const initializeGameUI = ({ claimedTickets }) => {
+  if (isNewGame(claimedTickets)) {
+    const swipeButtons = document.querySelector(".buttons-container");
+    swipeButtons.classList.add("is-disabled");
+  }
+};
+
 export const displayPlayerHand = (
   { carCards, ticketChoices, claimedTickets },
 ) => {
-  console.log(carCards, ticketChoices, claimedTickets);
-
-  displayTicketChoices(ticketChoices, claimedTickets);
   displayCarCards(carCards);
+  displayTicketChoices(ticketChoices, claimedTickets);
 };
 
 export const displayDestTicketDeck = () => {
-  // const template = document.querySelector("#dest-ticket");
-  // const clone = template.content.cloneNode(true);
+  const template = document.querySelector("#dest-ticket");
+  const clone = template.content.cloneNode(true);
 
-  // document.querySelector(".footer").append(clone);
+  document.querySelector(".footer").append(clone);
 };
 
 export const toggleHidden = () => {
@@ -137,16 +160,16 @@ export const toggleDisable = () => {
   ticketDeck.classList.toggle("is-disabled");
 };
 
-const createTicketCard = (ticketId) => {
+const createTicketCard = (ticket) => {
   const ticketCardTemplate = document.querySelector("#market-card");
 
   const clone = ticketCardTemplate.content.cloneNode(true);
+  const ticketId = typeof ticket === "object" ? ticket.id : ticket;
   clone.querySelector(".card").id = ticketId;
   clone.querySelector(".card").setAttribute("data-ticket-route", ticketId);
   clone
     .querySelector(".card img")
     .setAttribute("src", `./assets/destination-cards-images/${ticketId}.png`);
-  clone.onclick = () => {};
   return clone;
 };
 
@@ -197,18 +220,21 @@ export const updateActiveTicket = (tickets, currentTicket, offset) => {
   const nextTicket = document.querySelector(`[data-ticket-id="${nextId}"]`);
   nextTicket.classList.add("top");
   currentTicket.classList.remove("top");
-
-  return;
 };
 
 export const highlightCities = (cardId) => {
   clearHighlightedCities();
-  const [from, to] = cardId.split("-");
-  document.querySelector(`#${from}`)?.classList.add(
+
+  const [src, dest] = cardId.split("-");
+
+  const srcStation = document.querySelector(`#${src}`);
+  const destStation = document.querySelector(`#${dest}`);
+
+  srcStation?.classList.add(
     "highlightCity",
     "stationColor",
   );
-  document.querySelector(`#${to}`)?.classList.add(
+  destStation?.classList.add(
     "highlightCity",
     "stationColor",
   );
@@ -218,11 +244,10 @@ export const unhighlightCities = (cardId) => {
   const [from, to] = cardId.split("-");
   document.querySelector(`#${from}`)?.classList.remove(
     "highlightCity",
-    "stationColor",
   );
+
   document.querySelector(`#${to}`)?.classList.remove(
     "highlightCity",
-    "stationColor",
   );
 };
 
@@ -248,6 +273,7 @@ export const addHandCardContainer = (color) => {
   const handContainer = document.querySelector(".hand-car-cards");
   const carCardTemplate = document.querySelector("#card");
   const clone = carCardTemplate.content.cloneNode(true);
+  clone.querySelector(".hand-car-card").id = color;
   clone.querySelector(".img-container").setAttribute("data-color", color);
 
   handContainer.append(clone);

@@ -50,27 +50,28 @@ export const fetchTicketChoices = () => get("/get-ticket-choices");
 export const claimSelectedTickets = (tickets) =>
   post("/claim-tickets", tickets);
 
-export const postClaimRoute = (body) => post("/claim-route", body);
+export const postClaimRoute = async (body) => {
+  const response = await fetch("/claim-route", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+
+  if (response.redirected) {
+    globalThis.location.href = response.url;
+    return;
+  }
+
+  return await response.json();
+};
 
 export const fetchRouteOwnership = () => get("/map-ownership");
 
 export const fetchPlayerHand = () => get("/car-cards");
 
-export const fetchLog = (body) => post("/fetch-log", body);
-
-export const fetchRoutesData = () => ({
-  "HLN-CLC": {
-    routeColor: "red",
-    routeLength: 4,
-  },
-  "STL-CLC": {
-    routeColor: "transparent",
-    routeLength: 4,
-  },
-  "VCR-CLC": {
-    routeColor: "transparent",
-    routeLength: 3,
-  },
-});
+export const fetchRoutesData = () => get("/routes-data");
 
 export const fetchPhase = () => get("/get-game-phase");
+
+export const fetchClaimedTickets = () => get("/claimed-tickets");
+
+export const fetchGameState = () => get("/game-state");

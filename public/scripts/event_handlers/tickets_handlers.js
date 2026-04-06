@@ -1,6 +1,7 @@
-import { claimSelectedTickets, fetchLog, fetchPhase } from "../api.js";
+import { animateTicketClaim } from "../animations.js";
+import { claimSelectedTickets, fetchPhase } from "../api.js";
+
 import {
-  displayLog,
   displayPlayerHandTickets,
   highlightCities,
   toggleDisable,
@@ -10,6 +11,7 @@ import {
 } from "../render.js";
 
 const selectedTickets = new Set();
+
 const claimedTicketsMap = {
   "INITIALIZED": 2,
   "DRAWTICKETCHOICE": 1,
@@ -32,15 +34,18 @@ export const handleTicketsClaim = async (_event) => {
 
   clearHighlightedCities();
   toggleDisable();
-  toggleHidden();
 
-  displayPlayerHandTickets(playerHandTickets);
+  setTimeout(() => {
+    toggleHidden();
+    displayPlayerHandTickets(playerHandTickets);
+
+    const swipeButtons = document.querySelector(".buttons-container");
+    swipeButtons.classList.remove("is-disabled");
+  }, 1500);
+
+  ticketChoices.forEach(animateTicketClaim);
 
   selectedTickets.clear();
-
-  const body = { msg: `tickets are drawn` };
-  const log = await fetchLog(body);
-  displayLog(log);
 };
 
 const validateTicketClaim = async () => {

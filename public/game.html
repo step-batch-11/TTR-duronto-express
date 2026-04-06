@@ -10,14 +10,11 @@
   <link rel="icon" href="assets/apple-touch-icon.png" type="image/png">
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.18.1/lodash.min.js"></script>
   <script type="module" src="scripts/script.js"></script>
-
 </head>
 
 <body>
-  <main>
-    <aside class="players">
-      <div class="player-details">
-        <template id="user">
+  <dialog id="dialog-box" >choose valid card</dialog>
+  <template id="user">
           <div class="user">
             <div class="identifier row">
               <h2 class="name"></h2>
@@ -30,12 +27,11 @@
             </div>
           </div>
         </template>
-      </div>
+  <main>
+    <aside class="players">
+      <div class="player-details"></div>
 
-      <div class="log">
-
-      </div>
-
+      <div class="log"></div>
     </aside>
 
     <article id="map">
@@ -64,7 +60,7 @@
     <div class="hand-destination-tickets">
       <div class="container">
       </div>
-      <div class="buttons-container hidden">
+      <div class="buttons-container">
         <button type="button" class="left-button" id="ticket-swipe-button-left" name="left">
           &lt; </button>
         <div class="ticket-counter"></div>
@@ -80,8 +76,7 @@
         </div>
       </div>
     </template>
-    <div class="hand-car-cards">
-    </div>
+
 
     <template id="build-route-template">
       <div class="build-route-container">
@@ -99,18 +94,19 @@
         </div>
 
         <div class="build-actions">
-          <button id="build">Build</button>
+          <button id="build" class="click-disabled">Build</button>
           <button id="cancel">Cancel</button>
         </div>
       </div>
-
     </template>
 
-    <div class="destination-tickets-deck-container">
-      <div class="destination-tickets-deck">
-        <img src="assets/deck-images/destination-card.png" alt="">
+    <template id="dest-ticket">
+      <div class="destination-tickets-deck-container">
+        <div class="destination-tickets-deck">
+          <img src="assets/deck-images/destination-card.png" alt="">
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </body>
 

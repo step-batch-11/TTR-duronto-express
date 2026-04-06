@@ -1,6 +1,6 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { CarCardsDeck } from "../../src/models/train_car_card_deck.js";
+import CarCardsDeck from "../../src/models/train_car_card_deck.js";
 import TicketDeck from "../../src/models/ticket_deck.js";
 import Player from "../../src/models/player.js";
 import Game from "../../src/models/game.js";

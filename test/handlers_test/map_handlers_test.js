@@ -1,14 +1,19 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { CarCardsDeck } from "../../src/models/train_car_card_deck.js";
+import CarCardsDeck from "../../src/models/train_car_card_deck.js";
 import TicketDeck from "../../src/models/ticket_deck.js";
 import Player from "../../src/models/player.js";
 import Game from "../../src/models/game.js";
 import { createApp } from "../../src/app.js";
+import PlayerBase from "../../src/models/player_base.js";
+import RoomManager from "../../src/models/room_manager.js";
+import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
 
 describe("testing map handlers", () => {
   let carCardsDeck;
   let ticketDeck;
+  let mockApp;
+  let players;
   beforeEach(() => {
     const carCards = [
       "red",
@@ -40,48 +45,131 @@ describe("testing map handlers", () => {
     ticketDeck = new TicketDeck(ticketCards);
   });
 
-  it("POST /claim-route should add the route to player claimed routes and should give route ownership of map", async () => {
-    const player = new Player();
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    const game = new Game(carCardsDeck, ticketDeck, player);
+  it("POST /claim-route should add the route to player claimed routes and should return car cards in player hand", async () => {
+    players = new PlayerBase([{ sessionId: 1000, username: "haji" }, {
+      sessionId: 1001,
+      username: "hussain",
+    }]);
 
-    const mockApp = createApp(game);
+    const createGame = () => {
+      const player = new Player();
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      return new Game(carCardsDeck, ticketDeck, player);
+    };
+
+    const roomManager = new RoomManager(
+      createRoomFn,
+      createGenerateFn(),
+      createGame,
+    );
+    const sessionToRoomMap = new Map();
+
+    const room = roomManager.createRoom(2, {
+      sessionId: 1000,
+      username: "haji",
+    });
+    sessionToRoomMap.set(1000, room);
+
+    roomManager.joinRoom(1000, { sessionId: 1001, username: "hussain" });
+    sessionToRoomMap.set(1001, room);
+
+    mockApp = createApp(roomManager, players, sessionToRoomMap);
+
     const body = JSON.stringify({
       routeId: "STN1-STN2",
-      cardsUsed: { colorCard: "red", colorCardCount: 2 },
-    });
-    const response = await mockApp.request("/claim-route", {
-      method: "post",
-      body,
+      cardsUsed: { colorCardUsed: "red", colorCardCount: 2, wildCardCount: 0 },
     });
 
+    const response = await mockApp.request("/claim-route", {
+      method: "post",
+      headers: {
+        Cookie: `sessionId=${1000}`,
+      },
+      body,
+    });
     assertEquals(response.status, 200);
     assertEquals(await response.json(), {
+      carCards: {
+        black: 1,
+        orange: 1,
+        red: 1,
+        wild: 1,
+        yellow: 1,
+      },
       routeOwnership: { green: ["STN1-STN2"] },
     });
   });
 
-  it("GET /map-ownership should give the routes ownership", async () => {
-    const player = new Player();
-    player.addCarCardToHand("red");
-    player.addCarCardToHand("red");
-    const game = new Game(carCardsDeck, ticketDeck, player);
+  it("after sending request to /claim-route if last turn is going on it should end the game if last player played the turn", async () => {
+    let res;
 
-    const app = createApp(game);
-    const body = JSON.stringify({
-      routeId: "STN5-STN7",
-      cardsUsed: { colorCard: "red", colorCardCount: 2 },
+    players = new PlayerBase([{ sessionId: 1000, username: "haji" }, {
+      sessionId: 1001,
+      username: "hussain",
+    }]);
+
+    const createGame = () => {
+      const player = new Player();
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      player.addCarCardToHand("red");
+      return new Game(carCardsDeck, ticketDeck, player);
+    };
+
+    const roomManager = new RoomManager(
+      createRoomFn,
+      createGenerateFn(),
+      createGame,
+    );
+    const sessionToRoomMap = new Map();
+
+    const room = roomManager.createRoom(2, {
+      sessionId: 1000,
+      username: "haji",
     });
-    await app.request("/claim-route", {
+    sessionToRoomMap.set(1000, room);
+
+    roomManager.joinRoom(1000, { sessionId: 1001, username: "hussain" });
+    sessionToRoomMap.set(1001, room);
+
+    mockApp = createApp(roomManager, players, sessionToRoomMap);
+
+    res = await mockApp.request("/claim-route", {
       method: "post",
-      body,
+      headers: {
+        Cookie: `sessionId=${1000}`,
+      },
+      body: JSON.stringify({
+        routeId: "SLC-DVR",
+        cardsUsed: {
+          colorCardUsed: "red",
+          colorCardCount: 3,
+          wildCardCount: 0,
+        },
+      }),
     });
 
-    const response = await app.request("/map-ownership");
-    assertEquals(response.status, 200);
-    assertEquals(await response.json(), {
-      routeOwnership: { green: ["STN5-STN7"] },
+    assertEquals(await res.status, 200);
+
+    res = await mockApp.request("/claim-route", {
+      method: "post",
+      headers: {
+        Cookie: `sessionId=${1000}`,
+      },
+      body: JSON.stringify({
+        routeId: "DLT-CHG",
+        cardsUsed: {
+          colorCardUsed: "red",
+          colorCardCount: 3,
+          wildCardCount: 0,
+        },
+      }),
     });
+
+    assertEquals(await res.status, 200);
   });
 });

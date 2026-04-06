@@ -1,10 +1,9 @@
 import { Hono } from "hono";
 import { logger } from "hono/logger";
+import { etag } from "hono/etag";
 import { serveStatic } from "hono/deno";
 import {
-  initializeFaceUpDeckHandler,
   initializePlayerHandHandler,
-  storeRecentMove,
 } from "./handlers/initialization_handlers.js";
 import {
   drawDeckCardHandler,
@@ -14,51 +13,91 @@ import {
   claimDestinationTickets,
   drawTicketChoiceHandler,
 } from "./handlers/draw_tickets_handlers.js";
-import {
-  claimRouteHandler,
-  routeOwnershipHandler,
-} from "./handlers/map_handlers.js";
-import { getplayerCarCardsHandler } from "./handlers/claim_route_handlers.js";
+import { claimRouteHandler } from "./handlers/map_handlers.js";
+import { getPlayerCarCardsHandler } from "./handlers/claim_route_handlers.js";
 import {
   allowExistingPlayer,
   allowNonExistingPlayer,
   createUser,
   doesPlayerNotExist,
 } from "./handlers/auth_handlers.js";
-import { getGamePhase } from "./handlers/phase_handler.js";
+import { gameStateHandler, getGamePhase } from "./handlers/phase_handler.js";
+import { createRoom, joinRoom } from "./handlers/room_handler.js";
+import { getCookie } from "hono/cookie";
 
-export const createApp = (game, players) => {
+export const createApp = (roomManager, players, sessionToRoomMap) => {
   const app = new Hono();
 
   app.use(logger());
+  app.use(etag());
   app.use((context, next) => {
-    context.set("game", game);
     context.set("players", players);
+    context.set("roomManager", roomManager);
+    context.set("sessionToRoomMap", sessionToRoomMap);
+    console.log(
+      "a room manager honi chahiye",
+      roomManager,
+      players,
+      sessionToRoomMap,
+    );
     return next();
   });
+
+  app.use((context, next) => {
+    const sessionId = Number(getCookie(context, "sessionId"));
+    context.set("sessionId", sessionId);
+    return next();
+  });
+
+  app.use((context, next) => {
+    const sessionId = getCookie(context, "sessionId");
+    const sessionToRoomMap = context.get("sessionToRoomMap");
+
+    const room = sessionToRoomMap.get(+sessionId);
+    if (room && room.game) {
+      const game = room.game;
+      context.set("game", game);
+      console.log("game create hora ki ni", game);
+    }
+    console.log("game ni hi room hi", room, sessionId);
+    return next();
+  });
+
+  app.get("/room-state", (context) => {
+    const sessionId = getCookie(context, "sessionId");
+    const sessionToRoomMap = context.get("sessionToRoomMap");
+
+    const room = sessionToRoomMap.get(+sessionId);
+
+    return context.json({
+      roomId: room.id,
+      maxPlayers: room.maxPlayers,
+      players: room.players,
+    });
+  });
+
+  app.post("/create-room", createRoom);
+  app.post("/join-room", joinRoom);
 
   app.get("/login.html", doesPlayerNotExist, serveStatic({ root: "/public" }));
   app.post("/login", allowNonExistingPlayer, createUser);
 
   app.get("/game.html", allowExistingPlayer, serveStatic({ root: "/public" }));
 
-  app.get("/init-faceup", initializeFaceUpDeckHandler);
   app.get("/initial-hand", initializePlayerHandHandler);
+
   app.get("/draw-deck-card", drawDeckCardHandler);
-  app.get("/car-cards", getplayerCarCardsHandler);
+  app.get("/car-cards", getPlayerCarCardsHandler);
+  app.get("/routes-data", serveStatic({ path: "src/static-data/route.json" }));
   app.get("/get-game-phase", getGamePhase);
-  app.get("/map-ownership", routeOwnershipHandler);
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
+  app.get("/game-state", gameStateHandler);
+
+  app.get("/finish-game", serveStatic({ path: "./public/victory.html" }));
 
   app.post("/draw-faceup-card", drawFaceUpCardHandler);
   app.post("/claim-tickets", claimDestinationTickets);
   app.post("/claim-route", claimRouteHandler);
-  app.post("/fetch-log", storeRecentMove);
-
-  app.get("/fetch-log", (context) => {
-    const game = context.get("game");
-    return context.json(game.getLog());
-  });
 
   app.get("*", serveStatic({ root: "public" }));
 

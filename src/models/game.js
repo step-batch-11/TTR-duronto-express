@@ -7,6 +7,8 @@ export default class Game {
   #log;
   #players;
   #currentPlayerIndex;
+  #isFinalRound;
+  #lastPlayerId;
 
   constructor(carCardsDeck, ticketDeck, players) {
     this.#carCardsDeck = carCardsDeck;
@@ -17,6 +19,9 @@ export default class Game {
     this.#drawnTickets = [];
     this.#phase = "STARTED";
     this.#log = [];
+    this.#isFinalRound = false;
+    this.#lastPlayerId = null;
+    this.initializePlayerHand();
   }
 
   #nextTurn() {
@@ -92,7 +97,7 @@ export default class Game {
   }
 
   getDrawnTickets() {
-    return structuredClone(this.#drawnTickets);
+    return structuredClone(this.#drawnTickets.map(({ id }) => id));
   }
 
   drawTicketChoice() {
@@ -152,5 +157,26 @@ export default class Game {
       playersClaimedRoutes[playerColor] = claimedRoutes;
     });
     return playersClaimedRoutes;
+  }
+
+  addToDiscardedPile(cards) {
+    this.#carCardsDeck.discardCards(cards);
+  }
+
+  getClaimedTickets(color) {
+    return this.#findPlayer(color).getClaimedTickets();
+  }
+
+  isGameEnded(color) {
+    const playerHand = this.#findPlayer(color).getPlayerHand();
+    return playerHand.bogies < 3;
+  }
+
+  setLastPlayer(lastPlayerId) {
+    this.#lastPlayerId = lastPlayerId;
+  }
+
+  getLastPlayerId() {
+    return this.#lastPlayerId;
   }
 }

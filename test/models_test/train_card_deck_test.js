@@ -1,6 +1,6 @@
 import { describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { CarCardsDeck } from "../../src/models/train_car_card_deck.js";
+import CarCardsDeck from "../../src/models/train_car_card_deck.js";
 
 const BASE_DECK = [
   "white",

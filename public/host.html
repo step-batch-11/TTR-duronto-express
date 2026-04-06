@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    h1 {
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+  <script type="module" src="scripts/create_room.js"></script>
+</head>
+
+<body>
+  <main>
+    <section>
+      <h1>Host</h1>
+      <form>
+        <label for="maxPlayer">Players count:</label>
+        <input type="number" name="maxPlayer" id="maxPlayer" min="2" max="5" value="2">
+        <button class="host" type="submit">Host</button>
+      </form>
+    </section>
+  </main>
+</body>
+
+</html>

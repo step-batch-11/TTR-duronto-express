@@ -69,7 +69,7 @@ article {
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 0.4em;
 }
 
 .user {
@@ -119,6 +119,11 @@ article {
   flex-flow: column;
   justify-content: space-around;
   width: 90%;
+}
+
+.ticket-cards .card {
+  width: 180px;
+  height: 110px;
 }
 
 .faceup-cards img {
@@ -193,7 +198,8 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50%;
+  height: 110px;
+  border: 1px solid rgb(183, 182, 182);
 }
 
 .buttons-container {
@@ -358,17 +364,19 @@ svg {
   cursor: pointer;
 }
 
-.highlight {
-  border: 40px;
-  border-color: #007bff;
-  box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+#ticket-claim-button:hover {
+  cursor: pointer;
 }
 
-.highlightCity {
-  stroke: rgb(19, 19, 18);
+.highlight {
+  border: 50px;
+  border-color: #eadec9;
+  box-shadow: 0 0 40px #e0d8c0;
+}
+
+.highlightCity > use {
+  fill: rgb(255, 62, 62);
   stroke-width: 1;
-  box-shadow: 0 0 20px rgb(250, 30, 30);
-  fill: red;
 }
 
 .highlightCity text {
@@ -382,7 +390,7 @@ svg {
   padding: 5px;
 }
 
-.disabled-submit{
+.disabled-submit {
   pointer-events: none;
   background-color: rgba(0, 0, 0, 0.577);
   user-select: none;
@@ -394,7 +402,7 @@ svg {
 
 .is-disabled {
   pointer-events: none;
-  opacity: 0.85;
+  opacity: 0.75;
   user-select: none;
 }
 
@@ -406,4 +414,32 @@ svg {
 
 .top {
   z-index: 31;
+}
+
+#dialog-box{
+  margin-right:0px;
+  line-height: 2em;
+  left: auto;
+  right: 50%;
+  text-align: center;
+  background-color: whitesmoke;
+  border: none;
+  outline: none;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.log {
+  opacity: 0;
+  width: 100%;
+  animation: showMove 2s ease-in-out;
+  border: none;
+}
+
+@keyframes showMove {
+  0%   { opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; }
 }

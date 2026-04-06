@@ -1,17 +1,12 @@
-// import { fetchFaceUpDeck, fetchLastLog } from "../api.js";
+import { fetchFaceUpDeck } from "../api.js";
 import { animateDrawDeckCard, getHandCardPositions } from "../animations.js";
 import { fetchDeckCards } from "../api.js";
-import {
-  displayCarCards,
-  displayLog,
-  resolveFaceUpCardDraw,
-} from "../render.js";
+import { displayCarCards, resolveFaceUpCardDraw } from "../render.js";
 import {
   animateDrawFaceUpCard,
   animateRefillMarket,
   moveFromDeckToHand,
 } from "../animations.js";
-import { mapOnClick } from "../claim_route.js";
 
 const resolveDeckCardDraw = (deck, img, carCards) => {
   setTimeout(() => {
@@ -43,12 +38,25 @@ const disableWild = () => {
   }, 1500);
 };
 
-export const handleDrawFaceUP = async (event) => {
+const showMessage = (message) => {
+  const dialogBox = document.getElementById("dialog-box");
+  dialogBox.textContent = message;
+  dialogBox.show();
+  setTimeout(() => {
+    dialogBox.close();
+  }, 4000);
+};
+
+export const handleDrawFaceUp = async (event) => {
   disableDestinationDeck();
   disableMap();
 
   const card = event.target.closest(".card");
-  if (card === null) return;
+  if (card === null) {
+    showMessage("choose a valid card");
+    return;
+  }
+
   const img = card.querySelector(".card-img");
   animateDrawFaceUpCard(card);
   const cardId = { id: card.id };
@@ -56,12 +64,11 @@ export const handleDrawFaceUP = async (event) => {
     cardId,
   );
 
-  const body = { msg: `Cards drown from face-up` };
-  const { lastLog } = await fetchLastLog(body);
-  displayLog(lastLog);
-  animateRefillMarket(cardToRefill, card, faceUpCards);
-  resolveFaceUpCardDraw(card, img, carCards);
-  disableWild();
+  if (cardToRefill !== undefined) {
+    animateRefillMarket(cardToRefill, card, faceUpCards);
+    resolveFaceUpCardDraw(card, img, carCards);
+    disableWild();
+  }
 };
 
 export const handleDrawCardFromDeck = async (deck) => {
@@ -69,18 +76,17 @@ export const handleDrawCardFromDeck = async (deck) => {
   disableMap();
 
   const { drawnCard, carCards } = await fetchDeckCards();
-  const deckPosition = deck
-    .querySelector("#deck-img")
-    .getBoundingClientRect();
-  const hand = getHandCardPositions(drawnCard);
+  if (drawnCard !== undefined) {
+    const deckPosition = deck
+      .querySelector("#deck-img")
+      .getBoundingClientRect();
+    const hand = getHandCardPositions(drawnCard);
 
-  const img = createImageAtr(drawnCard);
-  deck.append(img);
-  animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
-  const body = { msg: `Cards drown from deck` };
-  const { lastLog } = await fetchLastLog(body);
-  displayLog(lastLog);
-  resolveDeckCardDraw(deck, img, carCards);
+    const img = createCarCardImg(drawnCard);
+    deck.append(img);
+    animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
 
-  disableWild();
+    resolveDeckCardDraw(deck, img, carCards);
+    disableWild();
+  }
 };

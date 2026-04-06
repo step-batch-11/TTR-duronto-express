@@ -1,9 +1,7 @@
 import {
-  fetchInitialFaceUp,
   fetchInitialPlayerHand,
   fetchMap,
   fetchPlayerDetails,
-  fetchRouteOwnership,
   fetchRoutesData,
 } from "./api.js";
 import { mapOnClick } from "./claim_route.js";
@@ -18,11 +16,14 @@ import {
 import {
   displayDestTicketDeck,
   displayFaceUpCards,
-  displayLog,
   displayPlayerHand,
+  displayPlayerHandTickets,
   displayPlayers,
+  initializeGameUI,
   renderMap,
 } from "./render.js";
+
+import { Poller } from "./poller.js";
 
 const registerListeners = (routesData) => {
   selectTicketCard();
@@ -34,50 +35,39 @@ const registerListeners = (routesData) => {
   mapOnClick(routesData);
 };
 
-globalThis.onload = async () => {
-  await fetchMap();
+let etag = "";
 
-  const playerData = fetchPlayerDetails();
+const pollCallBack = async () => {
+  const playerData = await fetchPlayerDetails();
   displayPlayers(playerData);
-  displayDestTicketDeck();
 
-  const logs = await (await fetch("/fetch-log")).json();
-  displayLog(logs);
+  const response = await fetch("/game-state", {
+    headers: {
+      "If-None-Match": etag,
+    },
+  });
 
-  const playerHand = await fetchInitialPlayerHand();
-  displayPlayerHand(playerHand);
+  if (response.status === 304) {
+    return;
+  }
+  const gameState = await response.json();
 
-  const cardsData = await fetchInitialFaceUp();
-  displayFaceUpCards(cardsData);
-
-  const { routeOwnership } = await fetchRouteOwnership();
-  renderMap(routeOwnership);
-
-  const routesData = fetchRoutesData();
-
-  registerListeners(routesData);
+  displayPlayerHandTickets(gameState.claimedTickets);
+  displayFaceUpCards(gameState.faceUp);
+  renderMap(gameState.claimedRoutes);
+  etag = response.headers.get("etag");
 };
 
-// response(game state) {
-//   map,
-//     faceUp,
-//     playerData,
-//     claimedTickets,
-//     playerHand,
-// }
+globalThis.onload = async () => {
+  await fetchMap();
+  const playerHand = await fetchInitialPlayerHand();
+  displayDestTicketDeck();
+  initializeGameUI(playerHand);
+  displayPlayerHand(playerHand);
 
-// const poll = async () => {
-//   const response = await fetch('/gameState');
-//   displayFaceUpCards(response.faceUp);
-//   displayPlayerHand(response.playerHand);
-//   displayClaimedTickets(response.claimedTickets);
-//   displayPlayers(response.playerData);
-//   setTimeout(poll, 3000);
-// }
+  const routesData = await fetchRoutesData();
+  registerListeners(routesData);
 
-// globalThis.onload = async () => {
-//   renderMap(response.map);
-//   displayDestTicketDeck();
-//   registerListeners(routesData);
-//   await poll();
-// }
+  const poller = new Poller(pollCallBack, 2000);
+  poller.start();
+};

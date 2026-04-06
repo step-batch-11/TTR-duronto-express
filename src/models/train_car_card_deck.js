@@ -1,6 +1,6 @@
 import { shuffle } from "@std/random/shuffle";
 
-export class CarCardsDeck {
+export default class CarCardsDeck {
   #faceUp;
   #faceDown;
   #discardPile;
@@ -52,6 +52,7 @@ export class CarCardsDeck {
   #refillDeck() {
     const shuffledDeck = shuffle(this.#discardPile);
     this.#faceDown.push(...shuffledDeck);
+    this.#discardPile = [];
   }
 
   drawCardFromDeck() {

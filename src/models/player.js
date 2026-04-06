@@ -4,12 +4,14 @@ export default class Player {
   #bogies;
   #claimedRoutes;
   #color;
+  #playerId;
   constructor(color) {
     this.#carCards = {};
     this.#claimedTickets = [];
     this.#bogies = 45;
     this.#claimedRoutes = [];
     this.#color = color;
+    this.#playerId = 1;
   }
 
   addCarCardToHand(carCard) {
@@ -24,16 +26,41 @@ export default class Player {
   }
 
   getPlayerHand() {
+    const cards = Object.entries(this.#carCards);
+    const handCards = Object.fromEntries(
+      cards.filter(([color]) => color !== "undefined"),
+    );
     return {
-      carCards: structuredClone(this.#carCards),
+      carCards: handCards,
       claimedTickets: structuredClone(this.#claimedTickets),
       bogies: this.#bogies,
     };
   }
 
-  claimRoute(routeId, { colorCardUsed, colorCardCount }) {
-    this.#carCards[colorCardUsed] = this.#carCards[colorCardUsed] -
-      colorCardCount;
+  #removeExhaustedCard(color) {
+    if (this.#carCards[color] === 0) delete this.#carCards[color];
+  }
+
+  #reconcile(color, count) {
+    this.#carCards[color] = this.#carCards[color] - count;
+  }
+
+  #removeUsedBogies(count) {
+    this.#bogies = this.#bogies - count;
+  }
+
+  claimRoute(routeId, { colorCardUsed, colorCardCount, wildCardCount }) {
+    if (colorCardUsed !== null) {
+      this.#reconcile(colorCardUsed, colorCardCount);
+      this.#removeExhaustedCard(colorCardUsed);
+    }
+
+    if (this.#carCards["wild"]) {
+      this.#reconcile("wild", wildCardCount);
+      this.#removeExhaustedCard("wild");
+    }
+
+    this.#removeUsedBogies(colorCardCount + wildCardCount);
     this.#claimedRoutes.push(routeId);
   }
 
@@ -43,5 +70,13 @@ export default class Player {
 
   getClaimedRoutes() {
     return structuredClone(this.#claimedRoutes);
+  }
+
+  set playerBogies(bogies) { // for testing the game end condition
+    this.#bogies = bogies;
+  }
+
+  getClaimedTickets() {
+    return structuredClone(this.#claimedTickets);
   }
 }
