@@ -437,6 +437,10 @@ svg {
   border: none;
 }
 
+.add-to-cart {
+  transition: all 1s ease;
+}
+
 @keyframes showMove {
   0%   { opacity: 0; }
   10%  { opacity: 1; }
