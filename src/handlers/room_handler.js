@@ -22,15 +22,14 @@ export const joinRoom = async (context) => {
 
   const sessionId = +getCookie(context, "sessionId");
   const player = context.get("players").getPlayer(sessionId);
-  console.log(roomManager.getRoom(+roomId));
 
   if (roomManager.getRoom(+roomId)) {
     const { room } = roomManager.joinRoom(+roomId, player);
 
     sessionToRoomMap.set(sessionId, room);
 
-    return context.json({ roomId: room.id });
+    return context.json({ roomId: room.id, isValidRoom: true });
   }
 
-  return context.json({ status: false });
+  return context.json({ isValidRoom: false });
 };
