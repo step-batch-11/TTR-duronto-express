@@ -1,18 +1,28 @@
 import { clearHighlightedCities } from "./event_handlers/tickets_handlers.js";
 import { claimTicketChoices } from "./events.js";
 
-const paintRoutes = (color, routes) => {
-  const map = document.querySelector("#map");
+const validateDoubleRouteClaim = (_color, routeId, map) => {
+  const adjacentPathId = routeId.split("-").reverse().join("-");
+  const adjacentPath = map.querySelector(`#${adjacentPathId}`);
 
+  if (adjacentPath !== null) adjacentPath.classList.add("click-disabled");
+};
+
+const paintRoutes = (color, routes, map) => {
   for (const routeId of routes) {
     const routeElement = map.querySelector(`#${routeId}`);
     routeElement.setAttribute("data-owner-color", color);
+    routeElement.classList.add("click-disabled");
+
+    validateDoubleRouteClaim(color, routeId, map);
   }
 };
 
 export const renderMap = (routeOwnership) => {
+  const map = document.querySelector("#map");
+
   for (const [color, routes] of Object.entries(routeOwnership)) {
-    paintRoutes(color, routes);
+    paintRoutes(color, routes, map);
   }
 };
 
