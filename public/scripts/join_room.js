@@ -6,14 +6,19 @@ globalThis.onload = () => {
 
     const id = new FormData(form).get("roomId");
 
-    await fetch("/join-room", {
+    const { isValidRoom } = await fetch("/join-room", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ roomId: id }),
-    });
+    }).then((x) => x.json());
 
-    globalThis.location.href = "/waiting_room.html";
+    if (isValidRoom) {
+      globalThis.location.href = "/waiting_room.html";
+    } else {
+      document.querySelector(".alert").textContent =
+        "invalid room Id, try again with a valid one";
+    }
   });
 };

@@ -34,12 +34,6 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
     context.set("players", players);
     context.set("roomManager", roomManager);
     context.set("sessionToRoomMap", sessionToRoomMap);
-    console.log(
-      "a room manager honi chahiye",
-      roomManager,
-      players,
-      sessionToRoomMap,
-    );
     return next();
   });
 
@@ -57,11 +51,16 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
     if (room && room.game) {
       const game = room.game;
       context.set("game", game);
-      console.log("game create hora ki ni", game);
     }
-    console.log("game ni hi room hi", room, sessionId);
+
     return next();
   });
+
+  app.get("/login.html", doesPlayerNotExist, serveStatic({ root: "/public" }));
+  app.post("/login", allowNonExistingPlayer, createUser);
+
+  app.post("/create-room", createRoom);
+  app.post("/join-room", joinRoom);
 
   app.get("/room-state", (context) => {
     const sessionId = getCookie(context, "sessionId");
@@ -75,12 +74,6 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
       players: room.players,
     });
   });
-
-  app.post("/create-room", createRoom);
-  app.post("/join-room", joinRoom);
-
-  app.get("/login.html", doesPlayerNotExist, serveStatic({ root: "/public" }));
-  app.post("/login", allowNonExistingPlayer, createUser);
 
   app.get("/game.html", allowExistingPlayer, serveStatic({ root: "/public" }));
 

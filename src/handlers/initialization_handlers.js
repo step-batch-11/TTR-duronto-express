@@ -9,7 +9,6 @@ export const initializePlayerHandHandler = (context) => {
 
 export const initializeFaceUpDeckHandler = (context) => {
   const game = context.get("game");
-  console.log(game);
 
   const faceUpCards = game.getFaceUpCards();
 
