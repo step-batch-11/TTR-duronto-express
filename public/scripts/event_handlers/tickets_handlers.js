@@ -1,4 +1,3 @@
-
 import { animateTicketClaim } from "../animations.js";
 import { claimSelectedTickets, fetchPhase } from "../api.js";
 
