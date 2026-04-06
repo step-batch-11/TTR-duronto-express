@@ -39,6 +39,7 @@ export const handleTicketsClaim = async (_event) => {
   setTimeout(() => {
     toggleHidden();
     displayPlayerHandTickets(playerHandTickets);
+
     const swipeButtons = document.querySelector(".buttons-container");
     swipeButtons.classList.remove("is-disabled");
   }, 1500);

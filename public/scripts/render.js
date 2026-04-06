@@ -118,6 +118,17 @@ export const displayPlayerHandTickets = (ticketChoices) => {
   });
 };
 
+const isNewGame = (tickets) => tickets.length === 0;
+
+export const initializeGameUI = ({ claimedTickets }) => {
+  if (isNewGame(claimedTickets)) {
+    displayLog(`Game Started`);
+
+    const swipeButtons = document.querySelector(".buttons-container");
+    swipeButtons.classList.add("is-disabled");
+  }
+};
+
 export const displayPlayerHand = (
   { carCards, ticketChoices, claimedTickets },
 ) => {

@@ -18,9 +18,9 @@ import {
 import {
   displayDestTicketDeck,
   displayFaceUpCards,
-  displayLog,
   displayPlayerHand,
   displayPlayers,
+  initializeGameUI,
   renderMap,
 } from "./render.js";
 
@@ -40,10 +40,9 @@ globalThis.onload = async () => {
   const playerData = fetchPlayerDetails();
   displayPlayers(playerData);
 
-  displayLog(`Game Started`);
-
   const playerHand = await fetchInitialPlayerHand();
   displayDestTicketDeck();
+  initializeGameUI(playerHand);
   displayPlayerHand(playerHand);
 
   const cardsData = await fetchInitialFaceUp();
