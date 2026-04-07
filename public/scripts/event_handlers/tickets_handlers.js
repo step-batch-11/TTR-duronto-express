@@ -14,7 +14,9 @@ const selectedTickets = new Set();
 
 const claimedTicketsMap = {
   "INITIALIZED": 2,
-  "DRAWTICKETCHOICE": 1,
+  "DRAW_TICKET_CHOICE": 1,
+  "TURN_STARTED": 1,
+  "CARD_DRAWN": 1,
 };
 
 export const clearHighlightedCities = () => {
@@ -52,15 +54,17 @@ export const handleTicketsClaim = async (_event) => {
 const validateTicketClaim = async () => {
   const button = document.querySelector("#ticket-claim-button");
   const { gamePhase } = await fetchPhase();
+  console.log("game:", gamePhase);
 
   if (selectedTickets.size >= claimedTicketsMap[gamePhase]) {
     button.classList.remove("disabled-submit");
     return;
   }
+
   button.classList.add("disabled-submit");
 };
 
-const addBounceEffect = (selectedTickets) => {
+const addBounceEffect = () => {
   document.querySelector(".ticket-cards").classList.remove("active");
   [...selectedTickets].forEach((card) =>
     document.getElementById(card).classList.add("highlight")
@@ -85,8 +89,8 @@ export const handleTicketSelection = async (event) => {
   selectedTickets.add(cardId);
   highlightCities(cardId);
 
+  addBounceEffect();
   await validateTicketClaim();
-  addBounceEffect(selectedTickets);
 };
 
 const SWIPE_DIRECTION = {

@@ -8,6 +8,7 @@ export default class Game {
   #currentPlayerIndex;
   #isFinalRound;
   #lastPlayerId;
+
   constructor(carCardsDeck, ticketDeck, players) {
     this.#carCardsDeck = carCardsDeck;
     this.#ticketDeck = ticketDeck;
