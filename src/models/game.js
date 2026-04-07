@@ -78,11 +78,11 @@ export default class Game {
   drawDeckCard() {
     const drawnCard = this.#carCardsDeck.drawCardFromDeck();
 
+    this.#currentPlayer.addCarCardToHand(drawnCard);
+
     if (this.#isCardDrawFinished()) {
       this.#nextTurn();
     }
-
-    this.#currentPlayer.addCarCardToHand(drawnCard);
 
     return drawnCard;
   }

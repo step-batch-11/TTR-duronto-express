@@ -62,38 +62,32 @@ svg {
 
 
 .route[data-route-color="red"] .empty-shape {
-  fill: #ea4949;
+  fill: #ea5a5a;
   stroke: #4a4a4a;
-  opacity: 0.7;
 }
 
 .route[data-route-color="blue"] .empty-shape {
-  fill: #4997ea;
+  fill: #67a8ee;
   stroke: #4a4a4a;
-  opacity: 0.7;
 }
 
 .route[data-route-color="pink"] .empty-shape {
-  fill: #e779ed;
+  fill: #e889ed;
   stroke: #ff0c0c;
-  opacity: 0.7;
 }
 
 .route[data-route-color="yellow"] .empty-shape {
-  fill: #f2fb42;
+  fill: #eaf06f;
   stroke: #ff0c0c;
-  opacity: 0.7;
 }
 
 .route[data-route-color="orange"] .empty-shape {
-  fill: #ff8401;
-  opacity: 0.7;
+  fill: #f0a14c;
   stroke: #0a0909;
 }
 
 .route[data-route-color="green"] .empty-shape {
-  fill: #68ed66;
-  opacity: 0.7;
+  fill: #78ed76;
   stroke: #0a0909;
 }
 

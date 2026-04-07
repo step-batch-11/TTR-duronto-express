@@ -95,6 +95,15 @@ export const displayCarCards = (carCards) => {
   handContainer.append(...cardsInHand);
 };
 
+const createButton = (id, className, name, contents) => {
+  const button = document.createElement("button");
+  button.id = id;
+  button.classList.add(className);
+  button.setAttribute("name", name);
+  button.innerHTML = contents;
+  return button;
+};
+
 export const displayPlayerHandTickets = (ticketChoices) => {
   const playerHandTicketButtons = document.querySelector(".buttons-container");
   playerHandTicketButtons.classList.remove("hidden");
@@ -114,8 +123,25 @@ export const displayPlayerHandTickets = (ticketChoices) => {
     ticketDiv.append(imageElement);
     ticketDiv.setAttribute("data-ticket-route", id);
     ticketDiv.setAttribute("data-ticket-id", index);
+    const button = document.querySelector(".left-button");
 
     if (index === 0) {
+      if (!button) {
+        const leftButton = createButton(
+          "ticket-swipe-button-left",
+          "left-button",
+          "left",
+          "&lt;",
+        );
+        const rightButton = createButton(
+          "ticket-swipe-button-right",
+          "right-button",
+          "right",
+          "&gt;",
+        );
+        playerHandTicketButtons.prepend(leftButton);
+        playerHandTicketButtons.append(rightButton);
+      }
       ticketDiv.classList.add("top");
       const ticketCounter = document.querySelector(".ticket-counter");
       ticketCounter.textContent = `${index + 1}/${ticketChoices.length}`;
