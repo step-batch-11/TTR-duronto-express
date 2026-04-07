@@ -11,7 +11,7 @@
     "jsr:@std/random@~0.1.5": "0.1.5",
     "jsr:@std/testing@*": "1.0.17",
     "jsr:@std/testing@^1.0.17": "1.0.17",
-    "npm:hono@^4.12.10": "4.12.10",
+    "npm:hono@^4.12.12": "4.12.12",
     "npm:uuid@13": "13.0.0"
   },
   "jsr": {
@@ -58,8 +58,8 @@
     }
   },
   "npm": {
-    "hono@4.12.10": {
-      "integrity": "sha512-mx/p18PLy5og9ufies2GOSUqep98Td9q4i/EF6X7yJgAiIopxqdfIO3jbqsi3jRgTgw88jMDEzVKi+V2EF+27w=="
+    "hono@4.12.12": {
+      "integrity": "sha512-p1JfQMKaceuCbpJKAPKVqyqviZdS0eUxH9v82oWo1kb9xjQ5wA6iP3FNVAPDFlz5/p7d45lO+BpSk1tuSZMF4Q=="
     },
     "uuid@13.0.0": {
       "integrity": "sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==",
@@ -74,7 +74,7 @@
       "jsr:@std/assert@^1.0.19",
       "jsr:@std/random@~0.1.5",
       "jsr:@std/testing@^1.0.17",
-      "npm:hono@^4.12.10",
+      "npm:hono@^4.12.12",
       "npm:uuid@13"
     ]
   }
