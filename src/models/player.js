@@ -8,7 +8,7 @@ export default class Player {
   #playerId;
   #name;
   constructor(name, id, index) {
-    this.colors = ["green", "yellow", "blue", "black", "red"];
+    this.colors = ["green", "yellow", "blue", "purple", "red"];
     this.#carCards = {};
     this.#name = name;
     this.#claimedTickets = [];

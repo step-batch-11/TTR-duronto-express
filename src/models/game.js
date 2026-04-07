@@ -174,6 +174,11 @@ export default class Game {
       this.#findPlayer(parseInt(playerId)).getPlayerId();
   }
 
+  get currentPlayerIdx() {
+    const playerCount = this.#players.length;
+    return this.#currentPlayerIndex % playerCount;
+  }
+
   getAllPlayerDetails() {
     return this.#players.map((player) => {
       return {

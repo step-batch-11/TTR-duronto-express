@@ -48,8 +48,7 @@ let etag = "";
 let initial = true;
 
 const pollGameState = async () => {
-  const playerData = await fetchPlayerDetails();
-  displayPlayers(playerData);
+  const { players, currentPlayerIdx } = await fetchPlayerDetails();
 
   const response = await fetch("/game-state", {
     headers: {
@@ -61,6 +60,7 @@ const pollGameState = async () => {
 
   const gameState = await response.json();
 
+  displayPlayers(players, currentPlayerIdx);
   if (!gameState.isStarted) {
     disableInteractions();
     return;

@@ -464,3 +464,23 @@ article {
   pointer-events: none;
   opacity: 0.8;
 }
+
+.red {
+  background-color: rgb(246, 115, 115);
+}
+
+.yellow {
+  background-color: rgb(247, 247, 127);
+}
+
+.green {
+  background-color: rgb(149, 246, 149);
+}
+
+.blue {
+  background-color: rgb(131, 131, 232);
+}
+
+.purple {
+  background-color: rgb(233, 108, 242);
+}

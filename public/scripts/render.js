@@ -26,9 +26,17 @@ export const renderMap = (routeOwnership) => {
   }
 };
 
-const createPlayer = ({ name, symbol, carCount, ticketCount }, template) => {
+const createPlayer = (
+  { name, symbol, carCount, ticketCount },
+  template,
+  option,
+) => {
   const clone = template.content.cloneNode(true);
+  const container = clone.querySelector(".user");
   clone.querySelector(".identifier .name").textContent = name;
+  if (option.index === option.currentPlayerIdx) {
+    container.classList.add(symbol);
+  }
   clone.querySelector(".identifier .symbol").style.backgroundColor = symbol;
 
   clone
@@ -44,11 +52,14 @@ const createPlayer = ({ name, symbol, carCount, ticketCount }, template) => {
   return clone;
 };
 
-export const displayPlayers = (players) => {
+export const displayPlayers = (players, currentPlayerIdx) => {
   const playerTemplate = document.querySelector("#user");
   const container = document.querySelector(".player-details");
-  const playerElements = players.map((player) =>
-    createPlayer(player, playerTemplate)
+  const playerElements = players.map((player, index) =>
+    createPlayer(player, playerTemplate, {
+      index,
+      currentPlayerIdx,
+    })
   );
   container.replaceChildren(...playerElements);
 };

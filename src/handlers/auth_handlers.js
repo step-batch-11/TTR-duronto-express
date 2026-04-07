@@ -47,5 +47,6 @@ export const createUser = async (context) => {
 export const getPlayerDetails = (context) => {
   const game = context.get("game");
   const players = game.getPlayerDetails();
-  return context.json(players);
+  const currentPlayerIdx = game.currentPlayerIdx;
+  return context.json({ players, currentPlayerIdx });
 };
