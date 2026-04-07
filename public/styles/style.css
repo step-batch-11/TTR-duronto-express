@@ -343,6 +343,7 @@ article {
   font-size: 4.5em;
   font-weight: 900;
   color: white;
+  cursor: pointer;
   font-family: sans-serif;
   -webkit-text-stroke: 3px black;
 }

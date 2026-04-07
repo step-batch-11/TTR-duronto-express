@@ -154,10 +154,10 @@ const handleCartOnAddingCard = (routeLength, color) => {
 };
 
 const handleCardCountOnAddingCardInCart = (card, cardsContainer) => {
-  const countContainer = card.parentElement.querySelector(".card-count");
+  const countContainer = card.querySelector(".card-count");
 
   if (countContainer.textContent === "1") {
-    cardsContainer.removeChild(card.parentElement);
+    cardsContainer.removeChild(card);
   }
 
   countContainer.textContent = parseInt(countContainer.textContent) - 1;
@@ -167,10 +167,10 @@ const addToCart = ({ routeLength }) => {
   const cardsContainer = document.querySelector(".hand-car-cards");
 
   cardsContainer.addEventListener("click", (event) => {
-    const card = event.target.closest(".img-container");
+    const card = event.target.closest(".hand-car-card");
     if (card === null) return;
 
-    const colorCardChosen = card.dataset.color;
+    const colorCardChosen = card.id;
 
     if (colorCardChosen !== "wild") {
       disableCardsExcept(colorCardChosen);
@@ -275,6 +275,7 @@ const buildActionsOnClick = (routeId, handCarCards) => {
     await BUILD_ACTIONS[action](routeId, handCarCards);
     const route = document.querySelector(`#${routeId}`);
     route.querySelectorAll("g g").forEach((element) => {
+      element.style.opacity = "4";
       element.style.animation = `none`;
     });
   });
