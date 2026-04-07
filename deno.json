@@ -23,6 +23,16 @@
     ]
   },
   "compilerOptions": {
-    "lib": ["deno.ns", "dom"]
+    "lib": [
+      "deno.ns",
+      "dom"
+    ]
+  },
+  "lint": {
+    "rules": {
+      "include": [
+        "no-console"
+      ]
+    }
   }
 }

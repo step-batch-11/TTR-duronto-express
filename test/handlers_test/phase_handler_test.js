@@ -49,8 +49,8 @@ describe("testing /initial-hand GET", () => {
     ];
 
     const createGame = () => {
-      const players = users.map(({ sessionId }, index) =>
-        createPlayerFn(sessionId, index)
+      const players = users.map(({ sessionId, username }, index) =>
+        createPlayerFn(username, sessionId, index)
       );
 
       const carCardsDeck = new CarCardsDeck(carCards);
@@ -77,7 +77,7 @@ describe("testing /initial-hand GET", () => {
     app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
-  it("when game is just setted up, request of/get-game-phase [GET] should give the game phase as STARTED", async () => {
+  it("when game is just settled up, request of/get-game-phase [GET] should give the game phase as STARTED", async () => {
     const response = await app.request("/get-game-phase", {
       headers: {
         Cookie: `sessionId=${1000}`,

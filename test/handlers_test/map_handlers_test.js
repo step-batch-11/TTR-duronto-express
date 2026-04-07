@@ -52,7 +52,7 @@ describe("testing map handlers", () => {
     }]);
 
     const createGame = () => {
-      const player = new Player(1000, 0);
+      const player = new Player("bhanu", 1000, 0);
       player.addCarCardToHand("red");
       player.addCarCardToHand("red");
       player.addCarCardToHand("red");
@@ -112,7 +112,7 @@ describe("testing map handlers", () => {
     }]);
 
     const createGame = () => {
-      const player = new Player(1000, 0);
+      const player = new Player("bhanu", 1000, 0);
       player.addCarCardToHand("red");
       player.addCarCardToHand("red");
       player.addCarCardToHand("red");
