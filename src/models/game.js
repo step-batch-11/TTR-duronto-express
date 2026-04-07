@@ -170,4 +170,14 @@ export default class Game {
   getLastPlayerId() {
     return this.#lastPlayerId;
   }
+
+  getPlayerDetails() {
+    return this.#players.map((player) => {
+      return {
+        name: player.name,
+        symbol: player.color,
+        carCount: player.bogiesCount,
+      };
+    });
+  }
 }

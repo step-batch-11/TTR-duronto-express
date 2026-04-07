@@ -36,7 +36,7 @@ describe("testing the game", () => {
 
     const carCardsDeck = new CarCardsDeck(carCards);
     const ticketDeck = new TicketDeck(ticketCards);
-    const player = new Player(1000, 0);
+    const player = new Player("bhanu", 1000, 0);
     game = new Game(carCardsDeck, ticketDeck, [player]);
     game.initializePlayerHand();
   });
@@ -189,7 +189,7 @@ describe("validate draw tain car cards for multi-players", () => {
 
     const carCardsDeck = new CarCardsDeck(carCards);
     const ticketDeck = new TicketDeck(ticketCards);
-    const players = ["green"].map((color) => new Player(color));
+    const players = ["green"].map((color) => new Player("bhanu", color));
     game = new Game(carCardsDeck, ticketDeck, players);
     game.initializePlayerHand();
   });

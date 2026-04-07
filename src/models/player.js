@@ -6,9 +6,11 @@ export default class Player {
   #colors;
   #color;
   #playerId;
-  constructor(id, index) {
+  #name;
+  constructor(name, id, index) {
     this.colors = ["green", "yellow", "blue", "black", "red"];
     this.#carCards = {};
+    this.#name = name;
     this.#claimedTickets = [];
     this.#bogies = 45;
     this.#claimedRoutes = [];
@@ -86,5 +88,17 @@ export default class Player {
 
   getClaimedTickets() {
     return structuredClone(this.#claimedTickets);
+  }
+
+  get name() {
+    return this.#name;
+  }
+
+  get color() {
+    return this.#color;
+  }
+
+  get bogiesCount() {
+    return this.#bogies;
   }
 }

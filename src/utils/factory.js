@@ -6,8 +6,8 @@ import CarCardsDeck from "../models/train_car_card_deck.js";
 import { initDeck } from "../static-data/deck.js";
 import { getTicketCards } from "../static-data/ticket_cards.js";
 
-export const createPlayerFn = (sessionId, index) =>
-  new Player(sessionId, index);
+export const createPlayerFn = (name, sessionId, index) =>
+  new Player(name, sessionId, index);
 
 export const createGenerateFn = () => {
   let id = 1000;
@@ -15,8 +15,8 @@ export const createGenerateFn = () => {
 };
 
 export const createGameFn = (users) => {
-  const players = users.map(({ sessionId }, index) =>
-    createPlayerFn(sessionId, index)
+  const players = users.map(({ sessionId, username }, index) =>
+    createPlayerFn(username, sessionId, index)
   );
 
   const deck = new CarCardsDeck(initDeck());

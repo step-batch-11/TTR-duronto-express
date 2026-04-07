@@ -9,25 +9,7 @@ export const fetchMap = () => {
     });
 };
 
-export const fetchPlayerDetails = () => {
-  return [
-    {
-      name: "a",
-      symbol: "green",
-      carCount: 45,
-    },
-    {
-      name: "b",
-      symbol: "red",
-      carCount: 45,
-    },
-    {
-      name: "v",
-      symbol: "blue",
-      carCount: 45,
-    },
-  ];
-};
+export const fetchPlayerDetails = () => get("/player-details");
 
 const get = (endpoint) => fetch(endpoint).then((resp) => resp.json());
 

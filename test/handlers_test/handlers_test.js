@@ -51,8 +51,8 @@ describe("testing /initial-hand GET", () => {
     ];
 
     const createGame = () => {
-      const players = users.map(({ sessionId }, index) =>
-        createPlayerFn(sessionId, index)
+      const players = users.map(({ sessionId, username }, index) =>
+        createPlayerFn(username, sessionId, index)
       );
 
       const carCardsDeck = new CarCardsDeck(carCards);
@@ -150,8 +150,8 @@ describe("testing /draw-deck-card GET", () => {
       { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
     ];
     const createGame = () => {
-      const players = users.map(({ sessionId }, index) =>
-        createPlayerFn(sessionId, index)
+      const players = users.map(({ sessionId, username }, index) =>
+        createPlayerFn(username, sessionId, index)
       );
 
       const carCardsDeck = new CarCardsDeck(carCards);
@@ -271,8 +271,8 @@ describe("testing /get-ticket-choices GET", () => {
       { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
     ];
     const createGame = () => {
-      const players = users.map(({ sessionId }, index) =>
-        createPlayerFn(sessionId, index)
+      const players = users.map(({ sessionId, username }, index) =>
+        createPlayerFn(username, sessionId, index)
       );
 
       const carCardsDeck = new CarCardsDeck(carCards);
@@ -360,8 +360,8 @@ describe("testing /claim-tickets POST", () => {
       { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
     ];
     const createGame = () => {
-      const players = users.map(({ sessionId }, index) =>
-        createPlayerFn(sessionId, index)
+      const players = users.map(({ sessionId, username }, index) =>
+        createPlayerFn(username, sessionId, index)
       );
 
       const carCardsDeck = new CarCardsDeck(carCards);

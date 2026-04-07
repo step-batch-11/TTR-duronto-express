@@ -43,3 +43,9 @@ export const createUser = async (context) => {
     return context.json({ isLoggedIn: false, message: error.message });
   }
 };
+
+export const getPlayerDetails = (context) => {
+  const game = context.get("game");
+  const players = game.getPlayerDetails();
+  return context.json(players);
+};

@@ -20,6 +20,7 @@ import {
   allowNonExistingPlayer,
   createUser,
   doesPlayerNotExist,
+  getPlayerDetails,
 } from "./handlers/auth_handlers.js";
 import { gameStateHandler, getGamePhase } from "./handlers/phase_handler.js";
 import { createRoom, joinRoom } from "./handlers/room_handler.js";
@@ -81,6 +82,7 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
 
   app.get("/initial-hand", initializePlayerHandHandler);
 
+  app.get("/player-details", getPlayerDetails);
   app.get("/draw-deck-card", drawDeckCardHandler);
   app.get("/car-cards", getPlayerCarCardsHandler);
   app.get("/routes-data", serveStatic({ path: "src/static-data/route.json" }));
