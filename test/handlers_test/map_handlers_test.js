@@ -218,8 +218,8 @@ describe("End game test case for multiplayer game state", () => {
     }]);
 
     const createGame = () => {
-      const haji = new Player(1001, 0);
-      const ram = new Player(1002, 1);
+      const haji = new Player("haji", 1001, 0);
+      const ram = new Player("ram", 1002, 1);
 
       haji.addCarCardToHand("red");
       haji.addCarCardToHand("red");
@@ -257,8 +257,6 @@ describe("End game test case for multiplayer game state", () => {
   });
 
   it("Game end state test case for multiplayer turn based game handling", async () => {
-    console.log("our test");
-
     body = {
       routeId: "CLC-VCR",
       cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount: 0 },
