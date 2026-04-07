@@ -13,6 +13,7 @@ export const gameStateHandler = (context) => {
   const playerHand = game.playerHand(sessionId);
   const isStarted = game.hasTicketsClaimed();
   const isPlayerTurn = game.isTurn(sessionId);
+
   return context.json({
     faceUp,
     claimedRoutes,
