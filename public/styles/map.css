@@ -57,7 +57,7 @@ svg {
 .route[data-route-color="black"] .empty-shape {
   fill: black;
   stroke: black;
-  opacity: 0.6;
+  opacity: 0.75;
 }
 
 
@@ -72,12 +72,12 @@ svg {
 }
 
 .route[data-route-color="pink"] .empty-shape {
-  fill: #e889ed;
+  fill: #e795e3;
   stroke: #ff0c0c;
 }
 
 .route[data-route-color="yellow"] .empty-shape {
-  fill: #eaf06f;
+  fill: #ebda1c;
   stroke: #ff0c0c;
 }
 
@@ -87,20 +87,20 @@ svg {
 }
 
 .route[data-route-color="green"] .empty-shape {
-  fill: #78ed76;
+  fill: #47ab45;
   stroke: #0a0909;
 }
 
 .route[data-route-color="transparent"] .empty-shape {
-  fill: rgb(150, 150, 150);
-  opacity: 0.6;
+  fill: rgb(181, 179, 179);
+  opacity: 0.8;
   stroke: #ff0c0c;
 }
 
 /* Station color */
 
 .stationColor {
-  fill: rgb(116, 116, 116);
+  fill: rgb(248, 217, 42);
   stroke: #0a0909;
 }
 

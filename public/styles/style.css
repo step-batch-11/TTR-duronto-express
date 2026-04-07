@@ -23,6 +23,13 @@ body {
     sans-serif;
 
   position: relative;
+
+  background-image: 
+  radial-gradient(circle at 50% -40%, rgba(0,0,0,0) 60%, rgb(0, 0, 0) 95%, rgb(0, 0, 0) 100%),
+  url('../assets/background.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed; 
 }
 
 main {
