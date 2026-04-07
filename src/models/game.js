@@ -146,6 +146,7 @@ export default class Game {
       const claimedRoutes = player.getClaimedRoutes();
       playersClaimedRoutes[playerColor] = claimedRoutes;
     });
+
     return playersClaimedRoutes;
   }
 
@@ -157,17 +158,18 @@ export default class Game {
     return this.#findPlayer(id).getClaimedTickets();
   }
 
-  isGameEnded() {
-    const playerHand = this.#currentPlayer.getPlayerHand();
+  isGameEnded(playerId) {
+    const playerHand = this.playerHand(parseInt(playerId));
     return playerHand.bogies < 3;
   }
 
-  setLastPlayer(lastPlayerId) {
-    this.#lastPlayerId = lastPlayerId;
+  setLastPlayer(playerId) {
+    this.#lastPlayerId = parseInt(playerId);
   }
 
-  getLastPlayerId() {
-    return this.#lastPlayerId;
+  isLastPlayerTurn(playerId) {
+    return this.#lastPlayerId ===
+      this.#findPlayer(parseInt(playerId)).getPlayerId();
   }
 
   getPlayerDetails() {

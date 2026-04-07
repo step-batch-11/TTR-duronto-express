@@ -16,5 +16,6 @@ export const drawFaceUpCardHandler = async (context) => {
   const { drawnCard, cardToRefill } = game.drawFaceUpCard(id);
   const { carCards } = game.playerHand(sessionId);
   const faceUpCards = game.getFaceUpCards();
+
   return context.json({ drawnCard, cardToRefill, carCards, faceUpCards });
 };

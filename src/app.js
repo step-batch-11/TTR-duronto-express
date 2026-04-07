@@ -49,6 +49,7 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
     const sessionToRoomMap = context.get("sessionToRoomMap");
 
     const room = sessionToRoomMap.get(sessionId);
+
     if (room && room.game) {
       const game = room.game;
       context.set("game", game);
