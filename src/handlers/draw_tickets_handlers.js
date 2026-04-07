@@ -13,7 +13,7 @@ export const claimDestinationTickets = async (context) => {
   const playerHandTickets = game.claimTicketCard(tickets, sessionId);
 
   if (game.isLastPlayerTurn(sessionId)) {
-    return context.redirect("/finish-game", 303);
+    game.setGameEndFlag();
   }
 
   return context.json(playerHandTickets);

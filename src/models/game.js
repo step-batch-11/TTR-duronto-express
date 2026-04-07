@@ -8,6 +8,7 @@ export default class Game {
   #currentPlayerIndex;
   #isFinalRound;
   #lastPlayerId;
+  #gameEndFlag;
 
   constructor(carCardsDeck, ticketDeck, players) {
     this.#carCardsDeck = carCardsDeck;
@@ -17,8 +18,10 @@ export default class Game {
     this.#currentPlayer = this.#players[0];
     this.#drawnTickets = {};
     this.#phase = "STARTED";
+    this.#gameEndFlag = false;
     this.#isFinalRound = false;
     this.#lastPlayerId = null;
+
     this.initializePlayerHand();
   }
 
@@ -162,6 +165,7 @@ export default class Game {
 
   isGameEnded(playerId) {
     const playerHand = this.playerHand(parseInt(playerId));
+
     return playerHand.bogies < 3;
   }
 
@@ -179,6 +183,14 @@ export default class Game {
     return this.#currentPlayerIndex % playerCount;
   }
 
+  setGameEndFlag() {
+    this.#gameEndFlag = true;
+  }
+  
+  getGameEndFlag() {
+    return this.#gameEndFlag;
+  }
+  
   getAllPlayerDetails() {
     return this.#players.map((player) => {
       return {

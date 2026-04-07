@@ -16,7 +16,7 @@ export const claimRouteHandler = async (context) => {
   const { carCards } = game.playerHand(sessionId);
 
   if (game.isLastPlayerTurn(sessionId)) {
-    return context.redirect("/finish-game", 303);
+    game.setGameEndFlag();
   }
 
   if (game.isGameEnded(sessionId)) {

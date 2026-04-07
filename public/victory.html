@@ -4,11 +4,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/victory.css">
   <title>TTR</title>
 </head>
 
 <body>
-  victory yay!!!!
+  <table id="victory-table">
+    <thead id="victory-table-head">
+      <tr>
+        <th>Player</th>
+        <th>Tickets</th>
+        <th>Ticket Points</th>
+        <th>Road Points</th>
+        <th>Bonus Points</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="victory-table-body">
+    </tbody>
+  </table>
+
+  <template id="row-template">
+    <tr></tr>
+  </template>
+
+  <template id="row-data-template">
+    <td></td>
+  </template>
 </body>
 
 </html>

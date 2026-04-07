@@ -1,0 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#victory-table {
+  border: 1px solid black;
+}
