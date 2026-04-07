@@ -1,7 +1,9 @@
 export default class TicketDeck {
   #cards;
+  #staticCards;
   constructor(cards) {
     this.#cards = cards;
+    this.#staticCards = cards;
   }
 
   dealTicketChoices() {

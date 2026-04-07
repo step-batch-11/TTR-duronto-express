@@ -135,8 +135,8 @@ export default class Game {
     return this.#findPlayer(id).getPlayerHand();
   }
 
-  claimRoute(routeId, cardsUsed) {
-    this.#currentPlayer.claimRoute(routeId, cardsUsed);
+  claimRoute(routeId, cardsUsed, routeData) {
+    this.#currentPlayer.claimRoute(routeId, routeData, cardsUsed);
     this.#nextTurn();
   }
 
@@ -188,5 +188,11 @@ export default class Game {
         ticketCount: player.ticketCount,
       };
     });
+  }
+
+  calculateScore() {
+    const scores = this.#players.map((player) => player.calculateScore());
+    const winner = scores.sort((a, b) => a.total - b.total)[0].name;
+    return { winner, scores };
   }
 }

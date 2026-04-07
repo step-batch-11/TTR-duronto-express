@@ -25,6 +25,7 @@ import {
 import { gameStateHandler, getGamePhase } from "./handlers/phase_handler.js";
 import { createRoom, getRoomState, joinRoom } from "./handlers/room_handler.js";
 import { setContext } from "./utils/context.js";
+import { getCalculatedScore } from "./handlers/game_handlers.js";
 
 export const createApp = (roomManager, players, sessionToRoomMap) => {
   const app = new Hono();
@@ -54,6 +55,7 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   app.get("/get-game-phase", getGamePhase);
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
   app.get("/game-state", gameStateHandler);
+  app.get("/calculate-score", getCalculatedScore);
 
   app.get("/finish-game", serveStatic({ path: "./public/victory.html" }));
 

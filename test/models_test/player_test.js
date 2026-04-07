@@ -31,8 +31,14 @@ describe("testing player class methods", () => {
     player.addCarCardToHand("red");
     player.addCarCardToHand("red");
     player.addCarCardToHand("red");
-    player.claimRoute("STN1-STN2", { colorCardUsed: "red", colorCardCount: 2 });
-    assertEquals(player.getClaimedRoutes(), ["STN1-STN2"]);
+    player.claimRoute("STN1-STN2", {
+      routeColor: "transparent",
+      routeLength: 3,
+    }, { colorCardUsed: "red", colorCardCount: 2 });
+    assertEquals(player.getClaimedRoutes(), [{
+      routeId: "STN1-STN2",
+      routeData: { routeColor: "transparent", routeLength: 3 },
+    }]);
     assertEquals(player.getPlayerHand(1000).carCards, { "red": 1 });
   });
 

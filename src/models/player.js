@@ -54,7 +54,11 @@ export default class Player {
     this.#bogies = this.#bogies - count;
   }
 
-  claimRoute(routeId, { colorCardUsed, colorCardCount, wildCardCount }) {
+  claimRoute(
+    routeId,
+    routeData,
+    { colorCardUsed, colorCardCount, wildCardCount },
+  ) {
     if (colorCardUsed !== null) {
       this.#reconcile(colorCardUsed, colorCardCount);
       this.#removeExhaustedCard(colorCardUsed);
@@ -69,7 +73,7 @@ export default class Player {
     const wCardCount = wildCardCount || 0;
 
     this.#removeUsedBogies(clrCardCount + wCardCount);
-    this.#claimedRoutes.push(routeId);
+    this.#claimedRoutes.push({ routeId, routeData });
   }
 
   getPlayerId() {
@@ -90,6 +94,68 @@ export default class Player {
 
   getClaimedTickets() {
     return structuredClone(this.#claimedTickets);
+  }
+
+  #makeGraph(claimedRoute) {
+    const graph = {};
+    for (const { routeId } of claimedRoute) {
+      const [c1, c2] = routeId.split("-");
+      if (graph[c1] === undefined) graph[c1] = [];
+      if (graph[c2] === undefined) graph[c2] = [];
+      graph[c1].push(c2);
+      graph[c2].push(c1);
+    }
+    return graph;
+  }
+
+  #checkRoute(graph, city, to, visited) {
+    if (city === to) return true;
+
+    visited.add(city);
+
+    for (const neighbor of graph[city] || []) {
+      if (!visited.has(neighbor)) {
+        if (this.#checkRoute(graph, neighbor, to, visited)) return true;
+      }
+    }
+
+    return false;
+  }
+
+  #calculateTicketScore(graph, tickets) {
+    return tickets.reduce((total, ticket) => {
+      const visited = new Set();
+      const [src, dest] = ticket.id.split("-");
+      const isDone = this.#checkRoute(graph, src, dest, visited);
+
+      const ticketPoint = parseInt(ticket.points);
+      const point = isDone ? 1 * ticketPoint : -1 * ticketPoint;
+      total += point;
+      return total;
+    }, 0);
+  }
+
+  #calculatePointsOnRoute(routes) {
+    return routes.reduce((total, route) => {
+      const { routeLength } = route.routeData;
+      const point = dataMap[routeLength - 1];
+      total += point;
+      return total;
+    }, 0);
+  }
+
+  calculateScore() {
+    const routeScore = this.#calculatePointsOnRoute(this.#claimedRoutes);
+    const graph = this.#makeGraph(this.#claimedRoutes);
+    const ticketScore = this.#calculateTicketScore(graph, this.#claimedTickets);
+
+    const total = routeScore + ticketScore;
+    return {
+      name: this.name,
+      routeScore,
+      ticketScore,
+      total,
+    };
   }
 
   get name() {

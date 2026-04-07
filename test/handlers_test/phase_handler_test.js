@@ -112,6 +112,7 @@ describe("testing /initial-hand GET", () => {
     const body = JSON.stringify({
       routeId: "STN5-STN7",
       cardsUsed: { colorCard: "red", colorCardCount: 2 },
+      routeData: { routeColor: "transparent", routeLength: 3 },
     });
     await app.request("/claim-route", {
       method: "post",
@@ -143,7 +144,12 @@ describe("testing /initial-hand GET", () => {
     const gameState = await response.json();
 
     assertEquals(response.status, 200);
-    assertEquals(gameState.claimedRoutes, { green: ["STN5-STN7"] });
+    assertEquals(gameState.claimedRoutes, {
+      green: [{
+        routeId: "STN5-STN7",
+        routeData: { routeColor: "transparent", routeLength: 3 },
+      }],
+    });
     assertEquals(gameState.faceUp, ["red", "green", "blue", "pink", "white"]);
     assertEquals(gameState.playerHand.claimedTickets, ["DVR-ELP", "HLN-LAS"]);
   });

@@ -294,7 +294,7 @@ const isBuildPossible = ({ routeLength, routeColor }, handCarCards) => {
   return ((handCarCards[routeColor] || 0) + wildCardCount) >= routeLength;
 };
 
-const initializeListnersForClaim = (handCarCards, routeData, routeId) => {
+const initializeListenersForClaim = (handCarCards, routeData, routeId) => {
   addToCart(routeData);
   removeFromCart(routeData);
   buildActionsOnClick(routeId, handCarCards, routeData);
@@ -319,7 +319,7 @@ const claimRoute = async (event, routesData, map) => {
   enableBuildActions();
   squeezePlayerHand();
   await showPossibleCardsToBuild(routeData, handCarCards);
-  initializeListnersForClaim(handCarCards, routeData, routeId);
+  initializeListenersForClaim(handCarCards, routeData, routeId);
 };
 
 export const mapOnClick = (routesData) => {

@@ -80,6 +80,7 @@ describe("testing map handlers", () => {
     const body = JSON.stringify({
       routeId: "STN1-STN2",
       cardsUsed: { colorCardUsed: "red", colorCardCount: 2, wildCardCount: 0 },
+      routeData: { routeColor: "transparent", routeLength: 3 },
     });
 
     const response = await mockApp.request("/claim-route", {
@@ -99,7 +100,12 @@ describe("testing map handlers", () => {
         wild: 1,
         yellow: 1,
       },
-      routeOwnership: { green: ["STN1-STN2"] },
+      routeOwnership: {
+        green: [{
+          routeId: "STN1-STN2",
+          routeData: { routeColor: "transparent", routeLength: 3 },
+        }],
+      },
     });
   });
 
