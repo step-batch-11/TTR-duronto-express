@@ -90,7 +90,7 @@ describe("End game test case for multiplayer game state other actions", () => {
     mockApp = createApp(roomManager, players, sessionToRoomMap);
   });
 
-  it("draw train car cars from deck as a last player", async () => {
+  it("draw train car cards from deck as a last player", async () => {
     body = {
       routeId: "CLC-VCR",
       cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount: 0 },
@@ -157,44 +157,6 @@ describe("End game test case for multiplayer game state other actions", () => {
       },
       body: JSON.stringify({
         id: 1,
-      }),
-    });
-
-    assertEquals(await res.status, 303);
-  });
-
-  it.ignore("draw destination ticket cards from the deck as a last player", async () => {
-    body = {
-      routeId: "CLC-VCR",
-      cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount: 0 },
-    };
-
-    res = await mockApp.request("/claim-route", {
-      method: "post",
-      headers: {
-        Cookie: "sessionId=1001",
-      },
-      body: JSON.stringify(body),
-    });
-
-    assertEquals(await res.status, 200);
-
-    res = await mockApp.request("/draw-deck-card", {
-      method: "get",
-      headers: {
-        Cookie: "sessionId=1002",
-      },
-    });
-
-    assertEquals(await res.status, 200);
-
-    res = await mockApp.request("/claim-tickets", {
-      method: "post",
-      headers: {
-        Cookie: "sessionId=1001",
-      },
-      body: JSON.stringify({
-        tickets: ["hi"],
       }),
     });
 
