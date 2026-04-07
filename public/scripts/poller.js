@@ -9,12 +9,18 @@ export class Poller {
   }
 
   async start() {
-    await this.#cb();
-    this.#pollId = setInterval(this.#cb, this.#duration);
+    const shouldStop = await this.#cb();
+    if (shouldStop) return this.resume();
+    if (shouldStop) return this.pause();
+    this.#pollId = setInterval(async () => {
+      const shouldStop = await this.#cb();
+      if (shouldStop) return this.pause();
+    }, this.#duration);
   }
 
   pause() {
     if (this.#pollId) clearInterval(this.#pollId);
+    this.#pollId = null;
   }
 
   resume() {

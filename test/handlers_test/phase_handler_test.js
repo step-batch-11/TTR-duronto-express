@@ -145,6 +145,6 @@ describe("testing /initial-hand GET", () => {
     assertEquals(response.status, 200);
     assertEquals(gameState.claimedRoutes, { green: ["STN5-STN7"] });
     assertEquals(gameState.faceUp, ["red", "green", "blue", "pink", "white"]);
-    assertEquals(gameState.claimedTickets, ["DVR-ELP", "HLN-LAS"]);
+    assertEquals(gameState.playerHand.claimedTickets, ["DVR-ELP", "HLN-LAS"]);
   });
 });

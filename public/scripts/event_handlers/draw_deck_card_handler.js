@@ -7,6 +7,7 @@ import {
   animateRefillMarket,
   moveFromDeckToHand,
 } from "../animations.js";
+import { createCarCardImg } from "../utils.js";
 
 const resolveDeckCardDraw = (deck, img, carCards) => {
   setTimeout(() => {
@@ -14,6 +15,7 @@ const resolveDeckCardDraw = (deck, img, carCards) => {
     displayCarCards(carCards);
     document.querySelector(".market").classList.remove("is-disabled");
     document.querySelector(".footer").classList.remove("is-disabled");
+    document.querySelector("#map").classList.remove("disableInteractions");
   }, 1600);
 };
 
@@ -25,7 +27,7 @@ const disableDestinationDeck = () =>
 const disableMap = () =>
   document
     .querySelector("#map")
-    .classList.add("is-disabled");
+    .classList.add("disableInteractions");
 
 const disableWild = () => {
   setTimeout(() => {
@@ -48,9 +50,6 @@ const showMessage = (message) => {
 };
 
 export const handleDrawFaceUp = async (event) => {
-  disableDestinationDeck();
-  disableMap();
-
   const card = event.target.closest(".card");
   if (card === null) {
     showMessage("choose a valid card");
@@ -67,14 +66,13 @@ export const handleDrawFaceUp = async (event) => {
   if (cardToRefill !== undefined) {
     animateRefillMarket(cardToRefill, card, faceUpCards);
     resolveFaceUpCardDraw(card, img, carCards);
+    disableDestinationDeck();
+    disableMap();
     disableWild();
   }
 };
 
 export const handleDrawCardFromDeck = async (deck) => {
-  disableDestinationDeck();
-  disableMap();
-
   const { drawnCard, carCards } = await fetchDeckCards();
   if (drawnCard !== undefined) {
     const deckPosition = deck
@@ -85,8 +83,10 @@ export const handleDrawCardFromDeck = async (deck) => {
     const img = createCarCardImg(drawnCard);
     deck.append(img);
     animateDrawDeckCard(img, hand, deckPosition, moveFromDeckToHand);
-
     resolveDeckCardDraw(deck, img, carCards);
+
+    disableDestinationDeck();
+    disableMap();
     disableWild();
   }
 };

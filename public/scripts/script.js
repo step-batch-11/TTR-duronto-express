@@ -14,11 +14,13 @@ import {
   swipeTickets,
 } from "./events.js";
 import {
+  disableInteractions,
   displayDestTicketDeck,
   displayFaceUpCards,
   displayPlayerHand,
   displayPlayerHandTickets,
   displayPlayers,
+  enableInteractions,
   initializeGameUI,
   renderMap,
 } from "./render.js";
@@ -35,9 +37,17 @@ const registerListeners = (routesData) => {
   mapOnClick(routesData);
 };
 
-let etag = "";
+const renderGameState = (gameState) => {
+  renderMap(gameState.claimedRoutes);
+  displayFaceUpCards(gameState.faceUp);
+  disableInteractions();
+  displayPlayerHandTickets(gameState.playerHand.claimedTickets);
+};
 
-const pollCallBack = async () => {
+let etag = "";
+let initial = true;
+
+const pollGameState = async () => {
   const playerData = await fetchPlayerDetails();
   displayPlayers(playerData);
 
@@ -47,14 +57,26 @@ const pollCallBack = async () => {
     },
   });
 
-  if (response.status === 304) {
-    return;
-  }
+  if (response.status === 304) return;
+
   const gameState = await response.json();
 
-  displayPlayerHandTickets(gameState.claimedTickets);
-  displayFaceUpCards(gameState.faceUp);
-  renderMap(gameState.claimedRoutes);
+  if (!gameState.isStarted) {
+    disableInteractions();
+    return;
+  }
+
+  if (gameState.isPlayerTurn) {
+    enableInteractions();
+    if (initial) {
+      renderGameState(gameState);
+    }
+    initial = false;
+    return;
+  }
+
+  renderGameState(gameState);
+  initial = true;
   etag = response.headers.get("etag");
 };
 
@@ -69,6 +91,6 @@ globalThis.onload = async () => {
   const routesData = await fetchRoutesData();
   registerListeners(routesData);
 
-  const poller = new Poller(pollCallBack, 2000);
+  const poller = new Poller(pollGameState, 2000);
   poller.start();
 };

@@ -283,6 +283,7 @@ export const resolveFaceUpCardDraw = (card, img, carCards) => {
 
     const market = document.querySelector(".market");
     market.classList.remove("is-disabled");
+    document.querySelector("#map").classList.remove("disableInteractions");
     document.querySelector(".footer").classList.remove("is-disabled");
   }, 1001);
 };
@@ -303,4 +304,22 @@ export const addHandCardContainer = (color) => {
 
   handContainer.append(clone);
   return document.querySelector(`.hand-car-cards [data-color="${color}"]`);
+};
+
+export const disableInteractions = () => {
+  document.querySelector("#map").classList.add("disableInteractions");
+  document.querySelector(".faceup-cards").classList.add("disableInteractions");
+  document.querySelector(".deck").classList.add("disableInteractions");
+  document.querySelector(".destination-tickets-deck-container")
+    .classList.add("disableInteractions");
+};
+
+export const enableInteractions = () => {
+  document.querySelector("#map").classList.remove("disableInteractions");
+  document.querySelector(".faceup-cards").classList.remove(
+    "disableInteractions",
+  );
+  document.querySelector(".deck").classList.remove("disableInteractions");
+  document.querySelector(".destination-tickets-deck-container")?.classList
+    .remove("disableInteractions");
 };

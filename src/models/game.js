@@ -22,6 +22,10 @@ export default class Game {
     this.initializePlayerHand();
   }
 
+  isTurn(id) {
+    return this.#currentPlayer.getPlayerId() === id;
+  }
+
   #nextTurn() {
     const playerCount = this.#players.length;
     this.#currentPlayer =
@@ -61,11 +65,13 @@ export default class Game {
   drawFaceUpCard(id) {
     const { drawnCard, cardToRefill } = this.#carCardsDeck
       .drawCardFromFaceUp(id);
+
+    this.#currentPlayer.addCarCardToHand(drawnCard);
+
     if (this.#isCardDrawFinished(drawnCard)) {
       this.#nextTurn();
     }
 
-    this.#currentPlayer.addCarCardToHand(drawnCard);
     return { drawnCard, cardToRefill };
   }
 
@@ -96,16 +102,8 @@ export default class Game {
     return drawnTickets.map(({ id }) => id);
   }
 
-  filterTickets(unclaimed) {
-    const tickets = structuredClone(this.#drawnTickets);
-
-    return tickets.filter(({ id }, index) => {
-      if (unclaimed.includes(id)) {
-        this.#drawnTickets.splice(index, 1);
-        return true;
-      }
-      return false;
-    });
+  hasTicketsClaimed() {
+    return this.#players.every((player) => player.getClaimedTickets().length);
   }
 
   claimTicketCard(tickets, id) {
@@ -119,7 +117,11 @@ export default class Game {
       this.#ticketDeck.discardTickets(unclaimedTickets);
     }
 
-    this.#nextTurn();
+    if (this.hasTicketsClaimed()) {
+      this.#nextTurn();
+    }
+
+    this.#drawnTickets[id] = [];
 
     return claimedTickets;
   }

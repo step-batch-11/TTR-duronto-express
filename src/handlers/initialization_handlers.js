@@ -4,6 +4,7 @@ export const initializePlayerHandHandler = (context) => {
 
   const { carCards, claimedTickets } = game.playerHand(sessionId);
   const ticketChoices = game.getDrawnTickets(sessionId);
+
   return context.json({ carCards, ticketChoices, claimedTickets });
 };
 
