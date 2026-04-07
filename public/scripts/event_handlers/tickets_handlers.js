@@ -54,7 +54,6 @@ export const handleTicketsClaim = async (_event) => {
 const validateTicketClaim = async () => {
   const button = document.querySelector("#ticket-claim-button");
   const { gamePhase } = await fetchPhase();
-  console.log("game:", gamePhase);
 
   if (selectedTickets.size >= claimedTicketsMap[gamePhase]) {
     button.classList.remove("disabled-submit");

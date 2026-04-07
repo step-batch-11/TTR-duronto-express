@@ -101,4 +101,8 @@ export default class Player {
   get bogiesCount() {
     return this.#bogies;
   }
+
+  get ticketCount() {
+    return this.#claimedTickets.length;
+  }
 }

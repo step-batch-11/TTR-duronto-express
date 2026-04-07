@@ -85,7 +85,11 @@ article {
 }
 
 .train-car-data img {
-  width: 20%;
+  width: 15%;
+}
+
+.ticket-data img {
+  width: 15%;
 }
 
 .user .identifier {

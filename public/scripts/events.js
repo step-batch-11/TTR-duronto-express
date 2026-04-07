@@ -19,7 +19,6 @@ import {
 const enableBuildActions = () => {
   const template = document.querySelector("#build-route-template");
   const clone = template.content.cloneNode(true);
-  console.log(clone);
   document.querySelector(".footer").appendChild(clone);
 };
 

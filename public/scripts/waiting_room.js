@@ -36,17 +36,13 @@ const startCountdown = () => {
 };
 
 const pollRoom = async () => {
-  try {
-    const res = await fetch("/room-state");
-    const data = await res.json();
+  const res = await fetch("/room-state");
+  const data = await res.json();
 
-    render(data);
+  render(data);
 
-    if (data.players.length === +data.maxPlayers) {
-      startCountdown();
-    }
-  } catch (err) {
-    console.error("Polling error:", err);
+  if (data.players.length === +data.maxPlayers) {
+    startCountdown();
   }
 };
 

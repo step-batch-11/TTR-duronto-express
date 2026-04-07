@@ -130,7 +130,6 @@ export default class Game {
   }
 
   playerHand(id) {
-    console.log(id);
     return this.#findPlayer(id).getPlayerHand();
   }
 
@@ -177,6 +176,7 @@ export default class Game {
         name: player.name,
         symbol: player.color,
         carCount: player.bogiesCount,
+        ticketCount: player.ticketCount,
       };
     });
   }

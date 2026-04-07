@@ -127,7 +127,6 @@ describe("testing the game", () => {
 
   it("claimRoute should add the route to player claimed routes and remove the cards used to claim the route", () => {
     assertEquals(game.playerHand(1000).carCards.pink, 1);
-    console.log(game.playerHand(1000));
     game.claimRoute("STN4-STN5", { colorCardUsed: "pink", colorCardCount: 1 });
     assertEquals(game.getAllClaimedRoutes(), { green: ["STN4-STN5"] });
     assertEquals(game.playerHand(1000).carCards.pink);

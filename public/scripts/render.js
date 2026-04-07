@@ -26,7 +26,7 @@ export const renderMap = (routeOwnership) => {
   }
 };
 
-const createPlayer = ({ name, symbol, carCount }, template) => {
+const createPlayer = ({ name, symbol, carCount, ticketCount }, template) => {
   const clone = template.content.cloneNode(true);
   clone.querySelector(".identifier .name").textContent = name;
   clone.querySelector(".identifier .symbol").style.backgroundColor = symbol;
@@ -35,6 +35,11 @@ const createPlayer = ({ name, symbol, carCount }, template) => {
     .querySelector(".train-car-data img")
     .setAttribute("src", `assets/symbols/${symbol}.png`);
   clone.querySelector(".train-car-data .car-count").textContent = carCount;
+
+  clone
+    .querySelector(".ticket-data img")
+    .setAttribute("src", `assets/ticket-icon.png`);
+  clone.querySelector(".ticket-data .ticket-count").textContent = ticketCount;
 
   return clone;
 };
