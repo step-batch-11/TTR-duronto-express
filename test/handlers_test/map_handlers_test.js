@@ -12,8 +12,8 @@ import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
 describe("testing map handlers", () => {
   let carCardsDeck;
   let ticketDeck;
-  let mockApp;
-  let players;
+  let mockApp, players;
+
   beforeEach(() => {
     const carCards = [
       "red",
