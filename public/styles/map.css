@@ -35,6 +35,7 @@ svg {
   stroke: #2980b9;
 }
 
+
 .route[data-owner-color="green"] .claimed-shape {
   fill: mediumseagreen;
   /* opacity: 0.8; */
@@ -51,6 +52,7 @@ svg {
   fill: #fbfbfb;
   stroke: #4a4a4a;
 }
+
 
 .route[data-route-color="red"] .empty-shape {
   fill: #ea4949;
@@ -127,6 +129,20 @@ svg {
   position: absolute;
   animation: shine 0.75s infinite forwards;
 
+}
+
+@keyframes zoom {
+  0% {
+    scale: 1;
+  }
+
+  50% {
+    scale: 1.03;
+  }
+
+  100% {
+    scale: 1;
+  }
 }
 
 @keyframes shine {

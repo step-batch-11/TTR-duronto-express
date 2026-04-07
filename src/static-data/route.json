@@ -48,7 +48,7 @@
   "OMH-DLT": { "routeColor": "transparent", "routeLength": 2 },
   "OMH-CHG": { "routeColor": "blue", "routeLength": 4 },
   "OMH-KCT": { "routeColor": "transparent", "routeLength": 1 },
-  "KCT-OMK": { "routeColor": "transparent", "routeLength": 1 },
+  "KCT-OMH": { "routeColor": "transparent", "routeLength": 1 },
   "KCT-SLS": { "routeColor": "blue", "routeLength": 2 },
   "SLS-KCT": { "routeColor": "pink", "routeLength": 2 },
   "KCT-OKC": { "routeColor": "transparent", "routeLength": 2 },

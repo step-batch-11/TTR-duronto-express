@@ -273,6 +273,10 @@ const buildActionsOnClick = (routeId, handCarCards) => {
     if (action === null) return;
 
     await BUILD_ACTIONS[action](routeId, handCarCards);
+    const route = document.querySelector(`#${routeId}`);
+    route.querySelectorAll("g g").forEach((element) => {
+      element.style.animation = `none`;
+    });
   });
 };
 
@@ -301,9 +305,14 @@ const claimRoute = async (event, routesData, map) => {
 
   const handCarCards = await fetchPlayerHand();
   const routeId = route.getAttribute("id");
+
   const routeData = routesData[routeId];
 
   if (!isBuildPossible(routeData, structuredClone(handCarCards))) return;
+
+  route.querySelectorAll("g g").forEach((element) => {
+    element.style.animation = `zoom 1s ease-in-out 1s infinite forwards`;
+  });
 
   map.classList.add("click-disabled");
   enableBuildActions();
