@@ -15,19 +15,19 @@ const resolveDeckCardDraw = (deck, img, carCards) => {
     displayCarCards(carCards);
     document.querySelector(".market").classList.remove("is-disabled");
     document.querySelector(".footer").classList.remove("is-disabled");
-    document.querySelector("#map").classList.remove("disableInteractions");
+    document.querySelector("#map").classList.remove("is-disabled");
   }, 1600);
 };
 
 const disableDestinationDeck = () =>
   document
     .querySelector(".destination-tickets-deck")
-    .classList.add("is-disabled");
+    .classList.add("click-disabled");
 
 const disableMap = () =>
   document
     .querySelector("#map")
-    .classList.add("disableInteractions");
+    .classList.add("click-disabled");
 
 const disableWild = () => {
   setTimeout(() => {
@@ -74,6 +74,8 @@ export const handleDrawFaceUp = async (event) => {
 
 export const handleDrawCardFromDeck = async (deck) => {
   const { drawnCard, carCards } = await fetchDeckCards();
+  disableMap();
+
   if (drawnCard !== undefined) {
     const deckPosition = deck
       .querySelector("#deck-img")
@@ -86,7 +88,6 @@ export const handleDrawCardFromDeck = async (deck) => {
     resolveDeckCardDraw(deck, img, carCards);
 
     disableDestinationDeck();
-    disableMap();
     disableWild();
   }
 };

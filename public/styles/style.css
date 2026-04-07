@@ -391,18 +391,6 @@ article {
   display: none;
 }
 
-.is-disabled {
-  pointer-events: none;
-  opacity: 0.75;
-  user-select: none;
-}
-
-.click-disabled {
-  pointer-events: none;
-  cursor: not-allowed;
-  opacity: 0.8;
-}
-
 .top {
   z-index: 31;
 }
@@ -458,6 +446,18 @@ article {
   100% {
     opacity: 0;
   }
+}
+
+.is-disabled {
+  pointer-events: none;
+  opacity: 0.75;
+  user-select: none;
+}
+
+.click-disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.8;
 }
 
 .disableInteractions {

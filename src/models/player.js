@@ -7,6 +7,7 @@ export default class Player {
   #color;
   #playerId;
   #name;
+
   constructor(name, id, index) {
     this.colors = ["green", "yellow", "blue", "purple", "red"];
     this.#carCards = {};
@@ -58,7 +59,8 @@ export default class Player {
       this.#reconcile(colorCardUsed, colorCardCount);
       this.#removeExhaustedCard(colorCardUsed);
     }
-    if (this.#carCards["wild"] < 0) {
+
+    if (this.#carCards["wild"] > 0) {
       this.#reconcile("wild", wildCardCount);
       this.#removeExhaustedCard("wild");
     }

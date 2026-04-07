@@ -20,6 +20,7 @@ import {
   displayPlayerHand,
   displayPlayerHandTickets,
   displayPlayers,
+  enableClick,
   enableInteractions,
   initializeGameUI,
   renderMap,
@@ -68,7 +69,9 @@ const pollGameState = async () => {
 
   if (gameState.isPlayerTurn) {
     enableInteractions();
+
     if (initial) {
+      enableClick();
       renderGameState(gameState);
     }
     initial = false;
@@ -91,6 +94,6 @@ globalThis.onload = async () => {
   const routesData = await fetchRoutesData();
   registerListeners(routesData);
 
-  const poller = new Poller(pollGameState, 2000);
+  const poller = new Poller(pollGameState, 200);
   poller.start();
 };

@@ -244,12 +244,12 @@ const getColorCardDetailsToBuild = () => {
   return { colorCardCount, colorCardUsed };
 };
 
-const buildRoute = async (routeId) => {
+const buildRoute = async (routeId, _, routeData) => {
   const { colorCardCount, colorCardUsed } = getColorCardDetailsToBuild();
   const wildCardCount = parseInt(getCardCountOnCart("wild"));
 
   const cardsUsed = { colorCardUsed, colorCardCount, wildCardCount };
-  const res = await postClaimRoute({ routeId, cardsUsed });
+  const res = await postClaimRoute({ routeId, cardsUsed, routeData });
 
   const { routeOwnership, carCards } = res;
   renderMap(routeOwnership);
@@ -265,14 +265,14 @@ const cancelBuild = (_, handCarCards) => {
 
 const BUILD_ACTIONS = { "build": buildRoute, "cancel": cancelBuild };
 
-const buildActionsOnClick = (routeId, handCarCards) => {
+const buildActionsOnClick = (routeId, handCarCards, routeData) => {
   const buildButton = document.querySelector(".build-actions");
 
   buildButton.addEventListener("click", async (event) => {
     const action = event.target.id;
     if (action === null) return;
 
-    await BUILD_ACTIONS[action](routeId, handCarCards);
+    await BUILD_ACTIONS[action](routeId, handCarCards, routeData);
     const route = document.querySelector(`#${routeId}`);
     route.querySelectorAll("g g").forEach((element) => {
       element.style.opacity = "4";
@@ -297,7 +297,7 @@ const isBuildPossible = ({ routeLength, routeColor }, handCarCards) => {
 const initializeListnersForClaim = (handCarCards, routeData, routeId) => {
   addToCart(routeData);
   removeFromCart(routeData);
-  buildActionsOnClick(routeId, handCarCards);
+  buildActionsOnClick(routeId, handCarCards, routeData);
 };
 
 const claimRoute = async (event, routesData, map) => {
