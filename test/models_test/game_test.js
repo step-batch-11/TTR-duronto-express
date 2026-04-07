@@ -60,6 +60,12 @@ describe("testing the game", () => {
       "CLC-SLC",
       "LAS-NYC",
     ]);
+    assertEquals(game.getPlayerDetails(), [{
+      name: "bhanu",
+      symbol: "green",
+      carCount: 45,
+      ticketCount: 0,
+    }]);
   });
 
   it("player already initialized then it shouldn't reinitialize", () => {

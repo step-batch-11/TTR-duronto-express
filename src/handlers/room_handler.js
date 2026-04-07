@@ -36,3 +36,16 @@ export const joinRoom = async (context) => {
 
   return context.json({ error: `invalid room Id, try again with a valid one` });
 };
+
+export const getRoomState = (context) => {
+  const sessionId = parseInt(getCookie(context, "sessionId"));
+  const sessionToRoomMap = context.get("sessionToRoomMap");
+
+  const room = sessionToRoomMap.get(sessionId);
+
+  return context.json({
+    roomId: room.id,
+    maxPlayers: room.maxPlayers,
+    players: room.players,
+  });
+};

@@ -24,6 +24,14 @@ describe("Testing Player base method", () => {
       assertEquals(players.addPlayer("user2"), 1000);
     });
 
+    it("get player by sessionId", () => {
+      assertEquals(players.addPlayer("user2"), 1000);
+      assertEquals(players.getPlayer(1000), {
+        sessionId: 1000,
+        username: "user2",
+      });
+    });
+
     it("checking if sessionId increments", () => {
       assertEquals(players.addPlayer("user2"), 1000);
       assertEquals(players.addPlayer("user3"), 1001);

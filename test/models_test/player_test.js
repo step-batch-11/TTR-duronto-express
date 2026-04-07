@@ -9,7 +9,10 @@ describe("testing player class methods", () => {
   });
 
   it("creating a new instance of player class should assign 45 bogies", () => {
-    assertEquals(player.getPlayerHand(1000).bogies, 45);
+    assertEquals(player.bogiesCount, 45);
+    assertEquals(player.name, "bhanu");
+    assertEquals(player.color, "green");
+    assertEquals(player.ticketCount, 0);
   });
 
   it("addCardToHand should add the given card to player Hand", () => {

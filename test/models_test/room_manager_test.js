@@ -62,6 +62,13 @@ describe("testing RoomManager class", () => {
     });
   });
 
+  it("should throw error when joining existing player in room", () => {
+    manager.createRoom(1, { sessionId: 1 });
+    assertThrows(() => {
+      manager.joinRoom("room-1", { sessionId: 1 });
+    });
+  });
+
   it("should delete room correctly", () => {
     manager.createRoom(2, { sessionId: 1 });
 

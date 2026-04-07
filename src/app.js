@@ -23,7 +23,7 @@ import {
   getPlayerDetails,
 } from "./handlers/auth_handlers.js";
 import { gameStateHandler, getGamePhase } from "./handlers/phase_handler.js";
-import { createRoom, joinRoom } from "./handlers/room_handler.js";
+import { createRoom, getRoomState, joinRoom } from "./handlers/room_handler.js";
 import { getCookie } from "hono/cookie";
 
 export const createApp = (roomManager, players, sessionToRoomMap) => {
@@ -66,18 +66,7 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   app.post("/create-room", createRoom);
   app.post("/join-room", joinRoom);
 
-  app.get("/room-state", (context) => {
-    const sessionId = parseInt(getCookie(context, "sessionId"));
-    const sessionToRoomMap = context.get("sessionToRoomMap");
-
-    const room = sessionToRoomMap.get(sessionId);
-
-    return context.json({
-      roomId: room.id,
-      maxPlayers: room.maxPlayers,
-      players: room.players,
-    });
-  });
+  app.get("/room-state", getRoomState);
 
   app.get("/game.html", allowExistingPlayer, serveStatic({ root: "/public" }));
 

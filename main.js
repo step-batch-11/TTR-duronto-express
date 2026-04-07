@@ -1,11 +1,8 @@
 import { createApp } from "./src/app.js";
 import PlayerBase from "./src/models/player_base.js";
 import RoomManager from "./src/models/room_manager.js";
-import {
-  createGameFn,
-  createGenerateFn,
-  createRoomFn,
-} from "./src/utils/factory.js";
+import { createGameFn } from "./src/utils/create_game_factory.js";
+import { createGenerateFn, createRoomFn } from "./src/utils/factory.js";
 
 const main = () => {
   const players = new PlayerBase([]);
