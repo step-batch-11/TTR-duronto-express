@@ -24,39 +24,14 @@ import {
 } from "./handlers/auth_handlers.js";
 import { gameStateHandler, getGamePhase } from "./handlers/phase_handler.js";
 import { createRoom, getRoomState, joinRoom } from "./handlers/room_handler.js";
-import { getCookie } from "hono/cookie";
+import { setContext } from "./utils/context.js";
 
 export const createApp = (roomManager, players, sessionToRoomMap) => {
   const app = new Hono();
 
   app.use(logger());
   app.use(etag());
-  app.use((context, next) => {
-    context.set("players", players);
-    context.set("roomManager", roomManager);
-    context.set("sessionToRoomMap", sessionToRoomMap);
-    return next();
-  });
-
-  app.use((context, next) => {
-    const sessionId = Number(getCookie(context, "sessionId"));
-    context.set("sessionId", sessionId);
-    return next();
-  });
-
-  app.use((context, next) => {
-    const sessionId = parseInt(getCookie(context, "sessionId"));
-    const sessionToRoomMap = context.get("sessionToRoomMap");
-
-    const room = sessionToRoomMap.get(sessionId);
-
-    if (room && room.game) {
-      const game = room.game;
-      context.set("game", game);
-    }
-
-    return next();
-  });
+  app.use(setContext(players, roomManager, sessionToRoomMap));
 
   app.get("/", allowExistingPlayer, serveStatic({ root: "/public" }));
 
