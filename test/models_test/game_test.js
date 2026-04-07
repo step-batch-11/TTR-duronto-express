@@ -60,7 +60,7 @@ describe("testing the game", () => {
       "CLC-SLC",
       "LAS-NYC",
     ]);
-    assertEquals(game.getPlayerDetails(), [{
+    assertEquals(game.getAllPlayerDetails(), [{
       name: "bhanu",
       symbol: "green",
       carCount: 45,

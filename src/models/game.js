@@ -174,7 +174,7 @@ export default class Game {
       this.#findPlayer(parseInt(playerId)).getPlayerId();
   }
 
-  getPlayerDetails() {
+  getAllPlayerDetails() {
     return this.#players.map((player) => {
       return {
         name: player.name,
@@ -184,4 +184,5 @@ export default class Game {
       };
     });
   }
+  
 }
