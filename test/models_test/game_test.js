@@ -207,13 +207,13 @@ describe("validate draw tain car cards for multi-players", () => {
     game.initializePlayerHand();
   });
 
-  it("should allow the user to draw only 2 cards, initial round, drawing from deck and move to next player", () => {
+  it("should allow the user to draw only 2 cards, initial round, drawing from deck and move to next player", async () => {
     assertEquals(game.getGamePhase(), "INITIALIZED");
 
     game.drawFaceUpCard("1");
     assertEquals(game.getGamePhase(), "CARD_DRAWN");
     game.drawFaceUpCard("2");
-
+    await new Promise((resolve) => setTimeout(resolve, 1600));
     assertEquals(game.playerHand("green"), {
       carCards: {
         blue: 1,
@@ -228,10 +228,12 @@ describe("validate draw tain car cards for multi-players", () => {
     assertEquals(game.getGamePhase(), "TURN_STARTED");
   });
 
-  it("turn should end if user takes a wild card in the initial round", () => {
+  it("turn should end if user takes a wild card in the initial round", async () => {
     assertEquals(game.getGamePhase(), "INITIALIZED");
 
     game.drawFaceUpCard("5");
+    await new Promise((resolve) => setTimeout(resolve, 1600));
+
     assertEquals(game.getGamePhase(), "TURN_STARTED");
 
     assertEquals(game.playerHand("green"), {

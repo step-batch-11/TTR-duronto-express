@@ -22,7 +22,7 @@ import {
 } from "./render.js";
 
 import { Poller } from "./poller.js";
-import { showMessage } from "./event_handlers/draw_deck_card_handler.js";
+import { showAlert } from "./utils.js";
 
 const registerListeners = (routesData) => {
   selectTicketCard();
@@ -60,7 +60,7 @@ const pollGameState = async () => {
   }
 
   if (gameState.isFinalRound === true && isAlerted === false) {
-    showMessage("Final round");
+    showAlert("Final round");
     isAlerted = true;
   }
 
@@ -76,8 +76,10 @@ const pollGameState = async () => {
 
     if (initial) {
       enableClick();
+      showAlert("your turn");
       renderGameState(gameState);
     }
+
     initial = false;
     return;
   }

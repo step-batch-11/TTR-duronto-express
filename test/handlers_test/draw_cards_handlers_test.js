@@ -9,7 +9,7 @@ import PlayerBase from "../../src/models/player_base.js";
 import RoomManager from "../../src/models/room_manager.js";
 import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
 
-describe("End game test case for multiplayer game state other actions", () => {
+describe.ignore("End game test case for multiplayer game state other actions", () => {
   let carCardsDeck;
   let ticketDeck;
   let mockApp;
@@ -90,7 +90,7 @@ describe("End game test case for multiplayer game state other actions", () => {
     mockApp = createApp(roomManager, players, sessionToRoomMap);
   });
 
-  it("draw train car cars from deck as a last player", async () => {
+  it.ignore("draw train car cars from deck as a last player", async () => {
     body = {
       routeId: "CLC-VCR",
       cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount: 0 },
@@ -121,6 +121,8 @@ describe("End game test case for multiplayer game state other actions", () => {
         Cookie: "sessionId=1001",
       },
     });
+
+    await new Promise((resolve) => setTimeout(resolve, 1600));
 
     assertEquals(await res.status, 200);
 

@@ -338,8 +338,7 @@ export const resolveFaceUpCardDraw = (card, img, carCards) => {
     card.removeChild(img);
     displayCarCards(carCards);
 
-    const market = document.querySelector(".market");
-    market.classList.remove("is-disabled");
+    document.querySelector(".market").classList.remove("is-disabled");
     document.querySelector("#map").classList.remove("is-disabled");
     document.querySelector(".footer").classList.remove("is-disabled");
   }, 1001);
