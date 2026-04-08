@@ -186,11 +186,11 @@ export default class Game {
   setGameEndFlag() {
     this.#gameEndFlag = true;
   }
-  
+
   getGameEndFlag() {
     return this.#gameEndFlag;
   }
-  
+
   getAllPlayerDetails() {
     return this.#players.map((player) => {
       return {
