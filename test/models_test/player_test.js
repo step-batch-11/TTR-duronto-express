@@ -1,7 +1,9 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 import Player from "../../src/models/player.js";
-
+import pointMap from "../../src/static-data/ticketPoints.json" with {
+  type: "json",
+};
 describe("testing player class methods", () => {
   let player;
   beforeEach(() => {
@@ -52,5 +54,27 @@ describe("testing player class methods", () => {
       "NYC-ATL",
     ];
     assertEquals(player.claimTickets(selectedTickets), ["SSM-NVL", "NYC-ATL"]);
+  });
+
+  it("calculate score of a player", () => {
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.addCarCardToHand("red");
+    player.claimRoute("STN1-STN2", {
+      routeColor: "transparent",
+      routeLength: 3,
+    }, { colorCardUsed: "red", colorCardCount: 2 });
+    assertEquals(player.getClaimedRoutes(), [{
+      routeId: "STN1-STN2",
+      routeData: { routeColor: "transparent", routeLength: 3 },
+    }]);
+    const selectedTickets = ["SSM-NVL"];
+    assertEquals(player.claimTickets(selectedTickets), ["SSM-NVL"]);
+    assertEquals(player.calculateScore(pointMap, [1, 2, 4, 7, 10, 15]), {
+      name: "bhanu",
+      routeScore: 4,
+      ticketScore: -8,
+      total: -4,
+    });
   });
 });

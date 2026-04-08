@@ -122,32 +122,39 @@ export default class Player {
     return false;
   }
 
-  #calculateTicketScore(graph, tickets) {
+  #calculateTicketScore(graph, tickets, pointMap) {
     return tickets.reduce((total, ticket) => {
       const visited = new Set();
-      const [src, dest] = ticket.id.split("-");
+      const [src, dest] = ticket.split("-");
       const isDone = this.#checkRoute(graph, src, dest, visited);
 
-      const ticketPoint = parseInt(ticket.points);
+      const ticketPoint = parseInt(pointMap[ticket]);
       const point = isDone ? 1 * ticketPoint : -1 * ticketPoint;
       total += point;
       return total;
     }, 0);
   }
 
-  #calculatePointsOnRoute(routes) {
+  #calculatePointsOnRoute(routes, routeToScore) {
     return routes.reduce((total, route) => {
       const { routeLength } = route.routeData;
-      const point = dataMap[routeLength - 1];
+      const point = routeToScore[routeLength - 1];
       total += point;
       return total;
     }, 0);
   }
 
-  calculateScore() {
-    const routeScore = this.#calculatePointsOnRoute(this.#claimedRoutes);
+  calculateScore(pointMap, routeToScore) {
+    const routeScore = this.#calculatePointsOnRoute(
+      this.#claimedRoutes,
+      routeToScore,
+    );
     const graph = this.#makeGraph(this.#claimedRoutes);
-    const ticketScore = this.#calculateTicketScore(graph, this.#claimedTickets);
+    const ticketScore = this.#calculateTicketScore(
+      graph,
+      this.#claimedTickets,
+      pointMap,
+    );
 
     const total = routeScore + ticketScore;
     return {

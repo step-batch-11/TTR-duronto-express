@@ -97,6 +97,6 @@ globalThis.onload = async () => {
   const routesData = await fetchRoutesData();
   registerListeners(routesData);
 
-  const poller = new Poller(pollGameState, 200);
+  const poller = new Poller(pollGameState, 1200);
   poller.start();
 };

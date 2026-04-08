@@ -9,8 +9,10 @@ export default class Game {
   #isFinalRound;
   #lastPlayerId;
   #gameEndFlag;
+  #routeToScoreMap;
 
   constructor(carCardsDeck, ticketDeck, players) {
+    this.#routeToScoreMap = [1, 2, 4, 7, 10, 15];
     this.#carCardsDeck = carCardsDeck;
     this.#ticketDeck = ticketDeck;
     this.#players = players;
@@ -203,7 +205,10 @@ export default class Game {
   }
 
   calculateScore() {
-    const scores = this.#players.map((player) => player.calculateScore());
+    const pointMap = this.#ticketDeck.pointMap;
+    const scores = this.#players.map((player) =>
+      player.calculateScore(pointMap, this.#routeToScoreMap)
+    );
     const winner = scores.sort((a, b) => a.total - b.total)[0].name;
     return { winner, scores };
   }
