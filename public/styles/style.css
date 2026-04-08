@@ -24,12 +24,12 @@ body {
 
   position: relative;
 
-  background-image: 
-  radial-gradient(circle at 50% -40%, rgba(0,0,0,0) 75%, rgb(0, 0, 0) 100%),
-  url('../assets/game-background.webp');
+  background-image:
+    radial-gradient(circle at 50% -40%, rgba(0, 0, 0, 0) 75%, rgb(0, 0, 0) 100%),
+    url('../assets/game-background.webp');
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: fixed; 
+  background-attachment: fixed;
 }
 
 main {
@@ -473,21 +473,21 @@ article {
 }
 
 .red {
-  background-color: rgb(246, 115, 115);
+  background: linear-gradient(90deg, transparent, rgb(246, 115, 115), transparent);
 }
 
 .yellow {
-  background-color: rgb(236, 236, 146);
+  background: linear-gradient(90deg, transparent, rgb(236, 236, 146), transparent);
 }
 
 .green {
-  background-color: rgb(149, 246, 149);
+  background: linear-gradient(90deg, transparent, rgb(149, 246, 149), transparent);
 }
 
 .blue {
-  background-color: rgb(131, 131, 232);
+  background: linear-gradient(90deg, transparent, rgb(123, 123, 231), transparent);
 }
 
 .purple {
-  background-color: rgb(229, 124, 236);
+  background: linear-gradient(90deg, transparent, rgb(229, 124, 236), transparent);
 }

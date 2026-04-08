@@ -41,6 +41,11 @@ svg {
   stroke: #000000;
 }
 
+.route[data-owner-color="purple"] .claimed-shape {
+  fill: rgb(205, 73, 205);
+  stroke: #000000;
+}
+
 
 .route[data-owner-color="green"] .claimed-shape {
   fill: mediumseagreen;
