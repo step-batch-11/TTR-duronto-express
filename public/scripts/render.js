@@ -386,3 +386,36 @@ export const enableClick = () => {
   document.querySelector(".destination-tickets-deck")?.classList
     .remove("click-disabled");
 };
+
+const showSinglePlayerScore = (scores, row) => {
+  const scoreColumnTemplate = document.querySelector("#row-data-template");
+
+  for (const entity in scores) {
+    const clone = scoreColumnTemplate.content.cloneNode(true);
+    const scoreColumn = clone.querySelector(".row-data");
+
+    scoreColumn.textContent = scores[entity];
+
+    row.append(scoreColumn);
+  }
+};
+
+export const createLeaderboard = (scores) => {
+  const table = document.querySelector("#victory-table-body");
+  const rowTemplate = document.querySelector("#row-template");
+
+  for (const player of scores) {
+    const clone = rowTemplate.content.cloneNode(true);
+    const row = clone.querySelector(".row");
+
+    showSinglePlayerScore(player, row);
+
+    table.append(row);
+  }
+};
+
+export const displayWinner = (winner) => {
+  const winnerSection = document.querySelector("#winner");
+
+  winnerSection.textContent = winner;
+};

@@ -54,3 +54,5 @@ export const fetchClaimedTickets = () => get("/claimed-tickets");
 export const fetchGameState = () => get("/game-state");
 
 export const fetchPlayerBogiesCount = () => get("/bogies-count");
+
+export const fetchLeaderboardData = () => get("/get-leaderboard");

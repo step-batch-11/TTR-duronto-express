@@ -218,7 +218,7 @@ export default class Game {
     const scores = this.#players.map((player) =>
       player.calculateScore(pointMap, this.#routeToScoreMap)
     );
-    const winner = scores.sort((a, b) => a.total - b.total)[0].name;
+    const winner = scores.sort((a, b) => b.total - a.total)[0].name;
     return { winner, scores };
   }
 

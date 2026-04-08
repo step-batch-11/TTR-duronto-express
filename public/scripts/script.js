@@ -39,7 +39,6 @@ const renderGameState = (gameState) => {
   renderMap(gameState.claimedRoutes, gameState.color);
   displayFaceUpCards(gameState.faceUp);
   displayPlayerHandTickets(gameState.playerHand.claimedTickets);
-  displayPlayers(gameState.players, gameState.currentPlayerIdx);
 };
 
 let etag = "";
@@ -64,6 +63,8 @@ const pollGameState = async () => {
     showMessage("Final round");
     isAlerted = true;
   }
+
+  displayPlayers(gameState.players, gameState.currentPlayerIdx);
 
   if (!gameState.isStarted) {
     disableInteractions();

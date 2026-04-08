@@ -29,6 +29,7 @@ import { createRoom, getRoomState, joinRoom } from "./handlers/room_handler.js";
 import { setContext } from "./utils/context.js";
 import { getCalculatedScore } from "./handlers/game_handlers.js";
 import { getCookie } from "hono/cookie";
+import { getLeaderboardHandler } from "./handlers/score_handlers.js";
 
 export const createApp = (roomManager, players, sessionToRoomMap) => {
   const app = new Hono();
@@ -85,6 +86,7 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
   app.get("/game-state", gameStateHandler);
   app.get("/calculate-score", getCalculatedScore);
+  app.get("/get-leaderboard", getLeaderboardHandler);
   app.get("/bogies-count", getPlayerBogieCount);
 
   app.get("/finish-game", serveStatic({ path: "./public/victory.html" }));

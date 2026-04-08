@@ -5,31 +5,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles/victory.css">
+  <script type="module" src="scripts/leaderboard.js"></script>
   <title>TTR</title>
 </head>
 
 <body>
+  <h2 id="winner">
+  </h2>
   <table id="victory-table">
     <thead id="victory-table-head">
       <tr>
         <th>Player</th>
-        <th>Tickets</th>
         <th>Ticket Points</th>
         <th>Road Points</th>
-        <th>Bonus Points</th>
         <th>Total</th>
       </tr>
     </thead>
     <tbody id="victory-table-body">
     </tbody>
   </table>
-
+  
   <template id="row-template">
-    <tr></tr>
+    <tr class="row"></tr>
   </template>
 
   <template id="row-data-template">
-    <td></td>
+    <td class="row-data"></td>
   </template>
 </body>
 
