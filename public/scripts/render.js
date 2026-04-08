@@ -9,7 +9,7 @@ const validateDoubleRouteClaim = (_color, routeId, map) => {
 };
 
 const paintRoutes = (color, routes, map) => {
-  for (const routeId of routes) {
+  for (const { routeId } of routes) {
     const routeElement = map.querySelector(`#${routeId}`);
     routeElement.setAttribute("data-owner-color", color);
     routeElement.classList.add("click-disabled");

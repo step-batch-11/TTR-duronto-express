@@ -11,7 +11,7 @@ const submitUsername = async (e) => {
   });
   const { isLoggedIn } = await res.json();
   if (isLoggedIn) {
-    globalThis.location.href = "/index.html";
+    globalThis.location.href = "/";
   } else {
     globalThis.location.href = "/login.html";
   }

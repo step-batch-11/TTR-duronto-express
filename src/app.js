@@ -61,7 +61,11 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
     return next();
   });
 
-  app.get("/", allowExistingPlayer, serveStatic({ root: "/public" }));
+  app.get(
+    "/",
+    allowExistingPlayer,
+    serveStatic({ path: "/public/lobby.html" }),
+  );
 
   app.get("/login.html", doesPlayerNotExist, serveStatic({ root: "/public" }));
   app.post("/login", allowNonExistingPlayer, createUser);

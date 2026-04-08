@@ -1,9 +1,10 @@
 export default class TicketDeck {
   #cards;
-  #staticCards;
-  constructor(cards) {
+  #ticketToPointMap;
+
+  constructor(cards, ticketToPoint) {
     this.#cards = cards;
-    this.#staticCards = cards;
+    this.#ticketToPointMap = ticketToPoint;
   }
 
   dealTicketChoices() {
@@ -18,5 +19,9 @@ export default class TicketDeck {
 
   getTicketCards() {
     return this.#cards.map(({ id }) => id);
+  }
+
+  get pointMap() {
+    return this.#ticketToPointMap;
   }
 }

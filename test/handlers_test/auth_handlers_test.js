@@ -39,7 +39,7 @@ describe("auth handler test", () => {
       });
       await response.text();
       assertEquals(response.status, 303);
-      assertEquals(response.headers.get("location"), "/index.html");
+      assertEquals(response.headers.get("location"), "/");
     });
 
     it("accessing login with invalid session, should get login.html", async () => {
