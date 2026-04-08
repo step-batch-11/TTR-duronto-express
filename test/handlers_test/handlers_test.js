@@ -195,6 +195,7 @@ describe("testing /draw-deck-card GET", () => {
         yellow: 1,
       },
       drawnCard: "white",
+      isTurnChanged: false,
     });
   });
 
@@ -218,6 +219,7 @@ describe("testing /draw-deck-card GET", () => {
         wild: 1,
       },
       faceUpCards: ["white", "orange", "black", "wild", "red"],
+      isTurnChanged: false,
     });
   });
 });

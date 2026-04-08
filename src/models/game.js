@@ -74,10 +74,11 @@ export default class Game {
     this.#currentPlayer.addCarCardToHand(drawnCard);
 
     if (this.#isCardDrawFinished(drawnCard)) {
-      this.#nextTurn();
+      setTimeout(() => this.#nextTurn(), 1500);
+      return { drawnCard, cardToRefill, isTurnChanged: true };
     }
 
-    return { drawnCard, cardToRefill };
+    return { drawnCard, cardToRefill, isTurnChanged: false };
   }
 
   drawDeckCard() {
@@ -86,10 +87,11 @@ export default class Game {
     this.#currentPlayer.addCarCardToHand(drawnCard);
 
     if (this.#isCardDrawFinished()) {
-      this.#nextTurn();
+      setTimeout(() => this.#nextTurn(), 1500);
+      return { drawnCard, isTurnChanged: true };
     }
 
-    return drawnCard;
+    return { drawnCard, isTurnChanged: false };
   }
 
   getTicketCards() {

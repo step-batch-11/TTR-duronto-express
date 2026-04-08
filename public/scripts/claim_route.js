@@ -10,16 +10,19 @@ import {
   displayDestTicketDeck,
   renderMap,
 } from "./render.js";
-import { createCarCardImg } from "./utils.js";
+import { createCarCardImg, showAlert } from "./utils.js";
 
 const enableBuildActions = () => {
   const template = document.querySelector("#build-route-template");
   const clone = template.content.cloneNode(true);
+  document.querySelector("main").classList.add("click-disabled");
   document.querySelector(".footer").appendChild(clone);
 };
 
-const disableBuildActions = () =>
+const disableBuildActions = () => {
   document.querySelector(".build-route-container").remove();
+  document.querySelector("main").classList.remove("click-disabled");
+};
 
 const expandPlayerHand = () =>
   document.querySelector(".hand-car-cards").id = "";
@@ -238,6 +241,7 @@ const resolveBuild = (handCarCards) => {
   displayDestTicketDeck();
   drawTicketChoice();
   displayCarCards(handCarCards);
+  showAlert("your turn Completed!");
 };
 
 const getColorCardDetailsToBuild = () => {
@@ -318,6 +322,7 @@ const claimRoute = async (event, routesData, map) => {
   const routeData = routesData[routeId];
 
   if (!isBuildPossible(routeData, structuredClone(handCarCards), bogiesCount)) {
+    showAlert("you can't claim this route!");
     return;
   }
 

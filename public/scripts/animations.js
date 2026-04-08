@@ -1,5 +1,5 @@
 import { addHandCardContainer, displayFaceUpCards } from "./render.js";
-import { createCarCardImg } from "./utils.js";
+import { createCarCardImg, showAlert } from "./utils.js";
 
 export const moveFromDeckToHand = (img, destination, deck) => {
   img.style.transform = "scale(1)";
@@ -24,12 +24,13 @@ const moveFaceUpCard = (card, hand, faceUpCard) => {
   img.style.transform = `translate(${x}px, ${y}px) rotate(270deg)`;
 };
 
-const resolveRefillMarket = (deck, img, faceUpCards) => {
+const resolveRefillMarket = (deck, img, faceUpCards, isTurnChanged) => {
   setTimeout(() => {
     deck.removeChild(img);
     displayFaceUpCards(faceUpCards);
     document.querySelector(".market").classList.remove("is-disabled");
     document.querySelector(".footer").classList.remove("is-disabled");
+    if (isTurnChanged) showAlert("your turn completed!");
   }, 1500);
 };
 
@@ -71,7 +72,12 @@ export const animateDrawDeckCard = (img, destination, deckPosition, move) => {
   }, 500);
 };
 
-export const animateRefillMarket = (drawnCardFromDeck, card, faceUpCards) => {
+export const animateRefillMarket = (
+  drawnCardFromDeck,
+  card,
+  faceUpCards,
+  isTurnChanged,
+) => {
   const deck = document.querySelector(".deck");
   const cardPosition = card.getBoundingClientRect();
   const img = createCarCardImg(drawnCardFromDeck);
@@ -80,7 +86,7 @@ export const animateRefillMarket = (drawnCardFromDeck, card, faceUpCards) => {
   const deckPosition = deck.querySelector("#deck-img").getBoundingClientRect();
 
   animateDrawDeckCard(img, cardPosition, deckPosition, moveFromDeckToMarket);
-  resolveRefillMarket(deck, img, faceUpCards);
+  resolveRefillMarket(deck, img, faceUpCards, isTurnChanged);
 };
 
 export const animateTicketClaim = (ticketChoice) => {

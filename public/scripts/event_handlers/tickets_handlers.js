@@ -9,6 +9,7 @@ import {
   unhighlightCities,
   updateActiveTicket,
 } from "../render.js";
+import { showAlert } from "../utils.js";
 
 const selectedTickets = new Set();
 
@@ -48,6 +49,7 @@ export const handleTicketsClaim = async (_event) => {
   ticketChoices.forEach(animateTicketClaim);
 
   document.querySelector("#map").classList.remove("unfocus");
+  showAlert("your turn Completed!");
   selectedTickets.clear();
 };
 

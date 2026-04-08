@@ -4,3 +4,14 @@ export const createCarCardImg = (color) => {
 
   return img;
 };
+
+export const showAlert = (message) => {
+  const dialogBox = document.getElementById("alert-box");
+  dialogBox.classList.add("active-alert");
+  dialogBox.querySelector("p").textContent = message;
+  dialogBox.show();
+  setTimeout(() => {
+    dialogBox.close();
+    dialogBox.classList.remove("active-alert");
+  }, 2000);
+};
