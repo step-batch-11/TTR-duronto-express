@@ -122,44 +122,6 @@ describe("End game test case for multiplayer game state other actions", () => {
       },
     });
 
-    assertEquals(await res.status, 303);
-  });
-
-  it("draw train car cars from deck face up as a last player", async () => {
-    body = {
-      routeId: "CLC-VCR",
-      cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount: 0 },
-    };
-
-    res = await mockApp.request("/claim-route", {
-      method: "post",
-      headers: {
-        Cookie: "sessionId=1001",
-      },
-      body: JSON.stringify(body),
-    });
-
     assertEquals(await res.status, 200);
-
-    res = await mockApp.request("/draw-deck-card", {
-      method: "get",
-      headers: {
-        Cookie: "sessionId=1002",
-      },
-    });
-
-    assertEquals(await res.status, 200);
-
-    res = await mockApp.request("/draw-faceup-card", {
-      method: "post",
-      headers: {
-        Cookie: "sessionId=1001",
-      },
-      body: JSON.stringify({
-        id: 1,
-      }),
-    });
-
-    assertEquals(await res.status, 303);
   });
 });

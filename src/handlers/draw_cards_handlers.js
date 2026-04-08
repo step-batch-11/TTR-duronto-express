@@ -6,7 +6,7 @@ export const drawDeckCardHandler = (context) => {
   const { carCards } = game.playerHand(sessionId);
 
   if (game.isLastPlayerTurn(sessionId)) {
-    return context.redirect("/finish-game", 303);
+    game.setGameEndFlag();
   }
 
   return context.json({ drawnCard, carCards });
@@ -22,7 +22,7 @@ export const drawFaceUpCardHandler = async (context) => {
   const faceUpCards = game.getFaceUpCards();
 
   if (game.isLastPlayerTurn(sessionId)) {
-    return context.redirect("/finish-game", 303);
+    game.setGameEndFlag();
   }
 
   return context.json({ drawnCard, cardToRefill, carCards, faceUpCards });

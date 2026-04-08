@@ -58,10 +58,13 @@ const pollGameState = async () => {
   });
 
   if (response.status === 304) return;
-
   const gameState = await response.json();
 
   displayPlayers(players, currentPlayerIdx);
+  if (gameState.isGameEnded === true) {
+    globalThis.window.location = "/finish-game";
+  }
+
   if (!gameState.isStarted) {
     disableInteractions();
     return;

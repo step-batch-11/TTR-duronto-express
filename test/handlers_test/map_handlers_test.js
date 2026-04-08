@@ -306,6 +306,18 @@ describe("End game test case for multiplayer game state", () => {
       body: JSON.stringify(body),
     });
 
-    assertEquals(await res.status, 303);
+    assertEquals(await res.status, 200);
+
+    res = await mockApp.request("/game-state", {
+      headers: {
+        "If-None-Match": "",
+        Cookie: "sessionId=1001",
+      },
+    });
+
+    const { isGameEnded } = await res.json();
+
+    assertEquals(await res.status, 200);
+    assertEquals(isGameEnded, true);
   });
 });

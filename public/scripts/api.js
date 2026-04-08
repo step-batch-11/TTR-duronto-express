@@ -38,11 +38,6 @@ export const postClaimRoute = async (body) => {
     body: JSON.stringify(body),
   });
 
-  if (response.redirected) {
-    globalThis.location.href = response.url;
-    return;
-  }
-
   return await response.json();
 };
 

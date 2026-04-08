@@ -12,6 +12,7 @@ export class Poller {
     const shouldStop = await this.#cb();
     if (shouldStop) return this.resume();
     if (shouldStop) return this.pause();
+
     this.#pollId = setInterval(async () => {
       const shouldStop = await this.#cb();
       if (shouldStop) return this.pause();
