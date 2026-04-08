@@ -1,28 +1,30 @@
 import { clearHighlightedCities } from "./event_handlers/tickets_handlers.js";
 import { claimTicketChoices } from "./events.js";
 
-const validateDoubleRouteClaim = (_color, routeId, map) => {
+const validateDoubleRouteClaim = (color, routeId, map, myPawnColor) => {
   const adjacentPathId = routeId.split("-").reverse().join("-");
   const adjacentPath = map.querySelector(`#${adjacentPathId}`);
 
-  if (adjacentPath !== null) adjacentPath.classList.add("click-disabled");
+  if (adjacentPath !== null && color === myPawnColor) {
+    adjacentPath.classList.add("click-disabled");
+  }
 };
 
-const paintRoutes = (color, routes, map) => {
+const paintRoutes = (color, routes, map, myPawnColor) => {
   for (const { routeId } of routes) {
     const routeElement = map.querySelector(`#${routeId}`);
     routeElement.setAttribute("data-owner-color", color);
     routeElement.classList.add("click-disabled");
 
-    validateDoubleRouteClaim(color, routeId, map);
+    validateDoubleRouteClaim(color, routeId, map, myPawnColor);
   }
 };
 
-export const renderMap = (routeOwnership) => {
+export const renderMap = (routeOwnership, myPawnColor) => {
   const map = document.querySelector("#map");
 
   for (const [color, routes] of Object.entries(routeOwnership)) {
-    paintRoutes(color, routes, map);
+    paintRoutes(color, routes, map, myPawnColor);
   }
 };
 
@@ -269,18 +271,35 @@ const createPulseEffect = (element) => {
   const div = document.createElement("div");
   div.classList.add("effect");
   div.style.position = "absolute";
-  div.style.top = parseInt(element.top) - 14 + "px";
-  div.style.left = parseInt(element.left) + 2 + "px";
+  div.style.top = parseInt(element.top) - 12 + "px";
+  div.style.left = parseInt(element.left) + "px";
 
   document.querySelector("body").appendChild(div);
 };
 
-const getShimmeringEffect = (src, dest) => {
-  const srcD = src.querySelector("use").getBoundingClientRect();
-  const destD = dest.querySelector("use").getBoundingClientRect();
+const drawLineSrcToDest = (src, dest) => {
+  const svgNS = "http://www.w3.org/2000/svg";
+  const line = document.createElementNS(svgNS, "line");
+  const svg = document.querySelector("#map svg").getBoundingClientRect();
 
-  createPulseEffect(srcD);
-  createPulseEffect(destD);
+  line.setAttribute("x1", src.x - svg.x + 15);
+  line.setAttribute("y1", src.y);
+  line.setAttribute("x2", dest.x - svg.x + 15);
+  line.setAttribute("y2", dest.y);
+  line.setAttribute("stroke", "orange");
+  line.setAttribute("stroke-width", "15");
+  line.classList.add("line");
+
+  document.querySelector("#map svg").appendChild(line);
+};
+
+const getShimmeringEffect = (src, dest) => {
+  const srcDimentions = src.querySelector("use").getBoundingClientRect();
+  const destDimentions = dest.querySelector("use").getBoundingClientRect();
+
+  drawLineSrcToDest(srcDimentions, destDimentions);
+  createPulseEffect(srcDimentions);
+  createPulseEffect(destDimentions);
 };
 
 export const highlightCities = (cardId) => {
@@ -303,6 +322,7 @@ export const highlightCities = (cardId) => {
 
 export const unhighlightCities = (cardId) => {
   const [from, to] = cardId.split("-");
+  document.querySelectorAll(".line").forEach((ele) => ele.remove());
   document.querySelectorAll(".effect").forEach((ele) => ele.remove());
   document.querySelector(`#${from}`)?.classList.remove(
     "highlightCity",

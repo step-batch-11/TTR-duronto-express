@@ -16,6 +16,9 @@ export const gameStateHandler = (context) => {
   const isPlayerTurn = game.isTurn(sessionId);
   const isGameEnded = game.getGameEndFlag();
   const isFinalRound = game.getFinalRoundStatus();
+  const color = game.getPlayerColor(sessionId);
+  const players = game.getAllPlayerDetails();
+  const currentPlayerIdx = game.currentPlayerIdx;
 
   return context.json({
     faceUp,
@@ -25,5 +28,8 @@ export const gameStateHandler = (context) => {
     isStarted,
     isGameEnded,
     isFinalRound,
+    color,
+    players,
+    currentPlayerIdx,
   });
 };

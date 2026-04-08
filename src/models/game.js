@@ -140,6 +140,10 @@ export default class Game {
     return this.#findPlayer(id).getPlayerHand();
   }
 
+  getBogieCount(id) {
+    return this.#findPlayer(id).bogiesCount;
+  }
+
   claimRoute(routeId, cardsUsed, routeData) {
     this.#currentPlayer.claimRoute(routeId, routeData, cardsUsed);
     this.#nextTurn();
@@ -216,5 +220,9 @@ export default class Game {
     );
     const winner = scores.sort((a, b) => a.total - b.total)[0].name;
     return { winner, scores };
+  }
+
+  getPlayerColor(id) {
+    return this.#findPlayer(id).color;
   }
 }

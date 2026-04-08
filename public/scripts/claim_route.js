@@ -1,4 +1,8 @@
-import { fetchPlayerHand, postClaimRoute } from "./api.js";
+import {
+  fetchPlayerBogiesCount,
+  fetchPlayerHand,
+  postClaimRoute,
+} from "./api.js";
 import { drawTicketChoice } from "./events.js";
 import {
   addHandCardContainer,
@@ -281,10 +285,14 @@ const buildActionsOnClick = (routeId, handCarCards, routeData) => {
   });
 };
 
-const isBuildPossible = ({ routeLength, routeColor }, handCarCards) => {
+const isBuildPossible = (
+  { routeLength, routeColor },
+  handCarCards,
+  bogiesCount,
+) => {
   const wildCardCount = handCarCards["wild"] || 0;
   delete handCarCards.wild;
-
+  if (parseInt(bogiesCount) < routeLength) return;
   if (routeColor === "transparent") {
     return Object.values(handCarCards).some((count) =>
       count + wildCardCount >= routeLength
@@ -305,11 +313,13 @@ const claimRoute = async (event, routesData, map) => {
   if (route === null) return;
 
   const handCarCards = await fetchPlayerHand();
+  const bogiesCount = await fetchPlayerBogiesCount();
   const routeId = route.getAttribute("id");
-
   const routeData = routesData[routeId];
 
-  if (!isBuildPossible(routeData, structuredClone(handCarCards))) return;
+  if (!isBuildPossible(routeData, structuredClone(handCarCards), bogiesCount)) {
+    return;
+  }
 
   route.querySelectorAll("g g").forEach((element) => {
     element.style.animation = `zoom 1s ease-in-out 1s infinite forwards`;

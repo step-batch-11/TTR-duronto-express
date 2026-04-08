@@ -9,23 +9,19 @@ svg {
   transition: opacity 0.3s ease-in-out;
 }
 
-/* By default, hide the claimed shape */
 .route .claimed-shape {
   opacity: 0;
 }
 
-/* By default, show the empty shape */
 .route .empty-shape {
   opacity: 1;
   stroke-width: 2px;
 }
 
-/* When claimed, show the complex shape */
 .route:not([data-owner-color="none"]) .claimed-shape {
   opacity: 1;
 }
 
-/* Color the claimed shape based on the specific owner */
 .route[data-owner-color="red"] .claimed-shape {
   fill: #e74c3c;
   stroke: #c0392b;
@@ -49,15 +45,12 @@ svg {
 
 .route[data-owner-color="green"] .claimed-shape {
   fill: mediumseagreen;
-  /* opacity: 0.8; */
   stroke: black;
 }
 
 .route[data-owner-color="green"] .empty-shape {
   opacity: 0.5;
 }
-
-/* loading track color, color set from script */
 
 .route[data-route-color="white"] .empty-shape {
   fill: #FDFAF0;
@@ -107,15 +100,13 @@ svg {
   stroke-width: 2px;
 }
 
-/* Station color */
-
 .stationColor {
   fill: rgb(248, 217, 42);
   stroke: #0a0909;
 }
 
 .highlightCity>use {
-  fill: rgb(3, 182, 0);
+  fill: transparent;
   stroke-width: 0;
   stroke: none;
 }
