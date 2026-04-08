@@ -411,27 +411,7 @@ article {
   opacity: 0.8;
 }
 
-.disableInteractions {
+.disable-interactions {
   pointer-events: none;
   opacity: 0.8;
-}
-
-.red {
-  background: linear-gradient(90deg, transparent, rgb(246, 115, 115), transparent);
-}
-
-.yellow {
-  background: linear-gradient(90deg, transparent, rgb(236, 236, 146), transparent);
-}
-
-.green {
-  background: linear-gradient(90deg, transparent, rgb(149, 246, 149), transparent);
-}
-
-.blue {
-  background: linear-gradient(90deg, transparent, rgb(123, 123, 231), transparent);
-}
-
-.purple {
-  background: linear-gradient(90deg, transparent, rgb(229, 124, 236), transparent);
 }

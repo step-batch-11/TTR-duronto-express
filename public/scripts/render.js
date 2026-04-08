@@ -37,7 +37,7 @@ const createPlayer = (
   const container = clone.querySelector(".user");
   clone.querySelector(".identifier .name").textContent = name;
   if (option.index === option.currentPlayerIdx) {
-    container.classList.add(symbol);
+    container.querySelector(".symbol").classList.add("highlight-player");
   }
   clone.querySelector(".identifier .symbol").style.backgroundColor = symbol;
   clone.querySelector(".train-car-data .car-count").textContent = carCount;
@@ -355,21 +355,21 @@ export const addHandCardContainer = (color) => {
 };
 
 export const disableInteractions = () => {
-  document.querySelector("#map").classList.add("disableInteractions");
-  document.querySelector(".faceup-cards").classList.add("disableInteractions");
-  document.querySelector(".deck").classList.add("disableInteractions");
+  document.querySelector("#map").classList.add("disable-interactions");
+  document.querySelector(".faceup-cards").classList.add("disable-interactions");
+  document.querySelector(".deck").classList.add("disable-interactions");
   document.querySelector(".destination-tickets-deck-container")
-    .classList.add("disableInteractions");
+    .classList.add("disable-interactions");
 };
 
 export const enableInteractions = () => {
-  document.querySelector("#map").classList.remove("disableInteractions");
+  document.querySelector("#map").classList.remove("disabl-interactions");
   document.querySelector(".faceup-cards").classList.remove(
-    "disableInteractions",
+    "disable-interactions",
   );
-  document.querySelector(".deck").classList.remove("disableInteractions");
+  document.querySelector(".deck").classList.remove("disable-interactions");
   document.querySelector(".destination-tickets-deck-container")?.classList
-    .remove("disableInteractions");
+    .remove("disable-interactions");
 };
 
 export const enableClick = () => {

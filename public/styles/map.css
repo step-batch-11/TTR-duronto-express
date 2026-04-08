@@ -44,12 +44,8 @@ svg {
 
 
 .route[data-owner-color="green"] .claimed-shape {
-<<<<<<< HEAD
-  fill: mediumseagreen;
-=======
   fill: hsl(124, 100%, 50%);
   /* opacity: 0.8; */
->>>>>>> 0587297 ([#40] | player profile design modified | Santo/kiranmai)
   stroke: black;
 }
 
@@ -118,6 +114,10 @@ svg {
 
 .highlightCity text {
   font-weight: bold;
+}
+
+.for-now{
+  animation: scale 0.5s infinite ease-in-out alternate-reverse;
 }
 
 .effect {
