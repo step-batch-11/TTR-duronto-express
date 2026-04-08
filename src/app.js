@@ -14,13 +14,15 @@ import {
   drawTicketChoiceHandler,
 } from "./handlers/draw_tickets_handlers.js";
 import { claimRouteHandler } from "./handlers/map_handlers.js";
-import { getPlayerCarCardsHandler } from "./handlers/claim_route_handlers.js";
+import {
+  getPlayerBogieCount,
+  getPlayerCarCardsHandler,
+} from "./handlers/claim_route_handlers.js";
 import {
   allowExistingPlayer,
   allowNonExistingPlayer,
   createUser,
   doesPlayerNotExist,
-  getPlayerDetails,
 } from "./handlers/auth_handlers.js";
 import { gameStateHandler, getGamePhase } from "./handlers/phase_handler.js";
 import { createRoom, getRoomState, joinRoom } from "./handlers/room_handler.js";
@@ -74,12 +76,8 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   app.post("/join-room", allowExistingPlayer, joinRoom);
 
   app.get("/room-state", getRoomState);
-
   app.get("/game.html", allowExistingPlayer, serveStatic({ root: "/public" }));
-
   app.get("/initial-hand", initializePlayerHandHandler);
-
-  app.get("/player-details", getPlayerDetails);
   app.get("/draw-deck-card", drawDeckCardHandler);
   app.get("/car-cards", getPlayerCarCardsHandler);
   app.get("/routes-data", serveStatic({ path: "src/static-data/route.json" }));
@@ -87,6 +85,7 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
   app.get("/game-state", gameStateHandler);
   app.get("/calculate-score", getCalculatedScore);
+  app.get("/bogies-count", getPlayerBogieCount);
 
   app.get("/finish-game", serveStatic({ path: "./public/victory.html" }));
 

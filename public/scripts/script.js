@@ -1,9 +1,4 @@
-import {
-  fetchInitialPlayerHand,
-  fetchMap,
-  fetchPlayerDetails,
-  fetchRoutesData,
-} from "./api.js";
+import { fetchInitialPlayerHand, fetchMap, fetchRoutesData } from "./api.js";
 import { mapOnClick } from "./claim_route.js";
 import {
   accessTicket,
@@ -27,6 +22,7 @@ import {
 } from "./render.js";
 
 import { Poller } from "./poller.js";
+import { showMessage } from "./event_handlers/draw_deck_card_handler.js";
 
 const registerListeners = (routesData) => {
   selectTicketCard();
@@ -39,18 +35,18 @@ const registerListeners = (routesData) => {
 };
 
 const renderGameState = (gameState) => {
-  renderMap(gameState.claimedRoutes);
-  displayFaceUpCards(gameState.faceUp);
   disableInteractions();
+  renderMap(gameState.claimedRoutes, gameState.color);
+  displayFaceUpCards(gameState.faceUp);
   displayPlayerHandTickets(gameState.playerHand.claimedTickets);
+  displayPlayers(gameState.players, gameState.currentPlayerIdx);
 };
 
 let etag = "";
 let initial = true;
+let isAlerted = false;
 
 const pollGameState = async () => {
-  const { players, currentPlayerIdx } = await fetchPlayerDetails();
-
   const response = await fetch("/game-state", {
     headers: {
       "If-None-Match": etag,
@@ -60,9 +56,13 @@ const pollGameState = async () => {
   if (response.status === 304) return;
   const gameState = await response.json();
 
-  displayPlayers(players, currentPlayerIdx);
   if (gameState.isGameEnded === true) {
     globalThis.window.location = "/finish-game";
+  }
+
+  if (gameState.isFinalRound === true && isAlerted === false) {
+    showMessage("Final round");
+    isAlerted = true;
   }
 
   if (!gameState.isStarted) {
@@ -97,6 +97,6 @@ globalThis.onload = async () => {
   const routesData = await fetchRoutesData();
   registerListeners(routesData);
 
-  const poller = new Poller(pollGameState, 1200);
+  const poller = new Poller(pollGameState, 500);
   poller.start();
 };

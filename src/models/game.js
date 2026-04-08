@@ -140,6 +140,10 @@ export default class Game {
     return this.#findPlayer(id).getPlayerHand();
   }
 
+  getBogieCount(id) {
+    return this.#findPlayer(id).bogiesCount;
+  }
+
   claimRoute(routeId, cardsUsed, routeData) {
     this.#currentPlayer.claimRoute(routeId, routeData, cardsUsed);
     this.#nextTurn();
@@ -168,11 +172,16 @@ export default class Game {
   isGameEnded(playerId) {
     const playerHand = this.playerHand(parseInt(playerId));
 
-    return playerHand.bogies < 3;
+    return playerHand.bogies < 3 && this.#lastPlayerId === null;
   }
 
   setLastPlayer(playerId) {
+    this.#isFinalRound = true;
     this.#lastPlayerId = parseInt(playerId);
+  }
+
+  getFinalRoundStatus() {
+    return this.#isFinalRound;
   }
 
   isLastPlayerTurn(playerId) {
@@ -211,5 +220,9 @@ export default class Game {
     );
     const winner = scores.sort((a, b) => a.total - b.total)[0].name;
     return { winner, scores };
+  }
+
+  getPlayerColor(id) {
+    return this.#findPlayer(id).color;
   }
 }

@@ -121,9 +121,8 @@ export const handleHighlightCities = (event, container) => {
 
 export const handleUnHighlightCities = (event, container) => {
   const ticket = event.target.closest(`.${container}`);
-  if (!ticket) {
-    return;
-  }
+  if (!ticket) return;
+
   const ticketRoute = ticket.dataset.ticketRoute;
   unhighlightCities(ticketRoute);
 };

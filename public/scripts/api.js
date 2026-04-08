@@ -52,3 +52,5 @@ export const fetchPhase = () => get("/get-game-phase");
 export const fetchClaimedTickets = () => get("/claimed-tickets");
 
 export const fetchGameState = () => get("/game-state");
+
+export const fetchPlayerBogiesCount = () => get("/bogies-count");
