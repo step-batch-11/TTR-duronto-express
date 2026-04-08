@@ -3,8 +3,9 @@ import { createLeaderboard, displayWinner } from "./render.js";
 
 const displayLeaderboard = async () => {
   const { winner, scores } = await fetchLeaderboardData();
-  createLeaderboard(scores);
+
   displayWinner(winner);
+  createLeaderboard(scores);
 };
 
 globalThis.onload = displayLeaderboard;

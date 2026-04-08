@@ -414,7 +414,13 @@ export const createLeaderboard = (scores) => {
 };
 
 export const displayWinner = (winner) => {
-  const winnerSection = document.querySelector("#winner");
+  const body = document.querySelector("body");
+  const winnerTemplate = document.querySelector("#winner-template");
+  const clone = winnerTemplate.content.cloneNode(true);
+  const winnerSection = clone.querySelector(".winner");
 
-  winnerSection.textContent = winner;
+  const winnerNameSection = winnerSection.querySelector("#winner-name");
+  winnerNameSection.textContent = winner;
+
+  body.prepend(winnerSection);
 };

@@ -10,21 +10,26 @@
 </head>
 
 <body>
-  <h2 id="winner">
-  </h2>
+  <template id="winner-template">
+    <div class="winner">
+      <h1>Winner</h1>
+      <h2 id="winner-name">
+      </h2>
+    </div>
+  </template>
   <table id="victory-table">
     <thead id="victory-table-head">
       <tr>
         <th>Player</th>
-        <th>Ticket Points</th>
         <th>Road Points</th>
+        <th>Ticket Points</th>
         <th>Total</th>
       </tr>
     </thead>
     <tbody id="victory-table-body">
     </tbody>
   </table>
-  
+
   <template id="row-template">
     <tr class="row"></tr>
   </template>
