@@ -17,6 +17,7 @@ svg {
 /* By default, show the empty shape */
 .route .empty-shape {
   opacity: 1;
+  stroke-width: 2px;
 }
 
 /* When claimed, show the complex shape */
@@ -35,6 +36,11 @@ svg {
   stroke: #2980b9;
 }
 
+.route[data-owner-color="yellow"] .claimed-shape {
+  fill: #ffff00;
+  stroke: #000000;
+}
+
 
 .route[data-owner-color="green"] .claimed-shape {
   fill: mediumseagreen;
@@ -49,35 +55,33 @@ svg {
 /* loading track color, color set from script */
 
 .route[data-route-color="white"] .empty-shape {
-  fill: rgb(244, 253, 255);
+  fill: #FDFAF0;
   stroke: #4a4a4a;
-  opacity: 0.9;
 }
 
 .route[data-route-color="black"] .empty-shape {
-  fill: black;
+  fill: #1A1A1A;
   stroke: black;
-  opacity: 0.75;
 }
 
 
 .route[data-route-color="red"] .empty-shape {
-  fill: #ea5a5a;
+  fill: hsl(0, 50%, 60%);
   stroke: #4a4a4a;
 }
 
 .route[data-route-color="blue"] .empty-shape {
-  fill: #67a8ee;
+  fill: hsl(210, 50%, 60%);
   stroke: #4a4a4a;
 }
 
 .route[data-route-color="pink"] .empty-shape {
-  fill: #e795e3;
+  fill: hsl(340, 40%, 80%);
   stroke: #ff0c0c;
 }
 
 .route[data-route-color="yellow"] .empty-shape {
-  fill: #ebda1c;
+  fill: #f1d836;
   stroke: #ff0c0c;
 }
 
@@ -87,14 +91,15 @@ svg {
 }
 
 .route[data-route-color="green"] .empty-shape {
-  fill: #47ab45;
+  fill: #2E7D32;
   stroke: #0a0909;
 }
 
 .route[data-route-color="transparent"] .empty-shape {
-  fill: rgb(181, 179, 179);
+  fill: rgb(185, 185, 185);
   opacity: 0.8;
-  stroke: #ff0c0c;
+  stroke: hsl(0, 50%, 60%);
+  stroke-width: 2px;
 }
 
 /* Station color */

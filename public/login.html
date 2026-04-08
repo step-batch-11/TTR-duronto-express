@@ -11,15 +11,15 @@
 
 <body>
   <header>
-    <h1>Ticket To Ride</h1>
+    <h1>Duronto Express Ticket Counter</h1>
   </header>
   <main>
-    <form action="/login" method="post" id="login-form">
+    <form action="/login" method="post" id="login-form" class="input-group">
       <div>
-        <label for="username" id="username-label">Username</label>
+        <label for="username" id="username-label">Enter Passenger Name</label>
         <input type="text" id="username" name="username" pattern="[A-Za-z]+[0-9]*" required>
+        <button type="submit">Check In</button>
       </div>
-      <button type="submit">Login</button>
     </form>
   </main>
 </body>
