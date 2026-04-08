@@ -19,10 +19,10 @@ import {
   enableInteractions,
   initializeGameUI,
   renderMap,
-  showLastRoundFlashMessage,
 } from "./render.js";
 
 import { Poller } from "./poller.js";
+import { showMessage } from "./event_handlers/draw_deck_card_handler.js";
 
 const registerListeners = (routesData) => {
   selectTicketCard();
@@ -44,6 +44,7 @@ const renderGameState = (gameState) => {
 
 let etag = "";
 let initial = true;
+let isAlerted = false;
 
 const pollGameState = async () => {
   const response = await fetch("/game-state", {
@@ -59,8 +60,9 @@ const pollGameState = async () => {
     globalThis.window.location = "/finish-game";
   }
 
-  if (gameState.isFinalRound === true) {
-    showLastRoundFlashMessage();
+  if (gameState.isFinalRound === true && isAlerted === false) {
+    showMessage("Final round");
+    isAlerted = true;
   }
 
   if (!gameState.isStarted) {

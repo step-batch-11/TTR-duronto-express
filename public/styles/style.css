@@ -412,7 +412,7 @@ article {
   }
 }
 
-#dialog-box {
+#dialog-box, .last-move {
   margin-right: 0px;
   line-height: 2em;
   left: auto;
@@ -426,7 +426,8 @@ article {
   z-index: 1;
 }
 
-.log {
+.last-move {
+  z-index: 1000;
   opacity: 0;
   width: 100%;
   animation: showMove 2s ease-in-out;

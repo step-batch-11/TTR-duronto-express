@@ -40,10 +40,11 @@ const disableWild = () => {
   }, 1500);
 };
 
-const showMessage = (message) => {
+export const showMessage = (message) => {
   const dialogBox = document.getElementById("dialog-box");
   dialogBox.textContent = message;
   dialogBox.show();
+
   setTimeout(() => {
     dialogBox.close();
   }, 4000);
