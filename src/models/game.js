@@ -168,11 +168,16 @@ export default class Game {
   isGameEnded(playerId) {
     const playerHand = this.playerHand(parseInt(playerId));
 
-    return playerHand.bogies < 3;
+    return playerHand.bogies < 3 && this.#lastPlayerId === null;
   }
 
   setLastPlayer(playerId) {
+    this.#isFinalRound = true;
     this.#lastPlayerId = parseInt(playerId);
+  }
+
+  getFinalRoundStatus() {
+    return this.#isFinalRound;
   }
 
   isLastPlayerTurn(playerId) {

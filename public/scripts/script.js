@@ -24,6 +24,7 @@ import {
   enableInteractions,
   initializeGameUI,
   renderMap,
+  showLastRoundFlashMessage,
 } from "./render.js";
 
 import { Poller } from "./poller.js";
@@ -63,6 +64,10 @@ const pollGameState = async () => {
   displayPlayers(players, currentPlayerIdx);
   if (gameState.isGameEnded === true) {
     globalThis.window.location = "/finish-game";
+  }
+
+  if (gameState.isFinalRound === true) {
+    showLastRoundFlashMessage();
   }
 
   if (!gameState.isStarted) {

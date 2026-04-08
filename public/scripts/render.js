@@ -366,3 +366,8 @@ export const enableClick = () => {
   document.querySelector(".destination-tickets-deck")?.classList
     .remove("click-disabled");
 };
+
+export const showLastRoundFlashMessage = () => {
+  const log = document.querySelector(".log");
+  log.textContent = "Final Round";
+};
