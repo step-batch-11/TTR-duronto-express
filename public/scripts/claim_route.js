@@ -192,7 +192,7 @@ const moveCardToPlayerHand = (color) => {
 
   const container = addHandCardContainer(color);
   container.querySelector("img")
-    .setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
+    .setAttribute("src", `/assets/car-cards-images/${color}.webp`);
 
   const carCount = container.parentElement.querySelector(".card-count");
   carCount.textContent = 1;

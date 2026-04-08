@@ -75,7 +75,7 @@ export const displayFaceUpCards = (cards) => {
     clone.querySelector(".card").setAttribute("data-color", card);
     clone
       .querySelector(".card img")
-      .setAttribute("src", `./assets/car-cards-images/${card}.jpg`);
+      .setAttribute("src", `./assets/car-cards-images/${card}.webp`);
     container.append(clone);
   });
 };
@@ -97,7 +97,7 @@ export const displayCarCards = (carCards) => {
     clone.querySelector(".hand-car-card").id = color;
     clone.querySelector(".img-container").setAttribute("data-color", color);
     const imageElement = clone.querySelector(".card-img");
-    imageElement.setAttribute("src", `assets/car-cards-images/${color}.jpg`);
+    imageElement.setAttribute("src", `assets/car-cards-images/${color}.webp`);
 
     countContainer.textContent = count;
     return clone;
@@ -129,7 +129,7 @@ export const displayPlayerHandTickets = (ticketChoices) => {
     ticketDiv.classList.add("ticket");
 
     const imageElement = document.createElement("img");
-    imageElement.src = `assets/destination-cards-images/${id}.png`;
+    imageElement.src = `assets/destination-cards-images/${id}.webp`;
 
     ticketDiv.append(imageElement);
     ticketDiv.setAttribute("data-ticket-route", id);
@@ -211,7 +211,7 @@ const createTicketCard = (ticket) => {
   clone.querySelector(".card").setAttribute("data-ticket-route", ticketId);
   clone
     .querySelector(".card img")
-    .setAttribute("src", `./assets/destination-cards-images/${ticketId}.png`);
+    .setAttribute("src", `./assets/destination-cards-images/${ticketId}.webp`);
   return clone;
 };
 
@@ -327,7 +327,7 @@ export const resolveFaceUpCardDraw = (card, img, carCards) => {
 
 export const createImageAtr = (color) => {
   const img = document.createElement("img");
-  img.setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
+  img.setAttribute("src", `/assets/car-cards-images/${color}.webp`);
 
   return img;
 };
