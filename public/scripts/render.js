@@ -77,7 +77,7 @@ export const displayFaceUpCards = (cards) => {
     clone.querySelector(".card").setAttribute("data-color", card);
     clone
       .querySelector(".card img")
-      .setAttribute("src", `./assets/car-cards-images/${card}.webp`);
+      .setAttribute("src", `./assets/car-cards-images/${card}.jpg`);
     container.append(clone);
   });
 };
@@ -99,7 +99,7 @@ export const displayCarCards = (carCards) => {
     clone.querySelector(".hand-car-card").id = color;
     clone.querySelector(".img-container").setAttribute("data-color", color);
     const imageElement = clone.querySelector(".card-img");
-    imageElement.setAttribute("src", `assets/car-cards-images/${color}.webp`);
+    imageElement.setAttribute("src", `assets/car-cards-images/${color}.jpg`);
 
     countContainer.textContent = count;
     return clone;
@@ -346,7 +346,7 @@ export const resolveFaceUpCardDraw = (card, img, carCards) => {
 
 export const createImageAtr = (color) => {
   const img = document.createElement("img");
-  img.setAttribute("src", `/assets/car-cards-images/${color}.webp`);
+  img.setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
 
   return img;
 };
