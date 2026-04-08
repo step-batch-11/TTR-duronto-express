@@ -70,8 +70,8 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
     serveStatic({ path: "/public/lobby.html" }),
   );
 
-  app.get("/login.html", doesPlayerNotExist, serveStatic({ root: "/public" }));
   app.post("/login", allowNonExistingPlayer, createUser);
+  app.get("/login.html", doesPlayerNotExist, serveStatic({ root: "/public" }));
 
   app.post("/create-room", allowExistingPlayer, createRoom);
   app.post("/join-room", allowExistingPlayer, joinRoom);
@@ -94,6 +94,11 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   app.post("/draw-faceup-card", drawFaceUpCardHandler);
   app.post("/claim-tickets", claimDestinationTickets);
   app.post("/claim-route", claimRouteHandler);
+  app.get(
+    "/waiting-room",
+    allowExistingPlayer,
+    serveStatic({ root: "public" }),
+  );
 
   app.get("*", serveStatic({ root: "public" }));
 

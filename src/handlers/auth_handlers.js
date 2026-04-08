@@ -7,6 +7,7 @@ export const allowExistingPlayer = async (context, next) => {
   if (players.isExisting(sessionId)) {
     await next();
   }
+
   return context.redirect("/login.html", 303);
 };
 
