@@ -26,6 +26,7 @@ import { gameStateHandler, getGamePhase } from "./handlers/phase_handler.js";
 import { createRoom, getRoomState, joinRoom } from "./handlers/room_handler.js";
 import { setContext } from "./utils/context.js";
 import { getCalculatedScore } from "./handlers/game_handlers.js";
+import { getCookie } from "hono/cookie";
 
 export const createApp = (roomManager, players, sessionToRoomMap) => {
   const app = new Hono();
