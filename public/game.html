@@ -7,6 +7,7 @@
   <title>TTR</title>
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/map.css">
+  <link rel="stylesheet" href="styles/profile.css ">
   <link rel="icon" href="assets/apple-touch-icon.png" type="image/png">
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.18.1/lodash.min.js"></script>
   <script type="module" src="scripts/script.js"></script>
@@ -16,19 +17,22 @@
   <dialog id="alert-box"><p></p></dialog>
   <template id="user">
     <div class="user">
-      <div class="identifier row">
+      <div class="identifier">
         <h2 class="name"></h2>
         <div class="symbol"></div>
       </div>
 
-      <div class="train-car-data row">
-        <img src="" alt="car">
-        <p class="car-count"></p>
+      <div class="player-data">
+        <div class="train-car-data">
+          <img src="assets/train-shape.svg" alt="car">
+          <p class="car-count"></p> 
+        </div>
+        <div class="ticket-data">
+          <img src="assets/golden-ticket.png" alt="ticket">
+          <p class="ticket-count"></p>
+        </div>
       </div>
-      <div class="ticket-data row">
-        <img src="" alt="ticket">
-        <p class="ticket-count"></p>
-      </div>
+      
     </div>
   </template>
   <main>

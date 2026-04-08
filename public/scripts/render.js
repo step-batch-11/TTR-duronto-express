@@ -40,15 +40,7 @@ const createPlayer = (
     container.classList.add(symbol);
   }
   clone.querySelector(".identifier .symbol").style.backgroundColor = symbol;
-
-  clone
-    .querySelector(".train-car-data img")
-    .setAttribute("src", `assets/symbols/${symbol}.png`);
   clone.querySelector(".train-car-data .car-count").textContent = carCount;
-
-  clone
-    .querySelector(".ticket-data img")
-    .setAttribute("src", `assets/ticket-icon.png`);
   clone.querySelector(".ticket-data .ticket-count").textContent = ticketCount;
 
   return clone;

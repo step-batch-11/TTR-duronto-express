@@ -44,7 +44,12 @@ svg {
 
 
 .route[data-owner-color="green"] .claimed-shape {
+<<<<<<< HEAD
   fill: mediumseagreen;
+=======
+  fill: hsl(124, 100%, 50%);
+  /* opacity: 0.8; */
+>>>>>>> 0587297 ([#40] | player profile design modified | Santo/kiranmai)
   stroke: black;
 }
 
@@ -101,7 +106,7 @@ svg {
 }
 
 .stationColor {
-  fill: rgb(248, 217, 42);
+  fill: hsl(34, 34%, 48%);
   stroke: #0a0909;
 }
 
