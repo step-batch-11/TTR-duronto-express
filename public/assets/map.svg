@@ -90,6 +90,15 @@
    id="image1-8"
    x="1.2256045"
    y="11.077715" /></g>
+
+    <defs>
+      <filter id="shadow">
+        <feGaussianBlur stdDeviation="1" result="blur"/>
+        <feFlood flood-color="black" flood-opacity="1" result="color"/>
+        <feComposite in="color" in2="blur" operator="in" result="fog"/>
+        <feBlend in="SourceGraphic" in2="fog" mode="normal"/>
+      </filter>
+   </defs>
   
   <g
    inkscape:label="Layer 2"

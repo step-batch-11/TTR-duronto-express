@@ -241,7 +241,6 @@ const resolveBuild = (handCarCards) => {
   displayDestTicketDeck();
   drawTicketChoice();
   displayCarCards(handCarCards);
-  showAlert("your turn Completed!");
 };
 
 const getColorCardDetailsToBuild = () => {
@@ -262,6 +261,7 @@ const buildRoute = async (routeId, _, routeData) => {
   const { routeOwnership, carCards } = res;
   renderMap(routeOwnership);
   resolveBuild(carCards);
+  showAlert("your turn Completed!");
 };
 
 const cancelBuild = (_, handCarCards) => {

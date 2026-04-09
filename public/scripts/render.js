@@ -37,7 +37,7 @@ const createPlayer = (
   const container = clone.querySelector(".user");
   clone.querySelector(".identifier .name").textContent = name;
   if (option.index === option.currentPlayerIdx) {
-    container.querySelector(".symbol").classList.add("highlight-player");
+    container.classList.add("highlight-player");
   }
   clone.querySelector(".identifier .symbol").style.backgroundColor = symbol;
   clone.querySelector(".train-car-data .car-count").textContent = carCount;
@@ -273,10 +273,9 @@ const drawLineSrcToDest = (src, dest) => {
   const svgNS = "http://www.w3.org/2000/svg";
   const line = document.createElementNS(svgNS, "line");
   const svg = document.querySelector("#map svg").getBoundingClientRect();
-
-  line.setAttribute("x1", src.x - svg.x + 15);
+  line.setAttribute("x1", src.x - svg.x + 12);
   line.setAttribute("y1", src.y);
-  line.setAttribute("x2", dest.x - svg.x + 15);
+  line.setAttribute("x2", dest.x - svg.x + 12);
   line.setAttribute("y2", dest.y);
   line.setAttribute("stroke", "orange");
   line.setAttribute("stroke-width", "15");
@@ -300,6 +299,7 @@ export const highlightCities = (cardId) => {
   const [src, dest] = cardId.split("-");
   const srcStation = document.querySelector(`#${src}`);
   const destStation = document.querySelector(`#${dest}`);
+  document.querySelector("#map").classList.add("unfocus");
   getShimmeringEffect(srcStation, destStation);
 
   srcStation?.classList.add(
@@ -316,6 +316,7 @@ export const unhighlightCities = (cardId) => {
   const [from, to] = cardId.split("-");
   document.querySelectorAll(".line").forEach((ele) => ele.remove());
   document.querySelectorAll(".effect").forEach((ele) => ele.remove());
+  document.querySelector("#map").classList.remove("unfocus");
   document.querySelector(`#${from}`)?.classList.remove(
     "highlightCity",
   );

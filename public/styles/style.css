@@ -48,7 +48,6 @@ article {
 }
 
 .market {
-  /* border: 1px solid; */
   width: 13%;
   height: 100%;
   display: flex;
@@ -259,6 +258,8 @@ ion-icon {
   transform: rotate(270deg);
   z-index: 0;
   border: 1px solid;
+  overflow: hidden;
+  border-radius: 5px;
 }
 
 .card-placeholder {
@@ -281,6 +282,8 @@ ion-icon {
   height: 105px;
   transform: rotate(270deg);
   z-index: 0;
+  overflow: hidden;
+  border-radius: 5px;
 }
 
 .hand-car-card img {
@@ -372,7 +375,8 @@ ion-icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(90deg, rgba(109, 124, 142, 0.546), rgb(222, 196, 155), rgb(189, 154, 110), rgba(109, 124, 142, 0.448));
+  background: linear-gradient(90deg, rgba(109, 124, 142, 0.546),
+      rgb(222, 196, 155), rgb(189, 154, 110), rgba(109, 124, 142, 0.448));
 }
 
 .active-alert p {

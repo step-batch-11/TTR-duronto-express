@@ -45,7 +45,6 @@ svg {
 
 .route[data-owner-color="green"] .claimed-shape {
   fill: hsl(124, 100%, 50%);
-  /* opacity: 0.8; */
   stroke: black;
 }
 
@@ -59,8 +58,8 @@ svg {
 }
 
 .route[data-route-color="black"] .empty-shape {
-  fill: #1A1A1A;
-  stroke: black;
+  fill: #343434;
+  stroke: #343434;
 }
 
 
@@ -116,7 +115,7 @@ svg {
   font-weight: bold;
 }
 
-.for-now{
+.for-now {
   animation: scale 0.5s infinite ease-in-out alternate-reverse;
 }
 
@@ -128,7 +127,7 @@ svg {
   color: white;
   border: none;
   overflow: hidden;
-  border: 1.5px solid rgb(27, 27, 27);
+  border: 2px solid rgb(27, 27, 27);
   animation: scale 0.5s infinite ease-in-out alternate-reverse;
 }
 
