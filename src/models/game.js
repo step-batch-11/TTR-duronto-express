@@ -120,7 +120,6 @@ export default class Game {
     const unclaimedTickets = this.#drawnTickets[id].filter(({ id }) =>
       !tickets.includes(id)
     );
-    console.log(this.#drawnTickets);
 
     if (unclaimedTickets.length > 0) {
       this.#ticketDeck.discardTickets(unclaimedTickets);
