@@ -1,4 +1,8 @@
-import { fetchTicketChoices } from "./api.js";
+import { apiGet } from "./api.js";
+import {
+  handleDrawCardFromDeck,
+  handleDrawFaceUp,
+} from "./event_handlers/draw_deck_card_handler.js";
 import {
   handleHighlightCities,
   handleTicketsClaim,
@@ -6,10 +10,6 @@ import {
   handleTicketSwipe,
   handleUnHighlightCities,
 } from "./event_handlers/tickets_handlers.js";
-import {
-  handleDrawCardFromDeck,
-  handleDrawFaceUp,
-} from "./event_handlers/draw_deck_card_handler.js";
 import { displayTicketChoices } from "./render.js";
 import { showAlert } from "./utils.js";
 
@@ -27,7 +27,7 @@ export const drawTicketChoice = () => {
   const ticketDeck = document.querySelector(".destination-tickets-deck");
 
   ticketDeck.addEventListener("click", async () => {
-    const ticketChoices = await fetchTicketChoices();
+    const ticketChoices = await apiGet("/get-ticket-choices");
     if (ticketChoices.length === 0) {
       showAlert("TICKET DECK IS EMPTY");
       return;

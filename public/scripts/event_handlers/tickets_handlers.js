@@ -1,5 +1,5 @@
 import { animateTicketClaim } from "../animations.js";
-import { claimSelectedTickets, fetchPhase } from "../api.js";
+import { apiGet, apiPost } from "../api.js";
 
 import {
   displayPlayerHandTickets,
@@ -14,10 +14,10 @@ import { showAlert } from "../utils.js";
 const selectedTickets = new Set();
 
 const claimedTicketsMap = {
-  "INITIALIZED": 2,
-  "DRAW_TICKET_CHOICE": 1,
-  "TURN_STARTED": 1,
-  "CARD_DRAWN": 1,
+  INITIALIZED: 2,
+  DRAW_TICKET_CHOICE: 1,
+  TURN_STARTED: 1,
+  CARD_DRAWN: 1,
 };
 
 export const clearHighlightedCities = () => {
@@ -33,7 +33,7 @@ export const handleTicketsClaim = async (_event) => {
   const ticketChoices = [];
   selectedTickets.forEach((ticket) => ticketChoices.push(ticket));
 
-  const playerHandTickets = await claimSelectedTickets(ticketChoices);
+  const playerHandTickets = await apiPost("/claim-tickets", ticketChoices);
 
   clearHighlightedCities();
   toggleDisable();
@@ -55,7 +55,7 @@ export const handleTicketsClaim = async (_event) => {
 
 const validateTicketClaim = async () => {
   const button = document.querySelector("#ticket-claim-button");
-  const { gamePhase } = await fetchPhase();
+  const { gamePhase } = await apiGet("/get-game-phase");
 
   if (selectedTickets.size >= claimedTicketsMap[gamePhase]) {
     button.classList.remove("disabled-submit");
@@ -95,8 +95,8 @@ export const handleTicketSelection = async (event) => {
 };
 
 const SWIPE_DIRECTION = {
-  "right": 1,
-  "left": -1,
+  right: 1,
+  left: -1,
 };
 
 export const handleTicketSwipe = (event) => {
