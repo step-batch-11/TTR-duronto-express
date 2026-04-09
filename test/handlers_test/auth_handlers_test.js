@@ -124,7 +124,7 @@ describe("auth handler test", () => {
       assertEquals(response.headers.get("location"), "/login.html");
     });
 
-    it("accessing game.html with valid cookies", async () => {
+    it("not able to access game.html with valid cookies but it required room", async () => {
       const sessionId = players.addPlayer("newPlayer");
       const response = await app.request("/game.html", {
         headers: {
@@ -133,10 +133,10 @@ describe("auth handler test", () => {
       });
 
       await response.text();
-      assertEquals(response.status, 200);
+      assertEquals(response.status, 302);
       assertEquals(
-        response.headers.get("content-type"),
-        "text/html; charset=utf-8",
+        response.headers.get("location"),
+        "./lobby.html",
       );
     });
 
