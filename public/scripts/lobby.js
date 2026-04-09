@@ -1,5 +1,5 @@
 globalThis.onload = () => {
-  document.querySelector(".create").addEventListener("click", (e) => {
+  document.querySelector(".host").addEventListener("click", (e) => {
     e.preventDefault();
     globalThis.location.href = "/host.html";
   });

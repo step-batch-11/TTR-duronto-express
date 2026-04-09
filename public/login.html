@@ -5,23 +5,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <link rel="stylesheet" href="styles/login.css">
+  <link rel="stylesheet" href="styles/general.css">
   <script type="module" src="/scripts/login.js"></script>
 </head>
 
 <body>
-  <header>
-    <h1>Duronto Express Ticket Counter</h1>
-  </header>
-  <main>
-    <form action="/login" method="post" id="login-form" class="input-group">
-      <div>
+    <form action="/login" method="post" id="login-form">
+      <div class="outer-box">
         <label for="username" id="username-label">Enter Passenger Name</label>
         <input type="text" id="username" name="username" pattern="[A-Za-z]+[0-9]*" maxlength="10" autofocus required>
         <button type="submit">Check In</button>
       </div>
     </form>
-  </main>
 </body>
 
 </html>

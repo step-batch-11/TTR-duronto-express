@@ -6,28 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Host</title>
   <link rel="stylesheet" href="styles/lobby.css">
-  <style>
-    input{
-      width: 100px;
-      height: 50px;
-      font-size: larger;
-    }
-  </style>
+  <link rel="stylesheet" href="styles/general.css">
   <script type="module" src="scripts/create_room.js"></script>
 </head>
 
 <body>
   <main>
-    <section>
-      <header>
-        <h1>Host the Ride</h1>
-      </header>
       <form>
-        <label for="maxPlayer">Players count:</label>
-        <input type="number" name="maxPlayer" id="maxPlayer" min="2" max="5" value="2" autofocus>
-        <button class="host" type="submit">Host</button>
+        <div class="outer-box">
+          <label for="maxPlayer">Enter Passenger Count: </label>
+          <input type="number" name="maxPlayer" id="maxPlayer" min="2" max="5" value="2">
+          <button class="host" type="submit">Host</button>
+        </div>
       </form>
-    </section>
   </main>
 </body>
 

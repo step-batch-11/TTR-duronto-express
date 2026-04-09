@@ -1,25 +1,10 @@
-body {
-  font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-
-  background-image:
-    radial-gradient(circle at 50% -40%, rgba(0, 0, 0, 0) 75%, rgb(0, 0, 0) 100%),
-    url('../assets/waiting_room_bg.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+h2 {
+  font-size: 30px;
 }
 
-.container {
-  background: white;
-  padding: 2em;
-  border-radius: 10px;
-  width: 400px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.outer-box p {
+  font-size: 20px;
 }
 
 ul {
@@ -28,7 +13,7 @@ ul {
 }
 
 li {
-  padding: 5px 0;
+  font-size: 20px;
 }
 
 .start {

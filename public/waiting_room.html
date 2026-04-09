@@ -6,25 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Waiting Room</title>
   <link rel="stylesheet" href="styles/waiting.css">
+  <link rel="stylesheet" href="styles/general.css">
+  <script type="module" src="./scripts/waiting_room.js"></script>
 </head>
 
 <body>
-  <div class="container">
-    <h2>Platform ID: <span id="room-id"></span></h2>
-
-    <p>
-      Passengers: <span id="player-count">
-        <span>/</span>
-      </span>
-      <span id="max-players"></span>
-    </p>
-
-    <ul id="players-list"></ul>
-
-    <div class="start" id="start-msg"></div>
-  </div>
-
-  <script type="module" src="./scripts/waiting_room.js"></script>
+  <main>
+    <div class="outer-box">
+      <h2>Platform ID: <span id="room-id"></span></h2>
+      <p>
+        Passengers: <span id="player-count"></span> /
+        <span id="max-players"></span>
+      </p>
+      <ul id="players-list"></ul>
+      <div class="start" id="start-msg"></div>
+    </div>
+  </main>
 </body>
 
 </html>

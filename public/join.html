@@ -6,23 +6,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Join</title>
   <link rel="stylesheet" href="styles/lobby.css">
+  <link rel="stylesheet" href="styles/general.css">
   <script type="module" src="scripts/join_room.js"></script>
+  <style>
+    .alert {
+      color: red;
+      font-size: 2em;
+    }
+
+    p {
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
   <main>
-    <section>
-      <header>
-        <h1>Join a Ride</h1>
-      </header>
       <form>
-        <label for="joinRoom">Platform Id:</label>
-        <input type="text" pattern="[0-9]{4}" required name="roomId" maxlength="4"
-          title="Room Id must be 4 digit long" autofocus/>
-        <button class="join" type="submit">Join</button>
+        <div class="outer-box">
+          <label for="joinRoom">Platform Id:</label>
+          <input type="text" pattern="[0-9]{4}" required name="roomId" maxlength="4"
+            title="Room Id must be 4 digit long" />
+          <button class="join" type="submit">Join</button>
+        </div>
       </form>
       <p class="alert"></p>
-    </section>
   </main>
 </body>
 

@@ -1,8 +1,12 @@
 :root {
-
+  /* Content */
   --content-color:hsl(20, 44%, 20%);
   --content-bg-color:hsl(34, 41%, 66%);
 
+  /* Messages */
+  --waiting-room-start: hsl(123, 44%, 20%);
+
+  /* Map */
   --black-route:#1A1A1A;
   --white-route:#FDFAF0;
   --red-route:hsl(0, 50%, 60%);
@@ -16,6 +20,7 @@
   --station-clr: hsl(34, 34%, 48%);
   --station-stroke-clr:#0a0909;
 
+  /* Players */
   --red-player: #e74c3c;
   --blue-player:#3498db;
   --yellow-player:#ffff00;
