@@ -39,8 +39,6 @@ export default class Game {
   }
 
   initializePlayerHand() {
-    if (this.#phase !== "STARTED") return;
-
     this.#players.forEach((player) => {
       const dealtCards = this.#carCardsDeck.dealInitialCards();
       dealtCards.forEach((card) => player.addCarCardToHand(card));
@@ -217,9 +215,25 @@ export default class Game {
 
   calculateScore() {
     const pointMap = this.#ticketDeck.pointMap;
+    const longestPaths = this.#players.map((player) => player.findLongest());
     const scores = this.#players.map((player) =>
       player.calculateScore(pointMap, this.#routeToScoreMap)
     );
+
+    const longest = longestPaths
+      .reduce(
+        (longest, longestPath) => longest < longestPath ? longestPath : longest,
+        0,
+      );
+
+    longestPaths.forEach((longestPath, index) => {
+      const isLongest = longestPath === longest;
+      scores[index].isLongest = isLongest;
+      if (isLongest) {
+        scores[index].total += 10;
+      }
+    });
+
     const winner = scores.sort((a, b) => b.total - a.total)[0].name;
     return { winner, scores };
   }

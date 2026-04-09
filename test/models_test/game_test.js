@@ -38,58 +38,6 @@ describe("testing the game", () => {
     const ticketDeck = new TicketDeck(ticketCards);
     const player = new Player("bhanu", 1000, 0);
     game = new Game(carCardsDeck, ticketDeck, [player]);
-    game.initializePlayerHand();
-  });
-
-  it("initPlayer should initialize the player ", () => {
-    assertEquals(game.playerHand(1000), {
-      carCards: {
-        blue: 1,
-        black: 1,
-        pink: 1,
-        wild: 1,
-      },
-      claimedTickets: [],
-      bogies: 45,
-    });
-    assertEquals(game.getTicketCards(), [
-      "DLT-ELP",
-      "TRT-MIM",
-      "PLD-PHX",
-      "DLS-NYC",
-      "CLC-SLC",
-      "LAS-NYC",
-    ]);
-    assertEquals(game.getAllPlayerDetails(), [{
-      name: "bhanu",
-      symbol: "green",
-      carCount: 45,
-      ticketCount: 0,
-    }]);
-  });
-
-  it("player already initialized then it shouldn't reinitialize", () => {
-    game.initializePlayerHand();
-
-    assertEquals(game.playerHand(1000), {
-      carCards: {
-        blue: 1,
-        black: 1,
-        pink: 1,
-        wild: 1,
-      },
-      claimedTickets: [],
-      bogies: 45,
-    });
-
-    assertEquals(game.getTicketCards(), [
-      "DLT-ELP",
-      "TRT-MIM",
-      "PLD-PHX",
-      "DLS-NYC",
-      "CLC-SLC",
-      "LAS-NYC",
-    ]);
   });
 
   it("drawFaceUpCard should add the card from train car card face up to player hand", () => {
@@ -204,7 +152,6 @@ describe("validate draw tain car cards for multi-players", () => {
     const ticketDeck = new TicketDeck(ticketCards);
     const players = ["green"].map((color) => new Player("bhanu", color));
     game = new Game(carCardsDeck, ticketDeck, players);
-    game.initializePlayerHand();
   });
 
   it("should allow the user to draw only 2 cards, initial round, drawing from deck and move to next player", async () => {
@@ -218,8 +165,8 @@ describe("validate draw tain car cards for multi-players", () => {
       carCards: {
         blue: 1,
         orange: 1,
-        black: 1,
         pink: 2,
+        black: 1,
         wild: 1,
       },
       claimedTickets: [],
@@ -245,6 +192,34 @@ describe("validate draw tain car cards for multi-players", () => {
       },
       claimedTickets: [],
       bogies: 45,
+    });
+  });
+
+  it("should calculate the players score", () => {
+    game.claimRoute("CLC-VCR", {}, {
+      "routeColor": "transparent",
+      "routeLength": 3,
+    });
+    game.claimRoute("STL-VCR", {}, {
+      "routeColor": "transparent",
+      "routeLength": 1,
+    });
+    game.claimRoute("CLC-STL", {}, {
+      "routeColor": "transparent",
+      "routeLength": 4,
+    });
+
+    assertEquals(game.calculateScore(), {
+      scores: [
+        {
+          isLongest: true,
+          name: "bhanu",
+          routeScore: 12,
+          ticketScore: 0,
+          total: 22,
+        },
+      ],
+      winner: "bhanu",
     });
   });
 });

@@ -27,7 +27,6 @@ import {
 import { gameStateHandler, getGamePhase } from "./handlers/phase_handler.js";
 import { createRoom, getRoomState, joinRoom } from "./handlers/room_handler.js";
 import { setContext } from "./utils/context.js";
-import { getCalculatedScore } from "./handlers/game_handlers.js";
 import { getCookie } from "hono/cookie";
 import { getLeaderboardHandler } from "./handlers/score_handlers.js";
 
@@ -85,7 +84,6 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   app.get("/get-game-phase", getGamePhase);
   app.get("/get-ticket-choices", drawTicketChoiceHandler);
   app.get("/game-state", gameStateHandler);
-  app.get("/calculate-score", getCalculatedScore);
   app.get("/get-leaderboard", getLeaderboardHandler);
   app.get("/bogies-count", getPlayerBogieCount);
 
