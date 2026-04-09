@@ -7,11 +7,3 @@ export const initializePlayerHandHandler = (context) => {
 
   return context.json({ carCards, ticketChoices, claimedTickets });
 };
-
-export const initializeFaceUpDeckHandler = (context) => {
-  const game = context.get("game");
-
-  const faceUpCards = game.getFaceUpCards();
-
-  return context.json(faceUpCards);
-};

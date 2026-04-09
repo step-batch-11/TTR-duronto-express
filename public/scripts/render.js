@@ -1,30 +1,37 @@
 import { clearHighlightedCities } from "./event_handlers/tickets_handlers.js";
 import { claimTicketChoices } from "./events.js";
 
-const validateDoubleRouteClaim = (color, routeId, map, myPawnColor) => {
+const validateDoubleRouteClaim = (
+  color,
+  routeId,
+  map,
+  myPawnColor,
+  playerCount,
+) => {
   const adjacentPathId = routeId.split("-").reverse().join("-");
   const adjacentPath = map.querySelector(`#${adjacentPathId}`);
 
-  if (adjacentPath !== null && color === myPawnColor) {
+  if (adjacentPath !== null && (color === myPawnColor || playerCount <= 3)) {
     adjacentPath.classList.add("click-disabled");
   }
 };
 
-const paintRoutes = (color, routes, map, myPawnColor) => {
+const paintRoutes = (color, routes, map, myPawnColor, playerCount) => {
   for (const { routeId } of routes) {
     const routeElement = map.querySelector(`#${routeId}`);
     routeElement.setAttribute("data-owner-color", color);
     routeElement.classList.add("click-disabled");
 
-    validateDoubleRouteClaim(color, routeId, map, myPawnColor);
+    validateDoubleRouteClaim(color, routeId, map, myPawnColor, playerCount);
   }
 };
 
 export const renderMap = (routeOwnership, myPawnColor) => {
   const map = document.querySelector("#map");
+  const players = Object.entries(routeOwnership);
 
-  for (const [color, routes] of Object.entries(routeOwnership)) {
-    paintRoutes(color, routes, map, myPawnColor);
+  for (const [color, routes] of players) {
+    paintRoutes(color, routes, map, myPawnColor, players.length);
   }
 };
 
@@ -273,48 +280,32 @@ const createPulseEffect = (element) => {
   document.querySelector("body").appendChild(div);
 };
 
-const drawLineSrcToDest = (src, dest) => {
-  const svgNS = "http://www.w3.org/2000/svg";
-  const path = document.createElementNS(svgNS, "path");
-  const svgRect = document.querySelector("#map svg").getBoundingClientRect();
-
+const calculateDimentionsOfPath = (src, dest, svgRect) => {
   const x1 = src.x - svgRect.x + 12;
   const y1 = src.y;
   const x2 = dest.x - svgRect.x + 12;
   const y2 = dest.y;
+  return `M ${x1} ${y1} L ${x2} ${y2}`;
+};
 
-  const d = `M ${x1} ${y1} L ${x2} ${y2}`;
-
+const makeSvgPath = (cls, svgRect, src, dest) => {
+  const svgNS = "http://www.w3.org/2000/svg";
+  const path = document.createElementNS(svgNS, "path");
+  const d = calculateDimentionsOfPath(src, dest, svgRect);
   path.classList.add("line");
   path.setAttribute("d", d);
-  path.setAttribute("stroke", "tan");
-  path.setAttribute("stroke-width", "16");
+  path.classList.add(cls);
 
-  const path2 = (() => {
-    const path = document.createElementNS(svgNS, "path");
-    const svgRect = document.querySelector("#map svg").getBoundingClientRect();
+  return path;
+};
 
-    const x1 = src.x - svgRect.x + 12;
-    const y1 = src.y;
-    const x2 = dest.x - svgRect.x + 12;
-    const y2 = dest.y;
+const drawLineSrcToDest = (src, dest) => {
+  const svgRect = document.querySelector("#map svg").getBoundingClientRect();
 
-    const d = `M ${x1} ${y1} L ${x2} ${y2}`;
-
-    path.classList.add("line");
-    path.setAttribute("d", d);
-    path.setAttribute("stroke", "crimson");
-    path.setAttribute("stroke-width", "10");
-    return path;
-  })();
-
-  // path.classList.add("line");
-  // path.setAttribute("d", d);
-  // path.setAttribute("stroke", "black");
-  // path.setAttribute("stroke-width", "7");
-
-  document.querySelector("#map svg").appendChild(path);
-  document.querySelector("#map svg").appendChild(path2);
+  const innerStroke = makeSvgPath("inner-stroke", svgRect, src, dest);
+  const outerStroke = makeSvgPath("outer-stroke", svgRect, src, dest);
+  document.querySelector("#map svg").appendChild(outerStroke);
+  document.querySelector("#map svg").appendChild(innerStroke);
 };
 
 const getShimmeringEffect = (src, dest) => {
@@ -368,13 +359,6 @@ export const resolveFaceUpCardDraw = (card, img, carCards) => {
     document.querySelector("#map").classList.remove("is-disabled");
     document.querySelector(".footer").classList.remove("is-disabled");
   }, 1001);
-};
-
-export const createImageAtr = (color) => {
-  const img = document.createElement("img");
-  img.setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
-
-  return img;
 };
 
 export const addHandCardContainer = (color) => {

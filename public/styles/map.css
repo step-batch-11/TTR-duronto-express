@@ -63,7 +63,7 @@ svg {
 }
 
 .route[data-route-color="blue"] .empty-shape {
-  fill:var(--blue-route);
+  fill: var(--blue-route);
   stroke: #4a4a4a;
 }
 
@@ -174,9 +174,14 @@ svg {
   opacity: 0.8;
 }
 
-.line {
-  /* stroke-dasharray: 10; */
-  /* animation: lineMove 1s infinite linear; */
+.inner-stroke {
+  stroke: crimson;
+  stroke-width: 10;
+}
+
+.outer-stroke {
+  stroke: tan;
+  stroke-width: 16;
 }
 
 @keyframes lineMove {

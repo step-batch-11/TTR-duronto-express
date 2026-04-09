@@ -1,3 +1,0 @@
-# /bin/zsh
-
-echo "[#<story number>] | <commit message> | <author>/<pair>" > $1

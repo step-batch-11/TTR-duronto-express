@@ -54,7 +54,6 @@ const pollGameState = async () => {
 
   if (response.status === 304) return;
   const gameState = await response.json();
-
   if (gameState.isGameEnded === true) {
     globalThis.window.location = "/finish-game";
   }
@@ -88,15 +87,18 @@ const pollGameState = async () => {
   initial = true;
   etag = response.headers.get("etag");
 };
+
 const loadMap = async () => {
   const svg = await apiGetText("/assets/map.svg");
   document.querySelector("#map").innerHTML = svg;
 };
+
 const loadHand = async () => {
   const playerHand = await apiGet("/initial-hand"); //  fetchInitialPlayerHand();
   initializeGameUI(playerHand);
   displayPlayerHand(playerHand);
 };
+
 const main = async () => {
   await loadMap();
   displayDestTicketDeck();
@@ -108,4 +110,5 @@ const main = async () => {
   const poller = new Poller(pollGameState, 500);
   poller.start();
 };
+
 globalThis.onload = main;
