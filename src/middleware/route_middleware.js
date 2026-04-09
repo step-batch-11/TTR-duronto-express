@@ -59,3 +59,12 @@ export const allowNonExistingPlayer = async (context, next) => {
   }
   return await next();
 };
+
+export const preventVictoryPageAccess = (context, next) => {
+  const game = context.get("game");
+  const isGameEnd = game.getGameEndFlag();
+  if (!isGameEnd) {
+    return context.redirect("/game.html");
+  }
+  return next();
+};

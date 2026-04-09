@@ -1,6 +1,7 @@
 import { serveStatic } from "hono/deno";
 import {
   allowExistingPlayer,
+  preventVictoryPageAccess,
   redirectIfGameInProgress,
   redirectIfInRoom,
   requireGameAccess,
@@ -48,6 +49,7 @@ export const registerStaticRoutes = (app) => {
   app.get(
     "/victory.html",
     allowExistingPlayer,
+    preventVictoryPageAccess,
     serveStatic({ root: "public" }),
   );
 
