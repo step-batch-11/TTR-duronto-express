@@ -128,3 +128,36 @@ describe("testing player class methods", () => {
     });
   });
 });
+
+describe("test longest route", () => {
+  it("should find the longest route for circular path", () => {
+    const player = new Player("bhanu", 1000, 0);
+
+    player.claimRoute("A-B", { routeLength: 2 }, {});
+    player.claimRoute("B-C", { routeLength: 4 }, {});
+    player.claimRoute("C-F", { routeLength: 5 }, {});
+    player.claimRoute("F-E", { routeLength: 2 }, {});
+    player.claimRoute("E-C", { routeLength: 2 }, {});
+    player.claimRoute("C-D", { routeLength: 6 }, {});
+    player.claimRoute("E-G", { routeLength: 3 }, {});
+    const longestRoute = player.findLongest();
+    assertEquals(longestRoute, 21);
+  });
+
+  it("should find the longest route among three forests", () => {
+    const player = new Player("bhanu", 1000, 0);
+
+    player.claimRoute("A-B", { routeLength: 3 }, {});
+    player.claimRoute("A-C", { routeLength: 2 }, {});
+    player.claimRoute("A-D", { routeLength: 1 }, {});
+    player.claimRoute("E-G", { routeLength: 7 }, {});
+    player.claimRoute("G-F", { routeLength: 6 }, {});
+    player.claimRoute("F-E", { routeLength: 1 }, {});
+    player.claimRoute("I-H", { routeLength: 5 }, {});
+    player.claimRoute("I-J", { routeLength: 6 }, {});
+    player.claimRoute("J-H", { routeLength: 4 }, {});
+    player.claimRoute("J-k", { routeLength: 1 }, {});
+    const longestRoute = player.findLongest();
+    assertEquals(longestRoute, 16);
+  });
+});

@@ -165,6 +165,136 @@ export default class Player {
     };
   }
 
+  #makeCostMap(claimRoutes) {
+    const graph = {};
+    claimRoutes.forEach(({ routeId, routeData }) => {
+      const [from, to] = routeId.split("-");
+      if (graph[to] === undefined) graph[to] = {};
+      if (graph[from] === undefined) graph[from] = {};
+      graph[from][to] = routeData.routeLength;
+      graph[to][from] = routeData.routeLength;
+    });
+    return graph;
+  }
+
+  #calculateDegree(claimedRoutes, trail) {
+    const degreeMap = {};
+    claimedRoutes.forEach(({ routeId }) => {
+      const [from, to] = routeId.split("-");
+      if (trail.includes(from) && trail.includes(to)) {
+        if (degreeMap[from] === undefined) degreeMap[from] = 0;
+        if (degreeMap[to] === undefined) degreeMap[to] = 0;
+        degreeMap[from] += 1;
+        degreeMap[to] += 1;
+      }
+    });
+    return degreeMap;
+  }
+
+  #overlapped(forests, vertex) {
+    const sets = [];
+    forests.forEach((forest, index) => {
+      if (forest.has(vertex)) {
+        sets.push({ forest, index });
+      }
+    });
+    return sets;
+  }
+
+  #mergeForests(overlaps, forests) {
+    let mergedForest = new Set();
+
+    overlaps.forEach(({ forest, index }) => {
+      mergedForest = mergedForest.union(forest);
+      forests.splice(index, 1);
+    });
+    forests.push(mergedForest);
+    return forests;
+  }
+
+  #makeForest(claimedRoutes) {
+    let forests = [];
+    claimedRoutes.forEach(({ routeId }) => {
+      const [from, to] = routeId.split("-");
+      const overlaps = [];
+      overlaps.push(...this.#overlapped(forests, from));
+      overlaps.push(...this.#overlapped(forests, to));
+
+      if (overlaps.length === 1) {
+        const { index } = overlaps[0];
+        forests[index].add(from);
+        forests[index].add(to);
+        return;
+      }
+
+      if (overlaps.length > 1) {
+        forests = this.#mergeForests(overlaps, [...forests]);
+        return;
+      }
+
+      const newForest = new Set();
+      newForest.add(from);
+      newForest.add(to);
+      forests.push(newForest);
+    });
+    return forests;
+  }
+
+  #getAllSubsets(arr) {
+    return [...arr]
+      .reduce((subsets, value) =>
+        subsets.concat(subsets
+          .map((set) => [...set, value])), [[]])
+      .filter((s) => s.length > 0);
+  }
+
+  #isValidTrail(trail) {
+    let oddCount = 0;
+    const degreeMap = this.#calculateDegree(this.#claimedRoutes, trail);
+
+    for (const edge of trail) {
+      oddCount += (degreeMap[edge] % 2) || 0;
+    }
+
+    return oddCount === 0 || oddCount === 2;
+  }
+
+  #calculateCost(trail, lengthMap) {
+    let sum = 0;
+
+    for (let prev = 0; prev < trail.length - 1; prev++) {
+      const prevV = trail[prev];
+      for (let cur = prev + 1; cur < trail.length; cur++) {
+        const curV = trail[cur];
+        sum += lengthMap[prevV][curV] || 0;
+      }
+    }
+
+    return sum;
+  }
+
+  #findHighest(highest, cost) {
+    return Math.max(highest, cost);
+  }
+
+  #calculateLongest(graph, claimedRoutes) {
+    const allSubsets = this.#getAllSubsets(graph);
+    const lengthMap = this.#makeCostMap(claimedRoutes);
+    // const degreeMap = this.#calculateDegree(claimedRoutes);
+    return allSubsets
+      .filter((trail) => this.#isValidTrail(trail))
+      .map((trail) => this.#calculateCost(trail, lengthMap))
+      .reduce(this.#findHighest);
+  }
+
+  findLongest() {
+    const forests = this.#makeForest(this.#claimedRoutes);
+
+    return forests
+      .map((graph) => this.#calculateLongest(graph, this.#claimedRoutes))
+      .reduce(this.#findHighest);
+  }
+
   get name() {
     return this.#name;
   }
