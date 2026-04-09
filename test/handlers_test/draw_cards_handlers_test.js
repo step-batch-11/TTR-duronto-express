@@ -9,7 +9,7 @@ import PlayerBase from "../../src/models/player_base.js";
 import RoomManager from "../../src/models/room_manager.js";
 import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
 
-describe.ignore("End game test case for multiplayer game state other actions", () => {
+describe("End game test case for multiplayer game state other actions", () => {
   let carCardsDeck;
   let ticketDeck;
   let mockApp;
@@ -90,7 +90,7 @@ describe.ignore("End game test case for multiplayer game state other actions", (
     mockApp = createApp(roomManager, players, sessionToRoomMap);
   });
 
-  it.ignore("draw train car cars from deck as a last player", async () => {
+  it("draw train car cars from deck as a last player", async () => {
     body = {
       routeId: "CLC-VCR",
       cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount: 0 },
@@ -113,6 +113,7 @@ describe.ignore("End game test case for multiplayer game state other actions", (
       },
     });
 
+    await new Promise((resolve) => setTimeout(resolve, 1600));
     assertEquals(await res.status, 200);
 
     res = await mockApp.request("/draw-deck-card", {
@@ -123,7 +124,6 @@ describe.ignore("End game test case for multiplayer game state other actions", (
     });
 
     await new Promise((resolve) => setTimeout(resolve, 1600));
-
     assertEquals(await res.status, 200);
 
     res = await mockApp.request("/game-state", {
@@ -162,6 +162,7 @@ describe.ignore("End game test case for multiplayer game state other actions", (
       },
     });
 
+    await new Promise((resolve) => setTimeout(resolve, 1600));
     assertEquals(await res.status, 200);
 
     res = await mockApp.request("/draw-faceup-card", {
@@ -174,6 +175,7 @@ describe.ignore("End game test case for multiplayer game state other actions", (
       }),
     });
 
+    await new Promise((resolve) => setTimeout(resolve, 1600));
     assertEquals(await res.status, 200);
 
     res = await mockApp.request("/game-state", {

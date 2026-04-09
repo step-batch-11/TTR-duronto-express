@@ -9,7 +9,7 @@ import PlayerBase from "../../src/models/player_base.js";
 import RoomManager from "../../src/models/room_manager.js";
 import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
 
-describe.ignore("End game test case for multiplayer game state other actions", () => {
+describe("End game test case for multiplayer game state other actions", () => {
   let carCardsDeck;
   let ticketDeck;
   let mockApp;
@@ -113,6 +113,8 @@ describe.ignore("End game test case for multiplayer game state other actions", (
       },
     });
 
+    await new Promise((resolve) => setTimeout(resolve, 1600));
+
     assertEquals(await res.status, 200);
 
     res = await mockApp.request("/draw-deck-card", {
@@ -121,7 +123,7 @@ describe.ignore("End game test case for multiplayer game state other actions", (
         Cookie: "sessionId=1001",
       },
     });
-
+    await new Promise((resolve) => setTimeout(resolve, 1600));
     assertEquals(await res.status, 200);
   });
 });

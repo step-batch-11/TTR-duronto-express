@@ -144,7 +144,7 @@ describe("testing /initial-hand GET", () => {
 
     assertEquals(response.status, 200);
     assertEquals(await response.json(), {
-      error: "invalid room Id, try again with a valid one",
+      error: "Invalid Room Id",
     });
   });
 

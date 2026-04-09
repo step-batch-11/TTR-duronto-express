@@ -107,7 +107,7 @@ export const handleTicketSwipe = (event) => {
 
   const ticketRoute = currentTicket.dataset.ticketRoute;
   unhighlightCities(ticketRoute);
-  const offset = SWIPE_DIRECTION[event.target.name];
+  const offset = SWIPE_DIRECTION[event.target.dataset.name];
 
   return updateActiveTicket(tickets, currentTicket, offset);
 };

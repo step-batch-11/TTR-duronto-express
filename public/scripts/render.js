@@ -100,12 +100,12 @@ export const displayCarCards = (carCards) => {
   handContainer.append(...cardsInHand);
 };
 
-const createButton = (id, className, name, contents) => {
-  const button = document.createElement("button");
+const createButton = (id, className, buttonType, name) => {
+  const button = document.createElement("ion-icon");
   button.id = id;
   button.classList.add(className);
-  button.setAttribute("name", name);
-  button.innerHTML = contents;
+  button.setAttribute("name", buttonType);
+  button.setAttribute("data-name", name);
   return button;
 };
 
@@ -135,14 +135,14 @@ export const displayPlayerHandTickets = (ticketChoices) => {
         const leftButton = createButton(
           "ticket-swipe-button-left",
           "left-button",
+          "caret-back-outline",
           "left",
-          "&lt;",
         );
         const rightButton = createButton(
           "ticket-swipe-button-right",
           "right-button",
+          "caret-forward-outline",
           "right",
-          "&gt;",
         );
         playerHandTicketButtons.prepend(leftButton);
         playerHandTicketButtons.append(rightButton);

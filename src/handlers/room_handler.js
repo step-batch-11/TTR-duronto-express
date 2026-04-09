@@ -34,7 +34,7 @@ export const joinRoom = async (context) => {
     }
   }
 
-  return context.json({ error: `invalid room Id, try again with a valid one` });
+  return context.json({ error: `Invalid Room Id` });
 };
 
 export const getRoomState = (context) => {
