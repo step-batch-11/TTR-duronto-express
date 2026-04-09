@@ -1,8 +1,4 @@
-import {
-  fetchPlayerBogiesCount,
-  fetchPlayerHand,
-  postClaimRoute,
-} from "./api.js";
+import { apiGet, apiPost } from "./api.js";
 import { drawTicketChoice } from "./events.js";
 import {
   addHandCardContainer,
@@ -24,8 +20,8 @@ const disableBuildActions = () => {
   document.querySelector("main").classList.remove("click-disabled");
 };
 
-const expandPlayerHand = () =>
-  document.querySelector(".hand-car-cards").id = "";
+const expandPlayerHand =
+  () => (document.querySelector(".hand-car-cards").id = "");
 
 const squeezePlayerHand = () => {
   const destContainer = document.querySelector(
@@ -92,8 +88,7 @@ const removeExhaustedCards = () => {
 };
 
 const showPossibleCardToBuild = (countContainer, routeColor, cardCount) => {
-  countContainer.textContent = parseInt(countContainer.textContent) -
-    cardCount;
+  countContainer.textContent = parseInt(countContainer.textContent) - cardCount;
   appendCarCardInCart(routeColor, cardCount);
   disableCardsExcept(routeColor);
   removeExhaustedCards();
@@ -198,7 +193,8 @@ const moveCardToPlayerHand = (color) => {
   }
 
   const container = addHandCardContainer(color);
-  container.querySelector("img")
+  container
+    .querySelector("img")
     .setAttribute("src", `/assets/car-cards-images/${color}.jpg`);
 
   const carCount = container.parentElement.querySelector(".card-count");
@@ -256,7 +252,7 @@ const buildRoute = async (routeId, _, routeData) => {
   const wildCardCount = parseInt(getCardCountOnCart("wild"));
 
   const cardsUsed = { colorCardUsed, colorCardCount, wildCardCount };
-  const res = await postClaimRoute({ routeId, cardsUsed, routeData });
+  const res = await apiPost("/claim-route", { routeId, cardsUsed, routeData });
 
   const { routeOwnership, carCards } = res;
   renderMap(routeOwnership);
@@ -271,7 +267,7 @@ const cancelBuild = (_, handCarCards) => {
   resolveBuild(handCarCards);
 };
 
-const BUILD_ACTIONS = { "build": buildRoute, "cancel": cancelBuild };
+const BUILD_ACTIONS = { build: buildRoute, cancel: cancelBuild };
 
 const buildActionsOnClick = (routeId, handCarCards, routeData) => {
   const buildButton = document.querySelector(".build-actions");
@@ -298,12 +294,12 @@ const isBuildPossible = (
   delete handCarCards.wild;
   if (parseInt(bogiesCount) < routeLength) return;
   if (routeColor === "transparent") {
-    return Object.values(handCarCards).some((count) =>
-      count + wildCardCount >= routeLength
+    return Object.values(handCarCards).some(
+      (count) => count + wildCardCount >= routeLength,
     );
   }
 
-  return ((handCarCards[routeColor] || 0) + wildCardCount) >= routeLength;
+  return (handCarCards[routeColor] || 0) + wildCardCount >= routeLength;
 };
 
 const initializeListenersForClaim = (handCarCards, routeData, routeId) => {
@@ -316,8 +312,8 @@ const claimRoute = async (event, routesData, map) => {
   const route = event.target.closest(".route");
   if (route === null) return;
 
-  const handCarCards = await fetchPlayerHand();
-  const bogiesCount = await fetchPlayerBogiesCount();
+  const handCarCards = await apiGet("/car-cards");
+  const bogiesCount = await apiGet("/bogies-count");
   const routeId = route.getAttribute("id");
   const routeData = routesData[routeId];
 

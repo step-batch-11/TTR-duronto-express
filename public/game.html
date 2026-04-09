@@ -85,6 +85,10 @@
 
     <template id="build-route-template">
       <div class="build-route-container">
+        <div class="build-actions">
+          <button id="build" class="click-disabled">Build</button>
+          <button id="cancel">Cancel</button>
+        </div>
         <div class="possible-cards">
           <div class="hand-car-card" id="color-card">
             <span class="card-count"></span>
@@ -96,11 +100,6 @@
             <div class="build-img-container card-placeholder">
             </div>
           </div>
-        </div>
-
-        <div class="build-actions">
-          <button id="build" class="click-disabled">Build</button>
-          <button id="cancel">Cancel</button>
         </div>
       </div>
     </template>

@@ -1,4 +1,4 @@
-import { fetchInitialPlayerHand, fetchMap, fetchRoutesData } from "./api.js";
+import { apiGet, apiGetText } from "./api.js";
 import { mapOnClick } from "./claim_route.js";
 import {
   accessTicket,
@@ -88,18 +88,24 @@ const pollGameState = async () => {
   initial = true;
   etag = response.headers.get("etag");
 };
-
-globalThis.onload = async () => {
-  await fetchMap();
-  displayDestTicketDeck();
-
-  const playerHand = await fetchInitialPlayerHand();
+const loadMap = async () => {
+  const svg = await apiGetText("/assets/map.svg");
+  document.querySelector("#map").innerHTML = svg;
+};
+const loadHand = async () => {
+  const playerHand = await apiGet("/initial-hand"); //  fetchInitialPlayerHand();
   initializeGameUI(playerHand);
   displayPlayerHand(playerHand);
+};
+const main = async () => {
+  await loadMap();
+  displayDestTicketDeck();
+  await loadHand();
 
-  const routesData = await fetchRoutesData();
+  const routesData = await apiGet("/routes-data");
   registerListeners(routesData);
 
   const poller = new Poller(pollGameState, 500);
   poller.start();
 };
+globalThis.onload = main;

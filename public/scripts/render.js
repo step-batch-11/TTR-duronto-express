@@ -275,17 +275,46 @@ const createPulseEffect = (element) => {
 
 const drawLineSrcToDest = (src, dest) => {
   const svgNS = "http://www.w3.org/2000/svg";
-  const line = document.createElementNS(svgNS, "line");
-  const svg = document.querySelector("#map svg").getBoundingClientRect();
-  line.setAttribute("x1", src.x - svg.x + 12);
-  line.setAttribute("y1", src.y);
-  line.setAttribute("x2", dest.x - svg.x + 12);
-  line.setAttribute("y2", dest.y);
-  line.setAttribute("stroke", "orange");
-  line.setAttribute("stroke-width", "15");
-  line.classList.add("line");
+  const path = document.createElementNS(svgNS, "path");
+  const svgRect = document.querySelector("#map svg").getBoundingClientRect();
 
-  document.querySelector("#map svg").appendChild(line);
+  const x1 = src.x - svgRect.x + 12;
+  const y1 = src.y;
+  const x2 = dest.x - svgRect.x + 12;
+  const y2 = dest.y;
+
+  const d = `M ${x1} ${y1} L ${x2} ${y2}`;
+
+  path.classList.add("line");
+  path.setAttribute("d", d);
+  path.setAttribute("stroke", "tan");
+  path.setAttribute("stroke-width", "16");
+
+  const path2 = (() => {
+    const path = document.createElementNS(svgNS, "path");
+    const svgRect = document.querySelector("#map svg").getBoundingClientRect();
+
+    const x1 = src.x - svgRect.x + 12;
+    const y1 = src.y;
+    const x2 = dest.x - svgRect.x + 12;
+    const y2 = dest.y;
+
+    const d = `M ${x1} ${y1} L ${x2} ${y2}`;
+
+    path.classList.add("line");
+    path.setAttribute("d", d);
+    path.setAttribute("stroke", "crimson");
+    path.setAttribute("stroke-width", "10");
+    return path;
+  })();
+
+  // path.classList.add("line");
+  // path.setAttribute("d", d);
+  // path.setAttribute("stroke", "black");
+  // path.setAttribute("stroke-width", "7");
+
+  document.querySelector("#map svg").appendChild(path);
+  document.querySelector("#map svg").appendChild(path2);
 };
 
 const getShimmeringEffect = (src, dest) => {

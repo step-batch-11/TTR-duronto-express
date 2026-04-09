@@ -5,17 +5,11 @@ echo "🔄 Checking if branch is up to date..."
 
 git fetch origin
 
-LOCAL=$(git rev-parse @)
-REMOTE=$(git rev-parse @{u})
-
-# if [ "$LOCAL" != "$REMOTE" ]; then
-#   echo "❌ Your branch is not up to date with remote."
-#   echo "👉 Run: git pull --rebase"
-#   exit 1
-# fi
-
 echo "🔍 Linting..."
 deno lint
 
 echo "🧪 Running tests..."
 deno test -A
+
+echo "Checking unused exports"
+deno run -A find-unused-exports

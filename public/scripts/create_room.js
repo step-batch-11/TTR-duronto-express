@@ -1,19 +1,16 @@
-globalThis.onload = () => {
-  const form = document.querySelector("form");
+import { apiPost } from "./api.js";
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+const Q = (sel) => document.querySelector(sel);
 
-    const maxPlayer = document.querySelector("#maxPlayer").value;
-
-    await fetch("/create-room", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ maxPlayer }),
-    });
-
-    globalThis.location.href = "/waiting_room.html";
-  });
+const onSubmit = async (e) => {
+  e.preventDefault();
+  const maxPlayer = Q("#maxPlayer").value;
+  await apiPost("/create-room", { maxPlayer });
+  globalThis.location.href = "/waiting_room.html";
 };
+
+const main = () => {
+  Q("form").addEventListener("submit", onSubmit);
+};
+
+globalThis.onload = main;
