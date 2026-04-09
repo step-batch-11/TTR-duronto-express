@@ -11,6 +11,7 @@ import {
   handleDrawFaceUp,
 } from "./event_handlers/draw_deck_card_handler.js";
 import { displayTicketChoices } from "./render.js";
+import { showAlert } from "./utils.js";
 
 export const drawDeckCard = () => {
   const deck = document.querySelector(".deck");
@@ -26,10 +27,13 @@ export const drawTicketChoice = () => {
   const ticketDeck = document.querySelector(".destination-tickets-deck");
 
   ticketDeck.addEventListener("click", async () => {
-    document.querySelector("#map").classList.add("unfocus");
     const ticketChoices = await fetchTicketChoices();
+    if (ticketChoices.length === 0) {
+      showAlert("TICKET DECK IS EMPTY");
+      return;
+    }
+    document.querySelector("#map").classList.add("unfocus");
     displayTicketChoices(ticketChoices);
-
     return ticketChoices;
   });
 };
