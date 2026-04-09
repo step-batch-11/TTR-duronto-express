@@ -11,6 +11,7 @@
     "jsr:@std/random@~0.1.5": "0.1.5",
     "jsr:@std/testing@*": "1.0.17",
     "jsr:@std/testing@^1.0.17": "1.0.17",
+    "npm:@playwright/test@^1.59.1": "1.59.1",
     "npm:hono@^4.12.12": "4.12.12",
     "npm:playwright@*": "1.59.1",
     "npm:playwright@^1.59.1": "1.59.1",
@@ -60,6 +61,13 @@
     }
   },
   "npm": {
+    "@playwright/test@1.59.1": {
+      "integrity": "sha512-PG6q63nQg5c9rIi4/Z5lR5IVF7yU5MqmKaPOe0HSc0O2cX1fPi96sUQu5j7eo4gKCkB2AnNGoWt7y4/Xx3Kcqg==",
+      "dependencies": [
+        "playwright"
+      ],
+      "bin": true
+    },
     "fsevents@2.3.2": {
       "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
       "os": ["darwin"],
@@ -98,6 +106,12 @@
       "npm:hono@^4.12.12",
       "npm:playwright@^1.59.1",
       "npm:uuid@13"
-    ]
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:@playwright/test@^1.59.1",
+        "npm:hono@^4.12.12"
+      ]
+    }
   }
 }

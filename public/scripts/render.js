@@ -363,7 +363,7 @@ export const disableInteractions = () => {
 };
 
 export const enableInteractions = () => {
-  document.querySelector("#map").classList.remove("disabl-interactions");
+  document.querySelector("#map").classList.remove("disable-interactions");
   document.querySelector(".faceup-cards").classList.remove(
     "disable-interactions",
   );
