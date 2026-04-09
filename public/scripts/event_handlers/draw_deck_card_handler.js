@@ -16,7 +16,7 @@ const resolveDeckCardDraw = (deck, img, carCards, isTurnChanged) => {
     document.querySelector(".market").classList.remove("is-disabled");
     document.querySelector(".footer").classList.remove("is-disabled");
     document.querySelector("#map").classList.remove("is-disabled");
-    if (isTurnChanged) showAlert("your turn completed!");
+    if (isTurnChanged) showAlert("Your Turn Completed");
   }, 1600);
 };
 

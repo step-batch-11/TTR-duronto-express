@@ -1,6 +1,7 @@
 :root {
 
-  --text-color:#4a2c1d;
+  --content-color:hsl(20, 44%, 20%);
+  --content-bg-color:hsl(34, 41%, 66%);
 
   --black-route:#1A1A1A;
   --white-route:#FDFAF0;
