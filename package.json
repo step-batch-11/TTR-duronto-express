@@ -1,0 +1,30 @@
+{
+  "name": "ttr-duronto-express",
+  "version": "1.0.0",
+  "description": "``` . ├── deno.json ├── deno.lock ├── DockerFile ├── main.js ├── public │   ├── index.html │   ├── scripts │   │   └── script.js │   └── styles │       └── style.css ├── README.md ├── setup │   └── hooks │       ├── pre-commit │       └── prepare-commit-msg ├── setup.sh ├── src │   └── app.js └── test     └── test.js ```",
+  "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/step-batch-11/TTR-duronto-express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/step-batch-11/TTR-duronto-express/issues"
+  },
+  "homepage": "https://github.com/step-batch-11/TTR-duronto-express#readme",
+  "dependencies": {
+    "hono": "^4.12.12"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}

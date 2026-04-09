@@ -7,6 +7,7 @@ chmod +x .git/hooks/pre-push
 deno add jsr:@std/assert
 deno add jsr:@std/testing
 deno add npm:hono
+npm install
 
 rm -rf main.ts
 rm -rf main_test.ts
