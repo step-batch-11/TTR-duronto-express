@@ -240,4 +240,20 @@ export default class Game {
   getPlayerColor(id) {
     return this.#findPlayer(id).color;
   }
+
+  #formatTheDiscardedPile(cards) {
+    return Object.entries(cards).flatMap(([color, length]) =>
+      Array.from({ length }, () => color)
+    );
+  }
+
+  removeExitedPlayer(id) {
+    const { carCards, claimedTickets } = this.playerHand(id);
+    const cards = this.#formatTheDiscardedPile(carCards);
+    this.addToDiscardedPile(cards);
+    this.#ticketDeck.discardTickets(claimedTickets);
+    const index = this.#currentPlayerIndex % this.#players.length;
+    console.log("ended")
+    return this.#players.splice(index, 1)[0];
+  }
 }

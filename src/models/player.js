@@ -9,13 +9,13 @@ export default class Player {
   #name;
 
   constructor(name, id, index) {
-    this.colors = ["green", "yellow", "blue", "purple", "red"];
+    this.#colors = ["green", "yellow", "blue", "purple", "red"];
     this.#carCards = {};
     this.#name = name;
     this.#claimedTickets = [];
     this.#bogies = 45;
     this.#claimedRoutes = [];
-    this.#color = this.colors[index];
+    this.#color = this.#colors[index];
     this.#playerId = id;
   }
 

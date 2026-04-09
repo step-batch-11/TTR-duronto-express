@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 import { apiGet } from "./utils/api_utils.js";
 import {
   handleDrawCardFromDeck,
   handleDrawFaceUp,
 } from "./event_handlers/draw_deck_card_handler.js";
+=======
+import { fetchExitGame, fetchTicketChoices } from "./api.js";
+>>>>>>> d4557f4 ([#44] | implements the exit game feature, and removes the profile of that player | Sanket/Sivaji)
 import {
   handleHighlightCities,
   handleTicketsClaim,
@@ -74,4 +78,12 @@ export const accessTicket = () => {
     "mouseout",
     (event) => handleUnHighlightCities(event, "ticket"),
   );
+};
+
+export const exitGame = () => {
+  const exitForm = document.querySelector("#exit-game-form");
+  exitForm.addEventListener("submit", async (e) => {
+    await fetchExitGame(e);
+    globalThis.location.href = "/lobby.html";
+  });
 };

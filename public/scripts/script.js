@@ -5,6 +5,7 @@ import {
   drawDeckCard,
   drawFaceUpCard,
   drawTicketChoice,
+  exitGame,
   selectTicketCard,
   swipeTickets,
 } from "./events.js";
@@ -32,6 +33,7 @@ const registerListeners = (routesData) => {
   drawFaceUpCard();
   accessTicket();
   mapOnClick(routesData);
+  exitGame();
 };
 
 const renderGameState = (gameState) => {

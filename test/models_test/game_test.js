@@ -223,3 +223,50 @@ describe("validate draw tain car cards for multi-players", () => {
     });
   });
 });
+
+describe("Test the exit player feature", () => {
+  let game, players;
+  beforeEach(() => {
+    const carCards = [
+      "red",
+      "green",
+      "orange",
+      "pink",
+      "white",
+      "yellow",
+      "wild",
+      "black",
+      "wild",
+      "pink",
+      "blue",
+    ];
+
+    const ticketCards = [
+      { id: "DLT-ELP", src: "Duluth", dest: "El Paso", points: 10 },
+      { id: "TRT-MIM", src: "Toronto", dest: "Miami", points: 10 },
+      { id: "PLD-PHX", src: "Portland", dest: "Phoenix", points: 11 },
+      { id: "DLS-NYC", src: "Dallas", dest: "New York", points: 11 },
+      { id: "CLC-SLC", src: "Calgary", dest: "Salt Lake City", points: 7 },
+      { id: "LAS-NYC", src: "Los Angeles", dest: "New York", points: 21 },
+      { id: "DLT-HTN", src: "Duluth", dest: "Houston", points: 8 },
+      { id: "SSM-NVL", src: "Sault St. Marie", dest: "Nashville", points: 8 },
+      { id: "NYC-ATL", src: "New York", dest: "Atlanta", points: 6 },
+    ];
+
+    const carCardsDeck = new CarCardsDeck(carCards);
+    const ticketDeck = new TicketDeck(ticketCards);
+    players = ["green", "red"].map((color) => new Player("bhanu", color));
+    game = new Game(carCardsDeck, ticketDeck, players);
+    game.initializePlayerHand();
+  });
+
+  it("removes the player from the players list and returns the deleted player", async () => {
+    assertEquals(game.getGamePhase(), "INITIALIZED");
+
+    const res = game.removeExitedPlayer("green");
+    await new Promise((resolve) => setTimeout(resolve, 1600));
+    assertEquals(game.getGamePhase(), "INITIALIZED");
+
+    assertEquals(players.length, 1);
+  });
+});
