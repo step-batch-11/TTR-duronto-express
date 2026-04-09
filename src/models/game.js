@@ -106,6 +106,7 @@ export default class Game {
     this.#phase = "DRAW_TICKET_CHOICE";
     const drawnTickets = structuredClone(this.#ticketDeck.dealTicketChoices());
     this.#drawnTickets[id] = drawnTickets;
+
     return drawnTickets.map(({ id }) => id);
   }
 
@@ -119,16 +120,16 @@ export default class Game {
     const unclaimedTickets = this.#drawnTickets[id].filter(({ id }) =>
       !tickets.includes(id)
     );
+    console.log(this.#drawnTickets);
 
     if (unclaimedTickets.length > 0) {
       this.#ticketDeck.discardTickets(unclaimedTickets);
+      this.#drawnTickets[id] = [];
     }
 
     if (this.hasTicketsClaimed()) {
       this.#nextTurn();
     }
-
-    this.#drawnTickets[id] = [];
 
     return claimedTickets;
   }

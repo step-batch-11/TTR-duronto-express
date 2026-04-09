@@ -1,6 +1,7 @@
 export const drawTicketChoiceHandler = (context) => {
   const game = context.get("game");
-  const drawnCards = game.drawTicketChoice();
+  const sessionId = context.get("sessionId");
+  const drawnCards = game.drawTicketChoice(sessionId);
 
   return context.json(drawnCards);
 };
