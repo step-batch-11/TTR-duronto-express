@@ -95,7 +95,19 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   app.post("/claim-tickets", claimDestinationTickets);
   app.post("/claim-route", claimRouteHandler);
 
-  app.get("waiting-room", allowExistingPlayer, serveStatic({ root: "public" }));
+  app.get("/lobby.html", allowExistingPlayer, serveStatic({ root: "public" }));
+  app.get("/host.html", allowExistingPlayer, serveStatic({ root: "public" }));
+  app.get("/join.html", allowExistingPlayer, serveStatic({ root: "public" }));
+  app.get(
+    "/victory.html",
+    allowExistingPlayer,
+    serveStatic({ root: "public" }),
+  );
+  app.get(
+    "/waiting_room.html",
+    allowExistingPlayer,
+    serveStatic({ root: "public" }),
+  );
   app.get("*", serveStatic({ root: "public" }));
 
   return app;

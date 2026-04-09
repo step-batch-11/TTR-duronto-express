@@ -6,7 +6,9 @@
     "test": "deno test -A",
     "test:watch": "deno test -A --watch",
     "cvg": "deno test -A --coverage",
-    "cvg:detailed": "deno coverage --detailed"
+    "cvg:detailed": "deno coverage --detailed",
+    "automate": "deno run -A automation/room-flow.js",
+    "install:browser": "deno run -A npm:playwright install chromium"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@^1.0.19",
