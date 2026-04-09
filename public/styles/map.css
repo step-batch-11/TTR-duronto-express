@@ -1,3 +1,5 @@
+@import "colors.css";
+
 svg {
   cursor: pointer;
   height: 100%;
@@ -23,85 +25,74 @@ svg {
 }
 
 .route[data-owner-color="red"] .claimed-shape {
-  fill: #e74c3c;
-  stroke: #c0392b;
+  fill: var(--red-player);
 }
 
 .route[data-owner-color="blue"] .claimed-shape {
-  fill: #3498db;
-  stroke: #2980b9;
+  fill: var(--blue-player);
 }
 
 .route[data-owner-color="yellow"] .claimed-shape {
-  fill: #ffff00;
-  stroke: #000000;
+  fill: var(--yellow-player);
 }
 
 .route[data-owner-color="purple"] .claimed-shape {
-  fill: rgb(205, 73, 205);
-  stroke: #000000;
+  fill: var(--purple-player);
 }
 
 
 .route[data-owner-color="green"] .claimed-shape {
-  fill: hsl(124, 100%, 50%);
-  stroke: black;
-}
-
-.route[data-owner-color="green"] .empty-shape {
-  opacity: 0.5;
+  fill: var(--green-player);
 }
 
 .route[data-route-color="white"] .empty-shape {
-  fill: #FDFAF0;
+  fill: var(--white-route);
   stroke: #4a4a4a;
 }
 
 .route[data-route-color="black"] .empty-shape {
-  fill: #343434;
-  stroke: #343434;
+  fill: var(--black-route);
 }
 
 
 .route[data-route-color="red"] .empty-shape {
-  fill: hsl(0, 50%, 60%);
+  fill: var(--red-route);
+  /* fill: hsl( from var(--clr-red) h s calc(l + 10) ); */
   stroke: #4a4a4a;
+
 }
 
 .route[data-route-color="blue"] .empty-shape {
-  fill: hsl(210, 50%, 60%);
+  fill:var(--blue-route);
   stroke: #4a4a4a;
 }
 
 .route[data-route-color="pink"] .empty-shape {
-  fill: hsl(340, 40%, 80%);
-  stroke: #ff0c0c;
+  fill: var(--pink-route);
 }
 
 .route[data-route-color="yellow"] .empty-shape {
-  fill: #f1d836;
-  stroke: #ff0c0c;
+  fill: var(--yellow-route);
 }
 
 .route[data-route-color="orange"] .empty-shape {
-  fill: #f0a14c;
+  fill: var(--orange-route);
   stroke: #0a0909;
 }
 
 .route[data-route-color="green"] .empty-shape {
-  fill: #2E7D32;
+  fill: var(--green-route);
   stroke: #0a0909;
 }
 
 .route[data-route-color="transparent"] .empty-shape {
-  fill: rgb(185, 185, 185);
+  fill: var(--transparent-route);
   opacity: 0.8;
-  stroke: hsl(0, 50%, 60%);
   stroke-width: 2px;
 }
 
 .stationColor {
-  fill: hsl(34, 34%, 48%);
+  fill: var(--station-clr);
   stroke: #0a0909;
 }
 

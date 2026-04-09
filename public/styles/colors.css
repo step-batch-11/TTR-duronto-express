@@ -1,0 +1,23 @@
+:root {
+
+  --text-color:#4a2c1d;
+
+  --black-route:#1A1A1A;
+  --white-route:#FDFAF0;
+  --red-route:hsl(0, 50%, 60%);
+  --blue-route:hsl(210, 50%, 60%);
+  --pink-route: hsl(340, 40%, 80%);
+  --yellow-route:hsl(52, 87%, 58%);
+  --orange-route: hsl(31, 85%, 62%);
+  --green-route:hsla(123, 26%, 48%, 0.884);
+  --transparent-route: rgb(185, 185, 185);
+
+  --station-clr: hsl(34, 34%, 48%);
+  --station-stroke-clr:#0a0909;
+
+  --red-player: #e74c3c;
+  --blue-player:#3498db;
+  --yellow-player:#ffff00;
+  --green-player:hsl(123, 53%, 62%);
+  --purple-player:rgb(205, 73, 205);
+}

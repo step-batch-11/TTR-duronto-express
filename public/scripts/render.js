@@ -39,7 +39,11 @@ const createPlayer = (
   if (option.index === option.currentPlayerIdx) {
     container.classList.add("highlight-player");
   }
-  clone.querySelector(".identifier .symbol").style.backgroundColor = symbol;
+
+  const rootStyles = globalThis.getComputedStyle(document.documentElement);
+  const playerColor = rootStyles.getPropertyValue(`--${symbol}-player`);
+
+  clone.querySelector(".symbol").style.backgroundColor = playerColor;
   clone.querySelector(".train-car-data .car-count").textContent = carCount;
   clone.querySelector(".ticket-data .ticket-count").textContent = ticketCount;
 
