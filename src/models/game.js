@@ -253,7 +253,7 @@ export default class Game {
     this.addToDiscardedPile(cards);
     this.#ticketDeck.discardTickets(claimedTickets);
     const index = this.#currentPlayerIndex % this.#players.length;
-    console.log("ended")
+
     return this.#players.splice(index, 1)[0];
   }
 }

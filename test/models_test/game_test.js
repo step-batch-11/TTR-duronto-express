@@ -263,7 +263,7 @@ describe("Test the exit player feature", () => {
   it("removes the player from the players list and returns the deleted player", async () => {
     assertEquals(game.getGamePhase(), "INITIALIZED");
 
-    const res = game.removeExitedPlayer("green");
+    game.removeExitedPlayer("green");
     await new Promise((resolve) => setTimeout(resolve, 1600));
     assertEquals(game.getGamePhase(), "INITIALIZED");
 
