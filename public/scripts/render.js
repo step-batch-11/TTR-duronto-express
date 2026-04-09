@@ -384,28 +384,43 @@ export const enableClick = () => {
 };
 
 const showSinglePlayerScore = (scores, row) => {
+  const rankingTableColumns = [
+    "name",
+    "routeScore",
+    "ticketScore",
+    "isLongest",
+    "total",
+  ];
   const scoreColumnTemplate = document.querySelector("#row-data-template");
 
-  for (const entity in scores) {
+  rankingTableColumns.forEach((entity) => {
     const clone = scoreColumnTemplate.content.cloneNode(true);
     const scoreColumn = clone.querySelector(".row-data");
 
-    scoreColumn.textContent = scores[entity];
+    if (entity === "isLongest") {
+      const data = scores[entity] ? "10" : "-";
 
+      scoreColumn.textContent = data;
+      row.append(scoreColumn);
+      return;
+    }
+
+    const data = scores[entity];
+
+    scoreColumn.textContent = data;
     row.append(scoreColumn);
-  }
+  });
 };
 
 export const createLeaderboard = (scores) => {
   const table = document.querySelector("#victory-table-body");
   const rowTemplate = document.querySelector("#row-template");
 
-  for (const player of scores) {
+  for (const playerScore of scores) {
     const clone = rowTemplate.content.cloneNode(true);
     const row = clone.querySelector(".row");
 
-    showSinglePlayerScore(player, row);
-
+    showSinglePlayerScore(playerScore, row);
     table.append(row);
   }
 };
