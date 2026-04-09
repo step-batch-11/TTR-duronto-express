@@ -13,6 +13,7 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
+  font-family: 'MedievalSharp', fantasy, serif;
   background-image:
     radial-gradient(circle at 50% -40%, rgba(0, 0, 0, 0) 75%, rgb(0, 0, 0) 100%),
     url('../assets/game-background.webp');
@@ -46,6 +47,7 @@ article {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  gap: 1.5em;
 }
 
 .faceup-cards {
@@ -88,6 +90,7 @@ article {
   height: 18%;
   border-radius: 5px;
   border: 1px solid black;
+  box-shadow: 2px 2px 10px 5px rgb(0, 0, 0);
   transition: all 1s ease;
 }
 
@@ -112,7 +115,7 @@ article {
 .deck #deck-img {
   width: 85%;
   background-color: rgb(154, 154, 154);
-  box-shadow: 0px 3px 0px 3px rgb(154, 154, 154);
+  box-shadow: 0px 3px 10px 7px rgb(0, 0, 0);
 }
 
 .footer {
@@ -125,10 +128,6 @@ article {
 .hand-destination-tickets {
   width: 13%;
   height: 100%;
-  /* background: url("../assets/dest_background.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -173,6 +172,7 @@ ion-icon {
   border-radius: 5px;
   position: absolute;
   overflow: hidden;
+  box-shadow: 2px 2px 10px 4px rgb(0, 0, 0, 0.3);
 }
 
 .ticket img {
@@ -180,6 +180,7 @@ ion-icon {
   border-radius: 5px;
   height: 100%;
   width: 100%;
+  object-fit: fill;
 }
 
 .button {
@@ -205,42 +206,45 @@ ion-icon {
   justify-content: center;
   align-items: center;
   gap: 1%;
-  width: 60%;
+  width: 78%;
 }
 
 .build-route-container {
-  width: 27%;
+  width: 22%;
   height: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
 }
 
 .possible-cards {
-  padding-top: 4em;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 100%;
-  width: 70%;
+  height: 85%;
+  width: 100%;
 }
 
 .build-actions {
-  width: 30%;
-  height: 100%;
+  height: 15%;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   gap: 2em;
 }
 
 .build-actions button {
   display: block;
-  padding: 0.5em;
-  background-color: transparent;
+  padding: 0;
+  width: 170px;
+  font-size: 1.5em;
+  font-weight: 900;
+  font-family: 'MedievalSharp', fantasy, serif;
+  cursor: pointer;
 }
 
 .build-img-container {
+  margin-top: 2em;
   width: 170px;
   height: 105px;
   transform: rotate(270deg);
@@ -248,6 +252,16 @@ ion-icon {
   border: 1px solid;
   overflow: hidden;
   border-radius: 5px;
+  box-shadow: 1px 1px 8px 5px rgb(0, 0, 0, 0.7);
+}
+
+.possible-cards .hand-car-card {
+  position: relative;
+}
+
+.possible-cards .card-count {
+  top: 25%;
+  left: 35%;
 }
 
 .card-placeholder {
@@ -260,6 +274,7 @@ ion-icon {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 5px;
 }
 
 .img-container {
@@ -272,6 +287,7 @@ ion-icon {
   z-index: 0;
   overflow: hidden;
   border-radius: 5px;
+  box-shadow: 1px 1px 8px 5px rgb(0, 0, 0, 0.7);
 }
 
 .hand-car-card img {

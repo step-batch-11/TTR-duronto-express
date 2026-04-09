@@ -173,3 +173,18 @@ svg {
 .unfocus {
   opacity: 0.8;
 }
+
+.line {
+  /* stroke-dasharray: 10; */
+  /* animation: lineMove 1s infinite linear; */
+}
+
+@keyframes lineMove {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: 40;
+  }
+}
