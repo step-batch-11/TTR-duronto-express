@@ -63,7 +63,6 @@ svg {
 
 .route[data-route-color="red"] .empty-shape {
   fill: var(--red-route);
-  /* fill: hsl( from var(--clr-red) h s calc(l + 10) ); */
   stroke: #4a4a4a;
 
 }
