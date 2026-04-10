@@ -292,7 +292,7 @@ export default class Player {
 
     return forests
       .map((graph) => this.#calculateLongest(graph, this.#claimedRoutes))
-      .reduce(this.#findHighest);
+      .reduce(this.#findHighest, 0);
   }
 
   get name() {
