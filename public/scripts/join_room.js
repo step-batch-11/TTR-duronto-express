@@ -10,8 +10,7 @@ const main = () => {
     const res = await apiPost("/join-room", { roomId });
 
     if (res.isValidRoom) {
-      globalThis.location.href = "/waiting_room.html";
-      return;
+      return (globalThis.location.href = "/waiting_room.html");
     }
 
     document.querySelector(".alert").textContent = res.error;

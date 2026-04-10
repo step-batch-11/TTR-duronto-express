@@ -1,5 +1,6 @@
 import { clearHighlightedCities } from "./event_handlers/tickets_handlers.js";
 import { claimTicketChoices } from "./events.js";
+import { cloneTemplate } from "./utils/web_utils.js";
 
 const validateDoubleRouteClaim = (
   color,
@@ -183,8 +184,7 @@ export const displayPlayerHand = (
 };
 
 export const displayDestTicketDeck = () => {
-  const template = document.querySelector("#dest-ticket");
-  const clone = template.content.cloneNode(true);
+  const clone = cloneTemplate("#dest-ticket");
 
   document.querySelector(".footer").append(clone);
 };
@@ -208,29 +208,28 @@ export const toggleDisable = () => {
 };
 
 const createTicketCard = (ticket) => {
-  const ticketCardTemplate = document.querySelector("#market-card");
-
-  const clone = ticketCardTemplate.content.cloneNode(true);
+  const ticketCardEle = cloneTemplate("#market-card");
   const ticketId = typeof ticket === "object" ? ticket.id : ticket;
-  clone.querySelector(".card").id = ticketId;
-  clone.querySelector(".card").setAttribute("data-ticket-route", ticketId);
-  clone
+  ticketCardEle.querySelector(".card").id = ticketId;
+  ticketCardEle.querySelector(".card").setAttribute(
+    "data-ticket-route",
+    ticketId,
+  );
+  ticketCardEle
     .querySelector(".card img")
     .setAttribute("src", `./assets/destination-cards-images/${ticketId}.webp`);
-  return clone;
+  return ticketCardEle;
 };
 
 const createClaimButton = () => {
-  const buttonTemplate = document.querySelector("#btn");
-
-  const clone = buttonTemplate.content.cloneNode(true);
-  const button = clone.querySelector(".claim-button");
+  const btnEle = cloneTemplate("#btn");
+  const button = btnEle.querySelector(".claim-button");
   button.id = "ticket-claim-button";
   button.innerText = "Claim";
 
   button.classList.add("disabled-submit");
 
-  return clone;
+  return btnEle;
 };
 
 export const displayTicketChoices = (tickets, claimedTickets) => {
@@ -363,12 +362,11 @@ export const resolveFaceUpCardDraw = (card, img, carCards) => {
 
 export const addHandCardContainer = (color) => {
   const handContainer = document.querySelector(".hand-car-cards");
-  const carCardTemplate = document.querySelector("#card");
-  const clone = carCardTemplate.content.cloneNode(true);
-  clone.querySelector(".hand-car-card").id = color;
-  clone.querySelector(".img-container").setAttribute("data-color", color);
+  const carCardEle = cloneTemplate("#card");
+  carCardEle.querySelector(".hand-car-card").id = color;
+  carCardEle.querySelector(".img-container").setAttribute("data-color", color);
 
-  handContainer.append(clone);
+  handContainer.append(carCardEle);
   return document.querySelector(`.hand-car-cards [data-color="${color}"]`);
 };
 
@@ -440,9 +438,8 @@ export const createLeaderboard = (scores) => {
 
 export const displayWinner = (winner) => {
   const body = document.querySelector("body");
-  const winnerTemplate = document.querySelector("#winner-template");
-  const clone = winnerTemplate.content.cloneNode(true);
-  const winnerSection = clone.querySelector(".winner");
+  const winnerEle = cloneTemplate("#winner-template");
+  const winnerSection = winnerEle.querySelector(".winner");
 
   const winnerNameSection = winnerSection.querySelector("#winner-name");
   winnerNameSection.textContent = winner;

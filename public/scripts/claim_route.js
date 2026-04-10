@@ -7,10 +7,10 @@ import {
   renderMap,
 } from "./render.js";
 import { createCarCardImg, showAlert } from "./utils.js";
+import { cloneTemplate } from "./utils/web_utils.js";
 
 const enableBuildActions = () => {
-  const template = document.querySelector("#build-route-template");
-  const clone = template.content.cloneNode(true);
+  const clone = cloneTemplate("#build-route-template");
   document.querySelector("main").classList.add("click-disabled");
   document.querySelector(".footer").appendChild(clone);
 };
