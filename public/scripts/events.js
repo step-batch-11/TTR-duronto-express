@@ -10,6 +10,7 @@ import {
   handleTicketSwipe,
   handleUnHighlightCities,
 } from "./event_handlers/tickets_handlers.js";
+import { handleExitGame } from "./event_handlers/game_handler.js";
 import { displayTicketChoices } from "./render.js";
 import { showAlert } from "./utils.js";
 
@@ -76,10 +77,7 @@ export const accessTicket = () => {
   );
 };
 
-export const exitGame = () => {
+export const exitGame = async () => {
   const exitForm = document.querySelector("#exit-game-form");
-  exitForm.addEventListener("submit", async (e) => {
-    await fetchExitGame(e);
-    globalThis.location.href = "/lobby.html";
-  });
+  exitForm.addEventListener("submit", await handleExitGame);
 };

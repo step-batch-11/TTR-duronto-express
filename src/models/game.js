@@ -247,13 +247,21 @@ export default class Game {
     );
   }
 
+  removePlayerFromPlayers(id, index) {
+    this.#players = this.#players.filter((player) => player.sessionId !== id);
+
+    const isMyTurn = this.#players[index].sessionId === id;
+    if (isMyTurn) {
+      this.#nextTurn();
+    }
+  }
+
   removeExitedPlayer(id) {
     const { carCards, claimedTickets } = this.playerHand(id);
     const cards = this.#formatTheDiscardedPile(carCards);
     this.addToDiscardedPile(cards);
     this.#ticketDeck.discardTickets(claimedTickets);
     const index = this.#currentPlayerIndex % this.#players.length;
-
-    return this.#players.splice(index, 1)[0];
+    this.removePlayerFromPlayers(id, index);
   }
 }

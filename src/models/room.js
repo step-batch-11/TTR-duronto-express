@@ -56,4 +56,8 @@ export default class Room {
   get players() {
     return this.#players;
   }
+
+  removePlayer(id) {
+    this.#players = this.#players.filter((player) => player.sessionId !== id);
+  }
 }

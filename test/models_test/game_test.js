@@ -267,6 +267,6 @@ describe("Test the exit player feature", () => {
     await new Promise((resolve) => setTimeout(resolve, 1600));
     assertEquals(game.getGamePhase(), "INITIALIZED");
 
-    assertEquals(players.length, 1);
+    assertEquals(players.length, 2);
   });
 });

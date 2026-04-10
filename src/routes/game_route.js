@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { exitGameHandler } from "../handlers/game_handler.js";
 import {
   claimDestinationTickets,
   claimRouteHandler,
@@ -28,6 +29,7 @@ export const createGameRoutes = () => {
   game.post("/draw-faceup-card", drawFaceUpCardHandler);
   game.post("/claim-tickets", claimDestinationTickets);
   game.post("/claim-route", claimRouteHandler);
+  game.post("/exit", exitGameHandler);
 
   return game;
 };

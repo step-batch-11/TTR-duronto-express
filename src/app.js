@@ -18,7 +18,6 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   app.route("/room", createRoomRoutes());
   app.route("/auth", createAuthRoutes());
   app.route("/game", createGameRoutes());
-  // registerRoomRoutes(app);
   app.route("/", createStaticRoutes());
 
   return app;

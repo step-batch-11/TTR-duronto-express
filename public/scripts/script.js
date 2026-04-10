@@ -57,7 +57,9 @@ const pollGameState = async () => {
   if (response.status === 304) return;
   const gameState = await response.json();
   if (gameState.isGameEnded === true) {
+    globalThis.poller.pause();
     globalThis.window.location = "/finish-game";
+    return;
   }
 
   if (gameState.isFinalRound === true && isAlerted === false) {
@@ -109,8 +111,8 @@ const main = async () => {
   const routesData = await apiGet("/routes-data");
   registerListeners(routesData);
 
-  const poller = new Poller(pollGameState, 500);
-  poller.start();
+  globalThis.poller = new Poller(pollGameState, 500);
+  globalThis.poller.start();
 };
 
 globalThis.onload = main;
