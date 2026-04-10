@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
 h2 {
   font-size: 30px;
+  padding: 0;
 }
 
 .outer-box p {
