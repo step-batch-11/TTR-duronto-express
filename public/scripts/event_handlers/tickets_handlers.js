@@ -1,5 +1,5 @@
 import { animateTicketClaim } from "../animations.js";
-import { apiGet, apiPost } from "../api.js";
+import { apiGet, apiPost } from "../utils/api_utils.js";
 
 import {
   displayPlayerHandTickets,

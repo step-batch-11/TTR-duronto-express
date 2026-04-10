@@ -1,4 +1,4 @@
-import { apiGet } from "./api.js";
+import { apiGet } from "./utils/api_utils.js";
 import { createLeaderboard, displayWinner } from "./render.js";
 
 const displayLeaderboard = async () => {

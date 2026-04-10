@@ -1,3 +1,5 @@
+import { apiGet } from "./utils/api_utils.js";
+
 let countdownStarted = false;
 
 const render = ({ roomId, players, maxPlayers }) => {
@@ -36,12 +38,11 @@ const startCountdown = () => {
 };
 
 const pollRoom = async () => {
-  const res = await fetch("/room-state");
-  const data = await res.json();
+  const room = await apiGet("/room-state");
 
-  render(data);
+  render(room);
 
-  if (data.players.length === +data.maxPlayers) {
+  if (room.players.length === +room.maxPlayers) {
     startCountdown();
   }
 };

@@ -1,23 +1,19 @@
+import { apiPost } from "./utils/api_utils.js";
+import { Q } from "./utils/web_utils.js";
+
 const submitUsername = async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const username = formData.get("username");
-  const res = await fetch("/login", {
-    method: "post",
-    body: JSON.stringify({ username }),
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-  const { isLoggedIn } = await res.json();
-  if (isLoggedIn) {
-    globalThis.location.href = "/";
-  } else {
-    globalThis.location.href = "/login.html";
-  }
+  const res = await apiPost("/login", { username });
+
+  if (res.isLoggedIn) return (globalThis.location.href = "/");
+
+  globalThis.location.href = "/login.html";
 };
 
-globalThis.onload = () => {
-  const form = document.querySelector("#login-form");
-  form.addEventListener("submit", submitUsername);
+const main = () => {
+  Q("#login-form").addEventListener("submit", submitUsername);
 };
+
+globalThis.onload = main;

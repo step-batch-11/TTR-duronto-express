@@ -1,4 +1,4 @@
-import { apiGet, apiGetText } from "./api.js";
+import { apiGet, apiGetText } from "./utils/api_utils.js";
 import { mapOnClick } from "./claim_route.js";
 import {
   accessTicket,
@@ -94,7 +94,7 @@ const loadMap = async () => {
 };
 
 const loadHand = async () => {
-  const playerHand = await apiGet("/initial-hand"); //  fetchInitialPlayerHand();
+  const playerHand = await apiGet("/initial-hand");
   initializeGameUI(playerHand);
   displayPlayerHand(playerHand);
 };

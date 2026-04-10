@@ -1,6 +1,5 @@
-import { apiPost } from "./api.js";
-
-const Q = (sel) => document.querySelector(sel);
+import { apiPost } from "./utils/api_utils.js";
+import { Q } from "./utils/web_utils.js";
 
 const onSubmit = async (e) => {
   e.preventDefault();

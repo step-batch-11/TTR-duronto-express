@@ -5,7 +5,7 @@ import {
   getHandCardPositions,
   moveFromDeckToHand,
 } from "../animations.js";
-import { apiGet, apiPost } from "../api.js";
+import { apiGet, apiPost } from "../utils/api_utils.js";
 import { displayCarCards, resolveFaceUpCardDraw } from "../render.js";
 import { createCarCardImg, showAlert } from "../utils.js";
 

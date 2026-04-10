@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { etag } from "hono/etag";
+
 import { logger } from "hono/logger";
 
 import { registerAuthRoutes } from "./routes/auth_route.js";
@@ -12,7 +12,7 @@ export const createApp = (roomManager, players, sessionToRoomMap) => {
   const app = new Hono();
 
   app.use(logger());
-  app.use(etag());
+
   app.use(setContext(players, roomManager, sessionToRoomMap));
 
   registerAuthRoutes(app);
