@@ -33,7 +33,7 @@ export const handleTicketsClaim = async (_event) => {
   const ticketChoices = [];
   selectedTickets.forEach((ticket) => ticketChoices.push(ticket));
 
-  const playerHandTickets = await apiPost("/claim-tickets", ticketChoices);
+  const playerHandTickets = await apiPost("/game/claim-tickets", ticketChoices);
 
   clearHighlightedCities();
   toggleDisable();
@@ -55,7 +55,7 @@ export const handleTicketsClaim = async (_event) => {
 
 const validateTicketClaim = async () => {
   const button = document.querySelector("#ticket-claim-button");
-  const { gamePhase } = await apiGet("/get-game-phase");
+  const { gamePhase } = await apiGet("/game/phase");
 
   if (selectedTickets.size >= claimedTicketsMap[gamePhase]) {
     button.classList.remove("disabled-submit");

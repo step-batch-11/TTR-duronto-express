@@ -9,7 +9,7 @@ import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
 import PlayerBase from "../../src/models/player_base.js";
 import { createPlayerFn } from "../../src/utils/factory.js";
 
-describe("testing /initial-hand GET", () => {
+describe("testing /game/initial-hand GET", () => {
   let app;
   let playerBase;
   let users;
@@ -79,8 +79,8 @@ describe("testing /initial-hand GET", () => {
     app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
-  it("/initial-hand GET should give the player's initial hand with 4 car cards, 3 drawn tickets", async () => {
-    const response = await app.request("/initial-hand", {
+  it("/game/initial-hand GET should give the player's initial hand with 4 car cards, 3 drawn tickets", async () => {
+    const response = await app.request("/game/initial-hand", {
       headers: {
         Cookie: `sessionId=${1000}`,
       },
@@ -100,7 +100,7 @@ describe("testing /initial-hand GET", () => {
   });
 });
 
-describe("testing /draw-deck-card GET", () => {
+describe("testing /game/draw-deck-card GET", () => {
   let app;
   let playerBase;
   let users;
@@ -178,8 +178,8 @@ describe("testing /draw-deck-card GET", () => {
     app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
-  it("testing /draw-deck-card GET", async () => {
-    const response = await app.request("/draw-deck-card", {
+  it("testing /game/draw-deck-card GET", async () => {
+    const response = await app.request("/game/draw-deck-card", {
       headers: {
         Cookie: `sessionId=${1000}`,
       },
@@ -199,8 +199,8 @@ describe("testing /draw-deck-card GET", () => {
     });
   });
 
-  it("testing /draw-faceup-card POST", async () => {
-    const response = await app.request("/draw-faceup-card", {
+  it("testing /game/draw-faceup-card POST", async () => {
+    const response = await app.request("/game/draw-faceup-card", {
       method: "post",
       headers: {
         Cookie: `sessionId=${1000}`,
@@ -224,7 +224,7 @@ describe("testing /draw-deck-card GET", () => {
   });
 });
 
-describe("testing /get-ticket-choices GET", () => {
+describe("testing /game/ticket-choices GET", () => {
   let app;
   let playerBase;
   let users;
@@ -301,8 +301,8 @@ describe("testing /get-ticket-choices GET", () => {
     app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
-  it("after sending request to /get-ticket-choices it should return ticket cards choices as id", async () => {
-    const res = await app.request("/get-ticket-choices", {
+  it("after sending request to /game/ticket-choices it should return ticket cards choices as id", async () => {
+    const res = await app.request("/game/ticket-choices", {
       headers: {
         Cookie: `sessionId=${1000}`,
       },
@@ -313,7 +313,7 @@ describe("testing /get-ticket-choices GET", () => {
   });
 });
 
-describe("testing /claim-tickets POST", () => {
+describe("testing /game/claim-tickets POST", () => {
   let app;
   let playerBase;
   let users;
@@ -390,14 +390,14 @@ describe("testing /claim-tickets POST", () => {
     app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
-  it("after sending request to /claim-tickets it should return ticket cards of player hands after claiming", async () => {
-    await app.request("/get-ticket-choices", {
+  it("after sending request to /game/claim-tickets it should return ticket cards of player hands after claiming", async () => {
+    await app.request("/game/ticket-choices", {
       headers: {
         Cookie: `sessionId=${1000}`,
       },
     });
     const selectedTickets = ["HLN-LAS", "DVR-ELP"];
-    const res = await app.request("/claim-tickets", {
+    const res = await app.request("/game/claim-tickets", {
       method: "post",
       headers: {
         Cookie: `sessionId=${1000}`,
@@ -412,8 +412,8 @@ describe("testing /claim-tickets POST", () => {
     ]);
   });
 
-  it("/car-cards GET should return the car cards in player hand", async () => {
-    const res = await app.request("/car-cards", {
+  it("/game/car-cards GET should return the car cards in player hand", async () => {
+    const res = await app.request("/game/car-cards", {
       headers: {
         Cookie: `sessionId=${1000}`,
       },

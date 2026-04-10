@@ -45,7 +45,7 @@ describe("testing map handlers", () => {
     ticketDeck = new TicketDeck(ticketCards);
   });
 
-  it("POST /claim-route should add the route to player claimed routes and should return car cards in player hand", async () => {
+  it("POST /game/claim-route should add the route to player claimed routes and should return car cards in player hand", async () => {
     players = new PlayerBase([{ sessionId: 1000, username: "haji" }, {
       sessionId: 1001,
       username: "hussain",
@@ -83,7 +83,7 @@ describe("testing map handlers", () => {
       routeData: { routeColor: "transparent", routeLength: 3 },
     });
 
-    const response = await mockApp.request("/claim-route", {
+    const response = await mockApp.request("/game/claim-route", {
       method: "post",
       headers: {
         Cookie: `sessionId=${1000}`,
@@ -109,7 +109,7 @@ describe("testing map handlers", () => {
     });
   });
 
-  it("after sending request to /claim-route if last turn is going on it should end the game if last player played the turn", async () => {
+  it("after sending request to /game/claim-route if last turn is going on it should end the game if last player played the turn", async () => {
     let res;
 
     players = new PlayerBase([{ sessionId: 1000, username: "haji" }, {
@@ -145,7 +145,7 @@ describe("testing map handlers", () => {
 
     mockApp = createApp(roomManager, players, sessionToRoomMap);
 
-    res = await mockApp.request("/claim-route", {
+    res = await mockApp.request("/game/claim-route", {
       method: "post",
       headers: {
         Cookie: `sessionId=${1000}`,
@@ -162,7 +162,7 @@ describe("testing map handlers", () => {
 
     assertEquals(await res.status, 200);
 
-    res = await mockApp.request("/claim-route", {
+    res = await mockApp.request("/game/claim-route", {
       method: "post",
       headers: {
         Cookie: `sessionId=${1000}`,
@@ -268,7 +268,7 @@ describe("End game test case for multiplayer game state", () => {
       cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount: 0 },
     };
 
-    res = await mockApp.request("/claim-route", {
+    res = await mockApp.request("/game/claim-route", {
       method: "post",
       headers: {
         Cookie: "sessionId=1001",
@@ -283,7 +283,7 @@ describe("End game test case for multiplayer game state", () => {
       cardsUsed: { colorCardUsed: "blue", colorCardCount: 1, wildCardCount: 0 },
     };
 
-    res = await mockApp.request("/claim-route", {
+    res = await mockApp.request("/game/claim-route", {
       method: "post",
       headers: {
         Cookie: "sessionId=1002",
@@ -298,7 +298,7 @@ describe("End game test case for multiplayer game state", () => {
       cardsUsed: { colorCardUsed: "red", colorCardCount: 1, wildCardCount: 0 },
     };
 
-    res = await mockApp.request("/claim-route", {
+    res = await mockApp.request("/game/claim-route", {
       method: "post",
       headers: {
         Cookie: "sessionId=1001",
@@ -308,7 +308,7 @@ describe("End game test case for multiplayer game state", () => {
 
     assertEquals(await res.status, 200);
 
-    res = await mockApp.request("/game-state", {
+    res = await mockApp.request("/game/state", {
       headers: {
         "If-None-Match": "",
         Cookie: "sessionId=1001",

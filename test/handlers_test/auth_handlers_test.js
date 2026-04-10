@@ -57,9 +57,9 @@ describe("auth handler test", () => {
     });
   });
 
-  describe("POST /login", () => {
+  describe("POST /auth/login", () => {
     it("sending username for login without cookie, should set cookie and sends back isLoggedIn true", async () => {
-      const response = await app.request("/login", {
+      const response = await app.request("/auth/login", {
         method: "post",
         body: JSON.stringify({ username: "user" }),
       });
@@ -79,7 +79,7 @@ describe("auth handler test", () => {
 
     it("sending username for login with valid cookie, should send back isLoggedIn true, without cookies", async () => {
       const sessionId = players.addPlayer("newPlayer");
-      const response = await app.request("/login", {
+      const response = await app.request("/auth/login", {
         method: "post",
         body: JSON.stringify({ username: "user" }),
         headers: {
@@ -99,7 +99,7 @@ describe("auth handler test", () => {
 
     it("sending same username for login, should send back isLoggedIn false", async () => {
       players.addPlayer("newPlayer");
-      const response = await app.request("/login", {
+      const response = await app.request("/auth/login", {
         method: "post",
         body: JSON.stringify({ username: "newPlayer" }),
       });

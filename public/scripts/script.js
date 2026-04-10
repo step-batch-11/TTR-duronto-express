@@ -48,7 +48,7 @@ let initial = true;
 let isAlerted = false;
 
 const pollGameState = async () => {
-  const response = await fetch("/game-state", {
+  const response = await fetch("/game/state", {
     headers: {
       "If-None-Match": etag,
     },
@@ -96,7 +96,7 @@ const loadMap = async () => {
 };
 
 const loadHand = async () => {
-  const playerHand = await apiGet("/initial-hand");
+  const playerHand = await apiGet("/game/initial-hand");
   initializeGameUI(playerHand);
   displayPlayerHand(playerHand);
 };

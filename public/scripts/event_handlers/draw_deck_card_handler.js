@@ -49,7 +49,7 @@ export const handleDrawFaceUp = async (event) => {
 
   const img = cardElement.querySelector(".card-img");
   animateDrawFaceUpCard(cardElement);
-  const res = await apiPost("/draw-faceup-card", { id: cardElement.id });
+  const res = await apiPost("/game/draw-faceup-card", { id: cardElement.id });
   const { faceUpCards, carCards, cardToRefill, isTurnChanged } = res;
 
   if (cardToRefill !== undefined) {
@@ -63,7 +63,7 @@ export const handleDrawFaceUp = async (event) => {
 
 export const handleDrawCardFromDeck = async (deck) => {
   const { drawnCard, carCards, isTurnChanged } = await apiGet(
-    "/draw-deck-card",
+    "/game/draw-deck-card",
   );
   disableMap();
 

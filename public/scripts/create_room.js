@@ -4,7 +4,7 @@ import { Q } from "./utils/web_utils.js";
 const onSubmit = async (e) => {
   e.preventDefault();
   const maxPlayer = Q("#maxPlayer").value;
-  await apiPost("/create-room", { maxPlayer });
+  await apiPost("/room/create", { maxPlayer });
   globalThis.location.href = "/waiting_room.html";
 };
 

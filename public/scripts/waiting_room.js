@@ -38,7 +38,7 @@ const startCountdown = () => {
 };
 
 const pollRoom = async () => {
-  const room = await apiGet("/room-state");
+  const room = await apiGet("/room/state");
 
   render(room);
 

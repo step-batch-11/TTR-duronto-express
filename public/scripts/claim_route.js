@@ -252,7 +252,11 @@ const buildRoute = async (routeId, _, routeData) => {
   const wildCardCount = parseInt(getCardCountOnCart("wild"));
 
   const cardsUsed = { colorCardUsed, colorCardCount, wildCardCount };
-  const res = await apiPost("/claim-route", { routeId, cardsUsed, routeData });
+  const res = await apiPost("/game/claim-route", {
+    routeId,
+    cardsUsed,
+    routeData,
+  });
 
   const { routeOwnership, carCards } = res;
   renderMap(routeOwnership);
@@ -312,8 +316,8 @@ const claimRoute = async (event, routesData, map) => {
   const route = event.target.closest(".route");
   if (route === null) return;
 
-  const handCarCards = await apiGet("/car-cards");
-  const bogiesCount = await apiGet("/bogies-count");
+  const handCarCards = await apiGet("/game/car-cards");
+  const bogiesCount = await apiGet("/game/bogies-count");
   const routeId = route.getAttribute("id");
   const routeData = routesData[routeId];
 

@@ -9,7 +9,7 @@ import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
 import PlayerBase from "../../src/models/player_base.js";
 import { createPlayerFn } from "../../src/utils/factory.js";
 
-describe("testing /initial-hand GET", () => {
+describe("testing /game/initial-hand GET", () => {
   let app;
   let playerBase;
   let users;
@@ -77,8 +77,8 @@ describe("testing /initial-hand GET", () => {
     app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
-  it("when game is just settled up, request of/get-game-phase [GET] should give the game phase as STARTED", async () => {
-    const response = await app.request("/get-game-phase", {
+  it("when game is just settled up, request of/game/phase [GET] should give the game phase as STARTED", async () => {
+    const response = await app.request("/game/phase", {
       headers: {
         Cookie: `sessionId=${1000}`,
       },
@@ -90,13 +90,13 @@ describe("testing /initial-hand GET", () => {
     });
   });
 
-  it("when game is started, request of/get-game-phase [GET] should give the game phase as INITIALIZED", async () => {
-    await app.request("/initial-hand", {
+  it("when game is started, request of/game/phase [GET] should give the game phase as INITIALIZED", async () => {
+    await app.request("/game/initial-hand", {
       headers: {
         Cookie: `sessionId=${1000}`,
       },
     });
-    const response = await app.request("/get-game-phase", {
+    const response = await app.request("/game/phase", {
       headers: {
         Cookie: `sessionId=${1000}`,
       },
@@ -108,13 +108,13 @@ describe("testing /initial-hand GET", () => {
     });
   });
 
-  it("GET /game-state should give the updated routes ownership after claiming", async () => {
+  it("GET /game/state should give the updated routes ownership after claiming", async () => {
     const body = JSON.stringify({
       routeId: "STN5-STN7",
       cardsUsed: { colorCard: "red", colorCardCount: 2 },
       routeData: { routeColor: "transparent", routeLength: 3 },
     });
-    await app.request("/claim-route", {
+    await app.request("/game/claim-route", {
       method: "post",
       headers: {
         Cookie: `sessionId=${1000}`,
@@ -122,13 +122,13 @@ describe("testing /initial-hand GET", () => {
       body,
     });
 
-    await app.request("/initial-hand", {
+    await app.request("/game/initial-hand", {
       headers: {
         Cookie: `sessionId=${1000}`,
       },
     });
 
-    await app.request("/claim-tickets", {
+    await app.request("/game/claim-tickets", {
       method: "post",
       headers: {
         Cookie: `sessionId=${1000}`,
@@ -136,7 +136,7 @@ describe("testing /initial-hand GET", () => {
       body: JSON.stringify(["DVR-ELP", "HLN-LAS"]),
     });
 
-    const response = await app.request("/game-state", {
+    const response = await app.request("/game/state", {
       headers: {
         Cookie: `sessionId=${1000}`,
       },

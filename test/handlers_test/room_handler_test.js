@@ -12,7 +12,7 @@ import {
 import { assertEquals } from "@std/assert/equals";
 import { createApp } from "../../src/app.js";
 
-describe("testing /initial-hand GET", () => {
+describe("testing /game/initial-hand GET", () => {
   let app;
   let playerBase;
   let users;
@@ -86,8 +86,8 @@ describe("testing /initial-hand GET", () => {
     app = createApp(roomManager, playerBase, sessionToRoomMap);
   });
 
-  it("/create-room POST should able to create a room", async () => {
-    const response = await app.request("/create-room", {
+  it("/room/create POST should able to create a room", async () => {
+    const response = await app.request("/room/create", {
       method: "post",
       headers: {
         Cookie: "sessionId=1002",
@@ -101,8 +101,8 @@ describe("testing /initial-hand GET", () => {
     });
   });
 
-  it("/join-room POST should able to join existing room", async () => {
-    await app.request("/create-room", {
+  it("/room/join POST should able to join existing room", async () => {
+    await app.request("/room/create", {
       method: "post",
       headers: {
         Cookie: "sessionId=1002",
@@ -110,7 +110,7 @@ describe("testing /initial-hand GET", () => {
       body: JSON.stringify({ maxPlayer: 2 }),
     });
 
-    const response = await app.request("/join-room", {
+    const response = await app.request("/room/join", {
       method: "post",
       headers: {
         Cookie: "sessionId=1003",
@@ -125,8 +125,8 @@ describe("testing /initial-hand GET", () => {
     });
   });
 
-  it("/join-room POST should not able to join non-existing room", async () => {
-    await app.request("/create-room", {
+  it("/room/join POST should not able to join non-existing room", async () => {
+    await app.request("/room/create", {
       method: "post",
       headers: {
         Cookie: "sessionId=1002",
@@ -134,7 +134,7 @@ describe("testing /initial-hand GET", () => {
       body: JSON.stringify({ maxPlayer: 2 }),
     });
 
-    const response = await app.request("/join-room", {
+    const response = await app.request("/room/join", {
       method: "post",
       headers: {
         Cookie: "sessionId=1003",
@@ -148,8 +148,8 @@ describe("testing /initial-hand GET", () => {
     });
   });
 
-  it("/join-room POST should not able to join if room is full", async () => {
-    await app.request("/create-room", {
+  it("/room/join POST should not able to join if room is full", async () => {
+    await app.request("/room/create", {
       method: "post",
       headers: {
         Cookie: "sessionId=1002",
@@ -157,7 +157,7 @@ describe("testing /initial-hand GET", () => {
       body: JSON.stringify({ maxPlayer: 2 }),
     });
 
-    await app.request("/join-room", {
+    await app.request("/room/join", {
       method: "post",
       headers: {
         Cookie: "sessionId=1003",
@@ -165,7 +165,7 @@ describe("testing /initial-hand GET", () => {
       body: JSON.stringify({ roomId: 1001 }),
     });
 
-    const response = await app.request("/join-room", {
+    const response = await app.request("/room/join", {
       method: "post",
       headers: {
         Cookie: "sessionId=1003",
@@ -179,8 +179,8 @@ describe("testing /initial-hand GET", () => {
     });
   });
 
-  it("/room-state POST should able to create a room", async () => {
-    await app.request("/create-room", {
+  it("/room/state POST should able to create a room", async () => {
+    await app.request("/room/create", {
       method: "post",
       headers: {
         Cookie: "sessionId=1002",
@@ -188,7 +188,7 @@ describe("testing /initial-hand GET", () => {
       body: JSON.stringify({ maxPlayer: 2 }),
     });
 
-    const res = await app.request("/room-state", {
+    const res = await app.request("/room/state", {
       headers: {
         Cookie: "sessionId=1002",
       },

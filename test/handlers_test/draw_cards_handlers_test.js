@@ -96,7 +96,7 @@ describe("End game test case for multiplayer game state other actions", () => {
       cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount: 0 },
     };
 
-    res = await mockApp.request("/claim-route", {
+    res = await mockApp.request("/game/claim-route", {
       method: "post",
       headers: {
         Cookie: "sessionId=1001",
@@ -106,7 +106,7 @@ describe("End game test case for multiplayer game state other actions", () => {
 
     assertEquals(await res.status, 200);
 
-    res = await mockApp.request("/draw-deck-card", {
+    res = await mockApp.request("/game/draw-deck-card", {
       method: "get",
       headers: {
         Cookie: "sessionId=1002",
@@ -116,7 +116,7 @@ describe("End game test case for multiplayer game state other actions", () => {
     await new Promise((resolve) => setTimeout(resolve, 1600));
     assertEquals(await res.status, 200);
 
-    res = await mockApp.request("/draw-deck-card", {
+    res = await mockApp.request("/game/draw-deck-card", {
       method: "get",
       headers: {
         Cookie: "sessionId=1001",
@@ -126,7 +126,7 @@ describe("End game test case for multiplayer game state other actions", () => {
     await new Promise((resolve) => setTimeout(resolve, 1600));
     assertEquals(await res.status, 200);
 
-    res = await mockApp.request("/game-state", {
+    res = await mockApp.request("/game/state", {
       headers: {
         "If-None-Match": "",
         Cookie: "sessionId=1001",
@@ -145,7 +145,7 @@ describe("End game test case for multiplayer game state other actions", () => {
       cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount: 0 },
     };
 
-    res = await mockApp.request("/claim-route", {
+    res = await mockApp.request("/game/claim-route", {
       method: "post",
       headers: {
         Cookie: "sessionId=1001",
@@ -155,7 +155,7 @@ describe("End game test case for multiplayer game state other actions", () => {
 
     assertEquals(await res.status, 200);
 
-    res = await mockApp.request("/draw-deck-card", {
+    res = await mockApp.request("/game/draw-deck-card", {
       method: "get",
       headers: {
         Cookie: "sessionId=1002",
@@ -165,7 +165,7 @@ describe("End game test case for multiplayer game state other actions", () => {
     await new Promise((resolve) => setTimeout(resolve, 1600));
     assertEquals(await res.status, 200);
 
-    res = await mockApp.request("/draw-faceup-card", {
+    res = await mockApp.request("/game/draw-faceup-card", {
       method: "post",
       headers: {
         Cookie: "sessionId=1001",
@@ -178,7 +178,7 @@ describe("End game test case for multiplayer game state other actions", () => {
     await new Promise((resolve) => setTimeout(resolve, 1600));
     assertEquals(await res.status, 200);
 
-    res = await mockApp.request("/game-state", {
+    res = await mockApp.request("/game/state", {
       headers: {
         "If-None-Match": "",
         Cookie: "sessionId=1001",

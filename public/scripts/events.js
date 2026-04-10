@@ -27,7 +27,7 @@ export const drawTicketChoice = () => {
   const ticketDeck = document.querySelector(".destination-tickets-deck");
 
   ticketDeck.addEventListener("click", async () => {
-    const ticketChoices = await apiGet("/get-ticket-choices");
+    const ticketChoices = await apiGet("/game/ticket-choices");
     if (ticketChoices.length === 0) {
       showAlert("TICKET DECK IS EMPTY");
       return;

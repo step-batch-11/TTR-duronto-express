@@ -7,7 +7,7 @@ const main = () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const roomId = new FormData(form).get("roomId");
-    const res = await apiPost("/join-room", { roomId });
+    const res = await apiPost("/room/join", { roomId });
 
     if (res.isValidRoom) {
       return (globalThis.location.href = "/waiting_room.html");

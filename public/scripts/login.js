@@ -5,7 +5,7 @@ const submitUsername = async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const username = formData.get("username");
-  const res = await apiPost("/login", { username });
+  const res = await apiPost("/auth/login", { username });
 
   if (res.isLoggedIn) return (globalThis.location.href = "/");
 

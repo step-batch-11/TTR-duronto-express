@@ -10,13 +10,13 @@
 </head>
 
 <body>
-    <form action="/login" method="post" id="login-form">
-      <div class="outer-box">
-        <label for="username" id="username-label">Enter Passenger Name</label>
-        <input type="text" id="username" name="username" pattern="[A-Za-z]+[0-9]*" maxlength="10" autofocus required>
-        <button type="submit">Check In</button>
-      </div>
-    </form>
+  <form action="/auth/login" method="post" id="login-form">
+    <div class="outer-box">
+      <label for="username" id="username-label">Enter Passenger Name</label>
+      <input type="text" id="username" name="username" pattern="[A-Za-z]+[0-9]*" maxlength="10" autofocus required>
+      <button type="submit">Check In</button>
+    </div>
+  </form>
 </body>
 
 </html>

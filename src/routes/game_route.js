@@ -1,3 +1,4 @@
+import { Hono } from "hono";
 import {
   claimDestinationTickets,
   claimRouteHandler,
@@ -12,16 +13,21 @@ import {
   initializePlayerHandHandler,
 } from "../handlers/index.js";
 import { etag } from "hono/etag";
-export const registerGameRoutes = (app) => {
-  app.get("/initial-hand", initializePlayerHandHandler);
-  app.get("/draw-deck-card", drawDeckCardHandler);
-  app.get("/car-cards", getPlayerCarCardsHandler);
-  app.get("/get-game-phase", getGamePhase);
-  app.get("/get-ticket-choices", drawTicketChoiceHandler);
-  app.get("/game-state", etag(), gameStateHandler);
-  app.get("/get-leaderboard", getLeaderboardHandler);
-  app.get("/bogies-count", getPlayerBogieCount);
-  app.post("/draw-faceup-card", drawFaceUpCardHandler);
-  app.post("/claim-tickets", claimDestinationTickets);
-  app.post("/claim-route", claimRouteHandler);
+
+export const createGameRoutes = () => {
+  const game = new Hono();
+
+  game.get("/initial-hand", initializePlayerHandHandler);
+  game.get("/car-cards", getPlayerCarCardsHandler);
+  game.get("/draw-deck-card", drawDeckCardHandler);
+  game.get("/phase", getGamePhase);
+  game.get("/ticket-choices", drawTicketChoiceHandler);
+  game.get("/state", etag(), gameStateHandler);
+  game.get("/leaderboard", getLeaderboardHandler);
+  game.get("/bogies-count", getPlayerBogieCount);
+  game.post("/draw-faceup-card", drawFaceUpCardHandler);
+  game.post("/claim-tickets", claimDestinationTickets);
+  game.post("/claim-route", claimRouteHandler);
+
+  return game;
 };
