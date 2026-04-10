@@ -37,6 +37,8 @@ export const createStaticRoutes = () => {
   );
   staticRoutes.get(
     "/finish-game",
+    allowExistingPlayer,
+    preventVictoryPageAccess,
     serveStatic({ path: "./public/victory.html" }),
   );
 

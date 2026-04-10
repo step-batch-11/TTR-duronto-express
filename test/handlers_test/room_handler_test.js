@@ -16,6 +16,8 @@ describe("testing /game/initial-hand GET", () => {
   let app;
   let playerBase;
   let users;
+  let sessionToRoomMap;
+
   beforeEach(() => {
     playerBase = new PlayerBase([
       { sessionId: 1000, username: "haji" },
@@ -72,8 +74,7 @@ describe("testing /game/initial-hand GET", () => {
       createGenerateFn(),
       createGame,
     );
-    const sessionToRoomMap = new Map();
-
+    sessionToRoomMap = new Map();
     const room = roomManager.createRoom(2, {
       sessionId: 1000,
       username: "haji",
@@ -204,5 +205,25 @@ describe("testing /game/initial-hand GET", () => {
       ],
       roomId: 1001,
     });
+  });
+
+  it("/room/reset should move back to the lobby page", async () => {
+    await app.request("/room/create", {
+      method: "post",
+      headers: {
+        Cookie: "sessionId=1002",
+      },
+      body: JSON.stringify({ maxPlayer: 2 }),
+    });
+
+    const res = await app.request("/room/reset", {
+      headers: {
+        Cookie: "sessionId=1002",
+      },
+    });
+
+    assertEquals(res.status, 200);
+    assertEquals(await res.json(), { status: true });
+    assertEquals(sessionToRoomMap.size, 2);
   });
 });

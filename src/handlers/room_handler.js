@@ -49,3 +49,13 @@ export const getRoomState = (context) => {
     players: room.players,
   });
 };
+
+export const resetGame = (context) => {
+  const sessionId = context.get("sessionId");
+  const sessionToRoomMap = context.get("sessionToRoomMap");
+  if (sessionToRoomMap.has(sessionId)) {
+    sessionToRoomMap.delete(sessionId);
+    return context.json({ status: true });
+  }
+  return context.json({ status: false });
+};
