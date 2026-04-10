@@ -13,7 +13,7 @@ const main = () => {
       return (globalThis.location.href = "/waiting_room.html");
     }
 
-    document.querySelector(".alert").textContent = res.error;
+    Q(".alert").textContent = res.error;
   });
 };
 

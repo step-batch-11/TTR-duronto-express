@@ -9,7 +9,8 @@ const submitUsername = async (e) => {
 
   if (res.isLoggedIn) return (globalThis.location.href = "/");
 
-  globalThis.location.href = "/login.html";
+  // globalThis.location.href = "/login.html";
+  Q(".alert").textContent = res.message;
 };
 
 const main = () => {
