@@ -57,6 +57,7 @@ export const registerStaticRoutes = (app) => {
     "/waiting_room.html",
     allowExistingPlayer,
     redirectIfInRoom,
+    redirectIfGameInProgress,
     serveStatic({ root: "public" }),
   );
   app.get("*", serveStatic({ root: "public" }));
