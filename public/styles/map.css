@@ -6,9 +6,15 @@ svg {
   width: 100%;
 }
 
+.route:hover {
+  transition: filter 0.1s ease-in-out;
+  filter: brightness(1.1) drop-shadow(0 0 6px rgb(255, 255, 255));
+}
+
 .route .claimed-shape,
 .route .empty-shape {
   transition: opacity 0.3s ease-in-out;
+
 }
 
 .route .claimed-shape {

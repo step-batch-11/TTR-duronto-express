@@ -1,5 +1,5 @@
  @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
- @import "color.css";
+ @import "colors.css";
 
 body {
   background-image: url('../assets/index-background.webp');

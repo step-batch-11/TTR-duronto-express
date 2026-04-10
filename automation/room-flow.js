@@ -21,7 +21,7 @@ import { chromium } from "playwright";
   await joinerPage.locator("#username").fill("Pawar");
   await joinerPage.getByRole("button", { name: /check in/i }).click();
 
-  await hostPage.locator(".create").click();
+  await hostPage.locator(".host").click();
   await joinerPage.locator(".join").click();
 
   await hostPage.locator(".host").click();

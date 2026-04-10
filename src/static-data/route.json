@@ -78,7 +78,7 @@
   "MTL-TRT": { "routeColor": "transparent", "routeLength": 3 },
   "MTL-BSN": { "routeColor": "transparent", "routeLength": 2 },
   "BSN-MTL": { "routeColor": "transparent", "routeLength": 2 },
-  "MTL-NYC": { "routeColor": "blue", "routeLength": 2 },
+  "MTL-NYC": { "routeColor": "blue", "routeLength": 3 },
   "TRT-PBH": { "routeColor": "transparent", "routeLength": 2 },
   "PBH-NYC": { "routeColor": "white", "routeLength": 2 },
   "NYC-PBH": { "routeColor": "green", "routeLength": 2 },
