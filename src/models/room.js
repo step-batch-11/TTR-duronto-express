@@ -58,6 +58,7 @@ export default class Room {
   }
 
   removePlayer(id) {
+    this.#maxPlayersCount--;
     this.#players = this.#players.filter((player) => player.sessionId !== id);
   }
 }

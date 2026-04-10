@@ -203,6 +203,7 @@ export default class Game {
 
   getAllPlayerDetails() {
     return this.#players.map((player) => {
+      // console.log({length: this.#})
       return {
         name: player.name,
         symbol: player.color,
@@ -248,7 +249,9 @@ export default class Game {
   }
 
   removePlayerFromPlayers(id, index) {
-    this.#players = this.#players.filter((player) => player.sessionId !== id);
+    this.#players = this.#players.filter((player) =>
+      player.getPlayerId() !== id
+    );
 
     const isMyTurn = this.#players[index].sessionId === id;
     if (isMyTurn) {
