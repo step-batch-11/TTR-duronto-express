@@ -1,14 +1,6 @@
 import { addHandCardContainer, displayFaceUpCards } from "./render.js";
 import { createCarCardImg, showAlert } from "./utils.js";
 
-export const moveFromDeckToHand = (img, destination, deck) => {
-  img.style.transform = "scale(1)";
-  const x = destination.left - deck.left - deck.height / 2 + 17;
-  const y = destination.top - deck.top + deck.height / 2 - 20;
-
-  img.style.transform = `translate(${x}px,${y}px) rotate(270deg)`;
-};
-
 const moveFromDeckToMarket = (img, destination, deck) => {
   img.style.borderRadius = "5px";
   img.style.transform = "scale(1)";
@@ -16,12 +8,20 @@ const moveFromDeckToMarket = (img, destination, deck) => {
   img.style.transform = `translate(0px,${y}px)`;
 };
 
+const animateCardMove = (img, destination, src) => {
+  const x = destination.left - src.left - destination.width / 4;
+  const y = destination.top - src.top + destination.width / 4;
+  img.style.transform = `translate(${x}px,${y}px) rotate(270deg)`;
+};
+
+export const moveFromDeckToHand = (img, destination, deck) => {
+  img.style.transform = "scale(1)";
+  animateCardMove(img, destination, deck);
+};
+
 const moveFaceUpCard = (card, hand, faceUpCard) => {
   const img = card.querySelector(".card-img");
-  const x = hand.x - faceUpCard.x - faceUpCard.height / 2 + 15;
-  const y = hand.y - faceUpCard.y + faceUpCard.height / 2 - 20;
-  img.style.height = `${faceUpCard.height + 10}px`;
-  img.style.transform = `translate(${x}px, ${y}px) rotate(270deg)`;
+  animateCardMove(img, hand, faceUpCard);
 };
 
 const resolveRefillMarket = (deck, img, faceUpCards, isTurnChanged) => {

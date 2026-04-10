@@ -72,7 +72,7 @@ export default class Game {
     this.#currentPlayer.addCarCardToHand(drawnCard);
 
     if (this.#isCardDrawFinished(drawnCard)) {
-      setTimeout(() => this.#nextTurn(), 1500);
+      this.#nextTurn();
       return { drawnCard, cardToRefill, isTurnChanged: true };
     }
 
@@ -85,7 +85,7 @@ export default class Game {
     this.#currentPlayer.addCarCardToHand(drawnCard);
 
     if (this.#isCardDrawFinished()) {
-      setTimeout(() => this.#nextTurn(), 1500);
+      this.#nextTurn();
       return { drawnCard, isTurnChanged: true };
     }
 
@@ -114,7 +114,6 @@ export default class Game {
 
   claimTicketCard(tickets, id) {
     const claimedTickets = this.#findPlayer(id).claimTickets(tickets);
-
     const unclaimedTickets = this.#drawnTickets[id].filter(({ id }) =>
       !tickets.includes(id)
     );
