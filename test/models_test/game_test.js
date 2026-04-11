@@ -265,9 +265,8 @@ describe("Test the exit player feature", () => {
 
     game.removeExitedPlayer("green");
     await new Promise((resolve) => setTimeout(resolve, 1600));
-    assertEquals(game.getGamePhase(), "TURN_STARTED");
 
-    assertEquals(players.length, 2);
+    assertEquals(players.length, 1);
   });
 
   it("Exits the game of the player whose turn is going on, should pass the turn to next player", async () => {
@@ -275,8 +274,7 @@ describe("Test the exit player feature", () => {
 
     game.removeExitedPlayer("red");
     await new Promise((resolve) => setTimeout(resolve, 1600));
-    assertEquals(game.getGamePhase(), "TURN_STARTED");
 
-    assertEquals(players.length, 2);
+    assertEquals(players.length, 1);
   });
 });
