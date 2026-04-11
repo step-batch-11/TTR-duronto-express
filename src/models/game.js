@@ -247,16 +247,22 @@ export default class Game {
     );
   }
 
-  removePlayerFromPlayers(id, index) {
-    const isMyTurn = this.#players[index].getPlayerId() === id;
-    this.#players = this.#players.filter(
-      (player) => player.getPlayerId() !== id,
+  removePlayerFromPlayers(id) {
+    const index = this.#players.findIndex(
+      (player) => player.getPlayerId() === id,
     );
-
-    if (isMyTurn) {
-      this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) %
+    const isCurrentTurn = this.#currentPlayer.getPlayerId() === id;
+    this.#players.splice(index, 1);
+    if (index < this.#currentPlayerIndex) {
+      this.#currentPlayerIndex--;
+    }
+    if (isCurrentTurn) {
+      this.#currentPlayerIndex = this.#currentPlayerIndex %
         this.#players.length;
-      this.#nextTurn();
+      this.#currentPlayer = this.#players[this.#currentPlayerIndex];
+    } else {
+      this.#currentPlayer =
+        this.#players[this.#currentPlayerIndex % this.#players.length];
     }
   }
 
@@ -265,9 +271,6 @@ export default class Game {
     const cards = this.#formatTheDiscardedPile(carCards);
     this.addToDiscardedPile(cards);
     this.#ticketDeck.discardTickets(claimedTickets);
-    const index = this.#players.findIndex(
-      (player) => player.getPlayerId() === id,
-    );
-    this.removePlayerFromPlayers(id, index);
+    this.removePlayerFromPlayers(id);
   }
 }

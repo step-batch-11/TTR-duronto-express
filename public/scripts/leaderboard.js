@@ -10,6 +10,7 @@ const displayLeaderboard = async () => {
       globalThis.location.href = "./lobby.html";
     }
   });
+  
   displayWinner(winner);
   createLeaderboard(scores);
 };
