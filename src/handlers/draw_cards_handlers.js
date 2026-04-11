@@ -12,8 +12,8 @@ export const drawDeckCardHandler = (context) => {
   return context.json({ drawnCard, carCards, isTurnChanged });
 };
 
-export const drawFaceUpCardHandler = async (context) => {
-  const { id } = await context.req.json();
+export const drawFaceUpCardHandler = (context) => {
+  const { id } = context.get("validatedBody");
   const game = context.get("game");
   const sessionId = context.get("sessionId");
 

@@ -280,7 +280,6 @@ export default class Player {
   #calculateLongest(graph, claimedRoutes) {
     const allSubsets = this.#getAllSubsets(graph);
     const lengthMap = this.#makeCostMap(claimedRoutes);
-    // const degreeMap = this.#calculateDegree(claimedRoutes);
     return allSubsets
       .filter((trail) => this.#isValidTrail(trail))
       .map((trail) => this.#calculateCost(trail, lengthMap))

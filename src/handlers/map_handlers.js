@@ -1,5 +1,5 @@
-export const claimRouteHandler = async (context) => {
-  const { routeId, cardsUsed, routeData } = await context.req.json();
+export const claimRouteHandler = (context) => {
+  const { routeId, cardsUsed, routeData } = context.get("validatedBody");
 
   const game = context.get("game");
   const sessionId = context.get("sessionId");

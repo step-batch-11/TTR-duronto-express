@@ -14,6 +14,11 @@ import {
   initializePlayerHandHandler,
 } from "../handlers/index.js";
 import { etag } from "hono/etag";
+import { validate } from "../middleware/validate.js";
+import {
+  claimRouteSchema,
+  drawFaceUpSchema,
+} from "../validators/game_validators.js";
 
 export const createGameRoutes = () => {
   const game = new Hono();
@@ -26,9 +31,13 @@ export const createGameRoutes = () => {
   game.get("/state", etag(), gameStateHandler);
   game.get("/leaderboard", getLeaderboardHandler);
   game.get("/bogies-count", getPlayerBogieCount);
-  game.post("/draw-faceup-card", drawFaceUpCardHandler);
+  game.post(
+    "/draw-faceup-card",
+    validate(drawFaceUpSchema),
+    drawFaceUpCardHandler,
+  );
   game.post("/claim-tickets", claimDestinationTickets);
-  game.post("/claim-route", claimRouteHandler);
+  game.post("/claim-route", validate(claimRouteSchema), claimRouteHandler);
   game.post("/exit", exitGameHandler);
 
   return game;

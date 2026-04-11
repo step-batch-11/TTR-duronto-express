@@ -137,7 +137,6 @@ body::before {
   }
 }
 
-/* Decorative Divider below the name */
 .winner::after {
   content: "✦ 🚂 ✦";
   font-size: 1.5rem;

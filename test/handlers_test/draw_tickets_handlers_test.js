@@ -93,6 +93,9 @@ describe("End game test case for multiplayer game state other actions", () => {
   it("draw train car cards from deck as a last player", async () => {
     body = {
       routeId: "CLC-VCR",
+      routeData: {
+        routeLength: 4,
+      },
       cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount: 0 },
     };
 

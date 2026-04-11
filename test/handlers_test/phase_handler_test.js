@@ -111,9 +111,16 @@ describe("testing /game/initial-hand GET", () => {
   it("GET /game/state should give the updated routes ownership after claiming", async () => {
     const body = JSON.stringify({
       routeId: "STN5-STN7",
-      cardsUsed: { colorCard: "red", colorCardCount: 2 },
-      routeData: { routeColor: "transparent", routeLength: 3 },
+      routeData: {
+        routeLength: 3,
+      },
+      cardsUsed: {
+        "colorCardUsed": "green",
+        colorCardCount: 2,
+        wildCardCount: 0,
+      },
     });
+
     await app.request("/game/claim-route", {
       method: "post",
       headers: {
@@ -147,7 +154,7 @@ describe("testing /game/initial-hand GET", () => {
     assertEquals(gameState.claimedRoutes, {
       green: [{
         routeId: "STN5-STN7",
-        routeData: { routeColor: "transparent", routeLength: 3 },
+        routeData: { routeLength: 3 },
       }],
     });
     assertEquals(gameState.faceUp, ["red", "green", "blue", "pink", "white"]);

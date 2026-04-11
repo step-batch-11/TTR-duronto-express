@@ -103,7 +103,7 @@ describe("testing map handlers", () => {
       routeOwnership: {
         green: [{
           routeId: "STN1-STN2",
-          routeData: { routeColor: "transparent", routeLength: 3 },
+          routeData: { routeLength: 3 },
         }],
       },
     });
@@ -152,6 +152,9 @@ describe("testing map handlers", () => {
       },
       body: JSON.stringify({
         routeId: "SLC-DVR",
+        routeData: {
+          routeLength: 3,
+        },
         cardsUsed: {
           colorCardUsed: "red",
           colorCardCount: 3,
@@ -169,6 +172,9 @@ describe("testing map handlers", () => {
       },
       body: JSON.stringify({
         routeId: "DLT-CHG",
+        routeData: {
+          routeLength: 3,
+        },
         cardsUsed: {
           colorCardUsed: "red",
           colorCardCount: 3,
@@ -265,6 +271,9 @@ describe("End game test case for multiplayer game state", () => {
   it("Game end state test case for multiplayer turn based game handling", async () => {
     body = {
       routeId: "CLC-VCR",
+      routeData: {
+        routeLength: 3,
+      },
       cardsUsed: { colorCardUsed: "red", colorCardCount: 3, wildCardCount: 0 },
     };
 
@@ -280,6 +289,9 @@ describe("End game test case for multiplayer game state", () => {
 
     body = {
       routeId: "VCR-STL",
+      routeData: {
+        routeLength: 1,
+      },
       cardsUsed: { colorCardUsed: "blue", colorCardCount: 1, wildCardCount: 0 },
     };
 
@@ -295,6 +307,9 @@ describe("End game test case for multiplayer game state", () => {
 
     body = {
       routeId: "STL-PLD",
+      routeData: {
+        routeLength: 1,
+      },
       cardsUsed: { colorCardUsed: "red", colorCardCount: 1, wildCardCount: 0 },
     };
 
