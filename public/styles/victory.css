@@ -1,9 +1,8 @@
-/* Import a classic, vintage serif font */
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;700&family=Special+Elite&display=swap');
 
 body {
-  background-color: #2c1e14; /* Deep mahogany backdrop */
-  background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png'); /* Subtle wood texture */
+  background-color: #2c1e14;
+  background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
   font-family: 'Crimson Pro', serif;
   color: #4a3728;
   display: flex;
@@ -14,13 +13,13 @@ body {
   margin: 0;
 }
 
-/* The Leaderboard Container (The Parchment) */
 #victory-table {
-  background: #f4e4bc; /* Aged paper color */
+  background: #f4e4bc;
+
   background-image: url('https://www.transparenttextures.com/patterns/old-map.png');
   border: 12px solid #8b5a2b;
   border-image: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c) 1;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 0 100px rgba(0,0,0,0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), inset 0 0 100px rgba(0, 0, 0, 0.1);
   border-collapse: collapse;
   width: 80%;
   max-width: 800px;
@@ -28,18 +27,15 @@ body {
   position: relative;
 }
 
-/* Header Text (The Winner) */
 #winner {
   font-family: 'Special Elite', cursive;
   font-size: 3rem;
   color: #f4e4bc;
-  text-shadow: 2px 2px 0px #8b5a2b, 4px 4px 10px rgba(0,0,0,0.5);
+  text-shadow: 2px 2px 0px #8b5a2b, 4px 4px 10px rgba(0, 0, 0, 0.5);
   margin-bottom: 20px;
-  /* text-transform: uppercase; */
   letter-spacing: 3px;
 }
 
-/* Table Header Styles */
 #victory-table-head th {
   background: rgba(74, 55, 40, 0.1);
   border-bottom: 3px double #8b5a2b;
@@ -49,7 +45,6 @@ body {
   letter-spacing: 1px;
 }
 
-/* Table Cell Styles */
 .row-data {
   padding: 15px 25px;
   font-size: 1.3rem;
@@ -58,27 +53,23 @@ body {
   font-weight: 700;
 }
 
-/* Highlight the Player Name Column */
 .row-data:first-child {
   font-family: 'Special Elite', cursive;
   text-align: left;
   color: #2c1e14;
 }
 
-/* The Total Column Glow */
 .row-data:last-child {
   font-size: 1.6rem;
   color: #b38728;
   text-shadow: 1px 1px 0px #000;
 }
 
-/* Row Hover Effect */
 .row:hover {
   background: rgba(255, 255, 255, 0.3);
   transition: 0.3s;
 }
 
-/* Adding decorative corners via pseudo-elements */
 body::before {
   content: "🚂";
   font-size: 5rem;
@@ -88,7 +79,6 @@ body::before {
   right: 20px;
 }
 
-/* Container for the Winner Section */
 .winner {
   text-align: center;
   margin-bottom: 40px;
@@ -97,12 +87,10 @@ body::before {
   background: radial-gradient(circle, rgba(189, 149, 63, 0.2) 0%, rgba(44, 30, 20, 0) 70%);
 }
 
-/* "Winner" Label - The fancy small header */
 .winner h1 {
   font-family: 'Special Elite', cursive;
   font-size: 1.2rem;
-  color: #bf953f; /* Antique Gold */
-  /* text-transform: uppercase; */
+  color: #bf953f;
   letter-spacing: 8px;
   margin: 0;
   padding-bottom: 10px;
@@ -111,7 +99,6 @@ body::before {
   justify-content: center;
 }
 
-/* Adding decorative lines to the side of "Winner" */
 .winner h1::before,
 .winner h1::after {
   content: "";
@@ -122,28 +109,32 @@ body::before {
   margin: 0 15px;
 }
 
-/* "Winner Name" - The star of the show */
 #winner-name {
   font-family: 'Crimson Pro', serif;
   font-size: 4.5rem;
   font-weight: 700;
   margin: 10px 0;
   text-transform: capitalize;
-  
-  /* Metallic Gold Text Effect */
   background: linear-gradient(to bottom, #cfad48 22%, #fcf6ba 45%, #bf953f 50%, #8b5a2b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  
-  /* Depth shadow */
-  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
   animation: prize-glow 3s ease-in-out infinite;
 }
 
-/* Subtle pulse animation for the winner name */
+
 @keyframes prize-glow {
-  0%, 100% { filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5)); transform: scale(1); }
-  50% { filter: drop-shadow(0px 0px 20px rgba(252, 246, 186, 0.4)); transform: scale(1.02); }
+
+  0%,
+  100% {
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
+    transform: scale(1);
+  }
+
+  50% {
+    filter: drop-shadow(0px 0px 20px rgba(252, 246, 186, 0.4));
+    transform: scale(1.02);
+  }
 }
 
 /* Decorative Divider below the name */
@@ -154,4 +145,14 @@ body::before {
   display: block;
   margin-top: -10px;
   opacity: 0.8;
-}  
+}
+
+#homeBtn {
+  margin-top: 40px;
+  height: 60px;
+  font-size: 1.5em;
+  font-weight: 700;
+  background: #f4e4bc;
+  color: #4a3728;
+  border: 8px solid #8b5a2b;
+}
