@@ -66,8 +66,9 @@ export default class Game {
   }
 
   drawFaceUpCard(id) {
-    const { drawnCard, cardToRefill } = this.#carCardsDeck
-      .drawCardFromFaceUp(id);
+    const { drawnCard, cardToRefill } = this.#carCardsDeck.drawCardFromFaceUp(
+      id,
+    );
 
     this.#currentPlayer.addCarCardToHand(drawnCard);
 
@@ -114,8 +115,8 @@ export default class Game {
 
   claimTicketCard(tickets, id) {
     const claimedTickets = this.#findPlayer(id).claimTickets(tickets);
-    const unclaimedTickets = this.#drawnTickets[id].filter(({ id }) =>
-      !tickets.includes(id)
+    const unclaimedTickets = this.#drawnTickets[id].filter(
+      ({ id }) => !tickets.includes(id),
     );
 
     if (unclaimedTickets.length > 0) {
@@ -131,8 +132,7 @@ export default class Game {
   }
 
   #findPlayer(id) {
-    return this.#players
-      .find((player) => player.getPlayerId() === id);
+    return this.#players.find((player) => player.getPlayerId() === id);
   }
 
   playerHand(id) {
@@ -184,8 +184,9 @@ export default class Game {
   }
 
   isLastPlayerTurn(playerId) {
-    return this.#lastPlayerId ===
-      this.#findPlayer(parseInt(playerId)).getPlayerId();
+    return (
+      this.#lastPlayerId === this.#findPlayer(parseInt(playerId)).getPlayerId()
+    );
   }
 
   get currentPlayerIdx() {
@@ -220,11 +221,10 @@ export default class Game {
       player.calculateScore(pointMap, this.#routeToScoreMap)
     );
 
-    const longest = longestPaths
-      .reduce(
-        (longest, longestPath) => longest < longestPath ? longestPath : longest,
-        0,
-      );
+    const longest = longestPaths.reduce(
+      (longest, longestPath) => (longest < longestPath ? longestPath : longest),
+      0,
+    );
 
     longestPaths.forEach((longestPath, index) => {
       const isLongest = longestPath === longest;
@@ -249,11 +249,11 @@ export default class Game {
   }
 
   removePlayerFromPlayers(id, index) {
-    this.#players = this.#players.filter((player) =>
-      player.getPlayerId() !== id
+    const isMyTurn = this.#players[index].getPlayerId === id;
+    this.#players = this.#players.filter(
+      (player) => player.getPlayerId() !== id,
     );
 
-    const isMyTurn = this.#players[index].sessionId === id;
     if (isMyTurn) {
       this.#nextTurn();
     }
@@ -264,7 +264,9 @@ export default class Game {
     const cards = this.#formatTheDiscardedPile(carCards);
     this.addToDiscardedPile(cards);
     this.#ticketDeck.discardTickets(claimedTickets);
-    const index = this.#currentPlayerIndex % this.#players.length;
+    const index = this.#players.findIndex(
+      (player) => player.getPlayerId() === id,
+    );
     this.removePlayerFromPlayers(id, index);
   }
 }
