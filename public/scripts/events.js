@@ -78,6 +78,6 @@ export const accessTicket = () => {
 };
 
 export const exitGame = async () => {
-  const exitForm = document.querySelector("#exit-game-form");
-  exitForm.addEventListener("submit", await handleExitGame);
+  const exitForm = document.querySelector("#exit-game");
+  exitForm.addEventListener("click", await handleExitGame);
 };

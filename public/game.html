@@ -13,13 +13,17 @@
   <script type="module" src="scripts/script.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=logout" />
 </head>
 
 <body>
-  <dialog id="alert-box"><p></p></dialog>
-  <form id="exit-game-form">
-    <button type="submit" id="exit-game">Exit Game</button>
-  </form>
+  <dialog id="alert-box">
+    <p></p>
+  </dialog>
+  <span class="material-symbols-outlined" id="exit-game">
+    logout
+  </span>
   <template id="user">
     <div class="user">
       <div class="identifier">
@@ -30,14 +34,14 @@
       <div class="player-data">
         <div class="train-car-data">
           <img src="assets/train-shape.svg" alt="car">
-          <p class="car-count"></p> 
+          <p class="car-count"></p>
         </div>
         <div class="ticket-data">
           <img src="assets/golden-ticket.png" alt="ticket">
           <p class="ticket-count"></p>
         </div>
       </div>
-      
+
     </div>
   </template>
   <main>
@@ -45,7 +49,7 @@
       <div class="player-details"></div>
       <div class="log"></div>
     </aside>
-    
+
     <article id="map">
     </article>
     <aside class="market">
