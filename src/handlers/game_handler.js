@@ -9,7 +9,7 @@ export const exitGameHandler = (context) => {
   toMap.delete(id);
 
   if (room.players.length < 2) {
-    room.game.setGameEndFlag();
+    game.setGameEndFlag();
   }
 
   return context.json({ id });

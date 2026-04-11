@@ -13,7 +13,7 @@ export default class Player {
     this.#carCards = {};
     this.#name = name;
     this.#claimedTickets = [];
-    this.#bogies = 4;
+    this.#bogies = 45;
     this.#claimedRoutes = [];
     this.#color = this.#colors[index];
     this.#playerId = id;
