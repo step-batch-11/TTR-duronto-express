@@ -66,9 +66,8 @@ export default class Game {
   }
 
   drawFaceUpCard(id) {
-    const { drawnCard, cardToRefill } = this.#carCardsDeck.drawCardFromFaceUp(
-      id,
-    );
+    const { drawnCard, cardToRefill } =
+      this.#carCardsDeck.drawCardFromFaceUp(id);
 
     this.#currentPlayer.addCarCardToHand(drawnCard);
 
@@ -217,7 +216,7 @@ export default class Game {
     const pointMap = this.#ticketDeck.pointMap;
     const longestPaths = this.#players.map((player) => player.findLongest());
     const scores = this.#players.map((player) =>
-      player.calculateScore(pointMap, this.#routeToScoreMap)
+      player.calculateScore(pointMap, this.#routeToScoreMap),
     );
 
     const longest = longestPaths.reduce(
@@ -243,20 +242,26 @@ export default class Game {
 
   #formatTheDiscardedPile(cards) {
     return Object.entries(cards).flatMap(([color, length]) =>
-      Array.from({ length }, () => color)
+      Array.from({ length }, () => color),
     );
   }
 
-  removePlayerFromPlayers(id, index) {
-    const isMyTurn = this.#players[index].getPlayerId() === id;
-    this.#players = this.#players.filter(
-      (player) => player.getPlayerId() !== id,
+  removePlayerFromPlayers(id) {
+    const index = this.#players.findIndex(
+      (player) => player.getPlayerId() === id,
     );
-
-    if (isMyTurn) {
-      this.#currentPlayerIndex = (this.#currentPlayerIndex + 1) %
-        this.#players.length;
-      this.#nextTurn();
+    const isCurrentTurn = this.#currentPlayer.getPlayerId() === id;
+    this.#players.splice(index, 1);
+    if (index < this.#currentPlayerIndex) {
+      this.#currentPlayerIndex--;
+    }
+    if (isCurrentTurn) {
+      this.#currentPlayerIndex =
+        this.#currentPlayerIndex % this.#players.length;
+      this.#currentPlayer = this.#players[this.#currentPlayerIndex];
+    } else {
+      this.#currentPlayer =
+        this.#players[this.#currentPlayerIndex % this.#players.length];
     }
   }
 
@@ -265,9 +270,6 @@ export default class Game {
     const cards = this.#formatTheDiscardedPile(carCards);
     this.addToDiscardedPile(cards);
     this.#ticketDeck.discardTickets(claimedTickets);
-    const index = this.#players.findIndex(
-      (player) => player.getPlayerId() === id,
-    );
-    this.removePlayerFromPlayers(id, index);
+    this.removePlayerFromPlayers(id);
   }
 }
