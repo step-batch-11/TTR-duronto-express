@@ -3,7 +3,7 @@ import { Q } from "./utils/web_utils.js";
 
 const main = () => {
   const form = Q("form");
-
+  Q("#roomId").focus();
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const roomId = new FormData(form).get("roomId");

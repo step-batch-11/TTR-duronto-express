@@ -66,9 +66,8 @@ export default class Game {
   }
 
   drawFaceUpCard(id) {
-    const { drawnCard, cardToRefill } = this.#carCardsDeck.drawCardFromFaceUp(
-      id,
-    );
+    const { drawnCard, cardToRefill } =
+      this.#carCardsDeck.drawCardFromFaceUp(id);
 
     this.#currentPlayer.addCarCardToHand(drawnCard);
 
@@ -204,7 +203,6 @@ export default class Game {
 
   getAllPlayerDetails() {
     return this.#players.map((player) => {
-      // console.log({length: this.#})
       return {
         name: player.name,
         symbol: player.color,
@@ -218,7 +216,7 @@ export default class Game {
     const pointMap = this.#ticketDeck.pointMap;
     const longestPaths = this.#players.map((player) => player.findLongest());
     const scores = this.#players.map((player) =>
-      player.calculateScore(pointMap, this.#routeToScoreMap)
+      player.calculateScore(pointMap, this.#routeToScoreMap),
     );
 
     const longest = longestPaths.reduce(
@@ -244,7 +242,7 @@ export default class Game {
 
   #formatTheDiscardedPile(cards) {
     return Object.entries(cards).flatMap(([color, length]) =>
-      Array.from({ length }, () => color)
+      Array.from({ length }, () => color),
     );
   }
 
@@ -255,6 +253,8 @@ export default class Game {
     );
 
     if (isMyTurn) {
+      this.#currentPlayerIndex =
+        (this.#currentPlayerIndex + 1) % this.#players.length;
       this.#nextTurn();
     }
   }

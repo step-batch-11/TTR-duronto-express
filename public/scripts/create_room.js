@@ -10,6 +10,7 @@ const onSubmit = async (e) => {
 
 const main = () => {
   Q("form").addEventListener("submit", onSubmit);
+  Q("#maxPlayer").focus();
 };
 
 globalThis.onload = main;
