@@ -153,4 +153,29 @@ describe("testing /game/initial-hand GET", () => {
     assertEquals(gameState.faceUp, ["red", "green", "blue", "pink", "white"]);
     assertEquals(gameState.playerHand.claimedTickets, ["DVR-ELP", "HLN-LAS"]);
   });
+
+  it("GET /game/state includes lastAction with actionId 0 on a fresh game", async () => {
+    const response = await app.request("/game/state", {
+      headers: { Cookie: "sessionId=1000" },
+    });
+    const { lastAction } = await response.json();
+
+    assertEquals(response.status, 200);
+    assertEquals(lastAction, { actionId: 0, actorId: null, message: "" });
+  });
+
+  it("GET /game/state reflects updated lastAction after a player draws a deck card", async () => {
+    await app.request("/game/draw-deck-card", {
+      headers: { Cookie: "sessionId=1000" },
+    });
+
+    const response = await app.request("/game/state", {
+      headers: { Cookie: "sessionId=1000" },
+    });
+    const { lastAction } = await response.json();
+
+    assertEquals(response.status, 200);
+    assertEquals(lastAction.actionId, 1);
+    assertEquals(lastAction.message, "haji drew a card from the deck");
+  });
 });
