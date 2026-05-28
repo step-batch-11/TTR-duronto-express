@@ -27,13 +27,28 @@ const makeMapHandlerApp = (playerName, sessionId, carColors) => {
   const createGame = () => {
     const player = new Player(playerName, sessionId, 0);
     carColors.forEach((c) => player.addCarCardToHand(c));
-    return new Game(new CarCardsDeck([
-      "red", "green", "blue", "pink", "white",
-      "yellow", "orange", "black", "wild",
-    ]), new TicketDeck(ticketCards), [player]);
+    return new Game(
+      new CarCardsDeck([
+        "red",
+        "green",
+        "blue",
+        "pink",
+        "white",
+        "yellow",
+        "orange",
+        "black",
+        "wild",
+      ]),
+      new TicketDeck(ticketCards),
+      [player],
+    );
   };
 
-  const roomManager = new RoomManager(createRoomFn, createGenerateFn(), createGame);
+  const roomManager = new RoomManager(
+    createRoomFn,
+    createGenerateFn(),
+    createGame,
+  );
   const sessionToRoomMap = new Map();
   const room = roomManager.createRoom(2, { sessionId, username: playerName });
   sessionToRoomMap.set(sessionId, room);
@@ -358,14 +373,22 @@ describe("End game test case for multiplayer game state", () => {
 
 describe("lastAction is set after claim-route", () => {
   it("sets lastAction with city names when srcCity and destCity are provided", async () => {
-    const { app, room } = makeMapHandlerApp("alice", 2000, ["red", "red", "red"]);
+    const { app, room } = makeMapHandlerApp("alice", 2000, [
+      "red",
+      "red",
+      "red",
+    ]);
 
     await app.request("/game/claim-route", {
       method: "post",
       headers: { Cookie: "sessionId=2000" },
       body: JSON.stringify({
         routeId: "STN1-STN2",
-        cardsUsed: { colorCardUsed: "red", colorCardCount: 2, wildCardCount: 0 },
+        cardsUsed: {
+          colorCardUsed: "red",
+          colorCardCount: 2,
+          wildCardCount: 0,
+        },
         routeData: { routeColor: "transparent", routeLength: 2 },
         srcCity: "CALGARY",
         destCity: "VANCOUVER",
@@ -385,7 +408,11 @@ describe("lastAction is set after claim-route", () => {
       headers: { Cookie: "sessionId=3000" },
       body: JSON.stringify({
         routeId: "STN1-STN2",
-        cardsUsed: { colorCardUsed: "red", colorCardCount: 2, wildCardCount: 0 },
+        cardsUsed: {
+          colorCardUsed: "red",
+          colorCardCount: 2,
+          wildCardCount: 0,
+        },
         routeData: { routeColor: "transparent", routeLength: 2 },
       }),
     });

@@ -5,7 +5,11 @@ import TicketDeck from "../../src/models/ticket_deck.js";
 import Game from "../../src/models/game.js";
 import { createApp } from "../../src/app.js";
 import RoomManager from "../../src/models/room_manager.js";
-import { createGenerateFn, createRoomFn, createPlayerFn } from "../../src/utils/factory.js";
+import {
+  createGenerateFn,
+  createPlayerFn,
+  createRoomFn,
+} from "../../src/utils/factory.js";
 import PlayerBase from "../../src/models/player_base.js";
 
 describe("testing /game/initial-hand GET", () => {
@@ -440,10 +444,24 @@ describe("lastAction is set after draw and claim-tickets actions", () => {
     ];
 
     const carCards = [
-      "red", "green", "blue", "pink", "white",
-      "yellow", "orange", "black", "wild",
-      "red", "green", "blue", "pink", "white",
-      "yellow", "orange", "black", "wild",
+      "red",
+      "green",
+      "blue",
+      "pink",
+      "white",
+      "yellow",
+      "orange",
+      "black",
+      "wild",
+      "red",
+      "green",
+      "blue",
+      "pink",
+      "white",
+      "yellow",
+      "orange",
+      "black",
+      "wild",
     ];
 
     const ticketCards = [
@@ -451,7 +469,12 @@ describe("lastAction is set after draw and claim-tickets actions", () => {
       { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
       { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
       { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
-      { id: "SSM-OKC", src: "Sault St. Marie", dest: "Oklahoma City", points: 9 },
+      {
+        id: "SSM-OKC",
+        src: "Sault St. Marie",
+        dest: "Oklahoma City",
+        points: 9,
+      },
       { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
     ];
 
@@ -459,10 +482,18 @@ describe("lastAction is set after draw and claim-tickets actions", () => {
       const players = users.map(({ sessionId, username }, index) =>
         createPlayerFn(username, sessionId, index)
       );
-      return new Game(new CarCardsDeck(carCards), new TicketDeck(ticketCards), players);
+      return new Game(
+        new CarCardsDeck(carCards),
+        new TicketDeck(ticketCards),
+        players,
+      );
     };
 
-    const roomManager = new RoomManager(createRoomFn, createGenerateFn(), createGame);
+    const roomManager = new RoomManager(
+      createRoomFn,
+      createGenerateFn(),
+      createGame,
+    );
     const sessionToRoomMap = new Map();
 
     room = roomManager.createRoom(2, { sessionId: 1000, username: "haji" });
