@@ -9,6 +9,40 @@ import PlayerBase from "../../src/models/player_base.js";
 import RoomManager from "../../src/models/room_manager.js";
 import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
 
+const makeMapHandlerApp = (playerName, sessionId, carColors) => {
+  const ticketCards = [
+    { id: "DVR-ELP", src: "Denver", dest: "El Paso", points: 4 },
+    { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
+    { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+    { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
+    { id: "SSM-OKC", src: "Sault St. Marie", dest: "Oklahoma City", points: 9 },
+    { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
+  ];
+
+  const players = new PlayerBase([
+    { sessionId, username: playerName },
+    { sessionId: 9999, username: "other" },
+  ]);
+
+  const createGame = () => {
+    const player = new Player(playerName, sessionId, 0);
+    carColors.forEach((c) => player.addCarCardToHand(c));
+    return new Game(new CarCardsDeck([
+      "red", "green", "blue", "pink", "white",
+      "yellow", "orange", "black", "wild",
+    ]), new TicketDeck(ticketCards), [player]);
+  };
+
+  const roomManager = new RoomManager(createRoomFn, createGenerateFn(), createGame);
+  const sessionToRoomMap = new Map();
+  const room = roomManager.createRoom(2, { sessionId, username: playerName });
+  sessionToRoomMap.set(sessionId, room);
+  roomManager.joinRoom(room.id, { sessionId: 9999, username: "other" });
+  sessionToRoomMap.set(9999, room);
+
+  return { app: createApp(roomManager, players, sessionToRoomMap), room };
+};
+
 describe("testing map handlers", () => {
   let carCardsDeck;
   let ticketDeck;
@@ -319,5 +353,45 @@ describe("End game test case for multiplayer game state", () => {
 
     assertEquals(await res.status, 200);
     assertEquals(isGameEnded, true);
+  });
+});
+
+describe("lastAction is set after claim-route", () => {
+  it("sets lastAction with city names when srcCity and destCity are provided", async () => {
+    const { app, room } = makeMapHandlerApp("alice", 2000, ["red", "red", "red"]);
+
+    await app.request("/game/claim-route", {
+      method: "post",
+      headers: { Cookie: "sessionId=2000" },
+      body: JSON.stringify({
+        routeId: "STN1-STN2",
+        cardsUsed: { colorCardUsed: "red", colorCardCount: 2, wildCardCount: 0 },
+        routeData: { routeColor: "transparent", routeLength: 2 },
+        srcCity: "CALGARY",
+        destCity: "VANCOUVER",
+      }),
+    });
+
+    const lastAction = room.game.getLastAction();
+    assertEquals(lastAction.actorId, 2000);
+    assertEquals(lastAction.message, "alice claimed CALGARY - VANCOUVER");
+  });
+
+  it("falls back to routeId in lastAction message when srcCity and destCity are absent", async () => {
+    const { app, room } = makeMapHandlerApp("bob", 3000, ["red", "red", "red"]);
+
+    await app.request("/game/claim-route", {
+      method: "post",
+      headers: { Cookie: "sessionId=3000" },
+      body: JSON.stringify({
+        routeId: "STN1-STN2",
+        cardsUsed: { colorCardUsed: "red", colorCardCount: 2, wildCardCount: 0 },
+        routeData: { routeColor: "transparent", routeLength: 2 },
+      }),
+    });
+
+    const lastAction = room.game.getLastAction();
+    assertEquals(lastAction.actorId, 3000);
+    assertEquals(lastAction.message, "bob claimed STN1-STN2");
   });
 });

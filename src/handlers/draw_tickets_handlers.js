@@ -17,5 +17,8 @@ export const claimDestinationTickets = async (context) => {
     game.setGameEndFlag();
   }
 
+  const name = game.getPlayerName(sessionId);
+  game.updateLastAction(sessionId, `${name} drew destination tickets`);
+
   return context.json(playerHandTickets);
 };
