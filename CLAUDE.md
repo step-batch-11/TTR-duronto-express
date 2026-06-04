@@ -9,6 +9,11 @@ TTR-duronto-express is a web-based implementation of the board game "Ticket to
 Ride" built with Deno, Hono (web framework), and vanilla JavaScript frontend.
 It's a real-time multiplayer game where players claim train routes on a map to
 fulfill destination tickets and score points.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+Ticket to Ride: Duronto Express — a multiplayer board game server built with **Deno** and **Hono** (web framework). No database; all state is in-memory. Frontend is vanilla JavaScript with no bundler.
 
 ## Commands
 
@@ -154,3 +159,72 @@ source under `/test/models_test/` and `/test/handlers_test/`.
 - Git hooks in `/setup/hooks/` (pre-commit, prepare-commit-msg); install via
   `setup.sh`
 - CI on push/PR to main: format check → lint → tests
+deno task dev              # Dev server with --watch
+deno task run              # Production run (PORT env var, default 8000)
+deno task test             # Run all tests
+deno task test:watch       # Watch mode
+deno task cvg              # Run tests with coverage
+deno task cvg:detailed     # Detailed coverage report
+deno fmt                   # Format code
+deno lint                  # Lint (no-console rule is enforced)
+deno task automate         # E2E tests via Playwright
+```
+
+Run a single test file:
+```bash
+deno test -A test/models_test/game_test.js
+deno test -A test/handlers_test/auth_handlers_test.js
+```
+
+CI runs format check, lint, and full test suite on push/PR to main.
+
+## Architecture
+
+### Request lifecycle
+
+`main.js` creates shared singletons — `PlayerBase`, `RoomManager`, `sessionToRoomMap` — and passes them into the Hono app factory in `src/app.js`. Every request gets these injected via Hono middleware in `src/utils/context.js` as `c.var.players`, `c.var.roomManager`, `c.var.sessionToRoomMap`, and `c.var.game`.
+
+### Layer responsibilities
+
+| Layer | Path | Role |
+|-------|------|------|
+| Models | `src/models/` | Pure game logic, no HTTP concerns |
+| Handlers | `src/handlers/` | Read from `c.var.*`, call model methods, return JSON/redirects |
+| Routes | `src/routes/` | Mount handlers behind middleware |
+| Middleware | `src/middleware/route_middleware.js` | Session validation, phase/room guards, page redirects |
+| Utils | `src/utils/` | Context injection, factory functions |
+| Static data | `src/static-data/` | Card deck, ticket cards, route JSON |
+
+### Core models
+
+- **Game** — state machine with phases `STARTED → INITIALIZED → TURN_STARTED → (final round)`; owns turn logic, scoring, card/ticket management
+- **Room** — holds players (up to max), creates `Game` when full
+- **RoomManager** — creates/looks up rooms by ID
+- **Player** — holds car cards, claimed routes, bogies (starts at 45)
+- **PlayerBase** — global session registry; session IDs start at 1000
+- **TrainCarCardDeck** — face-up (5 cards) and face-down piles; redeals face-up if 3+ wilds
+- **TicketDeck** — deals destination ticket choices (3 at a time)
+
+### Game flow
+
+1. Players log in → session cookie issued
+2. Host creates room, others join by room ID
+3. `/game/initial-hand` deals starting cards and tickets (phase → `INITIALIZED`)
+4. Each turn: draw cards (deck or face-up) OR claim a route OR take tickets
+5. Final round triggers when a player's bogies drop below threshold; game ends after all players complete that round
+6. `/game/leaderboard` returns scores (route points + completed ticket points − incomplete ticket penalties)
+
+### Frontend
+
+Static files served from `public/`. Pages: `login → lobby → host/join → waiting_room → game → victory`. Client scripts poll `/game/state` (ETag-based) and `/room/state` for updates — there is no WebSocket.
+
+## Testing patterns
+
+Handler tests use Hono's `testClient` / direct `fetch` against a constructed app instance; they pass fake `PlayerBase`/`RoomManager` objects rather than hitting a real server. Model tests are pure unit tests.
+
+## Key constraints
+
+- **No TypeScript** — project is plain JavaScript (Deno's `compilerOptions` only adds DOM/Deno type libs for IDE support)
+- **`no-console` lint rule** — avoid `console.log` in source files; CI will fail
+- **Git hooks** — `setup.sh` installs pre-commit hooks that run `deno fmt` and `deno lint`; run `./setup.sh` after cloning
+- **In-memory only** — server restart wipes all rooms and sessions

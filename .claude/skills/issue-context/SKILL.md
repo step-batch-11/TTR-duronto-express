@@ -13,6 +13,8 @@ description: >
 Gather everything needed to understand a GitHub issue and the codebase it lives
 in. Produce a structured **Context Summary** and signal when it is ready for the
 planning phase.
+Gather everything needed to understand a GitHub issue and the codebase it lives in.
+Produce a structured **Context Summary** and signal when it is ready for the planning phase.
 
 Do not proceed to planning until all four steps below are complete.
 
@@ -27,6 +29,7 @@ gh issue view <NUMBER> --json title,body,labels,assignees,milestone,comments
 ```
 
 If `gh` returns an error:
+<<<<<<< HEAD
 
 - Run `gh auth status` to check authentication
 - If not authenticated, stop and ask the user to run `gh auth login`
@@ -37,6 +40,16 @@ If `gh` returns an error:
 
 Scan the body and comments for references to other issues (`#123`, closing
 keywords like `closes #45`, or explicit sub-issue lists). Fetch each one:
+=======
+- Run `gh auth status` to check authentication
+- If not authenticated, stop and ask the user to run `gh auth login`
+- If authenticated but issue not found, ask the user to verify the number and repo
+
+### 1.2 Linked issues and sub-issues
+
+Scan the body and comments for references to other issues (`#123`, closing keywords like
+`closes #45`, or explicit sub-issue lists). Fetch each one:
+>>>>>>> 11f8dc2 (STEP LAPTOP BACKUP)
 
 ```bash
 gh issue view <LINKED_NUMBER> --json title,body,state
@@ -48,10 +61,16 @@ Note the relationship (blocks / blocked-by / related / sub-issue) for each.
 
 ## Step 2 — Fetch Attached Images
 
+<<<<<<< HEAD
 GitHub issue bodies and comments often contain screenshots, mockups, diagrams,
 and annotated error outputs. The `gh` CLI returns these only as markdown URLs —
 it does not download the content. Always extract and fetch them so visual
 context is not lost.
+=======
+GitHub issue bodies and comments often contain screenshots, mockups, diagrams, and annotated
+error outputs. The `gh` CLI returns these only as markdown URLs — it does not download the
+content. Always extract and fetch them so visual context is not lost.
+>>>>>>> 11f8dc2 (STEP LAPTOP BACKUP)
 
 ### 2.1 Extract all image URLs
 
@@ -76,8 +95,13 @@ curl -sL "<IMAGE_URL>" -o /tmp/story-<NUMBER>-images/<filename>
 
 ### 2.3 Read images into context
 
+<<<<<<< HEAD
 Use the `view` tool on each downloaded file so the image content is visible —
 not just the filename:
+=======
+Use the `view` tool on each downloaded file so the image content is visible — not just
+the filename:
+>>>>>>> 11f8dc2 (STEP LAPTOP BACKUP)
 
 ```
 view /tmp/story-<NUMBER>-images/<filename>    ← repeat for each image
@@ -85,8 +109,13 @@ view /tmp/story-<NUMBER>-images/<filename>    ← repeat for each image
 
 ### 2.4 Caption each image
 
+<<<<<<< HEAD
 After viewing, write a one-line description of what each image shows. These
 captions travel with the Context Summary into planning. Example:
+=======
+After viewing, write a one-line description of what each image shows. These captions travel
+with the Context Summary into planning. Example:
+>>>>>>> 11f8dc2 (STEP LAPTOP BACKUP)
 
 ```
 Images:
@@ -96,19 +125,31 @@ Images:
 ```
 
 **Edge cases:**
+<<<<<<< HEAD
 
 - _Image URL returns 404 or redirects to a login page:_ Mark it as
   "inaccessible" in the summary and ask the user to share it directly before
   proceeding.
 - _Image is a GIF or video:_ Note its existence; describe the first visible
   frame if the tool supports it, otherwise flag it to the user.
+=======
+- *Image URL returns 404 or redirects to a login page:* Mark it as "inaccessible" in the
+  summary and ask the user to share it directly before proceeding.
+- *Image is a GIF or video:* Note its existence; describe the first visible frame if
+  the tool supports it, otherwise flag it to the user.
+>>>>>>> 11f8dc2 (STEP LAPTOP BACKUP)
 
 ---
 
 ## Step 3 — Survey the Codebase
 
+<<<<<<< HEAD
 Survey the repository so the planning phase can reference real files and
 patterns rather than speaking generically.
+=======
+Survey the repository so the planning phase can reference real files and patterns rather
+than speaking generically.
+>>>>>>> 11f8dc2 (STEP LAPTOP BACKUP)
 
 ### 3.1 Repo structure
 
@@ -119,8 +160,12 @@ find . -maxdepth 3 -not -path '*/\.*' -not -path '*/node_modules/*' | head -80
 
 ### 3.2 Relevant files
 
+<<<<<<< HEAD
 Search for files, functions, types, and modules related to the story's domain
 keywords:
+=======
+Search for files, functions, types, and modules related to the story's domain keywords:
+>>>>>>> 11f8dc2 (STEP LAPTOP BACKUP)
 
 ```bash
 grep -r "<domain keyword>" --include="*.ts" -l    # adapt extension to tech stack
@@ -136,8 +181,13 @@ Read the most relevant files (or key sections) to understand current behaviour.
 find . -name "*.test.*" -o -name "*.spec.*" -o -name "*_test.*" | head -20
 ```
 
+<<<<<<< HEAD
 Note: test runner (jest / pytest / go test / etc.), file naming pattern,
 assertion style, and where test files live relative to source files.
+=======
+Note: test runner (jest / pytest / go test / etc.), file naming pattern, assertion style,
+and where test files live relative to source files.
+>>>>>>> 11f8dc2 (STEP LAPTOP BACKUP)
 
 ### 3.4 Tech stack
 
@@ -163,8 +213,13 @@ ls docs/
 
 ## Step 4 — Produce the Context Summary
 
+<<<<<<< HEAD
 Write a structured summary that will be handed to the planning sub-skill as its
 starting input. Every section must be concrete — file names, not generalities.
+=======
+Write a structured summary that will be handed to the planning sub-skill as its starting
+input. Every section must be concrete — file names, not generalities.
+>>>>>>> 11f8dc2 (STEP LAPTOP BACKUP)
 
 ```
 ## Context Summary: Issue #<NUMBER> — <Title>
@@ -204,12 +259,18 @@ patterns to follow, potential risk areas, existing similar implementations>
 ## Step 5 — User Confirmation and Save
 
 Present the full Context Summary to the user and ask:
+<<<<<<< HEAD
 
 > "Does this context look accurate? Reply **Agreed** to proceed to planning, or
 > let me know what needs correcting."
 
 If the user requests corrections, update the relevant section(s) and re-present
 before asking again.
+=======
+> "Does this context look accurate? Reply **Agreed** to proceed to planning, or let me know what needs correcting."
+
+If the user requests corrections, update the relevant section(s) and re-present before asking again.
+>>>>>>> 11f8dc2 (STEP LAPTOP BACKUP)
 
 Once the user agrees, write the confirmed Context Summary to disk:
 
@@ -220,8 +281,14 @@ Once the user agrees, write the confirmed Context Summary to disk:
 ```
 
 Confirm to the user:
+<<<<<<< HEAD
 
 > "Context saved to `docs/<NUMBER>/context.md`. Ready to begin planning."
 
 Then return to the `user-story-implementation` orchestrator — Phase 0 is
 complete.
+=======
+> "Context saved to `docs/<NUMBER>/context.md`. Ready to begin planning."
+
+Then return to the `user-story-implementation` orchestrator — Phase 0 is complete.
+>>>>>>> 11f8dc2 (STEP LAPTOP BACKUP)
