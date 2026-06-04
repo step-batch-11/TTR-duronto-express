@@ -46,6 +46,7 @@ const renderGameState = (gameState) => {
 let etag = "";
 let initial = true;
 let isAlerted = false;
+let lastSeenActionId = 0;
 
 const pollGameState = async () => {
   const response = await fetch("/game/state", {
@@ -66,6 +67,15 @@ const pollGameState = async () => {
     showAlert("Final round");
     isAlerted = true;
   }
+
+  const { lastAction } = gameState;
+  if (
+    !gameState.isPlayerTurn &&
+    lastAction.actionId > lastSeenActionId
+  ) {
+    showAlert(lastAction.message);
+  }
+  lastSeenActionId = lastAction.actionId;
 
   displayPlayers(gameState.players, gameState.currentPlayerIdx);
 

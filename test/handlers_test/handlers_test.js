@@ -5,9 +5,12 @@ import TicketDeck from "../../src/models/ticket_deck.js";
 import Game from "../../src/models/game.js";
 import { createApp } from "../../src/app.js";
 import RoomManager from "../../src/models/room_manager.js";
-import { createGenerateFn, createRoomFn } from "../../src/utils/factory.js";
+import {
+  createGenerateFn,
+  createPlayerFn,
+  createRoomFn,
+} from "../../src/utils/factory.js";
 import PlayerBase from "../../src/models/player_base.js";
-import { createPlayerFn } from "../../src/utils/factory.js";
 
 describe("testing /game/initial-hand GET", () => {
   let app;
@@ -421,5 +424,123 @@ describe("testing /game/claim-tickets POST", () => {
 
     assertEquals(await res.status, 200);
     assertEquals(await res.json(), { blue: 2, green: 1, white: 1 });
+  });
+});
+
+describe("lastAction is set after draw and claim-tickets actions", () => {
+  let app;
+  let playerBase;
+  let room;
+
+  beforeEach(() => {
+    playerBase = new PlayerBase([
+      { sessionId: 1000, username: "haji" },
+      { sessionId: 1001, username: "hussain" },
+    ]);
+
+    const users = [
+      { sessionId: 1000, username: "haji" },
+      { sessionId: 1001, username: "hussain" },
+    ];
+
+    const carCards = [
+      "red",
+      "green",
+      "blue",
+      "pink",
+      "white",
+      "yellow",
+      "orange",
+      "black",
+      "wild",
+      "red",
+      "green",
+      "blue",
+      "pink",
+      "white",
+      "yellow",
+      "orange",
+      "black",
+      "wild",
+    ];
+
+    const ticketCards = [
+      { id: "DVR-ELP", src: "Denver", dest: "El Paso", points: 4 },
+      { id: "HLN-LAS", src: "Helena", dest: "Los Angeles", points: 8 },
+      { id: "WPG-HTN", src: "Winnipeg", dest: "Houston", points: 12 },
+      { id: "MTL-NOL", src: "Montreal", dest: "New Orleans", points: 13 },
+      {
+        id: "SSM-OKC",
+        src: "Sault St. Marie",
+        dest: "Oklahoma City",
+        points: 9,
+      },
+      { id: "STL-NYC", src: "Seattle", dest: "New York", points: 22 },
+    ];
+
+    const createGame = () => {
+      const players = users.map(({ sessionId, username }, index) =>
+        createPlayerFn(username, sessionId, index)
+      );
+      return new Game(
+        new CarCardsDeck(carCards),
+        new TicketDeck(ticketCards),
+        players,
+      );
+    };
+
+    const roomManager = new RoomManager(
+      createRoomFn,
+      createGenerateFn(),
+      createGame,
+    );
+    const sessionToRoomMap = new Map();
+
+    room = roomManager.createRoom(2, { sessionId: 1000, username: "haji" });
+    sessionToRoomMap.set(1000, room);
+    roomManager.joinRoom(1000, { sessionId: 1001, username: "hussain" });
+    sessionToRoomMap.set(1001, room);
+
+    app = createApp(roomManager, playerBase, sessionToRoomMap);
+  });
+
+  it("draw-deck-card sets lastAction with player name and deck message", async () => {
+    await app.request("/game/draw-deck-card", {
+      headers: { Cookie: "sessionId=1000" },
+    });
+
+    const lastAction = room.game.getLastAction();
+    assertEquals(lastAction.actionId, 1);
+    assertEquals(lastAction.actorId, 1000);
+    assertEquals(lastAction.message, "haji drew a card from the deck");
+  });
+
+  it("draw-faceup-card sets lastAction with player name, card color, and market message", async () => {
+    await app.request("/game/draw-faceup-card", {
+      method: "post",
+      headers: { Cookie: "sessionId=1000" },
+      body: JSON.stringify({ id: "1" }),
+    });
+
+    const lastAction = room.game.getLastAction();
+    assertEquals(lastAction.actionId, 1);
+    assertEquals(lastAction.actorId, 1000);
+    assertEquals(lastAction.message, "haji drew a yellow card from the market");
+  });
+
+  it("claim-tickets sets lastAction with player name and destination tickets message", async () => {
+    await app.request("/game/ticket-choices", {
+      headers: { Cookie: "sessionId=1000" },
+    });
+
+    await app.request("/game/claim-tickets", {
+      method: "post",
+      headers: { Cookie: "sessionId=1000" },
+      body: JSON.stringify(["MTL-NOL"]),
+    });
+
+    const lastAction = room.game.getLastAction();
+    assertEquals(lastAction.actorId, 1000);
+    assertEquals(lastAction.message, "haji drew destination tickets");
   });
 });

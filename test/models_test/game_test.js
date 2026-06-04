@@ -278,3 +278,75 @@ describe("Test the exit player feature", () => {
     assertEquals(players.length, 1);
   });
 });
+
+describe("lastAction and player name methods", () => {
+  let game;
+
+  beforeEach(() => {
+    const carCards = [
+      "red",
+      "green",
+      "blue",
+      "pink",
+      "white",
+      "yellow",
+      "orange",
+      "black",
+      "wild",
+      "pink",
+      "blue",
+    ];
+
+    const ticketCards = [
+      { id: "DLT-ELP", src: "Duluth", dest: "El Paso", points: 10 },
+      { id: "TRT-MIM", src: "Toronto", dest: "Miami", points: 10 },
+      { id: "PLD-PHX", src: "Portland", dest: "Phoenix", points: 11 },
+      { id: "DLS-NYC", src: "Dallas", dest: "New York", points: 11 },
+      { id: "CLC-SLC", src: "Calgary", dest: "Salt Lake City", points: 7 },
+      { id: "LAS-NYC", src: "Los Angeles", dest: "New York", points: 21 },
+    ];
+
+    const carCardsDeck = new CarCardsDeck(carCards);
+    const ticketDeck = new TicketDeck(ticketCards);
+    const player = new Player("alice", 1001, 0);
+    game = new Game(carCardsDeck, ticketDeck, [player]);
+  });
+
+  it("getLastAction returns default state on a fresh game", () => {
+    assertEquals(game.getLastAction(), {
+      actionId: 0,
+      actorId: null,
+      message: "",
+    });
+  });
+
+  it("updateLastAction sets actorId and message and increments actionId", () => {
+    game.updateLastAction(1001, "alice drew a card from the deck");
+
+    assertEquals(game.getLastAction(), {
+      actionId: 1,
+      actorId: 1001,
+      message: "alice drew a card from the deck",
+    });
+  });
+
+  it("updateLastAction increments actionId on each call", () => {
+    game.updateLastAction(1001, "first action");
+    game.updateLastAction(1001, "second action");
+    game.updateLastAction(1001, "third action");
+
+    assertEquals(game.getLastAction().actionId, 3);
+  });
+
+  it("getLastAction returns a deep clone — mutation does not affect internal state", () => {
+    game.updateLastAction(1001, "original message");
+    const action = game.getLastAction();
+    action.message = "mutated";
+
+    assertEquals(game.getLastAction().message, "original message");
+  });
+
+  it("getPlayerName returns the player name for a given id", () => {
+    assertEquals(game.getPlayerName(1001), "alice");
+  });
+});

@@ -247,15 +247,24 @@ const getColorCardDetailsToBuild = () => {
   return { colorCardCount, colorCardUsed };
 };
 
+const getCityName = (code) =>
+  document.querySelector(`#${code} tspan`)?.textContent ?? code;
+
 const buildRoute = async (routeId, _, routeData) => {
   const { colorCardCount, colorCardUsed } = getColorCardDetailsToBuild();
   const wildCardCount = parseInt(getCardCountOnCart("wild"));
+
+  const [srcCode, destCode] = routeId.split("-");
+  const srcCity = getCityName(srcCode);
+  const destCity = getCityName(destCode);
 
   const cardsUsed = { colorCardUsed, colorCardCount, wildCardCount };
   const res = await apiPost("/game/claim-route", {
     routeId,
     cardsUsed,
     routeData,
+    srcCity,
+    destCity,
   });
 
   const { routeOwnership, carCards } = res;

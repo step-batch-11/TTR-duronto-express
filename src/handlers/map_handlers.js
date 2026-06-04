@@ -1,5 +1,6 @@
-export const claimRouteHandler = (context) => {
-  const { routeId, cardsUsed, routeData } = context.get("validatedBody");
+export const claimRouteHandler = async (context) => {
+  const { routeId, cardsUsed, routeData, srcCity, destCity } = await context.req
+    .json();
 
   const game = context.get("game");
   const sessionId = context.get("sessionId");
@@ -22,6 +23,10 @@ export const claimRouteHandler = (context) => {
   if (game.isGameEnded(sessionId)) {
     game.setLastPlayer(sessionId);
   }
+
+  const name = game.getPlayerName(sessionId);
+  const routeLabel = srcCity && destCity ? `${srcCity} - ${destCity}` : routeId;
+  game.updateLastAction(sessionId, `${name} claimed ${routeLabel}`);
 
   return context.json({ routeOwnership: game.getAllClaimedRoutes(), carCards });
 };

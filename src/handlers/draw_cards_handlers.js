@@ -9,6 +9,9 @@ export const drawDeckCardHandler = (context) => {
     game.setGameEndFlag();
   }
 
+  const name = game.getPlayerName(sessionId);
+  game.updateLastAction(sessionId, `${name} drew a card from the deck`);
+
   return context.json({ drawnCard, carCards, isTurnChanged });
 };
 
@@ -24,6 +27,12 @@ export const drawFaceUpCardHandler = (context) => {
   if (game.isLastPlayerTurn(sessionId)) {
     game.setGameEndFlag();
   }
+
+  const name = game.getPlayerName(sessionId);
+  game.updateLastAction(
+    sessionId,
+    `${name} drew a ${drawnCard} card from the market`,
+  );
 
   return context.json({
     drawnCard,

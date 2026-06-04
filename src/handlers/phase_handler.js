@@ -19,6 +19,7 @@ export const gameStateHandler = (context) => {
   const color = game.getPlayerColor(sessionId);
   const players = game.getAllPlayerDetails();
   const currentPlayerIdx = game.currentPlayerIdx;
+  const lastAction = game.getLastAction();
 
   return context.json({
     faceUp,
@@ -31,5 +32,6 @@ export const gameStateHandler = (context) => {
     color,
     players,
     currentPlayerIdx,
+    lastAction,
   });
 };

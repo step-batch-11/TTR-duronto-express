@@ -10,6 +10,7 @@ export default class Game {
   #lastPlayerId;
   #gameEndFlag;
   #routeToScoreMap;
+  #lastAction;
 
   constructor(carCardsDeck, ticketDeck, players) {
     this.#routeToScoreMap = [1, 2, 4, 7, 10, 15];
@@ -23,6 +24,7 @@ export default class Game {
     this.#gameEndFlag = false;
     this.#isFinalRound = false;
     this.#lastPlayerId = null;
+    this.#lastAction = { actionId: 0, actorId: null, message: "" };
 
     this.initializePlayerHand();
   }
@@ -239,6 +241,22 @@ export default class Game {
 
   getPlayerColor(id) {
     return this.#findPlayer(id).color;
+  }
+
+  getPlayerName(id) {
+    return this.#findPlayer(id).name;
+  }
+
+  updateLastAction(actorId, message) {
+    this.#lastAction = {
+      actionId: this.#lastAction.actionId + 1,
+      actorId,
+      message,
+    };
+  }
+
+  getLastAction() {
+    return structuredClone(this.#lastAction);
   }
 
   #formatTheDiscardedPile(cards) {
